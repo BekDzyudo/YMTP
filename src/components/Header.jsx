@@ -1,43 +1,48 @@
 import React, { useEffect, useState } from "react";
 import { FaAngleDown } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { GrLanguage } from "react-icons/gr";
-
+import { IoMenu } from "react-icons/io5";
 
 const themeFromLocalStorage = () => {
   return localStorage.getItem("theme") || "night";
 };
 
 function Header() {
-
-const [theme, setTheme] = useState(themeFromLocalStorage());
-function changeTheme() {
+  const [theme, setTheme] = useState(themeFromLocalStorage());
+  function changeTheme() {
     const newTheme = theme == "night" ? "light" : "night";
     setTheme(newTheme);
   }
-    useEffect(() => {
+  useEffect(() => {
     localStorage.setItem("theme", theme);
     document.documentElement.setAttribute("data-theme", theme);
   }, [theme]);
 
   return (
-    <div className="shadow-xl py-2">
-      <div className="navbar px-5 mx-auto w-full xl:w-full 2xl:w-11/12 items-center">
+    <div className="shadow-xl py-1 sm:py-2">
+      <div className="navbar gap-2 px-3.5 sm:px-5 mx-auto w-full xl:w-full 2xl:w-11/12 items-center">
         <div className="navbar-start flex gap-2 sm:gap-3 items-center">
-          {
-            theme == "night" ? 
-            <img src="/new_logo_white.png" alt="logo" className="w-14 sm:w-20" />
-              :
-            <img src="/new_logo_blue.png" alt="logo" className="w-14 sm:w-20" />
-          }
-          <h4 className="font-semibold sm:text-[16px] text-[12px]">
+          {theme == "night" ? (
+            <img
+              src="/new_logo_white.png"
+              alt="logo"
+              className="w-12 xl:w-20 sm:w-16"
+            />
+          ) : (
+            <img
+              src="/new_logo_blue.png"
+              alt="logo"
+              className="w-12 xl:w-20 sm:w-16"
+            />
+          )}
+          <h4 className="font-semibold xl:text-[16px] lg:text-[14px] sm:text-[12px] text-[10px]">
             Kasbiy ta'limni <br />
             rivojlantirish <br />
             instituti
           </h4>
         </div>
-        <div className="navbar-center hidden xl:flex">
-          <ul className="menu lg:menu-horizontal 2xl:gap-3 border border-gray-700 rounded-xl text-[16px]">
+        <div className="navbar-center hidden lg:flex">
+          <ul className="menu lg:menu-horizontal 2xl:gap-3 lg:text-[12px] border border-gray-700 rounded-xl xl:text-[16px]">
             <li>
               <Link>Bosh sahifa</Link>
             </li>
@@ -51,7 +56,7 @@ function changeTheme() {
                   role="button"
                   className=" flex gap-2 items-center"
                 >
-                  Bizning veb-saytlar <FaAngleDown />
+                  Bizning platformalar <FaAngleDown />
                 </div>
                 <ul
                   tabIndex="-1"
@@ -81,24 +86,21 @@ function changeTheme() {
           </ul>
         </div>
         <div className="navbar-end 2xl:gap-4 xl:gap-2 gap-2">
-          <label className="swap swap-rotate sm:p-2 sm:border border-gray-700 rounded-lg">
-            {/* this hidden checkbox controls the state */}
+          <label className="hidden sm:inline-grid swap swap-rotate sm:p-2 sm:border border-gray-700 rounded-lg">
             <input
               type="checkbox"
               className="theme-controller"
               onClick={changeTheme}
             />
-            {/* sun icon */}
             <svg
-              className="swap-off h-6 sm:h-8 w-6 sm:w-8 fill-current"
+              className="swap-off h-6 w-6 xl:w-8 xl:h-8 fill-current"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
             >
               <path d="M5.64,17l-.71.71a1,1,0,0,0,0,1.41,1,1,0,0,0,1.41,0l.71-.71A1,1,0,0,0,5.64,17ZM5,12a1,1,0,0,0-1-1H3a1,1,0,0,0,0,2H4A1,1,0,0,0,5,12Zm7-7a1,1,0,0,0,1-1V3a1,1,0,0,0-2,0V4A1,1,0,0,0,12,5ZM5.64,7.05a1,1,0,0,0,.7.29,1,1,0,0,0,.71-.29,1,1,0,0,0,0-1.41l-.71-.71A1,1,0,0,0,4.93,6.34Zm12,.29a1,1,0,0,0,.7-.29l.71-.71a1,1,0,1,0-1.41-1.41L17,5.64a1,1,0,0,0,0,1.41A1,1,0,0,0,17.66,7.34ZM21,11H20a1,1,0,0,0,0,2h1a1,1,0,0,0,0-2Zm-9,8a1,1,0,0,0-1,1v1a1,1,0,0,0,2,0V20A1,1,0,0,0,12,19ZM18.36,17A1,1,0,0,0,17,18.36l.71.71a1,1,0,0,0,1.41,0,1,1,0,0,0,0-1.41ZM12,6.5A5.5,5.5,0,1,0,17.5,12,5.51,5.51,0,0,0,12,6.5Zm0,9A3.5,3.5,0,1,1,15.5,12,3.5,3.5,0,0,1,12,15.5Z" />
             </svg>
-            {/* moon icon */}
             <svg
-              className="swap-on h-6 sm:h-8 w-6 sm:w-8 fill-current"
+              className="swap-on h-6 w-6 xl:w-8 xl:h-8 fill-current"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
             >
@@ -109,7 +111,7 @@ function changeTheme() {
             <div className="indicator">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="sm:h-7 sm:w-7 h-5 w-5"
+                className="xl:w-7 xl:h-7 h-5 w-5"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -129,7 +131,7 @@ function changeTheme() {
           </button>
           <select
             defaultValue="Large"
-            className="select outline-0 select-sm sm:select-lg w-16 sm:w-20 border border-gray-700"
+            className="select outline-0 select-sm lg:select-md xl:select-lg w-16 sm:w-20 border border-gray-700"
           >
             <option className="bg-base-300">O‘z</option>
             <option>Ру</option>
@@ -139,7 +141,7 @@ function changeTheme() {
             <div
               tabIndex={0}
               role="button"
-              className="btn btn-ghost btn-circle avatar"
+              className="btn btn-ghost btn-circle avatar hidden lg:flex"
             >
               <div className="w-10 sm:w-12 shrink-0 rounded-full">
                 <img
@@ -148,22 +150,59 @@ function changeTheme() {
                 />
               </div>
             </div>
+            <div className="dropdown lg:hidden flex items-center">
+              <IoMenu
+                tabIndex={0}
+                role="button"
+                className="text-4xl outline-0"
+              />
+            </div>
             <ul
               tabIndex="-1"
-              className="menu menu-sm dropdown-content bg-base-300 rounded-lg z-1 mt-3 w-52 p-2 shadow border border-gray-700"
+              className="menu menu-sm dropdown-content bg-base-300 rounded-lg z-1 mt-3 w-48 sm:w-52 p-2 shadow border border-gray-700"
             >
               <li>
-                <Link className="justify-between text-[14px]">
+                <Link className="justify-between  text-[12px] sm:text-sm">
                   Profil
                   <span className="badge">New</span>
                 </Link>
               </li>
               <li>
-                <Link className="text-[14px]">Sozlamalar</Link>
+                <Link className=" text-[12px] sm:text-sm">Sozlamalar</Link>
               </li>
               <li>
-                <Link className="text-[14px]">Chiqish</Link>
+                <Link className=" text-[12px] sm:text-sm">Chiqish</Link>
               </li>
+              <div class="relative my-2">
+                <div class="h-[1px] w-full bg-gradient-to-r from-transparent via-blue-500/40 to-transparent"></div>
+                <div class="absolute inset-0 h-[1px] blur-md bg-gradient-to-r from-transparent via-blue-700/20 to-transparent"></div>
+              </div>
+              <div className="lg:hidden">
+                <li>
+                  <Link>Bosh sahifa</Link>
+                </li>
+                <li>
+                  <Link>Kasbiy ta'lim tashkilotlari</Link>
+                </li>
+                <li>
+                  <Link>Adabiyotlar</Link>
+                </li>
+                <li>
+                  <Link>Reyting</Link>
+                </li>
+                <li>
+                  <Link>Materiallar</Link>
+                </li>
+                <li>
+                  <Link>Rasmiy veb-sayt</Link>
+                </li>
+                <li>
+                  <Link>Metodik taminlash</Link>
+                </li>
+                <li>
+                  <Link>Raqamli ta'lim resurslari</Link>
+                </li>
+              </div>
             </ul>
           </div>
         </div>
