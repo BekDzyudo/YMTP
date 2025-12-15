@@ -2,91 +2,112 @@ import React, { useEffect, useState } from "react";
 import { FaAngleDown } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { IoMenu } from "react-icons/io5";
+import { useGlobalContext } from "../hooks/useGlobalContext";
+import { useHero } from "../context/HeroContext";
 
-const themeFromLocalStorage = () => {
-  return localStorage.getItem("theme") || "night";
-};
 
 function Header() {
-  const [theme, setTheme] = useState(themeFromLocalStorage());
-  function changeTheme() {
-    const newTheme = theme == "night" ? "light" : "night";
-    setTheme(newTheme);
-  }
-  useEffect(() => {
-    localStorage.setItem("theme", theme);
-    document.documentElement.setAttribute("data-theme", theme);
-  }, [theme]);
 
+const {onHero} = useHero();
+
+const {theme, changeTheme} = useGlobalContext()
   return (
-    <div className="shadow-xl py-1 sm:py-2">
+    <div className={`shadow-xl py-1 sm:py-2 fixed top-0 left-0 w-full z-30
+  bg-transparent
+  backdrop-blur-sm
+  border-b border-white/10`}>
       <div className="navbar gap-2 px-3.5 sm:px-5 mx-auto w-full xl:w-full 2xl:w-11/12 items-center">
         <div className="navbar-start flex gap-2 sm:gap-3 items-center">
-          {theme == "night" ? (
+          {theme == "light" && onHero && (
             <img
               src="/new_logo_white.png"
               alt="logo"
               className="w-12 xl:w-20 sm:w-16"
             />
-          ) : (
+          )}
+          {theme == "night" && (
+            <img
+              src="/new_logo_white.png"
+              alt="logo"
+              className="w-12 xl:w-20 sm:w-16"
+            />
+          )}
+          {theme == "light" && !onHero && (
             <img
               src="/new_logo_blue.png"
               alt="logo"
               className="w-12 xl:w-20 sm:w-16"
             />
           )}
-          <h4 className="font-semibold xl:text-[16px] lg:text-[14px] sm:text-[12px] text-[10px]">
+           
+          <h4 className={`font-semibold xl:text-[16px] lg:text-[14px] sm:text-[12px] text-[10px] ${theme === "light" && onHero ? "text-white" : "text-base-content"}`}>
             Kasbiy ta'limni <br />
             rivojlantirish <br />
             instituti
           </h4>
         </div>
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu lg:menu-horizontal 2xl:gap-3 lg:text-[12px] border border-gray-700 rounded-xl xl:text-[16px]">
+          <ul className={`menu lg:menu-horizontal 2xl:gap-3 lg:text-[12px] border rounded-xl xl:text-[16px] ${theme === "light" && onHero ? "border-gray-400" : "border-gray-700"}`}>
             <li>
-              <Link>Bosh sahifa</Link>
+              <Link className={`${theme === "light" && onHero ? "text-white" : "text-base-content"}`}>Bosh sahifa</Link>
             </li>
             <li>
-              <Link>Kasbiy ta'lim tashkilotlari</Link>
+              <Link className={`${theme === "light" && onHero ? "text-white" : "text-base-content"}`}>Kasbiy ta'lim tashkilotlari</Link>
             </li>
-            <li>
+            <li className="relative">
               <div className="dropdown dropdown-center">
                 <div
                   tabIndex={0}
                   role="button"
-                  className=" flex gap-2 items-center"
+                  className={`${theme === "light" && onHero ? "text-white" : "text-base-content"} gap-2 items-center flex w-auto`}
                 >
                   Bizning platformalar <FaAngleDown />
                 </div>
                 <ul
                   tabIndex="-1"
-                  className="dropdown-content menu border border-gray-700 bg-base-300 w-52 rounded-md z-1 mt-5"
+                  className="dropdown-content menu-horizontal border border-gray-700 bg-base-300 w-max rounded-md z-1 mt-5"
                 >
                   <li>
-                    <Link>Rasmiy veb-sayt</Link>
+                    <Link className="flex flex-col items-center gap-1 max-w-48">
+                    <img src="/rasmiy-website.png" alt="rasmiy-vebsayt" className="w-44"/>
+                    <p className="text-sm font-semibold">Rasmiy veb-sayt</p>
+                    </Link>
                   </li>
                   <li>
-                    <Link>Metodik taminlash</Link>
+                    <Link className="flex flex-col items-center gap-1 max-w-48">
+                    <img src="/eduprof.png" alt="Metodik taminlash" className="w-44"/>
+                    <p className="text-sm font-semibold">Metodik taminlash</p>
+                    </Link>
                   </li>
                   <li>
-                    <Link>Raqamli ta'lim resurslari</Link>
+                     <Link className="flex flex-col items-center gap-1 max-w-48">
+                    <img src="/rtr.png" alt="Raqamli ta'lim resurslari" className="w-44"/>
+                    <p className="text-sm font-semibold">Raqamli ta'lim resurslari</p>
+                    </Link>
+                  </li>
+                   <li>
+                     <Link className="flex flex-col items-center gap-1 max-w-48">
+                    <img src="/mymoqt.png" alt="Raqamli ta'lim resurslari" className="w-44"/>
+                    <p className="text-sm font-semibold text-center"> Malaka oshirish jarayonini tashkil etish</p>
+                    </Link>
                   </li>
                 </ul>
               </div>
             </li>
             <li>
-              <Link>Adabiyotlar</Link>
+              <Link className={`${theme === "light" && onHero ? "text-white" : "text-base-content"}`}>Adabiyotlar</Link>
             </li>
             <li>
-              <Link>Reyting</Link>
+              <Link className={`${theme === "light" && onHero ? "text-white" : "text-base-content"}`}>Reyting</Link>
             </li>
             <li>
-              <Link>Materiallar</Link>
+              <Link className={`${theme === "light" && onHero ? "text-white" : "text-base-content"}`}>Materiallar</Link>
             </li>
           </ul>
         </div>
         <div className="navbar-end 2xl:gap-4 xl:gap-2 gap-2">
-          <label className="hidden sm:inline-grid swap swap-rotate sm:p-2 sm:border border-gray-700 rounded-lg">
+          <label 
+          className={`hidden sm:inline-grid swap swap-rotate sm:p-2 sm:border rounded-lg ${theme === "light" && onHero ? "text-white border-gray-400" : "text-base-content border-gray-700"}`}>
             <input
               type="checkbox"
               className="theme-controller"
@@ -107,7 +128,7 @@ function Header() {
               <path d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z" />
             </svg>
           </label>
-          <button className="px-2 sm:py-2.5 sm:border border-gray-700 rounded-lg flex items-center">
+          <button className={`px-2 sm:py-2.5 sm:border rounded-lg flex items-center ${theme === "light" && onHero ? "text-white border-gray-400" : "text-base-content border-gray-700"}`}>
             <div className="indicator">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -154,12 +175,12 @@ function Header() {
               <IoMenu
                 tabIndex={0}
                 role="button"
-                className="text-4xl outline-0"
+                className={`text-4xl outline-0 ${theme === "light" && onHero ? "text-white" : "text-base-content"}`}
               />
             </div>
             <ul
               tabIndex="-1"
-              className="menu menu-sm dropdown-content bg-base-300 rounded-lg z-20 mt-3 w-48 sm:w-52 p-2 shadow border border-gray-700"
+              className="menu menu-sm dropdown-content bg-base-300 rounded-lg z-40 mt-3 w-48 sm:w-52 p-2 shadow border border-gray-700"
             >
               <li>
                 <Link className="justify-between  text-[12px] sm:text-sm">
@@ -173,9 +194,9 @@ function Header() {
               <li>
                 <Link className=" text-[12px] sm:text-sm">Chiqish</Link>
               </li>
-              <div class="relative my-2">
-                <div class="h-[1px] w-full bg-gradient-to-r from-transparent via-blue-500/40 to-transparent"></div>
-                <div class="absolute inset-0 h-[1px] blur-md bg-gradient-to-r from-transparent via-blue-700/20 to-transparent"></div>
+              <div className="relative my-2">
+                <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-blue-500/40 to-transparent"></div>
+                <div className="absolute inset-0 h-[1px] blur-md bg-gradient-to-r from-transparent via-blue-700/20 to-transparent"></div>
               </div>
               <div className="lg:hidden">
                 <li>

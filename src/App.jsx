@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import MainLayout from './layouts/MainLayout'
-import Home from './pages/Home'
+import Home from './pages/home-page/Home'
 
 function App() {
 

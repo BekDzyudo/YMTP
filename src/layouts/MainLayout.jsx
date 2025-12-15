@@ -1,18 +1,20 @@
-import React from 'react'
-import { Outlet } from 'react-router-dom'
-import Header from '../components/Header'
+import React, { useState } from "react";
+import { Outlet } from "react-router-dom";
+import Header from "../components/Header";
+import { HeroContext } from "../context/HeroContext";
 
 function MainLayout() {
+  const [onHero, setOnHero] = useState(true);
   return (
-    <>
-    <header>
-        <Header/>
-    </header>
-    <main>
-        <Outlet/>
-    </main>
-    </>
-  )
+    <HeroContext.Provider value={{ onHero, setOnHero }}>
+      <header>
+        <Header />
+      </header>
+      <main>
+        <Outlet />
+      </main>
+    </HeroContext.Provider>
+  );
 }
 
-export default MainLayout
+export default MainLayout;

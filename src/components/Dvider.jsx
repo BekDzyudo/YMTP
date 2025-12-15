@@ -1,12 +1,25 @@
 import React from "react";
 
-function Dvider() {
+function Divider({ color = "#f97316" }) {
   return (
-    <div class="relative my-10">
-      <div class="h-[1px] w-full bg-gradient-to-r from-transparent via-blue-500/40 to-transparent"></div>
-      <div class="absolute inset-0 h-[1px] blur-md bg-gradient-to-r from-transparent via-blue-700/20 to-transparent"></div>
+    <div className="relative my-10">
+      <div
+        className="h-[1px] w-full"
+        style={{
+          background: `linear-gradient(to right, transparent, ${color}, transparent)`,
+          opacity: 0.4,
+        }}
+      />
+      <div
+        className="absolute inset-0 h-[1px] blur-md"
+        style={{
+          background: `linear-gradient(to right, transparent, ${color}, transparent)`,
+          opacity: 0.2,
+        }}
+      />
     </div>
   );
 }
 
-export default Dvider;
+
+export default Divider;
