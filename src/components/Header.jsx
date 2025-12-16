@@ -14,7 +14,7 @@ const {theme, changeTheme} = useGlobalContext()
   return (
     <div className={`shadow-xl py-1 sm:py-2 fixed top-0 left-0 w-full z-30
   bg-transparent
-  backdrop-blur-sm
+  backdrop-blur-2xl
   border-b border-white/10`}>
       <div className="navbar gap-2 px-3.5 sm:px-5 mx-auto w-full xl:w-full 2xl:w-11/12 items-center">
         <div className="navbar-start flex gap-2 sm:gap-3 items-center">

@@ -21,7 +21,7 @@ function HomeHero() {
 
 
   return (
-     <div
+     <section
       className={`relative w-full h-screen flex items-center px-5 ${
         theme === "light" ? "text-neutral-content" : ""
       }`}
@@ -49,7 +49,7 @@ function HomeHero() {
       w-full h-full
       object-cover sm:hidden"/>
       <div
-        className={`fixed top-0 left-0 w-full h-screen pointer-events-none z-10 ${
+        className={`absolute inset-0 w-full h-screen pointer-events-none z-10 ${
           theme === "light"
             ? "bg-gradient-to-b from-[#0E3A8A]/85 via-[#1E4FD8]/70 to-[#2563EB]/85"
             : "bg-gradient-to-b from-base-100/90 via-base-100/90 to-base-200/90"
@@ -96,7 +96,7 @@ function HomeHero() {
         )}
       </div>
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-primary/10 via-primary/5 to-transparent " />
-    </div>
+    </section>
   )
 }
 
