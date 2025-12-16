@@ -52,7 +52,7 @@ function Statistics() {
           <div className="stat-figure text-primary">
             <PiUsersThree className="w-8 h-8"/>
           </div>
-          <div className="stat-value text-3xl mb-2">5,601</div>
+          <div className="stat-value text-3xl mb-2">5,602</div>
           <div className="stat-desc text-lg">Foydalanuvchilar soni</div>
         </div>
       </div>
