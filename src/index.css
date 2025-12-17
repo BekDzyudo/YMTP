@@ -20,9 +20,11 @@
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
 }
 
-/* body{
-  font-family: "Sora", system-ui, sans-serif;
-} */
+/* silliq marquee-like harakat */
+.leaders-swiper .swiper-wrapper {
+  transition-timing-function: linear !important;
+}
+
   html,
   body,
   #root {

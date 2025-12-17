@@ -6,7 +6,7 @@ import { PiUsersThree } from "react-icons/pi";
 
 function Statistics() {
   return (
-    <section className="px-3.5 sm:px-5 mx-auto w-full 2xl:w-10/12 my-36 flex justify-center">
+    <section className="px-3.5 sm:px-5 mx-auto w-full 2xl:w-10/12 sm:mt-36 mt-18 flex justify-center">
       <div className="stats shadow-md bg-base-200 border-base-300 border">
         <div className="stat">
           <div className="stat-figure text-primary">
