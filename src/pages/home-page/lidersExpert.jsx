@@ -75,21 +75,6 @@ function LidersExpert() {
       <h2 className="text-center text-2xl sm:text-4xl font-bold mb-10">
         Bizning mutaxassislar
       </h2>
-      {/* <div className="hidden md:flex absolute -left-5 top-1/2 -translate-y-1/2 z-10">
-        <div
-          className="swiper-button-prev !static 
-      w-12 h-12 rounded-full bg-base-200 shadow 
-      flex items-center justify-center"
-        ></div>
-      </div>
-
-      <div className="hidden md:flex absolute -right-5 top-1/2 -translate-y-1/2 z-10">
-        <div
-          className="swiper-button-next !static 
-      w-12 h-12 rounded-full bg-base-200 shadow 
-      flex items-center justify-center"
-        ></div>
-      </div> */}
       <Swiper
         modules={[Navigation, Autoplay]}
         spaceBetween={32}
