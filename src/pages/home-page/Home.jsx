@@ -8,7 +8,7 @@ function Home() {
   return (
     <>
       <HomeHero/>
-      {/* <LidersExpert/> */}
+      <LidersExpert/>
       <Statistics/>
       <Teachers/>
       <Partners/>

@@ -86,7 +86,7 @@ function LidersExpert() {
           nextEl: ".swiper-button-next",
         }}
         autoplay={{
-          delay: 2500,
+          delay: 3500,
           disableOnInteraction: false,
         }}
         // navigation
@@ -103,7 +103,7 @@ function LidersExpert() {
           <SwiperSlide key={i}>
             {({ isActive }) => (
               <div
-                className={`transition-all duration-500 ${
+                className={`transition-transform transition-opacity duration-500 will-change-transform ${
                   isActive ? "scale-100 opacity-100" : "scale-90 opacity-70"
                 }`}
               >

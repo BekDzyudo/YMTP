@@ -51,7 +51,8 @@ function HomeHero() {
       <div
         className={`absolute inset-0 w-full h-screen pointer-events-none z-10 ${
           theme === "light"
-            ? "bg-gradient-to-b from-[#0E3A8A]/85 via-[#1E4FD8]/70 to-[#2563EB]/85"
+            // ? "bg-gradient-to-b from-[#0E3A8A]/85 via-[#1E4FD8]/70 to-[#2563EB]/85"
+            ? "bg-gradient-to-b from-[#002d6d]/85 via-[#002d6d]/70 to-[#002d6d]/85"
             : "bg-gradient-to-b from-base-100/90 via-base-100/90 to-base-200/90"
         }`}
       />

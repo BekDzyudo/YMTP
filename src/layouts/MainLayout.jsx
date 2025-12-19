@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
 import Header from "../components/Header";
 import { HeroContext } from "../context/HeroContext";
+import Footer from "../components/Footer";
 
 function MainLayout() {
   const [onHero, setOnHero] = useState(true);
@@ -13,6 +14,9 @@ function MainLayout() {
       <main>
         <Outlet />
       </main>
+      <footer>
+        <Footer/>
+      </footer>
     </HeroContext.Provider>
   );
 }
