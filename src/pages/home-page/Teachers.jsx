@@ -1,5 +1,7 @@
 import Divider from "../../components/Dvider";
 import { GrFormNextLink } from "react-icons/gr";
+import "swiper/css";
+import "swiper/css/pagination";
 
 function Teachers() {
   const teachers = [

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import MainLayout from './layouts/MainLayout'
 import Home from './pages/home-page/Home'
+import Region from './pages/kasbiy-talim-tashkilotlari/Region'
 
 function App() {
 
@@ -13,6 +14,10 @@ function App() {
         {
           index:true,
           element: <Home/>,
+        },
+        {
+          path:"region",
+          element: <Region/>
         }
       ]
     }
