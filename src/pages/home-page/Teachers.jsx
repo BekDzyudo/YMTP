@@ -62,12 +62,11 @@ function Teachers() {
       </h2>
       <button className="btn btn-outline btn-primary btn-sm">Barchasi <GrFormNextLink className="text-xl"/></button>
       </div>
-
-      <div className="flex gap-6">
+      <div className="grid gap-5 grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
           {teachers.map((t, i) => (
             <div
               key={i}
-              className="card w-80 bg-base-100 shadow-xl hover:shadow-2xl border border-base-300 "
+              className="card bg-base-100 shadow-xl hover:shadow-2xl border border-base-300 "
             >
               <figure className="h-48 overflow-hidden">
                 <img
