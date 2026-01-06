@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { FaAngleDown } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { IoMenu } from "react-icons/io5";
 import { useGlobalContext } from "../hooks/useGlobalContext";
 import { useHero } from "../context/HeroContext";
 
 function Header() {
   const { onHero } = useHero();
+  const {pathname} = useLocation()
 
   const { theme, changeTheme } = useGlobalContext();
   return (
@@ -17,7 +18,7 @@ function Header() {
       <div className="navbar gap-2 px-3.5 sm:px-5 mx-auto w-full xl:w-full 2xl:w-11/12 items-center">
         <div className="navbar-start">
           <Link to="/" className="flex gap-2 sm:gap-3 items-center">
-          {theme == "light" && onHero && (
+          {theme == "light" && onHero && pathname == "/" && (
             <img
               src="/new_logo_white.png"
               alt="logo"
@@ -38,10 +39,17 @@ function Header() {
               className="w-12 xl:w-20 sm:w-16"
             />
           )}
+           {theme == "light" && !(pathname == "/") && (
+            <img
+              src="/new_logo_blue.png"
+              alt="logo"
+              className="w-12 xl:w-20 sm:w-16"
+            />
+          )}
 
           <h4
             className={`font-semibold xl:text-[16px] lg:text-[14px] sm:text-[12px] text-[10px] ${
-              theme === "light" && onHero ? "text-white" : "text-base-content"
+              theme === "light" && onHero && pathname=="/" ? "text-white" : "text-base-content"
             }`}
           >
             Kasbiy ta'limni <br />
@@ -62,7 +70,7 @@ function Header() {
               <Link
               to="/"
                 className={`${
-                  theme === "light" && onHero
+                  theme === "light" && onHero && pathname=="/"
                     ? "text-white"
                     : "text-base-content"
                 }`}
@@ -74,7 +82,7 @@ function Header() {
               <Link
               to="/region"
                 className={`${
-                  theme === "light" && onHero
+                  theme === "light" && onHero && pathname=="/"
                     ? "text-white"
                     : "text-base-content"
                 }`}
@@ -88,7 +96,7 @@ function Header() {
                   tabIndex={0}
                   role="button"
                   className={`${
-                    theme === "light" && onHero
+                    theme === "light" && onHero && pathname=="/"
                       ? "text-white"
                       : "text-base-content"
                   } gap-2 items-center flex w-auto`}
@@ -151,7 +159,7 @@ function Header() {
             <li>
               <Link
                 className={`${
-                  theme === "light" && onHero
+                  theme === "light" && onHero && pathname=="/"
                     ? "text-white"
                     : "text-base-content"
                 }`}
@@ -162,7 +170,7 @@ function Header() {
             <li>
               <Link
                 className={`${
-                  theme === "light" && onHero
+                  theme === "light" && onHero && pathname=="/"
                     ? "text-white"
                     : "text-base-content"
                 }`}
@@ -173,7 +181,7 @@ function Header() {
             <li>
               <Link
                 className={`${
-                  theme === "light" && onHero
+                  theme === "light" && onHero && pathname=="/"
                     ? "text-white"
                     : "text-base-content"
                 }`}
@@ -186,7 +194,7 @@ function Header() {
         <div className="navbar-end 2xl:gap-4 xl:gap-2 gap-2">
           <label
             className={`hidden sm:inline-grid swap swap-rotate sm:p-2 sm:border rounded-lg ${
-              theme === "light" && onHero
+              theme === "light" && onHero && pathname=="/"
                 ? "text-white border-gray-400"
                 : "text-base-content border-gray-700"
             }`}
@@ -213,7 +221,7 @@ function Header() {
           </label>
           <button
             className={`px-2 sm:py-2.5 sm:border rounded-lg flex items-center ${
-              theme === "light" && onHero
+              theme === "light" && onHero && pathname=="/"
                 ? "text-white border-gray-400"
                 : "text-base-content border-gray-700"
             }`}
@@ -265,7 +273,7 @@ function Header() {
                 tabIndex={0}
                 role="button"
                 className={`text-4xl outline-0 ${
-                  theme === "light" && onHero
+                  theme === "light" && onHero && pathname=="/"
                     ? "text-white"
                     : "text-base-content"
                 }`}
