@@ -7,7 +7,7 @@ import Footer from "../components/Footer";
 function MainLayout() {
   const [onHero, setOnHero] = useState(true);
   return (
-    <HeroContext.Provider value={{ onHero, setOnHero }}>
+    <HeroContext.Provider value={{ onHero, setOnHero }} className="flex flex-col min-h-screen">
       <header>
         <Header />
       </header>
