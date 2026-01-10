@@ -6,6 +6,7 @@ import Collages from "./pages/kasbiy-talim-tashkilotlari/Collages";
 import Districts from "./pages/kasbiy-talim-tashkilotlari/Districts";
 import HududLayout from "./layouts/HududLayout";
 import CollageLayout from "./pages/kasbiy-talim-tashkilotlari/CollageLayout";
+import AllDataCollage from "./pages/kasbiy-talim-tashkilotlari/collage-detail/AllDataCollage";
 
 function App() {
   const routes = createBrowserRouter([
@@ -37,7 +38,10 @@ function App() {
               path:"districts/:districtId/collages/:collageId/collage/:Id",
               element: <CollageLayout/>,
               children: [
-
+                {
+                  index: true,
+                  element: <AllDataCollage/>
+                }
               ]
             }
           ],

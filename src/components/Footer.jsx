@@ -9,7 +9,7 @@ import { useGlobalContext } from '../hooks/useGlobalContext';
 function Footer() {
     const {theme} = useGlobalContext()
   return (
-    <div className="bg-base-300 w-full py-5 mt-20 px-5">
+    <div className="bg-base-300 w-full py-5 mt-10 md:mt-20 px-5">
       <div className="grid grid-cols-1 gap-4 md:gap-0 md:grid-cols-3 px-3.5 sm:px-5 mx-auto w-full xl:w-full 2xl:w-11/12 pb-5">
         <div className="flex justify-start md:justify-center">
         <div className="flex items-center gap-3">
