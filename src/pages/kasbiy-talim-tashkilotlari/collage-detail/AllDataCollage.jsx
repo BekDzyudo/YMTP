@@ -37,7 +37,7 @@ function AllDataCollage() {
             <div className="flex items-center gap-2 md:gap-5 pr-2 md:pr-5 border-r-2">
               <FaMapLocation className="text-3xl md:text-5xl text-primary" />
               <p className="text-sm md:text-xl font-bold md:uppercase">
-                Manzill
+                Manzil
               </p>
             </div>
             <h3 className="text-center w-full text-sm md:text-xl font-bold">

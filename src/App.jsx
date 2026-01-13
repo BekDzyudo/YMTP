@@ -7,8 +7,14 @@ import Districts from "./pages/kasbiy-talim-tashkilotlari/Districts";
 import HududLayout from "./layouts/HududLayout";
 import CollageLayout from "./pages/kasbiy-talim-tashkilotlari/CollageLayout";
 import AllDataCollage from "./pages/kasbiy-talim-tashkilotlari/collage-detail/AllDataCollage";
+import Professions from "./pages/kasbiy-talim-tashkilotlari/collage-detail/Professions";
+import TeachersCollage from "./pages/kasbiy-talim-tashkilotlari/collage-detail/TeachersCollage";
+import Strategy from "./pages/kasbiy-talim-tashkilotlari/collage-detail/Strategy";
+import ShortTermCourse from "./pages/kasbiy-talim-tashkilotlari/collage-detail/ShortTermCourse";
+import DualEducation from "./pages/kasbiy-talim-tashkilotlari/collage-detail/DualEducation";
 
 function App() {
+
   const routes = createBrowserRouter([
     {
       path: "/",
@@ -41,6 +47,26 @@ function App() {
                 {
                   index: true,
                   element: <AllDataCollage/>
+                },
+                {
+                  path:"professions",
+                  element: <Professions/>
+                },
+                {
+                  path:"teachers",
+                  element: <TeachersCollage/>
+                },
+                {
+                  path:"strategy",
+                  element: <Strategy/>
+                },
+                {
+                  path:"short-term-courses",
+                  element: <ShortTermCourse/>
+                },
+                {
+                  path:"dual-education",
+                  element: <DualEducation/>
                 }
               ]
             }

@@ -3,7 +3,7 @@ import { Link, Outlet, useNavigate, useParams } from "react-router-dom";
 import useGetFetch from "../../hooks/useGetFetch";
 import { RiProfileLine } from "react-icons/ri";
 import { LuUsers } from "react-icons/lu";
-import { MdOutlinePlayLesson } from "react-icons/md";
+import { MdOutlinePlayLesson, MdReportGmailerrorred } from "react-icons/md";
 import { BsCommand } from "react-icons/bs";
 import { IoArrowBack } from "react-icons/io5";
 
@@ -18,12 +18,12 @@ function CollageLayout() {
   } = useGetFetch(`${import.meta.env.VITE_BASE_URL}/college-detail/${Id}`);
 
   return (
-    <section className="flex flex-col mt-24 sm:mt-35 px-3.5 sm:px-5 mx-auto w-full xl:w-full 2xl:w-9/12">
+    <section className="flex flex-col mt-24 sm:mt-35 px-3.5 sm:px-5 mx-auto w-full xl:w-full 2xl:w-8/12">
       {isPending && (
         <span className="loading loading-ring loading-xl sm:w-24 w-10 sm:h-24 h-10 absolute sm:left-1/2 left-1/2 sm:top-1/3 top-1/4"></span>
       )}
       {error && <div>{error}</div>}
-      {collage && (
+      {collage ? (
         <div className="flex flex-col gap-5">
           <Link
             onClick={() => navigate(-1)}
@@ -67,7 +67,7 @@ function CollageLayout() {
               </div>
             </div>
 
-            <div className="drawer-side is-drawer-close:overflow-visible">
+            <div className="drawer-side is-drawer-close:overflow-visible mt-20 sm:mt-25 lg:m-0">
               <label
                 htmlFor="my-drawer-4"
                 aria-label="close sidebar"
@@ -106,7 +106,7 @@ function CollageLayout() {
                   {/* List item */}
                   <li>
                     <Link
-                      to="tayyorlanadigan-kasblar"
+                      to="professions"
                       className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
                       data-tip="Tayyorlanadigan kasb va mutaxassisliklar"
                     >
@@ -119,7 +119,7 @@ function CollageLayout() {
                   </li>
                   <li>
                     <Link
-                      to="pedogoglar-tarkibi"
+                      to="teachers"
                       className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
                       data-tip="Pedagoglar tarkibi"
                     >
@@ -132,7 +132,7 @@ function CollageLayout() {
                   </li>
                   <li>
                     <Link
-                      to="rivojlanish-strategiyasi"
+                      to="strategy"
                       className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
                       data-tip="Rivojlanish strategiyasi"
                     >
@@ -159,7 +159,7 @@ function CollageLayout() {
                   </li>
                   <li>
                     <Link
-                      to="qisqa-muddatli-kurslar"
+                      to="short-term-courses"
                       className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
                       data-tip="Qisqa muddatli kurslar"
                     >
@@ -172,7 +172,7 @@ function CollageLayout() {
                   </li>
                   <li>
                     <Link
-                      to="worldSkills"
+                      to="dual-education"
                       className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
                       data-tip="Dual ta'lim"
                     >
@@ -186,6 +186,13 @@ function CollageLayout() {
                 </ul>
               </div>
             </div>
+          </div>
+        </div>
+      ) : (
+        <div className="text-primary text-sm sm:text-2xl font-bold text-center w-full opacity-90 absolute top-40 left-0 sm:top-52 flex justify-center">
+          <div className="flex items-center gap-3">
+            <MdReportGmailerrorred className="text-2xl sm:text-5xl" />{" "}
+            <p>Malumotlar kiritilmagan</p>
           </div>
         </div>
       )}

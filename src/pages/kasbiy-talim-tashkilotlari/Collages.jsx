@@ -41,11 +41,11 @@ function Collages() {
                   to={`collage/${collage.id}`}
                   className="group card rounded-md bg-base-300 p-0 xl:p-4 hover:shadow-xl border border-gray-700"
                 >
-                  <div className="md:mb-3 mb-2 h-36">
+                  <div className="md:mb-3 mb-2 h-44 border">
                     <img
                       src={collage.image}
                       alt=""
-                      className="rounded-t-md w-full h-full object-cover group-hover:scale-105 transition-all duration-300"
+                      className="rounded-t-md w-full h-full border object-cover group-hover:scale-105 transition-all duration-300"
                     />
                   </div>
                   <div className="p-2 xl:p-0 flex flex-col justify-between h-full">
