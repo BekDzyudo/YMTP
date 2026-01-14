@@ -31,7 +31,7 @@ function Professions() {
             {professions?.map((item, index) => {
               return (
                 <Link
-                  to={`professions/${item.kasb?.id}`}
+                  to={`${item.kasb?.id}`}
                   key={index}
                   className={`border ${
                     theme == "night"

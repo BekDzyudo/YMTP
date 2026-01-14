@@ -12,6 +12,10 @@ import TeachersCollage from "./pages/kasbiy-talim-tashkilotlari/collage-detail/T
 import Strategy from "./pages/kasbiy-talim-tashkilotlari/collage-detail/Strategy";
 import ShortTermCourse from "./pages/kasbiy-talim-tashkilotlari/collage-detail/ShortTermCourse";
 import DualEducation from "./pages/kasbiy-talim-tashkilotlari/collage-detail/DualEducation";
+import ProfessionsDetail from "./pages/kasbiy-talim-tashkilotlari/collage-detail/ProfessionsDetail";
+import ShortTermCourseDetail from "./pages/kasbiy-talim-tashkilotlari/collage-detail/ShortTermCourseDetail";
+import DualEducationDetail from "./pages/kasbiy-talim-tashkilotlari/collage-detail/DualEducationDetail";
+import Rating from "./pages/rating/Rating";
 
 function App() {
 
@@ -53,6 +57,10 @@ function App() {
                   element: <Professions/>
                 },
                 {
+                  path:"professions/:kasbId",
+                  element: <ProfessionsDetail/>
+                },
+                {
                   path:"teachers",
                   element: <TeachersCollage/>
                 },
@@ -65,13 +73,25 @@ function App() {
                   element: <ShortTermCourse/>
                 },
                 {
+                  path:"short-term-courses/:shortTermCourseId",
+                  element: <ShortTermCourseDetail/>
+                },
+                {
                   path:"dual-education",
                   element: <DualEducation/>
+                },
+                {
+                  path:"dual-education/:DualsId",
+                  element: <DualEducationDetail/>
                 }
               ]
             }
           ],
         },
+        {
+          path:"rating",
+          element:<Rating/>
+        }
       ],
     },
   ]);

@@ -13,8 +13,6 @@ function ShortTermCourse() {
     isPending,
     error,
   } = useGetFetch(`${import.meta.env.VITE_BASE_URL}/qisqa-muddatli-kurslar`);
-
-  console.log(ShortTermCourse);
   
 
   return (
@@ -34,7 +32,7 @@ function ShortTermCourse() {
             {ShortTermCourses?.map((course, index) => {
               return (
                 <Link
-                  to={`short-term-courses/${course.id}`}
+                  to={`${course.id}`}
                   key={course.id}
                   className={`border ${
                     theme == "night"

@@ -30,7 +30,7 @@ function DualEducation() {
             {Duals?.map((dual) => {
               return (
                 <Link
-                  to={`short-term-courses/${dual.id}`}
+                  to={`${dual.id}`}
                   key={dual.id}
                   className={`border ${
                     theme == "night"

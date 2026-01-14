@@ -109,7 +109,10 @@ function Header() {
     group-focus-within:pointer-events-auto"
                 >
                   <li>
-                    <Link className="flex flex-col items-center gap-1 max-w-48">
+                    <Link 
+                    to="https://ipitvet.uz/uz/" 
+                    target="blank"
+                    className="flex flex-col items-center gap-1 max-w-48">
                       <img
                         src="/rasmiy-website.png"
                         alt="rasmiy-vebsayt"
@@ -119,7 +122,10 @@ function Header() {
                     </Link>
                   </li>
                   <li>
-                    <Link className="flex flex-col items-center gap-1 max-w-48">
+                    <Link
+                    to="https://edu.profedu.uz/" 
+                    target="blank"
+                    className="flex flex-col items-center gap-1 max-w-48">
                       <img
                         src="/eduprof.png"
                         alt="Metodik taminlash"
@@ -129,7 +135,10 @@ function Header() {
                     </Link>
                   </li>
                   <li>
-                    <Link className="flex flex-col items-center gap-1 max-w-48">
+                    <Link 
+                    to="https://rtr.profedu.uz/" 
+                    target="blank"
+                    className="flex flex-col items-center gap-1 max-w-48">
                       <img
                         src="/rtr.png"
                         alt="Raqamli ta'lim resurslari"
@@ -141,7 +150,10 @@ function Header() {
                     </Link>
                   </li>
                   <li>
-                    <Link className="flex flex-col items-center gap-1 max-w-48">
+                    <Link
+                    to="https://my.moqt.uz/"
+                    target="blank"
+                    className="flex flex-col items-center gap-1 max-w-48">
                       <img
                         src="/mymoqt.png"
                         alt="Raqamli ta'lim resurslari"
@@ -169,6 +181,7 @@ function Header() {
             </li>
             <li>
               <Link
+              to="rating"
                 className={`${
                   theme === "light" && onHero && pathname=="/"
                     ? "text-white"
