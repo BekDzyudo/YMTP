@@ -5,7 +5,7 @@ import { MdReportGmailerrorred } from "react-icons/md";
 import { IoArrowBack } from "react-icons/io5";
 
 function Collages() {
-  const { collageId } = useParams();
+  const { collageId, districtId } = useParams();
   const navigate = useNavigate();
 
   const {
@@ -24,13 +24,18 @@ function Collages() {
       {error && <div>{error}</div>}
       {collages ? (
         <>
+          <div className="breadcrumbs text-sm md:text-[16px] hidden md:block">
+            <ul>
+              <li>
+                <Link to="/region">Viloyatlar</Link>
+              </li>
+              <li>
+                <Link to={`/region/districts/${districtId}`}>Tumanlar</Link>
+              </li>
+              <li>Texnikumlar</li>
+            </ul>
+          </div>
           <h2 className="text-center text-2xl sm:text-4xl font-bold mb-10">
-            <Link
-              onClick={() => navigate(-1)}
-              className="items-center text-md absolute left-0 text-lg gap-2 text-primary px-5 lg:flex hidden"
-            >
-              <IoArrowBack className="text-lg" /> orqaga
-            </Link>{" "}
             Ta‘lim tashkilotlari
           </h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5 h-min">
@@ -54,7 +59,9 @@ function Collages() {
                     </h4>
                     <p className="stat-desc text-center xl:text-start">
                       Ko'rilganlar{" "}
-                      <span className="text-amber-600 font-bold text-md">56</span>
+                      <span className="text-amber-600 font-bold text-md">
+                        56
+                      </span>
                     </p>
                   </div>
                 </Link>

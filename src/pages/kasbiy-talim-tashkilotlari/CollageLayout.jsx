@@ -25,12 +25,20 @@ function CollageLayout() {
       {error && <div>{error}</div>}
       {collage ? (
         <div className="flex flex-col gap-5">
-          <Link
-            onClick={() => navigate(-1)}
-            className="items-center text-md font-semibold text-lg gap-2 text-primary lg:flex hidden"
-          >
-            <IoArrowBack className="text-lg" /> orqaga
-          </Link>{" "}
+          <div className="breadcrumbs text-sm md:text-[16px] hidden md:block">
+            <ul>
+              <li>
+                <Link to="/region">Viloyatlar</Link>
+              </li>
+              <li>
+                <Link to={`/region/districts/${districtId}`}>Tumanlar</Link>
+              </li>
+              <li>
+                <Link to={`/region/districts/${districtId}/collages/${collageId}`}>Texnikumlar</Link>
+              </li>
+              <li>{collage.name}</li>
+            </ul>
+          </div>
           <div className="drawer lg:drawer-open">
             <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
             <div className="drawer-content">

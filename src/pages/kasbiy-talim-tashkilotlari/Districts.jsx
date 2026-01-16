@@ -20,13 +20,15 @@ function Districts() {
       {error && <div>{error}</div>}
       {data && (
         <>
+          <div className="breadcrumbs text-sm md:text-[16px] hidden md:block">
+            <ul>
+              <li>
+                <Link to="/region">Viloyatlar</Link>
+              </li>
+              <li>Tumanlar</li>
+            </ul>
+          </div>
           <h2 className="text-center text-2xl sm:text-4xl font-bold mb-10">
-            <Link
-              onClick={() => navigate(-1)}
-              className="flex items-center text-md absolute left-0 text-lg gap-2 text-primary px-5 lg:flex hidden"
-            >
-              <IoArrowBack className="text-lg" /> orqaga
-            </Link>{" "}
             {data.name}
           </h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5 h-min">

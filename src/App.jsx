@@ -16,6 +16,7 @@ import ProfessionsDetail from "./pages/kasbiy-talim-tashkilotlari/collage-detail
 import ShortTermCourseDetail from "./pages/kasbiy-talim-tashkilotlari/collage-detail/ShortTermCourseDetail";
 import DualEducationDetail from "./pages/kasbiy-talim-tashkilotlari/collage-detail/DualEducationDetail";
 import Rating from "./pages/rating/Rating";
+import TeacherProfil from "./pages/profil/teacher/TeacherProfil";
 
 function App() {
 
@@ -91,6 +92,10 @@ function App() {
         {
           path:"rating",
           element:<Rating/>
+        },
+        {
+          path:"/profile",
+          element: <TeacherProfil/>
         }
       ],
     },

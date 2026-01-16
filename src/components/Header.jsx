@@ -297,7 +297,7 @@ function Header() {
               className="menu menu-sm dropdown-content bg-base-300 rounded-lg z-40 mt-3 w-48 sm:w-52 p-2 shadow border border-gray-700"
             >
               <li>
-                <Link className="justify-between  text-[12px] sm:text-sm">
+                <Link className="justify-between  text-[12px] sm:text-sm" to="/profile">
                   Profil
                   <span className="badge">New</span>
                 </Link>
