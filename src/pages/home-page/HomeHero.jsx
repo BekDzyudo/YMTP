@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Divider from "../../components/Dvider";
 import { FaGooglePlay } from "react-icons/fa";
 import { useGlobalContext } from "../../hooks/useGlobalContext";
 import { useHero } from "../../context/HeroContext";
+import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
 
 function HomeHero() {
 
  const { theme } = useGlobalContext();
+ const {auth} = useContext(AuthContext)
   const { setOnHero } = useHero();
 
   useEffect(() => {
@@ -77,8 +80,13 @@ function HomeHero() {
               <FaGooglePlay /> Videoni ko‘rish
             </button>
           )}
-
-          <button className="btn btn-info btn-sm lg:btn-md">Batafsil</button>
+          {
+            auth.refreshToken ?
+            <></>
+          // <Link to="/" className="btn btn-info btn-sm lg:btn-md" onClick={logout}>Chiqish</Link>
+            :
+          <Link to="login" className="btn btn-info btn-sm lg:btn-md">Kirish</Link>
+          }
         </div>
       </div>
       <div className="hidden xl:block absolute right-5 h-full py-5 pt-32 z-20">

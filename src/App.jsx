@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout";
 import Home from "./pages/home-page/Home";
 import Region from "./pages/kasbiy-talim-tashkilotlari/Region";
@@ -17,8 +17,16 @@ import ShortTermCourseDetail from "./pages/kasbiy-talim-tashkilotlari/collage-de
 import DualEducationDetail from "./pages/kasbiy-talim-tashkilotlari/collage-detail/DualEducationDetail";
 import Rating from "./pages/rating/Rating";
 import TeacherProfil from "./pages/profil/teacher/TeacherProfil";
+import Login from "./pages/auth/login/Login";
+import Register from "./pages/auth/register/Register";
+import ConfirmEmail from "./pages/auth/reset-parol/ConfirmEmail";
+import NewPassword from "./pages/auth/reset-parol/NewPassword";
+import { useContext } from "react";
+import { AuthContext } from "./context/AuthContext";
 
 function App() {
+
+  const {auth} = useContext(AuthContext)
 
   const routes = createBrowserRouter([
     {
@@ -31,7 +39,7 @@ function App() {
         },
         {
           path: "region",
-          element: <HududLayout/>,
+          element: <HududLayout />,
           children: [
             {
               index: true,
@@ -39,66 +47,82 @@ function App() {
             },
             {
               path: "districts/:districtId",
-              element: <Districts/>,
+              element: <Districts />,
             },
             {
               path: "districts/:districtId/collages/:collageId",
               element: <Collages />,
             },
             {
-              path:"districts/:districtId/collages/:collageId/collage/:Id",
-              element: <CollageLayout/>,
+              path: "districts/:districtId/collages/:collageId/collage/:Id",
+              element: <CollageLayout />,
               children: [
                 {
                   index: true,
-                  element: <AllDataCollage/>
+                  element: <AllDataCollage />,
                 },
                 {
-                  path:"professions",
-                  element: <Professions/>
+                  path: "professions",
+                  element: <Professions />,
                 },
                 {
-                  path:"professions/:kasbId",
-                  element: <ProfessionsDetail/>
+                  path: "professions/:kasbId",
+                  element: <ProfessionsDetail />,
                 },
                 {
-                  path:"teachers",
-                  element: <TeachersCollage/>
+                  path: "teachers",
+                  element: <TeachersCollage />,
                 },
                 {
-                  path:"strategy",
-                  element: <Strategy/>
+                  path: "strategy",
+                  element: <Strategy />,
                 },
                 {
-                  path:"short-term-courses",
-                  element: <ShortTermCourse/>
+                  path: "short-term-courses",
+                  element: <ShortTermCourse />,
                 },
                 {
-                  path:"short-term-courses/:shortTermCourseId",
-                  element: <ShortTermCourseDetail/>
+                  path: "short-term-courses/:shortTermCourseId",
+                  element: <ShortTermCourseDetail />,
                 },
                 {
-                  path:"dual-education",
-                  element: <DualEducation/>
+                  path: "dual-education",
+                  element: <DualEducation />,
                 },
                 {
-                  path:"dual-education/:DualsId",
-                  element: <DualEducationDetail/>
-                }
-              ]
-            }
+                  path: "dual-education/:DualsId",
+                  element: <DualEducationDetail />,
+                },
+              ],
+            },
           ],
         },
         {
-          path:"rating",
-          element:<Rating/>
+          path: "rating",
+          element: <Rating />,
         },
         {
-          path:"/profile",
-          element: <TeacherProfil/>
-        }
+          path: "/profile",
+          element: <TeacherProfil />,
+        },
       ],
     },
+    {
+      path: "login",
+      element: auth.refreshToken ? <Navigate to="/"/> :  <Login />,
+    },
+    {
+      path: "register",
+      element: auth.refreshToken ? <Navigate to="/"/> :  <Register/>
+    },
+    {
+      path:"confirm-email",
+      element: auth.refreshToken ? <Navigate to="/"/> :  <ConfirmEmail/>
+    },
+    {
+      path:"create-new-parol",
+      element: auth.refreshToken ? <Navigate to="/"/> :  <NewPassword/>
+    }
   ]);
   return <RouterProvider router={routes} />;
 }

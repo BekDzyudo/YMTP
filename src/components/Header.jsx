@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FaAngleDown } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
 import { IoMenu } from "react-icons/io5";
 import { useGlobalContext } from "../hooks/useGlobalContext";
 import { useHero } from "../context/HeroContext";
+import { FiLogIn } from "react-icons/fi";
+import { AuthContext } from "../context/AuthContext";
 
 function Header() {
   const { onHero } = useHero();
-  const {pathname} = useLocation()
+  const { pathname } = useLocation();
+  const {auth, logout} = useContext(AuthContext)
 
   const { theme, changeTheme } = useGlobalContext();
   return (
@@ -18,44 +21,46 @@ function Header() {
       <div className="navbar gap-2 px-3.5 sm:px-5 mx-auto w-full xl:w-full 2xl:w-11/12 items-center">
         <div className="navbar-start">
           <Link to="/" className="flex gap-2 sm:gap-3 items-center">
-          {theme == "light" && onHero && pathname == "/" && (
-            <img
-              src="/new_logo_white.png"
-              alt="logo"
-              className="w-12 xl:w-20 sm:w-16"
-            />
-          )}
-          {theme == "night" && (
-            <img
-              src="/new_logo_white.png"
-              alt="logo"
-              className="w-12 xl:w-20 sm:w-16"
-            />
-          )}
-          {theme == "light" && !onHero && (
-            <img
-              src="/new_logo_blue.png"
-              alt="logo"
-              className="w-12 xl:w-20 sm:w-16"
-            />
-          )}
-           {theme == "light" && !(pathname == "/") && (
-            <img
-              src="/new_logo_blue.png"
-              alt="logo"
-              className="w-12 xl:w-20 sm:w-16"
-            />
-          )}
+            {theme == "light" && onHero && pathname == "/" && (
+              <img
+                src="/new_logo_white.png"
+                alt="logo"
+                className="w-12 xl:w-20 sm:w-16"
+              />
+            )}
+            {theme == "night" && (
+              <img
+                src="/new_logo_white.png"
+                alt="logo"
+                className="w-12 xl:w-20 sm:w-16"
+              />
+            )}
+            {theme == "light" && !onHero && (
+              <img
+                src="/new_logo_blue.png"
+                alt="logo"
+                className="w-12 xl:w-20 sm:w-16"
+              />
+            )}
+            {theme == "light" && !(pathname == "/") && (
+              <img
+                src="/new_logo_blue.png"
+                alt="logo"
+                className="w-12 xl:w-20 sm:w-16"
+              />
+            )}
 
-          <h4
-            className={`font-semibold xl:text-[16px] lg:text-[14px] sm:text-[12px] text-[10px] ${
-              theme === "light" && onHero && pathname=="/" ? "text-white" : "text-base-content"
-            }`}
-          >
-            Kasbiy ta'limni <br />
-            rivojlantirish <br />
-            instituti
-          </h4>
+            <h4
+              className={`font-semibold xl:text-[16px] lg:text-[14px] sm:text-[12px] text-[10px] ${
+                theme === "light" && onHero && pathname == "/"
+                  ? "text-white"
+                  : "text-base-content"
+              }`}
+            >
+              Kasbiy ta'limni <br />
+              rivojlantirish <br />
+              instituti
+            </h4>
           </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
@@ -68,9 +73,9 @@ function Header() {
           >
             <li>
               <Link
-              to="/"
+                to="/"
                 className={`${
-                  theme === "light" && onHero && pathname=="/"
+                  theme === "light" && onHero && pathname == "/"
                     ? "text-white"
                     : "text-base-content"
                 }`}
@@ -80,9 +85,9 @@ function Header() {
             </li>
             <li>
               <Link
-              to="/region"
+                to="/region"
                 className={`${
-                  theme === "light" && onHero && pathname=="/"
+                  theme === "light" && onHero && pathname == "/"
                     ? "text-white"
                     : "text-base-content"
                 }`}
@@ -96,7 +101,7 @@ function Header() {
                   tabIndex={0}
                   role="button"
                   className={`${
-                    theme === "light" && onHero && pathname=="/"
+                    theme === "light" && onHero && pathname == "/"
                       ? "text-white"
                       : "text-base-content"
                   } gap-2 items-center flex w-auto`}
@@ -109,10 +114,11 @@ function Header() {
     group-focus-within:pointer-events-auto"
                 >
                   <li>
-                    <Link 
-                    to="https://ipitvet.uz/uz/" 
-                    target="blank"
-                    className="flex flex-col items-center gap-1 max-w-48">
+                    <Link
+                      to="https://ipitvet.uz/uz/"
+                      target="blank"
+                      className="flex flex-col items-center gap-1 max-w-48"
+                    >
                       <img
                         src="/rasmiy-website.png"
                         alt="rasmiy-vebsayt"
@@ -123,9 +129,10 @@ function Header() {
                   </li>
                   <li>
                     <Link
-                    to="https://edu.profedu.uz/" 
-                    target="blank"
-                    className="flex flex-col items-center gap-1 max-w-48">
+                      to="https://edu.profedu.uz/"
+                      target="blank"
+                      className="flex flex-col items-center gap-1 max-w-48"
+                    >
                       <img
                         src="/eduprof.png"
                         alt="Metodik taminlash"
@@ -135,10 +142,11 @@ function Header() {
                     </Link>
                   </li>
                   <li>
-                    <Link 
-                    to="https://rtr.profedu.uz/" 
-                    target="blank"
-                    className="flex flex-col items-center gap-1 max-w-48">
+                    <Link
+                      to="https://rtr.profedu.uz/"
+                      target="blank"
+                      className="flex flex-col items-center gap-1 max-w-48"
+                    >
                       <img
                         src="/rtr.png"
                         alt="Raqamli ta'lim resurslari"
@@ -151,9 +159,10 @@ function Header() {
                   </li>
                   <li>
                     <Link
-                    to="https://my.moqt.uz/"
-                    target="blank"
-                    className="flex flex-col items-center gap-1 max-w-48">
+                      to="https://my.moqt.uz/"
+                      target="blank"
+                      className="flex flex-col items-center gap-1 max-w-48"
+                    >
                       <img
                         src="/mymoqt.png"
                         alt="Raqamli ta'lim resurslari"
@@ -168,7 +177,7 @@ function Header() {
                 </ul>
               </div>
             </li>
-            <li>
+            {/* <li>
               <Link
                 className={`${
                   theme === "light" && onHero && pathname=="/"
@@ -178,12 +187,12 @@ function Header() {
               >
                 Adabiyotlar
               </Link>
-            </li>
+            </li> */}
             <li>
               <Link
-              to="rating"
+                to="rating"
                 className={`${
-                  theme === "light" && onHero && pathname=="/"
+                  theme === "light" && onHero && pathname == "/"
                     ? "text-white"
                     : "text-base-content"
                 }`}
@@ -194,7 +203,7 @@ function Header() {
             <li>
               <Link
                 className={`${
-                  theme === "light" && onHero && pathname=="/"
+                  theme === "light" && onHero && pathname == "/"
                     ? "text-white"
                     : "text-base-content"
                 }`}
@@ -205,9 +214,17 @@ function Header() {
           </ul>
         </div>
         <div className="navbar-end 2xl:gap-4 xl:gap-2 gap-2">
+            {/* <button  className={`px-2 sm:py-2.5 sm:border rounded-lg flex items-center ${
+              theme === "light" && onHero && pathname == "/"
+                ? "text-white border-gray-400"
+                : "text-base-content border-gray-700"
+            }`}>
+              {" "}
+              Kirish <FiLogIn />
+            </button> */}
           <label
             className={`hidden sm:inline-grid swap swap-rotate sm:p-2 sm:border rounded-lg ${
-              theme === "light" && onHero && pathname=="/"
+              theme === "light" && onHero && pathname == "/"
                 ? "text-white border-gray-400"
                 : "text-base-content border-gray-700"
             }`}
@@ -234,7 +251,7 @@ function Header() {
           </label>
           <button
             className={`px-2 sm:py-2.5 sm:border rounded-lg flex items-center ${
-              theme === "light" && onHero && pathname=="/"
+              theme === "light" && onHero && pathname == "/"
                 ? "text-white border-gray-400"
                 : "text-base-content border-gray-700"
             }`}
@@ -286,7 +303,7 @@ function Header() {
                 tabIndex={0}
                 role="button"
                 className={`text-4xl outline-0 ${
-                  theme === "light" && onHero && pathname=="/"
+                  theme === "light" && onHero && pathname == "/"
                     ? "text-white"
                     : "text-base-content"
                 }`}
@@ -297,7 +314,10 @@ function Header() {
               className="menu menu-sm dropdown-content bg-base-300 rounded-lg z-40 mt-3 w-48 sm:w-52 p-2 shadow border border-gray-700"
             >
               <li>
-                <Link className="justify-between  text-[12px] sm:text-sm" to="/profile">
+                <Link
+                  className="justify-between  text-[12px] sm:text-sm"
+                  to="/profile"
+                >
                   Profil
                   <span className="badge">New</span>
                 </Link>
@@ -305,9 +325,14 @@ function Header() {
               <li>
                 <Link className=" text-[12px] sm:text-sm">Sozlamalar</Link>
               </li>
-              <li>
-                <Link className=" text-[12px] sm:text-sm">Chiqish</Link>
-              </li>
+              {
+                auth.refreshToken ? 
+                <li>
+                <Link to="/" onClick={logout} className=" text-[12px] sm:text-sm">Chiqish</Link>
+              </li> :
+              <></>
+              }
+              
               <div className="relative my-2">
                 <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-blue-500/40 to-transparent"></div>
                 <div className="absolute inset-0 h-[1px] blur-md bg-gradient-to-r from-transparent via-blue-700/20 to-transparent"></div>
