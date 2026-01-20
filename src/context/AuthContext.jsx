@@ -70,7 +70,7 @@ export const AuthProvider = ({children}) =>{
       }
       return res.json()
     })
-    .then((data)=>{
+    .then((data)=>{      
       setUserData({userId: data.id, user_roles: data.user_roles})
       localStorage.setItem("userData", JSON.stringify({userId: data.id, user_roles: data.user_roles}))
     })

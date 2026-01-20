@@ -1,15 +1,46 @@
-import React from "react";
+import React, { useState } from "react";
 import useGetFetch from "../../hooks/useGetFetch";
 import Divider from "../../components/Dvider";
 import { FaSearch } from "react-icons/fa";
 import { GrClearOption } from "react-icons/gr";
 
 function Rating() {
+
+  // get filter data
+  const [bilim, setBilim] = useState("");
+  const [talim, setTalim] = useState("");
+  const [yunalish, setYunalish] = useState("");
+  const [kasb, setKasb] = useState("");
+  const [fan, setFan] = useState("");
+
+  const { data: bilim_soha } = useGetFetch(
+    `${import.meta.env.VITE_BASE_URL}/edu-prof/bilim-soha/`
+  );
+  const { data: talim_soha } = useGetFetch(
+    `${import.meta.env.VITE_BASE_URL}/edu-prof/talim-soha/?bilim_soha=${bilim}`
+  );
+  const { data: talim_yunalish } = useGetFetch(
+    `${
+      import.meta.env.VITE_BASE_URL
+    }/edu-prof/talim-yunalish/?talim_soha=${talim}`
+  );
+  const { data: kasb_mutaxassislik } = useGetFetch(
+    `${
+      import.meta.env.VITE_BASE_URL
+    }/edu-prof/kasb-va-mutaxassislik/?talim_yunalish=${yunalish}`
+  );
+  const { data: fanlar } = useGetFetch(
+    `${
+      import.meta.env.VITE_BASE_URL
+    }/edu-prof/fan/?kasb_va_mutaxassislik=${kasb}`
+  );
+
+  // get teachers
   const {
     data: reyting,
     isPending,
     error,
-  } = useGetFetch(`${import.meta.env.VITE_BASE_URL}/reyting_app/reyting/`);
+  } = useGetFetch(`${import.meta.env.VITE_BASE_URL}/reyting_app/reyting/?bilim_soha=${bilim}&talim_soha=${talim}&talim_yunalish=${yunalish}&kasb_va_mutaxasislik=${kasb}&fan=${fan}`);
 
   return (
     <section className="relative mt-24 md:mt-35 px-3.5 sm:px-5 mx-auto w-full xl:w-full 2xl:w-11/12">
@@ -46,130 +77,232 @@ function Rating() {
                 ></label>
                 <ul className="menu bg-base-200 min-h-full w-80 p-4 gap-2 text-sm">
                   <li>
-                    <select defaultValue="" className="select outline-0">
-                      <option value="" disabled={true}>
-                        O‘quv yili
-                      </option>
-                      <option value="">2023</option>
-                      <option value="">2024</option>
-                      <option value="">2025</option>
-                    </select>
+                    <select 
+            defaultValue="" 
+            className="select outline-0"
+            onChange={(e) => setBilim(e.target.value)}
+            >
+              <option value="" disabled={true}>
+                Bilim sohasi
+              </option>
+              {bilim_soha &&
+                    bilim_soha.map((item) => {
+                      return (
+                        <option
+                          key={item.id}
+                          value={item.id}
+                        >
+                          {item.name}
+                        </option>
+                      );
+                    })}
+            </select>
                   </li>
                   <li>
-                    <select defaultValue="" className="select outline-0">
-                      <option disabled={true} value="">
-                        Ta'lim darajasi
-                      </option>
-                      <option value="">3 darajasi</option>
-                      <option value="">4 darajasi</option>
-                      <option value="">5 darajasi</option>
-                    </select>
+                    <select 
+            defaultValue="" 
+            className="select outline-0"
+            onChange={(e) => setTalim(e.target.value)}
+            >
+              <option value="" disabled={true}>
+                Ta'lim sohasi
+              </option>
+               {talim_soha &&
+                    talim_soha.map((item) => {
+                      return (
+                        <option
+                          key={item.id}
+                          value={item.id}
+                        >
+                          {item.name}
+                        </option>
+                      );
+                    })}
+            </select>
                   </li>
                   <li>
-                    <select defaultValue="" className="select outline-0">
-                      <option value="" disabled={true}>
-                        Bilim sohasi
-                      </option>
-                      <option value="">ta'lim sohasi</option>
-                      <option value="">xavfsizlik sohasi</option>
-                    </select>
+                    <select 
+            defaultValue="" 
+            className="select outline-0"
+            onChange={(e) => setYunalish(e.target.value)}>
+              <option value="" disabled={true}>
+                Ta'lim yo'nalish
+              </option>
+                  {talim_yunalish &&
+                    talim_yunalish.map((item) => {
+                      return (
+                        <option
+                          key={item.id}
+                          value={item.id}
+                        >
+                          {item.name}
+                        </option>
+                      );
+                    })}
+            </select>
                   </li>
                   <li>
-                    <select defaultValue="" className="select outline-0">
-                      <option value="" disabled={true}>
-                        Ta'lim sohasi
-                      </option>
-                      <option value="">qishloq xo'jaligi</option>
-                    </select>
+                    <select 
+            defaultValue="" 
+            className="select outline-0"
+            onChange={(e) => setKasb(e.target.value)}>
+              <option value="" disabled={true}>
+                Kasb va mutaxasisliklar
+              </option>
+              {kasb_mutaxassislik &&
+                    kasb_mutaxassislik.map((item) => {
+                      return (
+                        <option
+                          key={item.id}
+                          value={item.id}
+                        >
+                          {item.name}
+                        </option>
+                      );
+                    })}
+            </select>
                   </li>
                   <li>
-                    <select defaultValue="" className="select outline-0">
-                      <option value="" disabled={true}>
-                        Ta'lim yo'nalish
-                      </option>
-                      <option value="" disabled={true}>
-                        Ta'lim yo'nalish
-                      </option>
-                    </select>
-                  </li>
-                  <li>
-                    <select defaultValue="" className="select outline-0">
-                      <option value="" disabled={true}>
-                        Kasb va mutaxasislik
-                      </option>
-                      <option value="">Kasb va mutaxasislik</option>
-                      <option value="">Kasb va mutaxasislik</option>
-                    </select>
-                  </li>
-                  <li>
-                    <select defaultValue="" className="select outline-0">
-                      <option value="" disabled={true}>
-                        Fanlar
-                      </option>
-                      <option value="">Fanlar</option>
-                      <option value="">Fanlar</option>
-                    </select>
-                  </li>
+                    <select 
+            defaultValue="" 
+            className="select outline-0"
+            onChange={(e) => setFan(e.target.value)}
+            >
+              <option value="" disabled={true}>
+                Fanlar
+              </option>
+               {fanlar &&
+                    fanlar.map((item) => {
+                      return (
+                        <option
+                          key={item.id}
+                          value={item.id}
+                        >
+                          {item.name}
+                        </option>
+                      );
+                    })}
+            </select>
+            </li>
                 </ul>
               </div>
             </div>
-            <button className="btn btn-success btn-sm">
+            <button className="btn btn-success btn-sm"  onClick={() => {
+                    setBilim(""),
+                    setTalim(""),
+                      setKasb(""),
+                      setYunalish(""),
+                      setFan("");
+                  }}>
               Filtrni tozalash <GrClearOption />
             </button>
           </div>
           <div className="hidden gap-4 mb-10 border px-2 py-3 rounded-lg md:flex">
-            <select defaultValue="" className="select">
-              <option value="" disabled={true}>
-                O‘quv yili
-              </option>
-              <option value="">2023</option>
-              <option value="">2024</option>
-              <option value="">2025</option>
-            </select>
-            <select defaultValue="" className="select">
-              <option disabled={true} value="">
-                Ta'lim darajasi
-              </option>
-              <option value="">3 darajasi</option>
-              <option value="">4 darajasi</option>
-              <option value="">5 darajasi</option>
-            </select>
-            <select defaultValue="" className="select">
+            <select 
+            defaultValue="" 
+            className="select outline-0"
+            onChange={(e) => setBilim(e.target.value)}
+            >
               <option value="" disabled={true}>
                 Bilim sohasi
               </option>
-              <option value="">ta'lim sohasi</option>
-              <option value="">xavfsizlik sohasi</option>
+              {bilim_soha &&
+                    bilim_soha.map((item) => {
+                      return (
+                        <option
+                          key={item.id}
+                          value={item.id}
+                        >
+                          {item.name}
+                        </option>
+                      );
+                    })}
             </select>
-            <select defaultValue="" className="select">
+            <select 
+            defaultValue="" 
+            className="select outline-0"
+            onChange={(e) => setTalim(e.target.value)}
+            >
               <option value="" disabled={true}>
                 Ta'lim sohasi
               </option>
-              <option value="">qishloq xo'jaligi</option>
+               {talim_soha &&
+                    talim_soha.map((item) => {
+                      return (
+                        <option
+                          key={item.id}
+                          value={item.id}
+                        >
+                          {item.name}
+                        </option>
+                      );
+                    })}
             </select>
-            <select defaultValue="" className="select">
+            <select 
+            defaultValue="" 
+            className="select outline-0"
+            onChange={(e) => setYunalish(e.target.value)}>
               <option value="" disabled={true}>
                 Ta'lim yo'nalish
               </option>
-              <option value="" disabled={true}>
-                Ta'lim yo'nalish
-              </option>
+                  {talim_yunalish &&
+                    talim_yunalish.map((item) => {
+                      return (
+                        <option
+                          key={item.id}
+                          value={item.id}
+                        >
+                          {item.name}
+                        </option>
+                      );
+                    })}
             </select>
-            <select defaultValue="" className="select">
+            <select 
+            defaultValue="" 
+            className="select outline-0"
+            onChange={(e) => setKasb(e.target.value)}>
               <option value="" disabled={true}>
-                Kasb va mutaxasislik
+                Kasb va mutaxasisliklar
               </option>
-              <option value="">Kasb va mutaxasislik</option>
-              <option value="">Kasb va mutaxasislik</option>
+              {kasb_mutaxassislik &&
+                    kasb_mutaxassislik.map((item) => {
+                      return (
+                        <option
+                          key={item.id}
+                          value={item.id}
+                        >
+                          {item.name}
+                        </option>
+                      );
+                    })}
             </select>
-            <select defaultValue="" className="select">
+            <select 
+            defaultValue="" 
+            className="select outline-0"
+            onChange={(e) => setFan(e.target.value)}
+            >
               <option value="" disabled={true}>
                 Fanlar
               </option>
-              <option value="">Fanlar</option>
-              <option value="">Fanlar</option>
+               {fanlar &&
+                    fanlar.map((item) => {
+                      return (
+                        <option
+                          key={item.id}
+                          value={item.id}
+                        >
+                          {item.name}
+                        </option>
+                      );
+                    })}
             </select>
-            <button className="btn btn-primary">Filterni tozalash</button>
+            <button className="btn btn-primary"  onClick={() => {
+                    setBilim(""),
+                    setTalim(""),
+                      setKasb(""),
+                      setYunalish(""),
+                      setFan("");
+                  }}>Filterni tozalash</button>
           </div>
           <div className="hidden md:block">
             <Divider color="blue" />

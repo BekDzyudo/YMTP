@@ -60,7 +60,7 @@ function Collages() {
                     <p className="stat-desc text-center xl:text-start">
                       Ko'rilganlar{" "}
                       <span className="text-amber-600 font-bold text-md">
-                        56
+                        {collage.views_count}
                       </span>
                     </p>
                   </div>

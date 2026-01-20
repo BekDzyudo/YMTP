@@ -80,13 +80,13 @@ function HomeHero() {
               <FaGooglePlay /> Videoni ko‘rish
             </button>
           )}
-          {
+          {/* {
             auth.refreshToken ?
             <></>
           // <Link to="/" className="btn btn-info btn-sm lg:btn-md" onClick={logout}>Chiqish</Link>
             :
           <Link to="login" className="btn btn-info btn-sm lg:btn-md">Kirish</Link>
-          }
+          } */}
         </div>
       </div>
       <div className="hidden xl:block absolute right-5 h-full py-5 pt-32 z-20">

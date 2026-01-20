@@ -6,13 +6,19 @@ import { useGlobalContext } from "../hooks/useGlobalContext";
 import { useHero } from "../context/HeroContext";
 import { FiLogIn } from "react-icons/fi";
 import { AuthContext } from "../context/AuthContext";
+import useGetFetchProfile from "../hooks/useGetFetchProfile";
 
 function Header() {
   const { onHero } = useHero();
   const { pathname } = useLocation();
-  const {auth, logout} = useContext(AuthContext)
-
+  const { auth, logout } = useContext(AuthContext);
   const { theme, changeTheme } = useGlobalContext();
+
+   const { data: user } = useGetFetchProfile(
+    `${import.meta.env.VITE_BASE_URL}/user-data/`
+  );
+  
+
   return (
     <div
       className={`shadow-xl py-1 sm:py-2 fixed top-0 left-0 w-full z-30 backdrop-blur-3xl bg-transparent
@@ -214,14 +220,22 @@ function Header() {
           </ul>
         </div>
         <div className="navbar-end 2xl:gap-4 xl:gap-2 gap-2">
-            {/* <button  className={`px-2 sm:py-2.5 sm:border rounded-lg flex items-center ${
-              theme === "light" && onHero && pathname == "/"
-                ? "text-white border-gray-400"
-                : "text-base-content border-gray-700"
-            }`}>
+          {auth.refreshToken ? (
+            <></>
+          ) : (
+            <Link
+              to="/login"
+              className={`hidden sm:flex px-2 py-2.5 xl:py-3 sm:border rounded-lg gap-1 items-center text-sm xl:text-[16px] ${
+                theme === "light" && onHero && pathname == "/"
+                  ? "text-white border-gray-400"
+                  : "text-base-content border-gray-700"
+              }`}
+            >
               {" "}
-              Kirish <FiLogIn />
-            </button> */}
+              Kirish <FiLogIn className="text-sm xl:text-lg" />
+            </Link>
+          )}
+
           <label
             className={`hidden sm:inline-grid swap swap-rotate sm:p-2 sm:border rounded-lg ${
               theme === "light" && onHero && pathname == "/"
@@ -293,8 +307,8 @@ function Header() {
             >
               <div className="w-10 sm:w-12 shrink-0 rounded-full">
                 <img
-                  alt="Tailwind CSS Navbar component"
-                  src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                  alt="Avatar"
+                  src={user?.image ? user?.image : "/person.png"}
                 />
               </div>
             </div>
@@ -313,6 +327,16 @@ function Header() {
               tabIndex="-1"
               className="menu menu-sm dropdown-content bg-base-300 rounded-lg z-40 mt-3 w-48 sm:w-52 p-2 shadow border border-gray-700"
             >
+              {auth.refreshToken ? (
+                <></>
+              ) : (
+                <li>
+                  <Link to="/login" className={`text-[12px] sm:text-sm`}>
+                    {" "}
+                    Kirish
+                  </Link>
+                </li>
+              )}
               <li>
                 <Link
                   className="justify-between  text-[12px] sm:text-sm"
@@ -325,14 +349,20 @@ function Header() {
               <li>
                 <Link className=" text-[12px] sm:text-sm">Sozlamalar</Link>
               </li>
-              {
-                auth.refreshToken ? 
+              {auth.refreshToken ? (
                 <li>
-                <Link to="/" onClick={logout} className=" text-[12px] sm:text-sm">Chiqish</Link>
-              </li> :
-              <></>
-              }
-              
+                  <Link
+                    to="/"
+                    onClick={logout}
+                    className=" text-[12px] sm:text-sm"
+                  >
+                    Chiqish
+                  </Link>
+                </li>
+              ) : (
+                <></>
+              )}
+
               <div className="relative my-2">
                 <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-blue-500/40 to-transparent"></div>
                 <div className="absolute inset-0 h-[1px] blur-md bg-gradient-to-r from-transparent via-blue-700/20 to-transparent"></div>
