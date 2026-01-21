@@ -64,7 +64,7 @@ function Login() {
             Kasbiy ta'limni rivojlantirish instituti
           </h3>
           <h3 className="text-[16px] md:text-lg font-bold text-primary mb-3 sm:mb-5 uppercase">
-            Kirish
+            Tizimga kirish
           </h3>
         </div>
         <form action="" ref={regLoginForm} className="w-full md:w-[80%] sm:w-[90%]">
@@ -107,7 +107,7 @@ function Login() {
               to="/register"
                 className={`${theme == "night" ? "text-neutral-400" : ""} text-sm link`}
               >
-                Hisobingiz yo‘qmi? Ro‘yxatdan o‘ting
+                Hisobingiz yo‘qmi? <span className="text-blue-500 opacity-100">Ro‘yxatdan o‘ting</span>
               </Link>
             </div>
         </form>

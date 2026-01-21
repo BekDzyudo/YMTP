@@ -4,6 +4,7 @@ import { AuthContext } from "../../../context/AuthContext";
 import { TiMessages } from "react-icons/ti";
 import { GrFormNextLink } from "react-icons/gr";
 import { Link } from "react-router-dom";
+import Chat from "../../../components/Chat";
 
 function TeacherProfil() {
   const { theme } = useGlobalContext();
@@ -43,18 +44,20 @@ function TeacherProfil() {
   console.log(Materiallar);
 
   return (
-    <section className="relative mt-24 md:mt-35 px-3.5 sm:px-5 mx-auto w-full xl:w-full 2xl:w-10/12">
+    <section className="relative mt-28 md:mt-35 px-3.5 sm:px-5 mx-auto w-full xl:w-full 2xl:w-10/12">
       <div
         className={`p-3 md:p-5 rounded-md ${
           theme == "night" ? "bg-gray-700" : "bg-slate-300"
         }`}
       >
-        <div className="flex justify-between mb-10">
-          <h2 className="text-2xl font-bold">Materiallar</h2>
-          <div className="flex gap-5">
+        <div className="flex flex-col sm:flex-row justify-between mb-5 sm:mb-6 md:mb-10">
+          <h2 className="text-lg mb-1 text-center sm:text-start sm:mb-0 md:text-2xl font-bold">
+            Materiallar
+          </h2>
+          <div className="flex gap-2 md:gap-5">
             <select
               defaultValue="Pick a text editor"
-              className="select bg-none outline-0"
+              className="select select-sm md:select-md bg-none outline-0"
             >
               <option disabled={true}>Material turi</option>
               <option>O‘qitish materiallari to‘plami</option>
@@ -65,64 +68,90 @@ function TeacherProfil() {
               <option>Didaktik ko‘rgazmali materiallar to‘plami</option>
               <option>Glossary</option>
             </select>
-            <button className="btn btn-primary">+ Qo‘shish</button>
+            <button className="btn btn-sm md:btn-md btn-primary">
+              + Qo‘shish
+            </button>
           </div>
         </div>
         <div className="overflow-x-auto">
-          <table className="table md:text-[15px] lg:text-[17px] text-center">
+          <table className="table text-[12px] md:text-[15px] lg:text-[17px] text-center">
             {/* head */}
             <thead className="bg-base-300">
-              <tr className="uppercase font-bold md:text-[14px] lg:text-[16px]">
+              <tr className="uppercase font-bold text-[12px] md:text-[14px] lg:text-[16px]">
                 <th>№</th>
                 <th>Fan nomi</th>
                 <th>Material turi</th>
                 <th>Holati</th>
                 <th>Muhokama</th>
-                <th>Materialni ko'rish</th>
+                <th>ko'rish</th>
               </tr>
             </thead>
             <tbody>
               {Materiallar?.results?.map((item, index) => {
                 return (
                   <tr key={item.id} className="">
-                    <td className="font-semibold">{index + 1}</td>
+                    <td className="font-bold">{index + 1}</td>
                     <td>{item.fan?.name}</td>
                     <td>{item.kategoriya_material?.name}</td>
                     <td className="">
-                      {
-                        item.holat == "yangi" && (
-                          <div className="flex justify-center">
-                        <span className="badge bg-blue-500 border-0 badge-md">Yangi</span>
+                      {item.holat == "yangi" && (
+                        <div className="flex justify-center">
+                          <span className="badge bg-blue-500 border-0 badge-md min-w-22 sm:min-w-24">
+                            Yangi
+                          </span>
+                        </div>
+                      )}
+                      {item.holat == "rad_etildi" && (
+                        <div className="flex justify-center">
+                          <span className="badge bg-red-500 border-0 badge-md min-w-22 sm:min-w-24">
+                            Rad etildi
+                          </span>
+                        </div>
+                      )}
+                      {item.holat == "tasdiqlandi" && (
+                        <div className="flex justify-center">
+                          <span className="badge bg-green-600 badge-md border-0 min-w-22 sm:min-w-24">
+                            Tasdiqlandi
+                          </span>
+                        </div>
+                      )}
+
+                      <div className="text-[12px] sm:text-sm text-center opacity-70">
+                        {new Date(item.created_at).getDate() < 10
+                            ? "0" + new Date(item.created_at).getDate()
+                            : new Date(item.created_at).getDate()}
+                          .{new Date(item.created_at).getMonth() + 1}.
+                          {new Date(item.created_at).getFullYear()}
                       </div>
-                        )
-                      }
-                      {
-                        item.holat == "rad_etildi" && (
-                          <div className="flex justify-center">
-                        <span className="badge bg-red-500 border-0 badge-md">Rad etildi</span>
-                      </div>
-                        )
-                      }
-                      {
-                        item.holat == "tasdiqlandi" && (
-                          <div className="flex justify-center">
-                        <span className="badge bg-green-600 badge-md border-0">Tasdiqlandi</span>
-                      </div>
-                        )
-                      }
-                      
-                      <div className="text-sm text-center opacity-70">17.01.2026</div>
                     </td>
-                    <td className="flex items-center gap-1">
-                      <div className="indicator">
-                        <span className="indicator-item badge badge-primary">
+                    <td className="">
+                      {/* You can open the modal using document.getElementById('ID').showModal() method */}
+                      <div className="indicator" onClick={() =>
+                          document.getElementById("my_modal_3").showModal()
+                        }>
+                        <span className="indicator-item badge badge-sm badge-primary text-sm">
                           2
                         </span>
-                        <button className="btn btn-md bg-none">Chat <TiMessages className="text-xl" /></button>
+                        <button className="btn btn-sm md:btn-md bg-none">
+                          Chat <TiMessages className="text-xl" />
+                        </button>
                       </div>
+                      <dialog id="my_modal_3" className="modal">
+                        <div className="modal-box">
+                          <form method="dialog">
+                            {/* if there is a button in form, it will close the modal */}
+                            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+                              ✕
+                            </button>
+                          </form>
+                          <Chat/>
+                        </div>
+                      </dialog>
                     </td>
                     <td>
-                      <Link className="link text-sm md:text-lg flex items-center justify-center hover:text-primary">o‘tish <GrFormNextLink/></Link>
+                      <Link to={item.file} target="_blanck" className="link text-sm md:text-lg flex items-center justify-center hover:text-primary">
+                        o‘tish <GrFormNextLink />
+                      </Link>
                     </td>
                   </tr>
                 );
