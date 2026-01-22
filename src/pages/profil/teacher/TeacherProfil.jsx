@@ -144,7 +144,7 @@ function TeacherProfil() {
                               ✕
                             </button>
                           </form>
-                          <Chat/>
+                          <Chat materialId={item.id}/>
                         </div>
                       </dialog>
                     </td>

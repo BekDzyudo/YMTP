@@ -9,57 +9,57 @@ const leaders = [
   {
     name: "Otayorov Javohir Odiljon o‘g‘li",
     position: "Bosh mutaxassis",
-    image: "xodim1.jpg",
+    image: "xodim1.JPG",
   },
   {
     name: "Ubaydullaev Mirjalol Baxodir o‘g‘li",
     position: "Bosh mutaxassis",
-    image: "xodim2.jpg",
+    image: "xodim2.JPG",
   },
   {
-    name: "Botirov Ravshan Maxkam o‘g‘li",
+    name: "Shukurova Shayxzoda Kamaritdinovna",
     position: "Bosh mutaxassis",
     image: "xodim5.jpg",
   },
   {
     name: "Rahmatov Baxtiyor",
     position: "Bosh mutaxassis",
-    image: "xodim3.jpg",
+    image: "xodim3.JPG",
   },
   {
-    name: "Shukurova Shayxzoda Kamaritdinovna",
+    name: "Botirov Ravshan Maxkam o‘g‘li",
     position: "Bosh mutaxassis",
-    image: "xodim4.jpg",
+    image: "xodim4.JPG",
   },
   {
     name: "Yakubova Nargiz Mirzaxamedovna",
     position: "Bosh mutaxassis",
     image: "xodim6.jpg",
   },
-  {
+   {
     name: "Otayorov Javohir Odiljon o‘g‘li",
     position: "Bosh mutaxassis",
-    image: "xodim1.jpg",
+    image: "xodim1.JPG",
   },
   {
     name: "Ubaydullaev Mirjalol Baxodir o‘g‘li",
     position: "Bosh mutaxassis",
-    image: "xodim2.jpg",
+    image: "xodim2.JPG",
   },
   {
-    name: "Botirov Ravshan Maxkam o‘g‘li",
+    name: "Shukurova Shayxzoda Kamaritdinovna",
     position: "Bosh mutaxassis",
     image: "xodim5.jpg",
   },
   {
     name: "Rahmatov Baxtiyor",
     position: "Bosh mutaxassis",
-    image: "xodim3.jpg",
+    image: "xodim3.JPG",
   },
   {
-    name: "Shukurova Shayxzoda Kamaritdinovna",
+    name: "Botirov Ravshan Maxkam o‘g‘li",
     position: "Bosh mutaxassis",
-    image: "xodim4.jpg",
+    image: "xodim4.JPG",
   },
   {
     name: "Yakubova Nargiz Mirzaxamedovna",
