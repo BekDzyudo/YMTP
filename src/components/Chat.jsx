@@ -9,9 +9,6 @@ function Chat({ materialId }) {
   const chatEndRef = useRef(null);
   const enterInput = useRef();
 
-console.log(Material?.muhokamalar);
-
-
   useEffect(() => {
     if (!materialId) return;
     fetch(
@@ -122,26 +119,52 @@ console.log(Material?.muhokamalar);
 
   return (
     <>
+    <div>
+      <h1 className="border-b text-center uppercase font-semibold mb-4 pb-1">{Material?.kategoriya_material?.name} bo'yicha</h1>
+    </div>
       {Material?.muhokamalar?.map((item) => {
-        item.text && (
-          <div className={`chat ${item.metodist?.id ? "chat-start" : "chat-end"}`}>
-            <div className="chat-image avatar">
-              <div className="w-10 rounded-full">
-                <img
-                  alt="Tailwind CSS chat bubble component"
-                  src="https://img.daisyui.com/images/profile/demo/kenobee@192.webp"
-                />
+        return (
+          item.text && (
+            <div
+              key={item.id}
+              className={`chat ${item.metodist?.id ? "chat-start" : "chat-end"}`}
+            >
+              <div className="chat-image avatar">
+                <div className="w-10 rounded-full">
+                  <img
+                    alt="Avatar"
+                    src={item.metodist?.id ? item.metodist?.image : user.image}
+                  />
+                </div>
               </div>
+              <div className="chat-header">
+                {item.metodist && (
+                  <span>
+                    {item.metodist?.first_name + " " + item.metodist?.last_name}
+                  </span>
+                )}
+                {/* <time className="text-xs opacity-50">12:45</time> */}
+              </div>
+              <div className="chat-bubble">{item.text}</div>
             </div>
-            <div className="chat-header">
-              Obi-Wan Kenobi
-              <time className="text-xs opacity-50">12:45</time>
-            </div>
-            <div className="chat-bubble">You were the Chosen One!</div>
-            <div className="chat-footer opacity-50">Delivered</div>
-          </div>
+          )
         );
       })}
+      <div ref={chatEndRef} />
+      <div>
+        <form className="flex gap-1 mt-5" onSubmit={sendData}>
+          <input
+            ref={enterInput}
+            onChange={(e) => setInputText(e.target.value)}
+            type="text"
+            className="input join-item w-full outline-0"
+            placeholder="Xabar yozing..."
+          />
+          <button type="submit" className="btn join-item">
+            Yuborish
+          </button>
+        </form>
+      </div>
     </>
   );
 }

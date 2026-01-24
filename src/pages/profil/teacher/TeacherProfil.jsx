@@ -12,6 +12,7 @@ function TeacherProfil() {
 
   const [Materiallar, setMateriallar] = useState(null);
   const [page, setPage] = useState(1);
+  const [detailId, setDetailId] = useState(null);
 
   useEffect(() => {
     fetch(
@@ -40,8 +41,8 @@ function TeacherProfil() {
   function handlePagination(e, p) {
     setPage(p);
   }
-  console.log(userData);
-  console.log(Materiallar);
+  // console.log(userData);
+  // console.log(Materiallar);
 
   return (
     <section className="relative mt-28 md:mt-35 px-3.5 sm:px-5 mx-auto w-full xl:w-full 2xl:w-10/12">
@@ -118,17 +119,23 @@ function TeacherProfil() {
 
                       <div className="text-[12px] sm:text-sm text-center opacity-70">
                         {new Date(item.created_at).getDate() < 10
-                            ? "0" + new Date(item.created_at).getDate()
-                            : new Date(item.created_at).getDate()}
-                          .{new Date(item.created_at).getMonth() + 1}.
-                          {new Date(item.created_at).getFullYear()}
+                          ? "0" + new Date(item.created_at).getDate()
+                          : new Date(item.created_at).getDate()}
+                        .{new Date(item.created_at).getMonth() + 1}.
+                        {new Date(item.created_at).getFullYear()}
                       </div>
                     </td>
                     <td className="">
                       {/* You can open the modal using document.getElementById('ID').showModal() method */}
-                      <div className="indicator" onClick={() =>
+                      <div
+                        className="indicator"
+                        onClick={() =>
+                        {
                           document.getElementById("my_modal_3").showModal()
-                        }>
+                          setDetailId(item.id)
+                        }
+                        }
+                      >
                         <span className="indicator-item badge badge-sm badge-primary text-sm">
                           2
                         </span>
@@ -136,20 +143,23 @@ function TeacherProfil() {
                           Chat <TiMessages className="text-xl" />
                         </button>
                       </div>
-                      <dialog id="my_modal_3" className="modal">
+                      {/* <dialog id="my_modal_3" className="modal">
                         <div className="modal-box">
                           <form method="dialog">
-                            {/* if there is a button in form, it will close the modal */}
                             <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
                               ✕
                             </button>
                           </form>
                           <Chat materialId={item.id}/>
                         </div>
-                      </dialog>
+                      </dialog> */}
                     </td>
                     <td>
-                      <Link to={item.file} target="_blanck" className="link text-sm md:text-lg flex items-center justify-center hover:text-primary">
+                      <Link
+                        to={item.file}
+                        target="_blanck"
+                        className="link text-sm md:text-lg flex items-center justify-center hover:text-primary"
+                      >
                         o‘tish <GrFormNextLink />
                       </Link>
                     </td>
@@ -160,6 +170,16 @@ function TeacherProfil() {
           </table>
         </div>
       </div>
+      <dialog id="my_modal_3" className="modal">
+        <div className="modal-box">
+          <form method="dialog">
+            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+              ✕
+            </button>
+          </form>
+          <Chat materialId={detailId} />
+        </div>
+      </dialog>
     </section>
   );
 }
