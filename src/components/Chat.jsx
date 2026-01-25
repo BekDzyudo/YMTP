@@ -120,7 +120,7 @@ function Chat({ materialId }) {
   return (
     <>
     <div>
-      <h1 className="border-b text-center uppercase font-semibold mb-4 pb-1">{Material?.kategoriya_material?.name} bo'yicha</h1>
+      <h1 className="border-b text-xs sm:text-md text-center uppercase font-semibold mb-4 pb-1">{Material?.kategoriya_material?.name} bo'yicha</h1>
     </div>
       {Material?.muhokamalar?.map((item) => {
         return (
@@ -130,7 +130,7 @@ function Chat({ materialId }) {
               className={`chat ${item.metodist?.id ? "chat-start" : "chat-end"}`}
             >
               <div className="chat-image avatar">
-                <div className="w-10 rounded-full">
+                <div className="w-9 sm:w-10 rounded-full">
                   <img
                     alt="Avatar"
                     src={item.metodist?.id ? item.metodist?.image : user.image}
@@ -145,7 +145,7 @@ function Chat({ materialId }) {
                 )}
                 {/* <time className="text-xs opacity-50">12:45</time> */}
               </div>
-              <div className="chat-bubble">{item.text}</div>
+              <div className="chat-bubble text-sm sm:text-md">{item.text}</div>
             </div>
           )
         );
@@ -157,10 +157,10 @@ function Chat({ materialId }) {
             ref={enterInput}
             onChange={(e) => setInputText(e.target.value)}
             type="text"
-            className="input join-item w-full outline-0"
+            className="input input-sm sm:input-md join-item w-full outline-0"
             placeholder="Xabar yozing..."
           />
-          <button type="submit" className="btn join-item">
+          <button type="submit" className="btn btn-sm sm:btn-md join-item">
             Yuborish
           </button>
         </form>
