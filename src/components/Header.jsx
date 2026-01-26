@@ -11,7 +11,7 @@ import useGetFetchProfile from "../hooks/useGetFetchProfile";
 function Header() {
   const { onHero } = useHero();
   const { pathname } = useLocation();
-  const { auth, logout } = useContext(AuthContext);
+  const {userData, auth, logout } = useContext(AuthContext);
   const { theme, changeTheme } = useGlobalContext();
 
    const { data: user } = useGetFetchProfile(
@@ -338,13 +338,19 @@ function Header() {
                 </li>
               )}
               <li>
-                <Link
-                  className="justify-between  text-[12px] sm:text-sm"
-                  to="/profile"
-                >
-                  Profil
-                  <span className="badge">New</span>
+                {
+                  userData?.user_roles == "metodist" ? 
+                  <Link
+                  className="justify-between text-[12px] sm:text-sm"
+                  to="/expert-profile"
+                >Profil
                 </Link>
+                :
+                <Link
+                  className="justify-between text-[12px] sm:text-sm"
+                  to="/profile"
+                >Profil</Link>
+                }
               </li>
               <li>
                 <Link className=" text-[12px] sm:text-sm">Sozlamalar</Link>

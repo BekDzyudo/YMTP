@@ -23,6 +23,7 @@ import ConfirmEmail from "./pages/auth/reset-parol/ConfirmEmail";
 import NewPassword from "./pages/auth/reset-parol/NewPassword";
 import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
+import ExpertProfil from "./pages/profil/expert/ExpertProfil";
 
 function App() {
 
@@ -100,6 +101,10 @@ function App() {
         {
           path: "rating",
           element: <Rating />,
+        },
+        {
+          path: "expert-profile",
+          element: <ExpertProfil/>
         },
         {
           path: "/profile",
