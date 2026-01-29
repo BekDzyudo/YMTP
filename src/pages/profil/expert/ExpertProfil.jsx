@@ -4,6 +4,7 @@ import { AuthContext } from '../../../context/AuthContext';
 import { TiMessages } from 'react-icons/ti';
 import { Link } from 'react-router-dom';
 import { useGlobalContext } from '../../../hooks/useGlobalContext';
+import { FiLogIn } from "react-icons/fi";
 
 function ExpertProfil() {
 
@@ -16,7 +17,7 @@ function ExpertProfil() {
     }`
   );
   console.log(Materiallar);
-  
+
 
   return (
     <section className="relative mt-28 md:mt-35 px-3.5 sm:px-5 mx-auto w-full xl:w-full 2xl:w-10/12">
@@ -38,7 +39,7 @@ function ExpertProfil() {
                   </tr>
                 </thead>
                 <tbody>
-                  {Materiallar?.results?.map((item, index) => {
+                  {Materiallar?.results?.result.map((item, index) => {
                     return (
                       <tr key={item.id} className="">
                         <td className="font-bold">{index + 1}</td>
@@ -77,8 +78,7 @@ function ExpertProfil() {
                         </td>
                         <td>
                           <Link
-                            // to={item.file}
-                            target="_blanck"
+                            to={`/expert-profile/material-detail/${item.id}`}
                             className="link text-sm md:text-lg flex items-center justify-center hover:text-primary"
                           >
                             <div
@@ -88,7 +88,7 @@ function ExpertProfil() {
                             {item.count_not_read}
                             </span>
                             <button className="btn btn-sm md:btn-md bg-none">
-                              Kirish <TiMessages className="text-xl" />
+                              Kirish <FiLogIn className="text-xl" />
                             </button>
                           </div>
                           </Link>

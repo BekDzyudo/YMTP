@@ -24,6 +24,7 @@ import NewPassword from "./pages/auth/reset-parol/NewPassword";
 import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
 import ExpertProfil from "./pages/profil/expert/ExpertProfil";
+import MaterialCheckingDetail from "./pages/profil/expert/MaterialCheckingDetail";
 
 function App() {
 
@@ -104,7 +105,11 @@ function App() {
         },
         {
           path: "expert-profile",
-          element: <ExpertProfil/>
+          element: <ExpertProfil/>,
+        },
+        {
+          path: "expert-profile/material-detail/:materialId",
+          element: <MaterialCheckingDetail/>
         },
         {
           path: "/profile",
