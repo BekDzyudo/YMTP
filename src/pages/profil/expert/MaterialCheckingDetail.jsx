@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { useGlobalContext } from "../../../hooks/useGlobalContext";
 import { FiDownload } from "react-icons/fi";
 import ExpertChat from "./ExpertChat";
+import { TbSend } from "react-icons/tb";
 
 function MaterialCheckingDetail() {
   const { materialId } = useParams();
@@ -176,56 +177,56 @@ function MaterialCheckingDetail() {
   }
 
   return (
-    <section className="relative mt-28 md:mt-35 px-3.5 sm:px-5 mx-auto w-full xl:w-full 2xl:w-11/12">
+    <section className="relative mt-28 md:mt-35 px-3.5 sm:px-5 mx-auto w-full xl:w-full 2xl:w-9/12">
       <div
         className={`p-3 md:p-5 rounded-md ${
           theme == "night" ? "bg-gray-700" : "bg-slate-300"
         }`}
       >
-        <div className="flex items-center gap-5 mb-5">
+        <div className="flex items-center gap-3 md:gap-5 mb-5">
           {Material?.holat == "yangi" && (
-            <span className="text-lg font-bold">Kiruvchi material</span>
+            <span className="text-md md:text-lg font-bold">Kiruvchi material</span>
           )}
           {Material?.holat == "rad_etildi" && (
-            <span className="text-lg font-bold">Qaytgan material</span>
+            <span className="text-md md:text-lg font-bold">Qaytgan material</span>
           )}
           {Material?.holat == "tasdiqlandi" && (
-            <span className="text-lg font-bold">Tasdiqlangan material</span>
+            <span className="text-md md:text-lg font-bold">Tasdiqlangan material</span>
           )}
           {Material?.holat == "yangi" && (
-            <span className="badge bg-blue-500 border-0 badge-md min-w-22 sm:min-w-24">
+            <span className="badge bg-blue-500 border-0 badge-sm md:badge-md">
               Yangi
             </span>
           )}
           {Material?.holat == "rad_etildi" && (
-            <span className="badge bg-red-500 border-0 badge-md min-w-22 sm:min-w-24">
+            <span className="badge bg-red-500 border-0 badge-sm md:badge-md">
               Rad etildi
             </span>
           )}
           {Material?.holat == "tasdiqlandi" && (
-            <span className="badge bg-green-600 badge-md border-0 min-w-22 sm:min-w-24">
+            <span className="badge bg-green-600 badge-sm md:badge-md border-0">
               Tasdiqlandi
             </span>
           )}
         </div>
         {Material && (
-          <div className="grid grid-cols-3">
-            <div className="flex flex-col gap-10">
+          <div className="grid grid-cols-1 gap-10 md:gap-5 md:grid-cols-2">
+            <div className="flex flex-col gap-5 md:gap-10">
               <div>
-                <h2 className="uppercase font-semibold text-primary">
+                <h2 className="md:uppercase text-sm md:text-[16px] font-semibold text-primary">
                   Jo'natuvchi hudud
                 </h2>
                 <div>
-                  <p>{Material.teacher?.region?.name},</p>
-                  <p>{Material.teacher?.district?.name}</p>
-                  <p>{Material.teacher?.college?.name}</p>
+                  <p className="text-sm md:text-[16px]">{Material.teacher?.region?.name},</p>
+                  <p className="text-sm md:text-[16px]">{Material.teacher?.district?.name}</p>
+                  <p className="text-sm md:text-[16px]">{Material.teacher?.college?.name}</p>
                 </div>
               </div>
               <div>
-                <h2 className="uppercase font-semibold text-primary">
+                <h2 className="md:uppercase text-sm md:text-[16px] font-semibold text-primary">
                   Yaratilgan vaqt
                 </h2>
-                <p>
+                <p className="text-sm md:text-[16px]">
                   {new Date(Material.created_at).getDate() < 10
                     ? "0" + new Date(Material.created_at).getDate()
                     : new Date(Material.created_at).getDate()}
@@ -237,24 +238,80 @@ function MaterialCheckingDetail() {
                 </p>
               </div>
               <div>
-                <h2 className="uppercase font-semibold text-primary">
+                <h2 className="md:uppercase text-sm md:text-[16px] font-semibold text-primary">
                   Biriktirilgan fayl
                 </h2>
-                <span className="flex gap-3">
-                  <span>{Material?.kategoriya_material?.name}</span>
+                <p className="flex flex-col gap-1 sm:flex-row sm:gap-3 text-sm md:text-[16px]">
+                  <p className="m-0 p-0">{Material?.kategoriya_material?.name}</p>
 
                   <Link
                     target="blanck"
                     to={Material.file}
-                    className="flex items-center gap-1 link text-primary"
+                    className="flex items-center gap-1 link text-primary m-0 p-0"
                   >
                     {" "}
                     <FiDownload className="w-4 h-4" /> Yuklab olish
                   </Link>
-                </span>
+                </p>
               </div>
+              {/* ==== */}
+
+              <div>
+                <h2 className="md:uppercase text-sm md:text-[16px] font-semibold text-primary">
+                  Muallif
+                </h2>
+                <p className="text-sm md:text-[16px]">
+                  {Material?.teacher?.last_name +
+                    " " +
+                    Material?.teacher?.first_name}
+                </p>
+              </div>
+              <div>
+                <h2 className="md:uppercase text-sm md:text-[16px] font-semibold text-primary">
+                  Fan nomi
+                </h2>
+                <p className="text-sm md:text-[16px]">{Material?.fan.name}</p>
+              </div>
+              {!Material.is_clicked && (
+                <div>
+                  {!Material.is_sended_telegram_group ? (
+                    <Link
+                      ref={birlashmaLink}
+                      onClick={birlashmaFunc}
+                      className="btn btn-sm sm:btn-md btn-primary sm:px-5 px-2 sm:py-2 py-1"
+                    >
+                      <TbSend className="sm:text-xl text-[16px]" /> Birlashmaga yuborish
+                    </Link>
+                  ) : (
+                    <Link
+                      style={{ background: "gray" }}
+                      className="btn btn-neutral disabled border-none sm:px-5 px-2 sm:py-2 py-0"
+                    >
+                      <TbSend className="sm:text-xl text-[16px]" />  Birlashmaga yuborildi
+                    </Link>
+                  )}
+                </div>
+              )}
+              {!Material.is_clicked && (
+                <div className="incoming_buttons" ref={incomingButtons}>
+                  <div className="flex items-center gap-3 sm:gap-5">
+                    <Link
+                      className="btn bg-green-600 sm:px-5 sm:py-2 px-3 py-1 text-[12px] sm:text-sm outline-0 border-0 text-white"
+                      onClick={qabulQilindi}
+                    >
+                      Qabul qilish
+                    </Link>
+                    <Link
+                      className="btn bg-red-500 sm:px-5 sm:py-2 px-3 py-1 text-[12px] sm:text-sm outline-0 border-0 text-white"
+                      onClick={radEtildi}
+                    >
+                      Rad etish
+                    </Link>
+                  </div>
+                </div>
+              )}
             </div>
-            <div className="flex flex-col gap-8">
+            {/* <div className="flex flex-col gap-8">
               <div>
                 <h2 className="uppercase font-semibold text-primary">
                   Muallif
@@ -279,7 +336,7 @@ function MaterialCheckingDetail() {
                       onClick={birlashmaFunc}
                       className="btn btn-primary px-5 py-2"
                     >
-                      Birlashmaga yuborish
+                     <TbSend className="text-xl"/> Birlashmaga yuborish
                     </Link>
                   ) : (
                     <Link
@@ -309,13 +366,14 @@ function MaterialCheckingDetail() {
                   </div>
                 </div>
               )}
-            </div>
+            </div> */}
             <div>
-              <ExpertChat 
-              userData={Material?.teacher}
-              muhokama={Material?.muhokamalar}
-              materialId={Material.id}
-              materialDetail={materialDetail}/>
+              <ExpertChat
+                userData={Material?.teacher}
+                muhokama={Material?.muhokamalar}
+                materialId={Material.id}
+                materialDetail={materialDetail}
+              />
             </div>
           </div>
         )}

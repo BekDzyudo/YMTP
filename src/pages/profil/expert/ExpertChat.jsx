@@ -44,7 +44,7 @@ function ExpertChat({ userData, muhokama, materialId, materialDetail }) {
 console.log(muhokama);
 
   return (
-    <div className="h-[500px] bg-base-100 w-full px-3 py-5 rounded-2xl flex flex-col justify-between">
+    <div className="h-[400px] md:h-[600px] bg-base-100 w-full px-3 py-5 rounded-2xl flex flex-col justify-between">
       <h1 className="border-b text-xs sm:text-md text-center uppercase font-semibold mb-4 pb-1">
         Material bo‘yicha muhokama
       </h1>
@@ -58,7 +58,7 @@ console.log(muhokama);
                   className={`chat mb-2 ${item.teacher ? "chat-start" : "chat-end"}`}
                 >
                   <div className="chat-image avatar">
-                    <div className="w-10 rounded-full">
+                    <div className="md:w-10 w-8 rounded-full">
                       <img
                         alt="Avatar"
                         src={
@@ -81,7 +81,7 @@ console.log(muhokama);
                     )}
                     {/* <time className="text-xs opacity-50">12:45</time> */}
                   </div>
-                  <div className="chat-bubble">{item.text}</div>
+                  <div className="chat-bubble text-sm sm:text-[16px]">{item.text}</div>
                 </div>
               )
             );
@@ -89,7 +89,7 @@ console.log(muhokama);
         :
         <div className="w-full h-full flex justify-center items-center font-semibold">
             <div className="flex flex-col items-center">
-                <TbMessageOff className="text-4xl"/>
+                <TbMessageOff className="text-3xl sm:text-4xl"/>
             <h1 className="text-center">Suhbatlar mavjud <br /> emas</h1>
             </div>
         </div>
