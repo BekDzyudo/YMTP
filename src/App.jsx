@@ -25,6 +25,7 @@ import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
 import ExpertProfil from "./pages/profil/expert/ExpertProfil";
 import MaterialCheckingDetail from "./pages/profil/expert/MaterialCheckingDetail";
+import TeachersMaterial from "./pages/materials/TeachersMaterial";
 
 function App() {
 
@@ -102,6 +103,10 @@ function App() {
         {
           path: "rating",
           element: <Rating />,
+        },
+        {
+          path: "teachers",
+          element: <TeachersMaterial/>
         },
         {
           path: "expert-profile",

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 
-function useGetFetchProfile(url) {
+function useGetFetchProfile(url, lookAtLogout) {
   const [data, setData] = useState(null);
   const [isPending, setIsPending] = useState(false);
   const [error, setError] = useState(null);
@@ -54,7 +54,7 @@ function useGetFetchProfile(url) {
       }
     };
     fetchData();
-  }, [url, auth.accessToken]);
+  }, [url, auth.accessToken, lookAtLogout]);
 
   return { data, isPending, error };
 }

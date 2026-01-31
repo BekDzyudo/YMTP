@@ -15,8 +15,9 @@ function Header() {
   const { theme, changeTheme } = useGlobalContext();
 
   const { data: user } = useGetFetchProfile(
-    `${import.meta.env.VITE_BASE_URL}/user-data/`,
+    `${import.meta.env.VITE_BASE_URL}/user-data/`
   );
+  
 
   return (
     <div
@@ -207,6 +208,7 @@ function Header() {
             </li>
             <li>
               <Link
+              to="teachers"
                 className={`${
                   theme === "light" && onHero && pathname == "/"
                     ? "text-white"
