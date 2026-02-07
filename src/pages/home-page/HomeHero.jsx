@@ -72,21 +72,14 @@ function HomeHero() {
           {theme == "light" ? (
             <button className="btn btn-outline btn-dash btn-sm lg:btn-md flex gap-2 items-center">
               {" "}
-              <FaGooglePlay /> Videoni ko‘rish
+              <FaGooglePlay /> Video yo‘riqnoma
             </button>
           ) : (
             <button className="btn btn-outline btn-primary btn-sm lg:btn-md flex gap-2 items-center">
               {" "}
-              <FaGooglePlay /> Videoni ko‘rish
+              <FaGooglePlay /> Video yo‘riqnoma
             </button>
           )}
-          {/* {
-            auth.refreshToken ?
-            <></>
-          // <Link to="/" className="btn btn-info btn-sm lg:btn-md" onClick={logout}>Chiqish</Link>
-            :
-          <Link to="login" className="btn btn-info btn-sm lg:btn-md">Kirish</Link>
-          } */}
         </div>
       </div>
       <div className="hidden xl:block absolute right-5 h-full py-5 pt-32 z-20">

@@ -77,8 +77,8 @@ function LidersExpert() {
       </h2>
       <Swiper
         modules={[Navigation, Autoplay]}
-        spaceBetween={32}
-        slidesPerView={5}
+        spaceBetween={24}
+        slidesPerView={1.5}
         centeredSlides={true}
         loop={true}
         navigation={{
@@ -86,24 +86,23 @@ function LidersExpert() {
           nextEl: ".swiper-button-next",
         }}
         autoplay={{
-          delay: 3500,
+          delay: 4000,
           disableOnInteraction: false,
         }}
-        // navigation
-        speed={500}
+        speed={600}
         breakpoints={{
-          0: { slidesPerView: 1.2 },
-          640: { slidesPerView: 2 },
-          1024: { slidesPerView: 3 },
-          1280: { slidesPerView: 5 },
+          480: { slidesPerView: 2, spaceBetween: 16 },
+          768: { slidesPerView: 3, spaceBetween: 20 },
+          1024: { slidesPerView: 4, spaceBetween: 20 },
+          1280: { slidesPerView: 5, spaceBetween: 24 },
         }}
         className="w-full leaders-swiper"
       >
-        {leaders.map((item, i) => (
-          <SwiperSlide key={i}>
+        {leaders.map((item) => (
+          <SwiperSlide key={item.id}>
             {({ isActive }) => (
               <div
-                className={`transition-transform transition-opacity duration-500 will-change-transform ${
+                className={`transition-all duration-500 ${
                   isActive ? "scale-100 opacity-100" : "scale-90 opacity-70"
                 }`}
               >
@@ -111,8 +110,15 @@ function LidersExpert() {
                   {/* IMAGE */}
                   <img
                     src={`/${item.image}`}
+                    loading="lazy"
+                    decoding="async"
                     alt={item.name}
-                    className="h-[380px] sm:h-[420px] w-full object-cover"
+                    className="h-[380px] sm:h-[420px] w-full object-cover transition-transform duration-300 ease-out group-hover:scale-110"
+                    width={280}
+                    height={420}
+                    onError={(e) => {
+                      e.currentTarget.style.backgroundColor = "#f3f4f6";
+                    }}
                   />
 
                   {/* GRADIENT OVERLAY */}
@@ -120,10 +126,10 @@ function LidersExpert() {
 
                   {/* TEXT */}
                   <div className="absolute bottom-6 left-6 right-6">
-                    <h3 className="text-white text-xl font-semibold">
+                    <h3 className="text-white text-lg sm:text-xl font-semibold leading-snug">
                       {item.name}
                     </h3>
-                    <p className="text-white/70 text-sm">{item.position}</p>
+                    <p className="text-white/70 text-sm mt-1">{item.position}</p>
                   </div>
                 </div>
               </div>

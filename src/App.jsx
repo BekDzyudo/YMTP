@@ -26,6 +26,7 @@ import { AuthContext } from "./context/AuthContext";
 import ExpertProfil from "./pages/profil/expert/ExpertProfil";
 import MaterialCheckingDetail from "./pages/profil/expert/MaterialCheckingDetail";
 import TeachersMaterial from "./pages/materials/TeachersMaterial";
+import AllMaterials from "./pages/materials/AllMaterials";
 
 function App() {
 
@@ -109,6 +110,10 @@ function App() {
           element: <TeachersMaterial/>
         },
         {
+          path: "teachers/:teacherMaterialId",
+          element: <AllMaterials/>
+        },
+        {
           path: "expert-profile",
           element: <ExpertProfil/>,
         },
@@ -119,7 +124,7 @@ function App() {
         {
           path: "/profile",
           element: <TeacherProfil />,
-        },
+        }
       ],
     },
     {

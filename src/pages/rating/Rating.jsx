@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import useGetFetch from "../../hooks/useGetFetch";
 import Divider from "../../components/Dvider";
 import { FaSearch } from "react-icons/fa";
@@ -16,38 +16,90 @@ function Rating() {
   const { data: bilim_soha } = useGetFetch(
     `${import.meta.env.VITE_BASE_URL}/edu-prof/bilim-soha/`
   );
-  const { data: talim_soha } = useGetFetch(
-    `${import.meta.env.VITE_BASE_URL}/edu-prof/talim-soha/?bilim_soha=${bilim}`
-  );
-  const { data: talim_yunalish } = useGetFetch(
-    `${
-      import.meta.env.VITE_BASE_URL
-    }/edu-prof/talim-yunalish/?talim_soha=${talim}`
-  );
-  const { data: kasb_mutaxassislik } = useGetFetch(
-    `${
-      import.meta.env.VITE_BASE_URL
-    }/edu-prof/kasb-va-mutaxassislik/?talim_yunalish=${yunalish}`
-  );
-  const { data: fanlar } = useGetFetch(
-    `${
-      import.meta.env.VITE_BASE_URL
-    }/edu-prof/fan/?kasb_va_mutaxassislik=${kasb}`
-  );
+  const baseUrl = import.meta.env.VITE_BASE_URL;
+
+  const talimUrl = useMemo(() => {
+    return bilim ? `${baseUrl}/edu-prof/talim-soha/?bilim_soha=${bilim}` : null;
+  }, [baseUrl, bilim]);
+
+  const talimYunalishUrl = useMemo(() => {
+    return talim ? `${baseUrl}/edu-prof/talim-yunalish/?talim_soha=${talim}` : null;
+  }, [baseUrl, talim]);
+
+  const kasbUrl = useMemo(() => {
+    return yunalish
+      ? `${baseUrl}/edu-prof/kasb-va-mutaxassislik/?talim_yunalish=${yunalish}`
+      : null;
+  }, [baseUrl, yunalish]);
+
+  const fanUrl = useMemo(() => {
+    return kasb ? `${baseUrl}/edu-prof/fan/?kasb_va_mutaxassislik=${kasb}` : null;
+  }, [baseUrl, kasb]);
+
+  const reytingUrl = useMemo(() => {
+    const params = new URLSearchParams();
+    if (bilim) params.append("bilim_soha", bilim);
+    if (talim) params.append("talim_soha", talim);
+    if (yunalish) params.append("talim_yunalish", yunalish);
+    // use consistent param name
+    if (kasb) params.append("kasb_va_mutaxassislik", kasb);
+    if (fan) params.append("fan", fan);
+    const qs = params.toString();
+    return qs ? `${baseUrl}/reyting_app/reyting/?${qs}` : `${baseUrl}/reyting_app/reyting/`;
+  }, [baseUrl, bilim, talim, yunalish, kasb, fan]);
+
+  const { data: talim_soha, isPending: isPendingTalim, error: errorTalim } = useGetFetch(talimUrl);
+  const { data: talim_yunalish, isPending: isPendingYunalish, error: errorYunalish } = useGetFetch(talimYunalishUrl);
+  const { data: kasb_mutaxassislik, isPending: isPendingKasb, error: errorKasb } = useGetFetch(kasbUrl);
+  const { data: fanlar, isPending: isPendingFan, error: errorFan } = useGetFetch(fanUrl);
 
   // get teachers
   const {
     data: reyting,
-    isPending,
-    error,
-  } = useGetFetch(`${import.meta.env.VITE_BASE_URL}/reyting_app/reyting/?bilim_soha=${bilim}&talim_soha=${talim}&talim_yunalish=${yunalish}&kasb_va_mutaxasislik=${kasb}&fan=${fan}`);
+    isPending: isPendingReyting,
+    error: errorReyting,
+  } = useGetFetch(reytingUrl);
+
+  const isPending = isPendingReyting || isPendingTalim || isPendingYunalish || isPendingKasb || isPendingFan;
+  const error = errorReyting || errorTalim || errorYunalish || errorKasb || errorFan;
+
+  const clearFilters = () => {
+    setBilim("");
+    setTalim("");
+    setYunalish("");
+    setKasb("");
+    setFan("");
+  };
+
+  // clear dependent filters when parent changes
+  React.useEffect(() => {
+    setTalim("");
+    setYunalish("");
+    setKasb("");
+    setFan("");
+  }, [bilim]);
+
+  React.useEffect(() => {
+    setYunalish("");
+    setKasb("");
+    setFan("");
+  }, [talim]);
+
+  React.useEffect(() => {
+    setKasb("");
+    setFan("");
+  }, [yunalish]);
+
+  React.useEffect(() => {
+    setFan("");
+  }, [kasb]);
 
   return (
-    <section className="relative mt-24 md:mt-35 px-3.5 sm:px-5 mx-auto w-full xl:w-full 2xl:w-11/12">
+    <section className="relative min-h-[60vh] mt-24 md:mt-35 px-3.5 sm:px-5 mx-auto w-full xl:w-full 2xl:w-11/12">
       {isPending && (
-        <span className="loading loading-ring loading-xl sm:w-24 w-10 sm:h-24 h-10 absolute sm:left-1/2 left-1/2 sm:top-1/3 top-1/4"></span>
+        <span className="loading loading-ring loading-xl absolute sm:w-24 w-10 sm:h-24 h-10 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"></span>
       )}
-      {error && <div>{error}</div>}
+      {error && <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 font-bold">{error}</div>}
       {reyting?.results && (
         <>
           <h2 className="text-center text-2xl sm:text-3xl lg:text-4xl font-bold mb-10">
@@ -78,7 +130,7 @@ function Rating() {
                 <ul className="menu bg-base-200 min-h-full w-80 p-4 gap-2 text-sm">
                   <li>
                     <select 
-            defaultValue="" 
+            value={bilim}
             className="select outline-0"
             onChange={(e) => setBilim(e.target.value)}
             >
@@ -100,7 +152,7 @@ function Rating() {
                   </li>
                   <li>
                     <select 
-            defaultValue="" 
+            value={talim}
             className="select outline-0"
             onChange={(e) => setTalim(e.target.value)}
             >
@@ -122,7 +174,7 @@ function Rating() {
                   </li>
                   <li>
                     <select 
-            defaultValue="" 
+            value={yunalish}
             className="select outline-0"
             onChange={(e) => setYunalish(e.target.value)}>
               <option value="" disabled={true}>
@@ -143,7 +195,7 @@ function Rating() {
                   </li>
                   <li>
                     <select 
-            defaultValue="" 
+            value={kasb}
             className="select outline-0"
             onChange={(e) => setKasb(e.target.value)}>
               <option value="" disabled={true}>
@@ -164,7 +216,7 @@ function Rating() {
                   </li>
                   <li>
                     <select 
-            defaultValue="" 
+            value={fan}
             className="select outline-0"
             onChange={(e) => setFan(e.target.value)}
             >
@@ -187,19 +239,13 @@ function Rating() {
                 </ul>
               </div>
             </div>
-            <button className="btn btn-success btn-sm"  onClick={() => {
-                    setBilim(""),
-                    setTalim(""),
-                      setKasb(""),
-                      setYunalish(""),
-                      setFan("");
-                  }}>
+            <button className="btn btn-success btn-sm" onClick={clearFilters}>
               Filtrni tozalash <GrClearOption />
             </button>
           </div>
           <div className="hidden gap-4 mb-10 border px-2 py-3 rounded-lg md:flex">
             <select 
-            defaultValue="" 
+            value={bilim}
             className="select outline-0"
             onChange={(e) => setBilim(e.target.value)}
             >
@@ -219,7 +265,7 @@ function Rating() {
                     })}
             </select>
             <select 
-            defaultValue="" 
+            value={talim}
             className="select outline-0"
             onChange={(e) => setTalim(e.target.value)}
             >
@@ -239,7 +285,7 @@ function Rating() {
                     })}
             </select>
             <select 
-            defaultValue="" 
+            value={yunalish}
             className="select outline-0"
             onChange={(e) => setYunalish(e.target.value)}>
               <option value="" disabled={true}>
@@ -258,7 +304,7 @@ function Rating() {
                     })}
             </select>
             <select 
-            defaultValue="" 
+            value={kasb}
             className="select outline-0"
             onChange={(e) => setKasb(e.target.value)}>
               <option value="" disabled={true}>
@@ -277,7 +323,7 @@ function Rating() {
                     })}
             </select>
             <select 
-            defaultValue="" 
+            value={fan}
             className="select outline-0"
             onChange={(e) => setFan(e.target.value)}
             >
@@ -296,13 +342,7 @@ function Rating() {
                       );
                     })}
             </select>
-            <button className="btn btn-primary"  onClick={() => {
-                    setBilim(""),
-                    setTalim(""),
-                      setKasb(""),
-                      setYunalish(""),
-                      setFan("");
-                  }}>Filterni tozalash</button>
+            <button className="btn btn-primary" onClick={clearFilters}>Filterni tozalash</button>
           </div>
           <div className="hidden md:block">
             <Divider color="blue" />
@@ -328,7 +368,7 @@ function Rating() {
                         <div className="flex items-center gap-3">
                           <div className="avatar">
                             <div className="rounded-md h-12 w-12 md:h-16 md:w-16">
-                              <img src={result.user?.image} alt="Avatar" />
+                              <img loading="lazy" src={result.user?.image || ""} alt={result.user?.full_name || "Avatar"} onError={(e) => { e.currentTarget.style.display = 'none'; }} />
                             </div>
                           </div>
                           <div>

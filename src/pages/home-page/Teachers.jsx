@@ -87,9 +87,9 @@ function Teachers() {
                       {t.name}
                     </p>
                   </div>
-                  <span className="badge badge-primary badge-lg font-semibold">
+                  {/* <span className="badge badge-primary badge-lg font-semibold">
                     {t.badge}
-                  </span>
+                  </span> */}
                 </div>
 
                 <div className="mt-4">
