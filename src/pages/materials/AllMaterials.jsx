@@ -116,7 +116,8 @@ function AllMaterials() {
                   <div className="p-0 pt-4 md:p-4">
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                       {teacherMaterialList?.materiallar?.map((material) => (
-                        <div
+                        <Link
+                        to={`/materials-detail/${material.id}`}
                           key={material.id}
                           className={`border ${theme === "night" ? "bg-gray-800 border-gray-500" : "bg-slate-100 border-gray-300"} p-1 rounded-lg transition-colors duration-150 cursor-pointer hover:shadow-md`}
                         >
@@ -129,7 +130,7 @@ function AllMaterials() {
                             </div>
                             <div className="flex flex-col gap-2 text-sm">
                               <div className="flex items-center justify-between">
-                                <span className="text-gray-600">
+                                <span className="text-base">
                                   Ko'rilgan:
                                 </span>
                                 <span className="font-semibold">
@@ -137,7 +138,7 @@ function AllMaterials() {
                                 </span>
                               </div>
                               <div className="flex items-center justify-between">
-                                <span className="text-gray-600">
+                                <span className="text-base">
                                   Yuklab olingan:
                                 </span>
                                 <span className="font-semibold">
@@ -145,14 +146,14 @@ function AllMaterials() {
                                 </span>
                               </div>
                               <div className="flex items-center justify-between">
-                                <span className="text-gray-600">Reyting:</span>
+                                <span className="text-base">Reyting:</span>
                                 <span className="font-semibold text-yellow-500 flex items-center gap-1">
                                   {"⭐ " + material.rate_material?.toFixed(1)}
                                 </span>
                               </div>
                             </div>
                           </div>
-                        </div>
+                        </Link>
                       ))}
                     </div>
                   </div>

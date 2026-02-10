@@ -27,6 +27,7 @@ import ExpertProfil from "./pages/profil/expert/ExpertProfil";
 import MaterialCheckingDetail from "./pages/profil/expert/MaterialCheckingDetail";
 import TeachersMaterial from "./pages/materials/TeachersMaterial";
 import AllMaterials from "./pages/materials/AllMaterials";
+import MaterialDetail from "./pages/materials/MaterialDetail";
 
 function App() {
 
@@ -112,6 +113,10 @@ function App() {
         {
           path: "teachers/:teacherMaterialId",
           element: <AllMaterials/>
+        },
+        {
+          path: "materials-detail/:materialDetailId",
+          element: <MaterialDetail/>
         },
         {
           path: "expert-profile",

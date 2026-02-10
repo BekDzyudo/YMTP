@@ -84,9 +84,13 @@ function ExpertProfil() {
                             <div
                             className="indicator"
                           >
-                            <span className="indicator-item badge badge-sm badge-primary text-sm">
+                            {
+                              item.count_not_read > 0 && (
+                                <span className="indicator-item badge badge-sm badge-primary text-sm">
                             {item.count_not_read}
                             </span>
+                              )
+                            }
                             <button className="btn btn-sm md:btn-md bg-none">
                               Kirish <FiLogIn className="text-xl" />
                             </button>

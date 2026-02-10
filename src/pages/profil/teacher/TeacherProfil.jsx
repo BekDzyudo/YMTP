@@ -314,9 +314,9 @@ function TeacherProfil() {
                           setDetailId(item.id);
                         }}
                       >
-                        <span className="indicator-item badge badge-sm badge-primary text-sm">
+                        {/* <span className="indicator-item badge badge-sm badge-primary text-sm">
                           2
-                        </span>
+                        </span> */}
                         <button className="btn btn-sm md:btn-md bg-none">
                           Chat <TiMessages className="text-xl" />
                         </button>
@@ -349,7 +349,7 @@ function TeacherProfil() {
         </div>
       </div>
       <dialog id="my_modal_3" className="modal">
-        <div className="modal-box">
+        <div className="modal-box border border-amber-400 flex flex-col justify-between">
           <form method="dialog">
             <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
               ✕
