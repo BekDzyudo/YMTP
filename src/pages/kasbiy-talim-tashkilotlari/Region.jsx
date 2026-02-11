@@ -47,7 +47,7 @@ const navigate = useNavigate()
               <Uzbekistan
                 onSelect={handleMap}
                 size="100%"
-                hoverColor="orange"
+                hoverColor="gray"
                 type="select-single"
                 mapColor="#c9cbd0"
                 selectColor="green"

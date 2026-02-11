@@ -69,7 +69,7 @@ function Footer() {
       </div>
       <div className="border-t border-gray-600 pt-2 flex justify-center">
         <p className="xl:w-full 2xl:w-11/12 text-center text-sm md:text-[16px]">
-          2025. Barcha huquqlar himoyalangan. Saytdan olingan barcha ma’lumotlar
+          Barcha huquqlar himoyalangan. Saytdan olingan barcha ma’lumotlar
           chop etilganda veb-saytga havola qilish majburiy
         </p>
       </div>

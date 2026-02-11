@@ -367,15 +367,18 @@ const logoSrc = isWhiteLogo
                   </Link>
                 </li>
               )}
-              <li>
-                {userData?.user_roles == "metodist" ? (
+              {
+                userData?.user_roles && (
+                  <li>
+                {userData?.user_roles == "metodist" && (
                   <Link
                     className="justify-between text-[12px] sm:text-sm"
                     to="/expert-profile"
                   >
                     Profil
                   </Link>
-                ) : (
+                )}
+                { userData?.user_roles == "teacher" && (
                   <Link
                     className="justify-between text-[12px] sm:text-sm"
                     to="/profile"
@@ -384,6 +387,9 @@ const logoSrc = isWhiteLogo
                   </Link>
                 )}
               </li>
+                )
+              }
+              
               <li className="flex sm:hidden">
                 <label className="flex cursor-pointer gap-2">
                   <svg
