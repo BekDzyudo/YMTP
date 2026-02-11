@@ -9,12 +9,12 @@ const leaders = [
   {
     name: "Otayorov Javohir Odiljon o‘g‘li",
     position: "Bosh mutaxassis",
-    image: "xodim1.JPG",
+    image: "xodim1.jpg",
   },
   {
     name: "Ubaydullaev Mirjalol Baxodir o‘g‘li",
     position: "Bosh mutaxassis",
-    image: "xodim2.JPG",
+    image: "xodim2.jpg",
   },
   {
     name: "Shukurova Shayxzoda Kamaritdinovna",
@@ -24,12 +24,12 @@ const leaders = [
   {
     name: "Rahmatov Baxtiyor",
     position: "Bosh mutaxassis",
-    image: "xodim3.JPG",
+    image: "xodim3.jpg",
   },
   {
     name: "Botirov Ravshan Maxkam o‘g‘li",
     position: "Bosh mutaxassis",
-    image: "xodim4.JPG",
+    image: "xodim4.jpg",
   },
   {
     name: "Yakubova Nargiz Mirzaxamedovna",
@@ -39,12 +39,12 @@ const leaders = [
    {
     name: "Otayorov Javohir Odiljon o‘g‘li",
     position: "Bosh mutaxassis",
-    image: "xodim1.JPG",
+    image: "xodim1.jpg",
   },
   {
     name: "Ubaydullaev Mirjalol Baxodir o‘g‘li",
     position: "Bosh mutaxassis",
-    image: "xodim2.JPG",
+    image: "xodim2.jpg",
   },
   {
     name: "Shukurova Shayxzoda Kamaritdinovna",
@@ -54,12 +54,12 @@ const leaders = [
   {
     name: "Rahmatov Baxtiyor",
     position: "Bosh mutaxassis",
-    image: "xodim3.JPG",
+    image: "xodim3.jpg",
   },
   {
     name: "Botirov Ravshan Maxkam o‘g‘li",
     position: "Bosh mutaxassis",
-    image: "xodim4.JPG",
+    image: "xodim4.jpg",
   },
   {
     name: "Yakubova Nargiz Mirzaxamedovna",

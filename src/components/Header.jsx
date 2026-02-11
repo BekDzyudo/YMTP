@@ -17,6 +17,14 @@ function Header() {
   const { data: user } = useGetFetchProfile(
     `${import.meta.env.VITE_BASE_URL}/user-data/`
   );
+
+
+const isHome = pathname === "/";
+const isWhiteLogo = theme === "night" || (theme === "light" && onHero && isHome);
+
+const logoSrc = isWhiteLogo
+  ? "/new_logo_white.png"
+  : "/new_logo_blue.png";
   
 
   return (
@@ -27,6 +35,25 @@ function Header() {
       <div className="navbar gap-2 px-3.5 sm:px-5 mx-auto w-full xl:w-full 2xl:w-11/12 items-center">
         <div className="navbar-start">
           <Link to="/" className="flex gap-2 sm:gap-3 items-center">
+           <img
+                src={logoSrc}
+                alt="logo"
+                className="w-12 xl:w-20 sm:w-16"
+              />
+
+            <h4
+              className={`font-semibold xl:text-[16px] lg:text-[14px] sm:text-[12px] text-[10px] ${
+                theme === "light" && onHero && pathname == "/"
+                  ? "text-white"
+                  : "text-base-content"
+              }`}
+            >
+              Kasbiy ta'limni <br />
+              rivojlantirish <br />
+              instituti
+            </h4>
+          </Link>
+          {/* <Link to="/" className="flex gap-2 sm:gap-3 items-center">
             {theme == "light" && onHero && pathname == "/" && (
               <img
                 src="/new_logo_white.png"
@@ -67,7 +94,7 @@ function Header() {
               rivojlantirish <br />
               instituti
             </h4>
-          </Link>
+          </Link> */}
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul
@@ -308,7 +335,7 @@ function Header() {
               role="button"
               className="btn btn-ghost btn-circle avatar hidden lg:flex"
             >
-              <div className="w-10 sm:w-12 shrink-0 rounded-full">
+              <div className="w-10 sm:w-12 shrink-0 rounded-full border border-gray-700">
                 <img
                   alt="Avatar"
                   src={user?.image ? user?.image : "/person.png"}

@@ -3,7 +3,7 @@ import { createContext, useEffect, useState } from "react";
 export const GlobalContext = createContext();
 
 const themeFromLocalStorage = () => {
-  return localStorage.getItem("theme") || "night";
+  return localStorage.getItem("theme") || "light";
 };
 
 export const GlobalContextProvider = ({children}) => {
