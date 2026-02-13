@@ -24,6 +24,7 @@
   body,
   #root {
     @apply h-full;
+    font-family: "Inter", sans-serif;
   }
   #root {
     @apply flex flex-col;

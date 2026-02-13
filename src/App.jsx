@@ -28,6 +28,8 @@ import MaterialCheckingDetail from "./pages/profil/expert/MaterialCheckingDetail
 import TeachersMaterial from "./pages/materials/TeachersMaterial";
 import AllMaterials from "./pages/materials/AllMaterials";
 import MaterialDetail from "./pages/materials/MaterialDetail";
+import RTR from "./pages/rtr/RTR";
+import EDUPROF from "./pages/edu-prof/EDUPROF";
 
 function App() {
 
@@ -101,6 +103,14 @@ function App() {
               ],
             },
           ],
+        },
+        {
+          path: "digital-educational-resources",
+          element: <RTR />,
+        },
+        {
+          path: "methodological-support",
+          element: <EDUPROF/>
         },
         {
           path: "rating",

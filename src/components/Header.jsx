@@ -19,13 +19,19 @@ function Header() {
   );
 
 
-const isHome = pathname === "/";
+const isHome = pathname === "/" || pathname === "/digital-educational-resources" || pathname === "/methodological-support";
 const isWhiteLogo = theme === "night" || (theme === "light" && onHero && isHome);
+// const isLightHero = theme === "light" && onHero && isHome;
 
 const logoSrc = isWhiteLogo
   ? "/new_logo_white.png"
   : "/new_logo_blue.png";
   
+  const navTextColor = theme === "night"
+    ? "text-white/80"
+    : theme === "light" && onHero && isHome
+    ? "text-white"
+    : "text-base-content";
 
   return (
     <div
@@ -42,81 +48,123 @@ const logoSrc = isWhiteLogo
               />
 
             <h4
-              className={`font-semibold xl:text-[16px] lg:text-[14px] sm:text-[12px] text-[10px] ${
-                theme === "light" && onHero && pathname == "/"
-                  ? "text-white"
-                  : "text-base-content"
-              }`}
+              className={`font-semibold xl:text-[16px] lg:text-[14px] sm:text-[12px] text-[10px] ${navTextColor}`}
             >
               Kasbiy ta'limni <br />
               rivojlantirish <br />
               instituti
             </h4>
           </Link>
-          {/* <Link to="/" className="flex gap-2 sm:gap-3 items-center">
-            {theme == "light" && onHero && pathname == "/" && (
-              <img
-                src="/new_logo_white.png"
-                alt="logo"
-                className="w-12 xl:w-20 sm:w-16"
-              />
-            )}
-            {theme == "night" && (
-              <img
-                src="/new_logo_white.png"
-                alt="logo"
-                className="w-12 xl:w-20 sm:w-16"
-              />
-            )}
-            {theme == "light" && !onHero && (
-              <img
-                src="/new_logo_blue.png"
-                alt="logo"
-                className="w-12 xl:w-20 sm:w-16"
-              />
-            )}
-            {theme == "light" && !(pathname == "/") && (
-              <img
-                src="/new_logo_blue.png"
-                alt="logo"
-                className="w-12 xl:w-20 sm:w-16"
-              />
-            )}
-
-            <h4
-              className={`font-semibold xl:text-[16px] lg:text-[14px] sm:text-[12px] text-[10px] ${
-                theme === "light" && onHero && pathname == "/"
-                  ? "text-white"
-                  : "text-base-content"
-              }`}
-            >
-              Kasbiy ta'limni <br />
-              rivojlantirish <br />
-              instituti
-            </h4>
-          </Link> */}
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul
-            className={`menu lg:menu-horizontal 2xl:gap-3 lg:text-[12px] border rounded-xl xl:text-[16px] ${
-              theme === "light" && onHero
-                ? "border-gray-400"
-                : "border-gray-700"
-            }`}
+            className={`menu lg:menu-horizontal 2xl:gap-3 lg:text-[12px] border rounded-xl xl:text-[16px] 
+              ${theme === "light" && onHero ? "border-gray-400" : "border-gray-700" }
+            `}
           >
             <li>
               <Link
                 to="/"
-                className={`${
-                  theme === "light" && onHero && pathname == "/"
-                    ? "text-white"
-                    : "text-base-content"
-                }`}
+                className={navTextColor}
               >
                 Bosh sahifa
               </Link>
             </li>
             <li>
+              <Link
+                to="/digital-educational-resources"
+                className={navTextColor}
+              >
+                Raqamli ta'lim resurslari
+              </Link>
+            </li>
+            <li>
+              <Link
+                // to="/methodological-support"
+                className={navTextColor}
+              >
+                Metodik ta'minot
+              </Link>
+            </li>
+            <li className="relative">
+              <div className="dropdown dropdown-center group">
+                <div
+                  tabIndex={0}
+                  role="button"
+                  className={`${navTextColor} gap-2 items-center flex w-auto`}
+                >
+                  Bizning platformalar <FaAngleDown />
+                </div>
+                <ul
+                  tabIndex="-1"
+                  className="dropdown-content menu-horizontal border border-gray-700 bg-base-300 w-max rounded-md z-1 mt-5 pointer-events-none
+    group-focus-within:pointer-events-auto"
+                >
+                  <li>
+                    <Link
+                      to="https://ipitvet.uz/uz/"
+                      target="blank"
+                      className="flex flex-col items-center gap-1 max-w-48"
+                    >
+                      <img
+                        src="/rasmiy-website.png"
+                        alt="rasmiy-vebsayt"
+                        className="w-44"
+                      />
+                      <p className="text-sm font-semibold">Rasmiy veb-sayt</p>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="https://edu.profedu.uz/"
+                      target="blank"
+                      className="flex flex-col items-center gap-1 max-w-48"
+                    >
+                      <img
+                        src="/eduprof.png"
+                        alt="Metodik taminlash"
+                        className="w-44"
+                      />
+                      <p className="text-sm font-semibold">Metodik taminlash</p>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="https://rtr.profedu.uz/"
+                      target="blank"
+                      className="flex flex-col items-center gap-1 max-w-48"
+                    >
+                      <img
+                        src="/rtr.png"
+                        alt="Raqamli ta'lim resurslari"
+                        className="w-44"
+                      />
+                      <p className="text-sm font-semibold">
+                        Raqamli ta'lim resurslari
+                      </p>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="https://my.moqt.uz/"
+                      target="blank"
+                      className="flex flex-col items-center gap-1 max-w-48"
+                    >
+                      <img
+                        src="/mymoqt.png"
+                        alt="Raqamli ta'lim resurslari"
+                        className="w-44"
+                      />
+                      <p className="text-sm font-semibold text-center">
+                        {" "}
+                        Malaka oshirish jarayonini tashkil etish
+                      </p>
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            </li>
+             {/* <li>
               <Link
                 to="/region"
                 className={`${
@@ -210,17 +258,6 @@ const logoSrc = isWhiteLogo
                 </ul>
               </div>
             </li>
-            {/* <li>
-              <Link
-                className={`${
-                  theme === "light" && onHero && pathname=="/"
-                    ? "text-white"
-                    : "text-base-content"
-                }`}
-              >
-                Adabiyotlar
-              </Link>
-            </li> */}
             <li>
               <Link
                 to="rating"
@@ -244,7 +281,7 @@ const logoSrc = isWhiteLogo
               >
                 Materiallar
               </Link>
-            </li>
+            </li> */}
           </ul>
         </div>
         <div className="navbar-end 2xl:gap-4 xl:gap-2 gap-2">
@@ -254,7 +291,7 @@ const logoSrc = isWhiteLogo
             <Link
               to="/login"
               className={`hidden sm:flex px-2 py-2.5 xl:py-3 sm:border rounded-lg gap-1 items-center text-sm xl:text-[16px] ${
-                theme === "light" && onHero && pathname == "/"
+                theme === "light" && onHero && (pathname == "/" || pathname == "/digital-educational-resources" || pathname === "/methodological-support")
                   ? "text-white border-gray-400"
                   : "text-base-content border-gray-700"
               }`}
@@ -266,7 +303,7 @@ const logoSrc = isWhiteLogo
 
           <label
             className={`hidden sm:inline-grid swap swap-rotate sm:p-2 sm:border rounded-lg ${
-              theme === "light" && onHero && pathname == "/"
+              theme === "light" && onHero && pathname == "/" || pathname == "/digital-educational-resources" || pathname === "/methodological-support"
                 ? "text-white border-gray-400"
                 : "text-base-content border-gray-700"
             }`}
@@ -295,7 +332,7 @@ const logoSrc = isWhiteLogo
           </label>
           <button
             className={`px-2 sm:py-2.5 sm:border rounded-lg flex items-center ${
-              theme === "light" && onHero && pathname == "/"
+              theme === "light" && onHero && pathname == "/" || pathname == "/digital-educational-resources" || pathname === "/methodological-support"
                 ? "text-white border-gray-400"
                 : "text-base-content border-gray-700"
             }`}
@@ -347,7 +384,7 @@ const logoSrc = isWhiteLogo
                 tabIndex={0}
                 role="button"
                 className={`text-4xl outline-0 cursor-pointer ${
-                  theme === "light" && onHero && pathname == "/"
+                  theme === "light" && onHero && (pathname == "/" || pathname == "/digital-educational-resources" || pathname === "/methodological-support")
                     ? "text-white"
                     : "text-base-content"
                 }`}
