@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import {
   FaChalkboardTeacher,
+  FaDownload,
   FaGraduationCap,
   FaStar,
   FaVideo,
@@ -11,52 +12,59 @@ import { Link } from "react-router-dom";
 import { MdReportGmailerrorred } from "react-icons/md";
 import Pagination from "../../components/Pagination";
 import RTRHero from "./RTRHero";
+import useGetFetch from "../../hooks/useGetFetch";
 
 function RTR() {
+  const [activeFilter, setActiveFilter] = useState(1);
+  const [data, setData] = useState(null);
+  const [search, setSearch] = useState("");
 
-    const [activeFilter, setActiveFilter] = useState(1);
-    const [data, setData] = useState(null);
-    const [search, setSearch] = useState("");
-    
-  
-    const filterCards = [
-      {
-          id: 1,
-        icon: FaChalkboardTeacher,
-        title: "Boshlang‘ich kasbiy ta’lim",
-      },
-      {
-          id: 2,
-        icon: FaGraduationCap,
-        title: "O'rta kasbiy ta'lim",
-      },
-      {
-          id: 3,
-        icon: FaStar,
-        title: "O‘rta maxsus kasbiy ta’lim",
-      },
-      {
-          id: 4,
-        icon: FaVideo,
-        title: "Media materiallar",
-      },
-    ];  
-  
-     const fetchData = async (page = 1) => {
-      const res = await fetch(`${import.meta.env.VITE_BASE_URL_RTR}/v1/rtr_base_app/subject-list/${activeFilter}/level/?page=${page}&search=${search}`);
-      const json = await res.json();    
-      setData(json);
-    };
-  
-    useEffect(() => {
-      fetchData(1);
-    }, [search, activeFilter]);
+  const filterCards = [
+    {
+      id: 1,
+      icon: FaChalkboardTeacher,
+      title: "Boshlang‘ich kasbiy ta’lim",
+    },
+    {
+      id: 2,
+      icon: FaGraduationCap,
+      title: "O'rta kasbiy ta'lim",
+    },
+    {
+      id: 3,
+      icon: FaStar,
+      title: "O‘rta maxsus kasbiy ta’lim",
+    },
+    {
+      id: 4,
+      icon: FaVideo,
+      title: "Media materiallar",
+    },
+  ];
+
+  const fetchData = async (page = 1) => {
+    let url = "";
+    if (activeFilter === 4) {
+      url = `${import.meta.env.VITE_BASE_URL_RTR}/v1/video/video-material-list/?page=${page}&search=${search}`;
+    } else {
+      url = `${import.meta.env.VITE_BASE_URL_RTR}/v1/rtr_base_app/subject-list/${activeFilter}/level/?page=${page}&search=${search}`;
+    }
+    const res = await fetch(url);
+    const json = await res.json();
+    setData(json);
+  };
+
+  const {data: authorList} = useGetFetch(`${import.meta.env.VITE_BASE_URL_RTR}/v1/rtr_base_app/author-list/`)
+
+  useEffect(() => {
+    fetchData(1);
+  }, [search, activeFilter]);
 
   return (
     <>
-    <RTRHero/>
+      <RTRHero />
       <section className="relative flex flex-col items-center -mt-10 z-20 ">
-        <div className="w-full mx-5 xl:max-w-7xl 2xl:max-w-10/12 flex flex-col sm:flex-row gap-10 px-4 shadow-xl rounded-2xl bg-base-100 py-10">
+        <div className="w-full mx-5 xl:max-w-7xl 2xl:max-w-10/12 grid sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-5 xl:gap-10 px-2 sm:px-4 shadow-xl rounded-2xl bg-base-100 py-2 sm:py-4 lg:py-10">
           {filterCards.map((card) => {
             const isActive = card.id === activeFilter;
             const Icon = card.icon;
@@ -64,7 +72,7 @@ function RTR() {
               <div
                 key={card.id}
                 className={
-                  `cursor-pointer flex-1 rounded-full flex gap-2 items-center py-2 px-4 w-1/3 mx-auto relative transition-all duration-200 ` +
+                  `cursor-pointer rounded-full flex gap-2 items-center py-1 sm:py-2 px-2 sm:px-4 transition-all duration-200 ` +
                   (isActive
                     ? "bg-info text-white shadow-lg border-info"
                     : "bg-slate-100 text-gray-800 shadow-sm border border-slate-50 hover:border-gray-200")
@@ -74,30 +82,108 @@ function RTR() {
               >
                 <Icon
                   className={
-                    `rounded-full p-3 text-5xl border ` +
+                    `md:w-14 md:h-12 sm:w-12 sm:h-10 w-10 h-8 rounded-full md:p-3 p-2 border flex items-center justify-center ` +
                     (isActive
                       ? "bg-info text-white border-white"
                       : "text-info border-info bg-white")
                   }
                 />
-                <div className="w-full text-lg font-bold text-center">
+                <div className="w-full text-sm sm:text-[16px] md:text-lg font-bold text-center">
                   {card.title}
                 </div>
               </div>
             );
           })}
         </div>
-        <div className="w-full flex items-center justify-between gap-4 mt-6 px-2 xl:max-w-7xl 2xl:max-w-10/12">
-          <span className="text-base font-semibold text-gray-700 bg-blue-100 px-6 py-2 rounded-full uppercase flex items-center gap-2">
-            {" "}
-            <FcOk className="text-xl" /> {data?.total ? `${data.total} ta fan topildi` : "fanlar topilmadi"}
-          </span>
-          <div className="relative w-full max-w-lg h-12">
+        <div className="w-full flex lg:flex-row flex-col items-center justify-between gap-4 mt-6 px-2 xl:max-w-7xl 2xl:max-w-10/12">
+          <div className="flex items-center gap-5">
+            <style>{`
+              .ok-glow {
+                position: relative;
+                z-index: 1;
+                animation: ok-glow-anim 1.8s infinite cubic-bezier(.68,-0.55,.27,1.55);
+              }
+              .ok-glow::before {
+                content: '';
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                width: 200%;
+                height: 200%;
+                transform: translate(-50%, -50%) scale(0.7);
+                border-radius: 50%;
+                background: radial-gradient(rgba(34,197,94,0.18), transparent 70%);
+                opacity: 0;
+                pointer-events: none;
+                z-index: 0;
+                animation: ok-glow-wave 1.8s infinite cubic-bezier(.68,-0.55,.27,1.55);
+              }
+              @keyframes ok-glow-anim {
+                0%, 100% {
+                  transform: scale(1);
+                }
+                50% {
+                  transform: scale(1.13);
+                }
+              }
+              @keyframes ok-glow-wave {
+                0% {
+                  opacity: 0.5;
+                  transform: translate(-50%, -50%) scale(0.7);
+                }
+                70% {
+                  opacity: 0.15;
+                  transform: translate(-50%, -50%) scale(1.25);
+                }
+                100% {
+                  opacity: 0;
+                  transform: translate(-50%, -50%) scale(1.4);
+                }
+              }
+            `}</style>
+            <span className="font-semibold text-gray-700 bg-blue-100 sm:px-6 px-4 py-2 rounded-full sm:uppercase flex items-center gap-2 text-xs sm:text-[16px]">
+              <FcOk className="sm:text-xl text-lg ok-glow" />{" "}
+              {data?.total
+                ? `${data.total} ${activeFilter === 4 ? "ta media topildi" : "ta fan topildi"}`
+                : "fanlar topilmadi"}
+            </span>
+            <style>{`
+              .download-anim {
+                display: inline-flex;
+                transition: transform 0.5s cubic-bezier(.68,-0.55,.27,1.55), color 0.3s;
+              }
+              .group:hover .download-anim {
+                animation: drop-center-download 0.5s cubic-bezier(.68,-0.55,.27,1.55) forwards;
+                color: #fff;
+              }
+              @keyframes drop-center-download {
+                0% { transform: translateY(-6px); }
+                100% { transform: translateY(0); }
+              }
+            `}</style>
+            {
+              activeFilter === 4 ? ""
+              :
+              <Link
+              to={authorList && authorList[0]?.file}
+              target="_blank"
+              className="group relative text-xs sm:text-[16px] font-semibold text-gray-700 bg-blue-100 px-4 sm:px-6 py-2 rounded-full flex items-center gap-2 transition-all duration-300 hover:bg-blue-600 hover:text-white group"
+              style={{ overflow: "hidden" }}
+            >
+              <span className="download-anim">
+                <FaDownload className="text-blue-500 group-hover:text-white"/>
+              </span>
+              Mualliflar ro'yxati
+            </Link>
+            }
+          </div>
+          { activeFilter !== 4 ?
+            <div className="relative w-full sm:max-w-4/5 lg:max-w-lg h-10 sm:h-12">
             <input
-            onChange={(e)=>setSearch(e.target.value)}
+              onChange={(e) => setSearch(e.target.value)}
               type="text"
               placeholder="Fan nomi bo'yicha qidirish..."
-              className="w-full h-full rounded-full border border-gray-200 py-2 pl-4 pr-10 focus:outline-none focus:border-blue-400 transition text-[16px] bg-white shadow-sm"
+              className="w-full h-full rounded-full border border-gray-200 py-1 sm:py-2 pl-4 pr-10 focus:outline-none focus:border-blue-400 transition text-sm sm:text-[16px] bg-white shadow-sm"
             />
             <svg
               className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400"
@@ -111,60 +197,128 @@ function RTR() {
               <circle cx="11" cy="11" r="8" />
               <path d="M21 21l-2-2" />
             </svg>
-          </div>
+          </div> : ""
+          }
         </div>
-        <div className="w-full grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8 mt-15 px-2 xl:max-w-7xl 2xl:max-w-10/12">
-          {data?.results ? (
-            data.results.map((item) => (
-              <div
-                key={item.id}
-                className="bg-slate-100 rounded-2xl shadow-md group border-2 border-gray-100 flex flex-col hover:shadow-xl transition-all duration-500 hover:border-blue-500"
-              >
-                <div className="overflow-hidden w-full h-54 rounded-t-2xl transition-all duration-500 group-hover:shadow-lg">
-                  <img
-                    src={item.photo}
-                    alt={`Card image for ${item.title}`}
-                    className="w-full h-full object-cover rounded-t-2xl transition-all duration-500 group-hover:scale-110"
-                    style={{
-                      borderTopLeftRadius: "1rem",
-                      borderTopRightRadius: "1rem",
-                    }}
-                  />
+        <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5 sm:gap-8 mt-10 sm:mt-15 px-2 xl:max-w-7xl 2xl:max-w-10/12">
+          {data?.results.length > 0 ? (
+            data.results.map((item) =>
+              activeFilter === 4 ? (
+                <div
+                  key={item.id}
+                  className="bg-slate-100 rounded-2xl shadow-md group border-2 border-gray-100 flex flex-col hover:shadow-xl transition-all duration-500 hover:border-blue-500"
+                >
+                  <div className="overflow-hidden w-full h-54 rounded-t-2xl transition-all duration-500 group-hover:shadow-lg">
+                    <iframe
+                      src={(() => {
+                        if (item.video_link) {
+                          let videoId = null;
+                          if (item.video_link.includes('youtube.com/watch')) {
+                            const match = item.video_link.match(/[?&]v=([^&]+)/);
+                            videoId = match ? match[1] : null;
+                          } else if (item.video_link.includes('youtu.be/')) {
+                            const match = item.video_link.match(/youtu\.be\/([^?&]+)/);
+                            videoId = match ? match[1] : null;
+                          }
+                          return videoId
+                            ? `https://www.youtube.com/embed/${videoId}`
+                            : item.video_link;
+                        }
+                        return '';
+                      })()}
+                      title={item.title}
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      allowFullScreen
+                      className="w-full h-full object-cover rounded-t-2xl"
+                      style={{
+                        borderTopLeftRadius: "1rem",
+                        borderTopRightRadius: "1rem",
+                        aspectRatio: '16/9',
+                        minHeight: '180px',
+                        background: '#000',
+                      }}
+                    />
+                  </div>
+                  <div className="p-5 flex flex-col flex-1">
+                    <div className="text-lg font-bold mb-2 text-gray-800 group-hover:text-blue-600">
+                      {item.title}
+                    </div>
+                    <div className="text-gray-600 text-sm mb-4 flex-1">
+                      {(() => {
+                        const text = item.content || '';
+                        if (text.length <= 90) return text;
+                        const cut = text.slice(0, 90);
+                        const lastSpace = cut.lastIndexOf(' ');
+                        return (lastSpace > 0 ? cut.slice(0, lastSpace) : cut) + '...';
+                      })()}
+                    </div>
+                    <div className="flex items-center justify-start mt-auto">
+                      <div className="flex items-center gap-3 mt-2">
+                        <img
+                          src={item.author_photo || '/default-avatar.png'}
+                          alt={item.author || 'Muallif'}
+                          className="w-12 h-12 rounded-full object-cover shadow-md border-2 border-white bg-gray-200"
+                        />
+                        <div className="flex flex-col">
+                          <span className="text-[15px] font-semibold text-gray-800 leading-tight">
+                            {item.author || 'Muallif'}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div className="p-5 flex flex-col flex-1">
-                  <div className="text-lg font-bold mb-2 text-gray-800 group-hover:text-blue-600">
-                    {item.title}
+              ) : (
+                <div
+                  key={item.id}
+                  className="bg-slate-100 rounded-2xl shadow-md group border-2 border-gray-100 flex flex-col hover:shadow-xl transition-all duration-500 hover:border-blue-500"
+                >
+                  <div className="overflow-hidden w-full h-54 rounded-t-2xl transition-all duration-500 group-hover:shadow-lg">
+                    <img
+                      src={item.photo}
+                      alt={`Card image for ${item.title}`}
+                      className="w-full h-full object-cover rounded-t-2xl transition-all duration-500 group-hover:scale-110"
+                      style={{
+                        borderTopLeftRadius: "1rem",
+                        borderTopRightRadius: "1rem",
+                      }}
+                    />
                   </div>
-                  <div className="text-gray-600 text-sm mb-4 flex-1">
-                    {item.code}
-                  </div>
-                  <div className="flex items-center justify-between mt-auto">
-                    <span className="text-xs text-gray-400 flex items-center gap-1">
-                      {/* Eye icon for views */}
-                      <svg
-                        width="18"
-                        height="18"
-                        fill="currentColor"
-                        className="inline-block"
-                        viewBox="0 0 20 20"
-                      >
-                        <path d="M10 4.5c-5 0-8 5-8 5s3 5 8 5 8-5 8-5-3-5-8-5Zm0 8.33A3.33 3.33 0 1 1 13.33 9.5 3.33 3.33 0 0 1 10 12.83Zm0-5.33A2 2 0 1 0 12 9.5 2 2 0 0 0 10 7.5Z" />
-                      </svg>
-                      {item.view_count} ko'rishlar
-                    </span>
-                    <Link
-                      to="#"
-                      className="text-blue-600 font-bold text-sm flex items-center gap-1 uppercase group"
-                    >
-                      Batafsil
-                      <span className="inline-block transition-transform duration-300 group-hover:translate-x-2">
-                        <GrFormNextLink className="text-lg font-bold" />
+                  <div className="p-5 flex flex-col flex-1">
+                    <div className="text-lg font-bold mb-2 text-gray-800 group-hover:text-blue-600">
+                      {item.title}
+                    </div>
+                    <div className="text-gray-600 text-sm mb-4 flex-1">
+                      {item.code}
+                    </div>
+                    <div className="flex items-center justify-between mt-auto">
+                      <span className="text-xs text-gray-400 flex items-center gap-1">
+                        {/* Eye icon for views */}
+                        <svg
+                          width="18"
+                          height="18"
+                          fill="currentColor"
+                          className="inline-block"
+                          viewBox="0 0 20 20"
+                        >
+                          <path d="M10 4.5c-5 0-8 5-8 5s3 5 8 5 8-5 8-5-3-5-8-5Zm0 8.33A3.33 3.33 0 1 1 13.33 9.5 3.33 3.33 0 0 1 10 12.83Zm0-5.33A2 2 0 1 0 12 9.5 2 2 0 0 0 10 7.5Z" />
+                        </svg>
+                        {item.view_count} ko'rishlar
                       </span>
-                    </Link>
+                      <Link
+                        to={`rtr-detail/${item.id}`}
+                        className="text-blue-600 font-bold text-sm flex items-center gap-1 uppercase group"
+                      >
+                        Batafsil
+                        <span className="inline-block transition-transform duration-300 group-hover:translate-x-2">
+                          <GrFormNextLink className="text-lg font-bold" />
+                        </span>
+                      </Link>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))
+              ),
+            )
           ) : (
             <div className="text-info text-sm sm:text-2xl font-bold text-center w-full opacity-90 absolute left-0 top-40 sm:top-70 flex justify-center">
               <div className="flex items-center gap-3">
@@ -174,7 +328,13 @@ function RTR() {
             </div>
           )}
         </div>
-        {data?.total > 0 && <Pagination current_page={data?.current_page} total_pages={data?.total_pages} onPageChange={fetchData}/>}
+        {data?.total > 0 && (
+          <Pagination
+            current_page={data?.current_page}
+            total_pages={data?.total_pages}
+            onPageChange={fetchData}
+          />
+        )}
       </section>
     </>
   );

@@ -7,8 +7,11 @@ import {
   FaStar,
   FaVideo,
 } from "react-icons/fa";
+import useGetFetch from "../../hooks/useGetFetch";
 
 function RTRHero() {
+
+  const {data: statistika} = useGetFetch(`${import.meta.env.VITE_BASE_URL_RTR}/v1/rtr_base_app/statistika/`)  
 
      const heroRef = useRef(null);
     
@@ -42,11 +45,17 @@ function RTRHero() {
         };
       }, []);
       // Animated numbers for cards
-      const cardTargets = [60, 22, 35, 1458];
+      const safeStat = (val) => (typeof val === 'number' && !isNaN(val) ? val : 0);
+      const cardTargets = [
+        safeStat(statistika?.boshlangich),
+        safeStat(statistika?.orta),
+        safeStat(statistika?.maxsus),
+        safeStat(statistika?.video)
+      ];
       const [cardNumbers, setCardNumbers] = useState(cardTargets.map(() => 0));
       useEffect(() => {
         let frame = 0;
-        const duration = 1000; // ms
+        const duration = 1500; // ms
         const steps = 60;
         const interval = duration / steps;
         function animate() {
@@ -59,12 +68,12 @@ function RTRHero() {
           if (frame < steps) setTimeout(animate, interval);
         }
         animate();
-      }, []);
+      }, [statistika]);
     
   return (
      <section
      ref={heroRef}
-          className={`relative w-full h-[65vh] md:h-[75vh] flex items-center px-5 ${
+          className={`relative w-full h-[65vh] md:h-[80vh] flex items-center px-5 ${
             theme === "light" ? "text-neutral-content" : ""
           }`}
         >
@@ -76,7 +85,7 @@ function RTRHero() {
             />
           </div>
           <div
-            className="absolute inset-0 w-full h-[65vh] md:h-[75vh] pointer-events-none z-10"
+            className="absolute inset-0 w-full h-[65vh] md:h-[80vh] pointer-events-none z-10"
             style={{
               background: theme === "light" ? "rgba(0,0,0,0.7)" : "rgba(0,0,0,0.7)",
             }}

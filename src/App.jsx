@@ -30,6 +30,7 @@ import AllMaterials from "./pages/materials/AllMaterials";
 import MaterialDetail from "./pages/materials/MaterialDetail";
 import RTR from "./pages/rtr/RTR";
 import EDUPROF from "./pages/edu-prof/EDUPROF";
+import RTRDetail from "./pages/rtr/RTRDetail";
 
 function App() {
 
@@ -107,6 +108,10 @@ function App() {
         {
           path: "digital-educational-resources",
           element: <RTR />,
+        },
+        {
+          path: "digital-educational-resources/rtr-detail/:rtrId",
+          element: <RTRDetail/>,
         },
         {
           path: "methodological-support",
