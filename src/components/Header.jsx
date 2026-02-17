@@ -18,20 +18,13 @@ function Header() {
     `${import.meta.env.VITE_BASE_URL}/user-data/`
   );
 
-
-const isHome = pathname === "/" || pathname === "/digital-educational-resources" || pathname === "/methodological-support";
-const isWhiteLogo = theme === "night" || (theme === "light" && onHero && isHome);
-// const isLightHero = theme === "light" && onHero && isHome;
-
-const logoSrc = isWhiteLogo
-  ? "/new_logo_white.png"
-  : "/new_logo_blue.png";
+  // Hero stilini qo'llash kerakligini aniqlash (tungi rejim yoki hero ustida)
+  const useHeroStyle = theme === "night" || (theme === "light" && onHero);
   
-  const navTextColor = theme === "night"
-    ? "text-white/80"
-    : theme === "light" && onHero && isHome
-    ? "text-white"
-    : "text-base-content";
+  // Barcha komponentlar uchun yagona stil o'zgaruvchilari
+  const logoSrc = useHeroStyle ? "/new_logo_white.png" : "/new_logo_blue.png";
+  const textColor = useHeroStyle ? "text-white" : "text-base-content";
+  const borderColor = useHeroStyle ? "border-gray-400" : "border-gray-700";
 
   return (
     <div
@@ -48,7 +41,7 @@ const logoSrc = isWhiteLogo
               />
 
             <h4
-              className={`font-semibold xl:text-[16px] lg:text-[14px] sm:text-[12px] text-[10px] ${navTextColor}`}
+              className={`font-semibold xl:text-[16px] lg:text-[14px] sm:text-[12px] text-[10px] ${textColor}`}
             >
               Kasbiy ta'limni <br />
               rivojlantirish <br />
@@ -58,14 +51,12 @@ const logoSrc = isWhiteLogo
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul
-            className={`menu lg:menu-horizontal 2xl:gap-3 lg:text-[12px] border rounded-xl xl:text-[16px] 
-              ${theme === "light" && onHero ? "border-gray-400" : "border-gray-700" }
-            `}
+            className={`menu lg:menu-horizontal 2xl:gap-3 lg:text-[12px] border rounded-xl xl:text-[16px] ${borderColor}`}
           >
             <li>
               <Link
                 to="/"
-                className={navTextColor}
+                className={textColor}
               >
                 Bosh sahifa
               </Link>
@@ -73,7 +64,7 @@ const logoSrc = isWhiteLogo
             <li>
               <Link
                 to="/digital-educational-resources"
-                className={navTextColor}
+                className={textColor}
               >
                 Raqamli ta'lim resurslari
               </Link>
@@ -81,12 +72,12 @@ const logoSrc = isWhiteLogo
             <li>
               <Link
                 // to="/methodological-support"
-                className={navTextColor}
+                className={textColor}
               >
                 Metodik ta'minot
               </Link>
             </li>
-            <li className="relative">
+            {/* <li className="relative">
               <div className="dropdown dropdown-center group">
                 <div
                   tabIndex={0}
@@ -163,7 +154,7 @@ const logoSrc = isWhiteLogo
                   </li>
                 </ul>
               </div>
-            </li>
+            </li> */}
              {/* <li>
               <Link
                 to="/region"
@@ -290,11 +281,7 @@ const logoSrc = isWhiteLogo
           ) : (
             <Link
               to="/login"
-              className={`hidden sm:flex px-2 py-2.5 xl:py-3 sm:border rounded-lg gap-1 items-center text-sm xl:text-[16px] ${
-                theme === "light" && onHero && (pathname == "/" || pathname == "/digital-educational-resources" || pathname === "/methodological-support")
-                  ? "text-white border-gray-400"
-                  : "text-base-content border-gray-700"
-              }`}
+              className={`hidden sm:flex px-2 py-2.5 xl:py-3 sm:border rounded-lg gap-1 items-center text-sm xl:text-[16px] ${textColor} ${borderColor}`}
             >
               {" "}
               Kirish <FiLogIn className="text-sm xl:text-lg" />
@@ -302,11 +289,7 @@ const logoSrc = isWhiteLogo
           )}
 
           <label
-            className={`hidden sm:inline-grid swap swap-rotate sm:p-2 sm:border rounded-lg ${
-              theme === "light" && onHero && pathname == "/" || pathname == "/digital-educational-resources" || pathname === "/methodological-support"
-                ? "text-white border-gray-400"
-                : "text-base-content border-gray-700"
-            }`}
+            className={`hidden sm:inline-grid swap swap-rotate sm:p-2 sm:border rounded-lg ${textColor} ${borderColor}`}
           >
             <input
               type="checkbox"
@@ -331,11 +314,7 @@ const logoSrc = isWhiteLogo
             </svg>
           </label>
           <button
-            className={`px-2 sm:py-2.5 sm:border rounded-lg flex items-center ${
-              theme === "light" && onHero && pathname == "/" || pathname == "/digital-educational-resources" || pathname === "/methodological-support"
-                ? "text-white border-gray-400"
-                : "text-base-content border-gray-700"
-            }`}
+            className={`px-2 sm:py-2.5 sm:border rounded-lg flex items-center ${textColor} ${borderColor}`}
           >
             <div className="indicator">
               <svg
@@ -383,11 +362,7 @@ const logoSrc = isWhiteLogo
               <IoMenu
                 tabIndex={0}
                 role="button"
-                className={`text-4xl outline-0 cursor-pointer ${
-                  theme === "light" && onHero && (pathname == "/" || pathname == "/digital-educational-resources" || pathname === "/methodological-support")
-                    ? "text-white"
-                    : "text-base-content"
-                }`}
+                className={`text-4xl outline-0 cursor-pointer ${textColor}`}
               />
             </div>
             <ul

@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import { IoDocumentsOutline } from "react-icons/io5";
 import { HiOutlineClipboardDocumentList } from "react-icons/hi2";
 import { LuBookCopy } from "react-icons/lu";
@@ -13,21 +13,21 @@ function Statistics() {
             <IoDocumentsOutline className="h-8 w-8"/>
           </div>
           <div className="stat-value text-3xl mb-2">450</div>
-          <div className="stat-desc text-lg">O‘quv meyoriy hujjatlar</div>
+          <div className="stat-desc text-lg">O'quv meyoriy hujjatlar</div>
         </div>
         <div className="stat">
           <div className="stat-figure text-primary">
             <LuBookCopy className="h-8 w-8"/>
           </div>
           <div className="stat-value text-3xl mb-2">4,200</div>
-          <div className="stat-desc text-lg">O‘quv adabiyotlari</div>
+          <div className="stat-desc text-lg">O'quv adabiyotlari</div>
         </div>
         <div className="stat">
           <div className="stat-figure text-primary">
             <HiOutlineClipboardDocumentList className="h-8 w-8"/>
           </div>
           <div className="stat-value text-3xl mb-2">1,200</div>
-          <div className="stat-desc text-lg">O‘qitish materiallari to‘plami</div>
+          <div className="stat-desc text-lg">O'qitish materiallari to'plami</div>
         </div>
           <div className="stat">
           <div className="stat-figure text-primary">
