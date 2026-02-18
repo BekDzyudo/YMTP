@@ -1,37 +1,37 @@
 import React from 'react'
-import { FaLaptopCode, FaChalkboardTeacher, FaCertificate, FaUserGraduate, FaRocket, FaCheckCircle, FaArrowRight } from 'react-icons/fa'
+import { FaFolderOpen, FaBook, FaCertificate, FaLightbulb, FaFileAlt, FaRocket, FaCheckCircle, FaArrowRight } from 'react-icons/fa'
 
 function EduProfHome() {
   const features = [
     {
-      icon: <FaLaptopCode size={28} />,
-      title: "Zamonaviy Ta'lim Platformasi",
-      description: "Interaktiv darslar va zamonaviy ta'lim materiallari"
+      icon: <FaFileAlt size={28} />,
+      title: "O'quv Me'yoriy Hujjatlari",
+      description: "O'quv reja, dastur va me'yoriy-huquqiy hujjatlar to'plami"
     },
     {
-      icon: <FaChalkboardTeacher size={28} />,
-      title: "Professional O'qituvchilar",
-      description: "Tajribali mutaxassislar tomonidan tayyorlangan kurslar"
+      icon: <FaBook size={28} />,
+      title: "O'quv Adabiyotlari",
+      description: "Kasbiy fanlar bo'yicha o'quv qo'llanmalari va darsliklar"
     },
     {
       icon: <FaCertificate size={28} />,
-      title: "Sertifikatlar",
-      description: "Kursni muvaffaqiyatli yakunlang va sertifikat oling"
+      title: "Malaka Oshirish Sertifikatlari",
+      description: "Davlat namunasidagi malaka oshirish sertifikatlari"
     },
     {
-      icon: <FaUserGraduate size={28} />,
-      title: "Shaxsiy Rivojlanish",
-      description: "O'z bilim va ko'nikmalaringizni oshiring"
-    }
+      icon: <FaFolderOpen size={28} />,
+      title: "O'qitish Materiallari To'plami",
+      description: "Darslik, qo'llanma va o'quv materiallarining keng to'plami"
+    },
   ];
 
   const benefits = [
-    "Onlayn ta'lim materiallari",
-    "Video darsliklar va amaliy mashg'ulotlar",
-    "Testlar va baholash tizimi",
-    "Professional sertifikatlar",
-    "24/7 platformaga kirish imkoniyati",
-    "Mobil qurilmalarda ishlaydi"
+    "Malaka oshirish sertifikatlari",
+    "O‘quv adabiyotlari",
+    "O‘qitish materiallari to‘plami",
+    "O‘quv reja va dasturlari",
+    "Qisqa muddatli kurslar",
+    "Metodik tavsiyalar"
   ];
 
   return (
@@ -53,22 +53,22 @@ function EduProfHome() {
             {/* Badge */}
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500/10 border border-blue-500/20 rounded-full">
               <FaRocket className="text-blue-600 dark:text-blue-400" size={18} />
-              <span className="text-blue-600 dark:text-blue-400 font-semibold text-sm">Professional Ta'lim Platformasi</span>
+              <span className="text-blue-600 dark:text-blue-400 font-semibold text-sm">Kasbiy Ta'lim Hujjatlar</span>
             </div>
 
             {/* Heading */}
             <div>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black mb-4 leading-tight">
-                <span className="bg-gradient-to-r from-blue-600 via-cyan-600 to-blue-600 bg-clip-text text-transparent">
-                  EduProf
+                <span className="bg-gradient-to-r from-blue-600 via-cyan-600 to-blue-600 bg-clip-text text-transparent font-serif">
+                  Metodik ta'minlash
                 </span>
                 <br />
-                <span className="text-base-content">
-                  Ta'lim Platformasi
+                <span className="text-base-content font-serif">
+                  axborot tizimi
                 </span>
               </h1>
               <p className="text-base-content/70 text-lg sm:text-xl max-w-xl">
-                Kasbiy ta'lim sohasidagi eng zamonaviy onlayn ta'lim platformasi. 
+                Kasbiy ta'lim sohasidagi barcha metodik hujjatlar jamlanmasi. 
                 Bilimingizni oshiring, ko'nikmalaringizni rivojlantiring!
               </p>
             </div>
@@ -91,13 +91,9 @@ function EduProfHome() {
                 rel="noopener noreferrer"
                 className="group flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 rounded-full text-white font-bold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
               >
-                <span>Platformaga O'tish</span>
+                <span>Batafsil ma'lumot</span>
                 <FaArrowRight className="transition-transform duration-300 group-hover:translate-x-2" size={18} />
               </a>
-              
-              <button className="flex items-center gap-2 px-8 py-4 bg-white dark:bg-base-200 hover:bg-gray-50 dark:hover:bg-base-300 rounded-full text-base-content font-bold shadow-md hover:shadow-lg transition-all duration-300 border border-base-300">
-                <span>Batafsil Ma'lumot</span>
-              </button>
             </div>
           </div>
 

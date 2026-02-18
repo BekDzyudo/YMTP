@@ -3,221 +3,99 @@ import Divider from "../../components/Dvider";
 import { Navigation, Autoplay } from "swiper/modules";
 
 function Partners() {
+  const partners = [
+    { name: "UNICEF", image: "/unicef.png", description: "BMT Bolalar jamg'armasi" },
+    { name: "Askaniya", image: "/askaniya.png", description: "Askaniya ta'lim markazi" },
+    { name: "Avestos", image: "/avestos.png", description: "Avestos hamkorlik tashkiloti" },
+    { name: "BIBB", image: "/BIBB.png", description: "Federal kasb-hunar ta'limi instituti" },
+    { name: "Darya", image: "/Darya.png", description: "Darya ta'lim markazi" },
+    { name: "IRPO", image: "/irpo.png", description: "Rossiya kasb-hunar ta'limi instituti" },
+    { name: "Krivet", image: "/krivet.png", description: "Krivet o'quv markazi" },
+    { name: "RIPO", image: "/ripo.png", description: "Belarus kasb-hunar ta'limi instituti" },
+    { name: "RUDN", image: "/Rudn.png", description: "Rossiya do'stlik universiteti" },
+    { name: "Shvetsiya", image: "/shvesiya.png", description: "Shvetsiya ta'lim agentligi" },
+    { name: "UNESCO", image: "/unesco.png", description: "BMT ta'lim, fan va madaniyat tashkiloti" },
+    { name: "VET4UZ", image: "/vetuz.png", description: "Kasbiy ta'lim rivojlantirish loyihasi" },
+  ];
+
   return (
-    <section className="mb-10 sm:mb-16">
-       <Divider color="blue" />
-      <h2 className="text-center text-2xl sm:text-4xl font-bold mb-5 sm:mb-10">
-        Xorijiy hamkorlar
-      </h2>
-      <Swiper
-      modules={[Navigation, Autoplay]}
-        spaceBetween={32}
-        slidesPerView={5}
-        loop={true}
-        autoplay={{
-          delay: 2500,
-          disableOnInteraction: false,
+    <section className="relative py-12 sm:py-20 overflow-hidden">
+      {/* World Map Background Image */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center"
+        style={{
+          backgroundImage: `url('https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?w=1920&q=80')`,
+          filter: 'grayscale(100%) brightness(0.3)'
         }}
-        breakpoints={{
-  320: { slidesPerView: 1 },
-  640: { slidesPerView: 2 },
-  1024: { slidesPerView: 4 },
-}}
-        className="w-full leaders-swiper"
-      >
-        <SwiperSlide>
-          <div className="card card-side bg-base-300 h-full shadow-sm p-3">
-            <figure className="w-1/2">
-              <img
-                src="/unicef.png"
-                alt="unicef"
-                className="w-full object-contain"
-              />
-            </figure>
-            <div className="card-body">
-              <h2 className="card-title">
-                Federal kasb-hunar ta'limi instituti (BIBB)
-              </h2>
-            </div>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className="card card-side bg-base-300 h-full shadow-sm p-3">
-            <figure className="w-1/2">
-              <img
-                src="/askaniya.png"
-                alt="Askaniya"
-                className="w-full object-contain"
-              />
-            </figure>
-            <div className="card-body">
-              <h2 className="card-title">
-                Federal kasb-hunar ta'limi instituti (BIBB)
-              </h2>
-            </div>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className="card card-side bg-base-300 h-full shadow-sm p-3">
-            <figure className="w-1/2">
-              <img
-                src="/avestos.png"
-                alt="Avestos"
-                className="w-full object-contain"
-              />
-            </figure>
-            <div className="card-body">
-              <h2 className="card-title">
-                Federal kasb-hunar ta'limi instituti (BIBB)
-              </h2>
-            </div>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className="card card-side bg-base-300 h-full shadow-sm p-3">
-            <figure className="w-1/2">
-              <img
-                src="/BIBB.png"
-                alt="BIBB"
-                className="w-full object-contain"
-              />
-            </figure>
-            <div className="card-body">
-              <h2 className="card-title">
-                Federal kasb-hunar ta'limi instituti (BIBB)
-              </h2>
-            </div>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className="card card-side bg-base-300 h-full shadow-sm p-3">
-            <figure className="w-1/2">
-              <img
-                src="/Darya.png"
-                alt="Darya"
-                className="w-full object-contain"
-              />
-            </figure>
-            <div className="card-body">
-              <h2 className="card-title">
-                Federal kasb-hunar ta'limi instituti (BIBB)
-              </h2>
-            </div>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className="card card-side bg-base-300 h-auto shadow-sm p-3">
-            <div className="w-1/2 h-24">
-              <img
-                src="/irpo.png"
-                alt="Irpo"
-                className="w-full h-full object-contain"
-              />
-            </div>
-            <div className="card-body">
-              <h2 className="card-title">
-                Federal kasb-hunar ta'limi instituti (BIBB)
-              </h2>
-            </div>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className="card card-side bg-base-300 h-full shadow-sm p-3">
-            <figure className="w-1/2">
-              <img
-                src="/krivet.png"
-                alt="Krivet"
-                className="w-full object-contain"
-              />
-            </figure>
-            <div className="card-body">
-              <h2 className="card-title">
-                Federal kasb-hunar ta'limi instituti (BIBB)
-              </h2>
-            </div>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className="card card-side bg-base-300 h-full shadow-sm p-3">
-            <figure className="w-1/2">
-              <img
-                src="/ripo.png"
-                alt="Ripo"
-                className="w-full object-contain"
-              />
-            </figure>
-            <div className="card-body">
-              <h2 className="card-title">
-                Federal kasb-hunar ta'limi instituti (BIBB)
-              </h2>
-            </div>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className="card card-side bg-base-300 h-full shadow-sm p-3">
-            <figure className="w-1/2">
-              <img
-                src="/Rudn.png"
-                alt="Rudn"
-                className="w-full object-contain"
-              />
-            </figure>
-            <div className="card-body">
-              <h2 className="card-title">
-                Federal kasb-hunar ta'limi instituti (BIBB)
-              </h2>
-            </div>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className="card card-side bg-base-300 h-full shadow-sm p-3">
-            <figure className="w-1/2">
-              <img
-                src="/shvesiya.png"
-                alt="Shvesiya"
-                className="w-full object-contain"
-              />
-            </figure>
-            <div className="card-body">
-              <h2 className="card-title">
-                Federal kasb-hunar ta'limi instituti (BIBB)
-              </h2>
-            </div>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className="card card-side bg-base-300 h-full shadow-sm p-3">
-            <figure className="w-1/2">
-              <img
-                src="/unesco.png"
-                alt="Unesco"
-                className="w-full object-contain"
-              />
-            </figure>
-            <div className="card-body">
-              <h2 className="card-title">
-                Federal kasb-hunar ta'limi instituti (BIBB)
-              </h2>
-            </div>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className="card card-side bg-base-300 h-full shadow-sm p-3">
-            <figure className="w-1/2">
-              <img
-                src="/vetuz.png"
-                alt="Vet4uz"
-                className="w-full object-contain"
-              />
-            </figure>
-            <div className="card-body">
-              <h2 className="card-title">
-                Federal kasb-hunar ta'limi instituti (BIBB)
-              </h2>
-            </div>
-          </div>
-        </SwiperSlide>
+      ></div>
+
+      {/* Blue Transparent Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-600/85 via-blue-500/80 to-cyan-500/85"></div>
+
+      {/* Decorative Elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-10 right-20 w-72 h-72 bg-white/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-10 left-20 w-80 h-80 bg-cyan-300/10 rounded-full blur-3xl"></div>
+        <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-blue-300/10 rounded-full blur-3xl"></div>
+      </div>
+
+      <div className="relative w-full px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16">        
+        {/* Section Header */}
+        <div className="text-center mb-8 sm:mb-12">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black mb-3 text-white font-serif">
+            Xalqaro hamkorlar
+          </h2>
+          <p className="text-white/90 text-base sm:text-lg max-w-2xl mx-auto">
+            Biz jahonning yetakchi ta'lim tashkilotlari bilan hamkorlik qilamiz
+          </p>
+        </div>
+
+        <Swiper
+          modules={[Navigation, Autoplay]}
+          spaceBetween={24}
+          slidesPerView={1}
+          loop={true}
+          speed={700}
+          autoplay={{
+            delay: 2000,
+            disableOnInteraction: false,
+          }}
+          breakpoints={{
+            640: { slidesPerView: 2, spaceBetween: 20 },
+            1024: { slidesPerView: 4, spaceBetween: 24 },
+            1440: { slidesPerView: 5, spaceBetween: 24 },
+          }}
+          className="w-full partners-swiper"
+        >
+          {partners.map((partner, index) => (
+            <SwiperSlide key={index}>
+              <div className="group relative bg-white/95 backdrop-blur-sm rounded-2xl p-6 shadow-xl border-2 border-gray-200 hover:border-cyan-400 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl h-full">
+                
+                <div className="relative flex flex-col items-center justify-center h-full gap-4">
+                  {/* Logo Container */}
+                  <div className="w-full h-32 flex items-center justify-center p-4 bg-gradient-to-br from-gray-50 to-blue-50 rounded-xl transition-all duration-300 group-hover:from-blue-50 group-hover:to-cyan-50">
+                    <img
+                      src={partner.image}
+                      alt={partner.name}
+                      className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-110"
+                    />
+                  </div>
+                  
+                  {/* Content */}
+                  <div className="text-center">
+                    <h3 className="text-gray-900 font-bold text-lg mb-2 group-hover:text-blue-600 transition-colors duration-300">
+                      {partner.name}
+                    </h3>
+                    <p className="text-gray-600 text-sm line-clamp-2">
+                      {partner.description}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </SwiperSlide>
+          ))}
       </Swiper>
+      </div>
     </section>
   );
 }
