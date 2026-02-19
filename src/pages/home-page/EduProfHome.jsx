@@ -35,7 +35,7 @@ function EduProfHome() {
   ];
 
   return (
-    <section className='relative h-screen w-full bg-gradient-to-br from-blue-50 via-white to-cyan-50 dark:from-base-300 dark:via-base-100 dark:to-base-300 py-12 overflow-hidden'>
+    <section className='relative w-full bg-gradient-to-br from-blue-50 via-white to-cyan-50 dark:from-base-300 dark:via-base-100 dark:to-base-300 py-24 overflow-hidden'>
       {/* Background Decorations */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 right-10 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl"></div>
@@ -122,40 +122,7 @@ function EduProfHome() {
               </div>
             ))}
           </div>
-
         </div>
-
-        {/* Bottom Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
-          <div className="text-center p-4 bg-white/50 dark:bg-base-200/50 backdrop-blur-sm rounded-xl border border-base-300">
-            <div className="text-3xl font-black bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent mb-1">
-              10,000+
-            </div>
-            <div className="text-base-content/60 text-sm font-medium">Foydalanuvchilar</div>
-          </div>
-          
-          <div className="text-center p-4 bg-white/50 dark:bg-base-200/50 backdrop-blur-sm rounded-xl border border-base-300">
-            <div className="text-3xl font-black bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent mb-1">
-              500+
-            </div>
-            <div className="text-base-content/60 text-sm font-medium">Onlayn Kurslar</div>
-          </div>
-          
-          <div className="text-center p-4 bg-white/50 dark:bg-base-200/50 backdrop-blur-sm rounded-xl border border-base-300">
-            <div className="text-3xl font-black bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent mb-1">
-              100+
-            </div>
-            <div className="text-base-content/60 text-sm font-medium">O'qituvchilar</div>
-          </div>
-          
-          <div className="text-center p-4 bg-white/50 dark:bg-base-200/50 backdrop-blur-sm rounded-xl border border-base-300">
-            <div className="text-3xl font-black bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent mb-1">
-              5,000+
-            </div>
-            <div className="text-base-content/60 text-sm font-medium">Sertifikatlar</div>
-          </div>
-        </div>
-
       </div>
     </section>
   )

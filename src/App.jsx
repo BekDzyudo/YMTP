@@ -31,6 +31,10 @@ import MaterialDetail from "./pages/materials/MaterialDetail";
 import RTR from "./pages/rtr/RTR";
 import EDUPROF from "./pages/edu-prof/EDUPROF";
 import RTRDetail from "./pages/rtr/RTRDetail";
+import InstitutInfo from "./pages/institut-info/InstitutInfo";
+import InstitutSection from "./pages/institut-info/InstitutSection";
+import { institutLinks } from "./constants/institutLinks";
+import NewsList from "./pages/news/NewsList";
 
 function App() {
 
@@ -116,6 +120,17 @@ function App() {
         {
           path: "methodological-support",
           element: <EDUPROF/>
+        },
+        {
+          path: "news",
+          element: <NewsList/>
+        },
+        {
+          element: <InstitutInfo />,
+          children: institutLinks.map((link) => ({
+            path: link.slug,
+            element: <InstitutSection />,
+          })),
         },
         {
           path: "rating",

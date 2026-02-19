@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { FaAngleDown } from "react-icons/fa";
+import { FaAngleDown, FaAngleRight } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
 import { IoMenu } from "react-icons/io5";
 import { useGlobalContext } from "../hooks/useGlobalContext";
@@ -7,6 +7,7 @@ import { useHero } from "../context/HeroContext";
 import { FiLogIn } from "react-icons/fi";
 import { AuthContext } from "../context/AuthContext";
 import useGetFetchProfile from "../hooks/useGetFetchProfile";
+import { institutLinks } from "../constants/institutLinks";
 
 function Header() {
   const { onHero } = useHero();
@@ -22,12 +23,12 @@ function Header() {
   const useHeroStyle = theme === "night" || (theme === "light" && onHero);
   
   // Barcha komponentlar uchun yagona stil o'zgaruvchilari
-  const logoSrc = useHeroStyle ? "/new_logo_white.png" : "/new_logo_blue.png";
-  const textColor = useHeroStyle ? "text-white" : "text-base-content";
-  const borderColor = useHeroStyle ? "border-gray-400" : "border-gray-700";
+  const logoSrc = "/new_logo_white.png"; // Doim oq logo
+  const textColor = useHeroStyle ? "text-white" : "text-white";
+  const borderColor = useHeroStyle ? "border-gray-400" : "border-white/20";
   
-  // Background rangi - hero ustida transparent, boshqa joylarda to'liq
-  const bgColor = useHeroStyle ? "bg-transparent" : "bg-base-100/95";
+  // Background rangi - hero ustida transparent, boshqa joylarda #002d6d gradient
+  const bgColor = useHeroStyle ? "bg-transparent" : "bg-linear-to-r from-[#002d6d]/95 via-[#003d7d]/95 to-[#002d6d]/95";
 
   return (
     <div
@@ -56,7 +57,7 @@ function Header() {
           <ul
             className={`menu lg:menu-horizontal 2xl:gap-3 lg:text-[12px] border rounded-xl xl:text-[16px] ${borderColor}`}
           >
-            <li className="relative">
+            {/* <li className="relative">
               <div className="dropdown dropdown-hover group">
                 <div
                   tabIndex={0}
@@ -67,40 +68,28 @@ function Header() {
                 </div>
                 <ul
                   tabIndex="-1"
-                  className="dropdown-content menu bg-base-300 border border-gray-700 rounded-lg z-40 w-56 p-2 shadow-xl left-0 top-full -mt-0 opacity-0 translate-y-[50px] group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 ease-out"
+                  className="dropdown-content menu bg-base-300 rounded-lg z-40 w-56 p-2 shadow-xl left-0 top-full -mt-0 opacity-0 translate-y-[50px] group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 ease-out"
                 >
-                  <li>
-                    <Link to="/institut/haqida" className="py-2 hover:bg-gradient-to-r hover:from-blue-500/20 hover:to-info/20 hover:translate-x-1 transition-all duration-300 rounded-lg">
-                      Institut haqida
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/institut/rahbariyat" className="py-2 hover:bg-gradient-to-r hover:from-blue-500/20 hover:to-info/20 hover:translate-x-1 transition-all duration-300 rounded-lg">
-                      Rahbariyat
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/institut/tuzilma" className="py-2 hover:bg-gradient-to-r hover:from-blue-500/20 hover:to-info/20 hover:translate-x-1 transition-all duration-300 rounded-lg">
-                      Tashkiliy tuzilma
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/institut/xodimlar" className="py-2 hover:bg-gradient-to-r hover:from-blue-500/20 hover:to-info/20 hover:translate-x-1 transition-all duration-300 rounded-lg">
-                      Xodimlar
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/institut/vakansiyalar" className="py-2 hover:bg-gradient-to-r hover:from-blue-500/20 hover:to-info/20 hover:translate-x-1 transition-all duration-300 rounded-lg">
-                      Vakansiyalar
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/institut/aloqa" className="py-2 hover:bg-gradient-to-r hover:from-blue-500/20 hover:to-info/20 hover:translate-x-1 transition-all duration-300 rounded-lg">
-                      Aloqa
-                    </Link>
-                  </li>
+                  {institutLinks.map((link) => (
+                    <li key={link.to} className="group/item">
+                      <Link to={link.to} className="relative block py-2.5 text-[15px] font-medium transition-all duration-300 rounded-lg hover:translate-x-1 pl-0 group-hover/item:pl-4">
+                        <span className="absolute left-0 top-1/2 -translate-y-1/2 opacity-0 group-hover/item:opacity-100 transition-opacity duration-300 text-primary">
+                          <FaAngleRight size={13} />
+                        </span>
+                        {link.label}
+                      </Link>
+                    </li>
+                  ))}
                 </ul>
               </div>
+            </li> */}
+            <li>
+              <Link
+                to="/"
+                className={textColor}
+              >
+                Bosh sahifa
+              </Link>
             </li>
             <li>
               <Link
@@ -120,7 +109,7 @@ function Header() {
             </li>
             <li>
               <Link
-                // to="/methodological-support"
+                to="/news"
                 className={textColor}
               >
                 Yangiliklar

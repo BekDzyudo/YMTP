@@ -5,6 +5,7 @@ import useGetFetch from '../../hooks/useGetFetch';
 function News() {
 
   const {data, isPending, error} = useGetFetch(`${import.meta.env.VITE_BASE_URL}/shared_app/yangiliklar/latest/`)
+  
   // Kategoriyaga mos icon va gradient
   const getCategoryStyle = (kategoriya) => {
     const styles = {
@@ -14,7 +15,7 @@ function News() {
       },
       "Talim": {
         icon: <FaGraduationCap size={20} />,
-        gradient: "from-blue-500 to-cyan-500"
+        gradient: "from-emerald-500 to-teal-500"
       },
       "Yutuqlar": {
         icon: <FaTrophy size={20} />,
@@ -138,7 +139,7 @@ function News() {
           {newsData && newsData.length > 0 ? (
             <>
           {/* 2XL+ Layout: 1 Featured + 4 Side Cards */}
-          <div className="hidden 2xl:grid 2xl:grid-cols-5 gap-6 min-h-[600px]">
+          <div className="hidden 2xl:grid 2xl:grid-cols-5 gap-6 h-[600px]">
             {/* Featured News - Large Card */}
             <div className="2xl:col-span-3 group relative min-h-0">
               <div className="relative h-full bg-base-100 rounded-3xl overflow-hidden shadow-lg border border-base-300">
@@ -165,7 +166,7 @@ function News() {
                       {newsData[0].title}
                     </h3>
                     
-                    <button className="flex items-center gap-2 px-6 py-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white rounded-full font-semibold group/btn transition-all duration-300 border border-white/20 hover:border-white/40">
+                    <button className="flex items-center gap-2 px-6 py-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white rounded-full font-semibold group/btn transition-all duration-300 border border-white/20 hover:border-white/40 cursor-pointer">
                       <span>Batafsil</span>
                       <FaArrowRight className="transition-transform duration-300 group-hover/btn:translate-x-2" size={14} />
                     </button>
@@ -210,7 +211,7 @@ function News() {
                       </p>
                       
                       <div className="flex justify-end">
-                        <button className="flex items-center gap-1 text-primary font-semibold text-xs group/btn flex-shrink-0">
+                        <button className="flex items-center gap-1 text-primary font-semibold text-xs group/btn flex-shrink-0 cursor-pointer">
                           <span>Batafsil</span>
                           <FaArrowRight className="transition-transform duration-300 group-hover/btn:translate-x-1" size={10} />
                         </button>
@@ -258,7 +259,7 @@ function News() {
                     </p>
                     
                     <div className="flex justify-end">
-                      <button className="flex items-center gap-2 text-primary font-semibold text-sm group/btn transition-all duration-300 flex-shrink-0">
+                      <button className="flex items-center gap-2 text-primary font-semibold text-sm group/btn transition-all duration-300 flex-shrink-0 cursor-pointer">
                         <span>Batafsil</span>
                         <FaArrowRight className="transition-transform duration-300 group-hover/btn:translate-x-2" size={14} />
                       </button>
@@ -305,7 +306,7 @@ function News() {
                     </p>
                     
                     <div className="flex justify-end">
-                      <button className="flex items-center gap-1 text-primary font-semibold text-xs group/btn flex-shrink-0">
+                      <button className="flex items-center gap-1 text-primary font-semibold text-xs group/btn flex-shrink-0 cursor-pointer">
                         <span>Batafsil</span>
                         <FaArrowRight className="transition-transform duration-300 group-hover/btn:translate-x-1" size={12} />
                       </button>
@@ -352,7 +353,7 @@ function News() {
                     </p>
                     
                     <div className="flex justify-end">
-                      <button className="flex items-center gap-1 text-primary font-semibold text-xs group/btn flex-shrink-0">
+                      <button className="flex items-center gap-1 text-primary font-semibold text-xs group/btn flex-shrink-0 cursor-pointer">
                         <span>Batafsil</span>
                         <FaArrowRight className="transition-transform duration-300 group-hover/btn:translate-x-1" size={12} />
                       </button>
