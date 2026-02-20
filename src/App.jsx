@@ -32,9 +32,14 @@ import RTR from "./pages/rtr/RTR";
 import EDUPROF from "./pages/edu-prof/EDUPROF";
 import RTRDetail from "./pages/rtr/RTRDetail";
 import InstitutInfo from "./pages/institut-info/InstitutInfo";
-import InstitutSection from "./pages/institut-info/InstitutSection";
+import About from "./pages/institut-info/About";
+import Management from "./pages/institut-info/Management";
+import Structure from "./pages/institut-info/Structure";
+import Vacancy from "./pages/institut-info/Vacancy";
+import Contact from "./pages/institut-info/Contact";
 import { institutLinks } from "./constants/institutLinks";
 import NewsList from "./pages/news/NewsList";
+import NewsDetail from "./pages/news/NewsDetail";
 
 function App() {
 
@@ -126,11 +131,33 @@ function App() {
           element: <NewsList/>
         },
         {
+          path: "news/:id",
+          element: <NewsDetail/>
+        },
+        {
           element: <InstitutInfo />,
-          children: institutLinks.map((link) => ({
-            path: link.slug,
-            element: <InstitutSection />,
-          })),
+          children: [
+            {
+              path: "about",
+              element: <About />,
+            },
+            {
+              path: "management",
+              element: <Management />,
+            },
+            {
+              path: "structure",
+              element: <Structure />,
+            },
+            {
+              path: "vacansy",
+              element: <Vacancy />,
+            },
+            {
+              path: "contact",
+              element: <Contact />,
+            },
+          ],
         },
         {
           path: "rating",

@@ -1,22 +1,13 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
-import { institutLinks } from "../../constants/institutLinks";
+import { Link } from "react-router-dom";
 import useGetFetch from "../../hooks/useGetFetch";
 import { FaHome } from "react-icons/fa";
 import DOMPurify from "dompurify";
 
-function InstitutSection() {
-  const { pathname } = useLocation();
-
-  const current =
-    institutLinks.find((item) => pathname.includes(item.slug)) ||
-    institutLinks[0];
-
-  // Slug asosida API endpoint yaratish
-  const apiEndpoint = `${import.meta.env.VITE_BASE_URL}/shared_app/institut/${current.slug}/`;
-
-  const { data, isPending, error } = useGetFetch(apiEndpoint);
-  console.log('Current slug:', current.slug, 'Data:', data);
+function Contact() {
+  const { data, isPending, error } = useGetFetch(
+    `${import.meta.env.VITE_BASE_URL}/shared_app/institut/contact/`
+  );
 
   return (
     <section className="w-full bg-base-100 rounded-2xl border border-base-300 p-4 sm:p-6 lg:p-8 min-h-105">
@@ -33,18 +24,14 @@ function InstitutSection() {
               </Link>
             </li>
             <li>
-              <Link
-                className="text-base-content/70 hover:text-blue-700 transition-colors"
-              >
+              <Link className="text-base-content/70 hover:text-blue-700 transition-colors">
                 Institut
               </Link>
             </li>
-            <li className="text-blue-700 font-semibold">
-              {current.label}
-            </li>
+            <li className="text-blue-700 font-semibold">Aloqa</li>
           </ul>
         </div>
-        <h1 className="text-2xl sm:text-3xl font-bold font-serif">{current.label}</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold font-serif">Aloqa</h1>
       </div>
 
       {isPending ? (
@@ -55,10 +42,10 @@ function InstitutSection() {
         <div className="alert alert-error">
           <span>Ma'lumotlarni yuklashda xatolik yuz berdi</span>
         </div>
-      ) : data?.length && data[0]?.description ? (
-        <div 
-          className="prose prose-base sm:prose-lg max-w-none text-base-content/80 text-justify"
-          dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data[0]?.description) }}
+      ) : data?.description ? (
+        <div
+          className="prose prose-base sm:prose-lg max-w-none text-base-content/80"
+          dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data.description) }}
         />
       ) : (
         <p className="text-base-content/70 text-sm sm:text-base">
@@ -69,4 +56,4 @@ function InstitutSection() {
   );
 }
 
-export default InstitutSection;
+export default Contact;

@@ -1,6 +1,7 @@
 import React from 'react'
 import { FaCalendar, FaArrowRight, FaNewspaper, FaTrophy, FaUsers, FaGraduationCap, FaHandshake, FaChalkboardTeacher, FaLightbulb } from 'react-icons/fa'
 import useGetFetch from '../../hooks/useGetFetch';
+import { Link } from 'react-router-dom';
 
 function News() {
 
@@ -167,7 +168,7 @@ function News() {
                     </h3>
                     
                     <button className="flex items-center gap-2 px-6 py-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white rounded-full font-semibold group/btn transition-all duration-300 border border-white/20 hover:border-white/40 cursor-pointer">
-                      <span>Batafsil</span>
+                      <Link to={`/news/${newsData[0].id}`}>Batafsil</Link>
                       <FaArrowRight className="transition-transform duration-300 group-hover/btn:translate-x-2" size={14} />
                     </button>
                   </div>
@@ -212,7 +213,7 @@ function News() {
                       
                       <div className="flex justify-end">
                         <button className="flex items-center gap-1 text-primary font-semibold text-xs group/btn flex-shrink-0 cursor-pointer">
-                          <span>Batafsil</span>
+                          <Link to={`/news/${news.id}`}>Batafsil</Link>
                           <FaArrowRight className="transition-transform duration-300 group-hover/btn:translate-x-1" size={10} />
                         </button>
                       </div>
@@ -260,7 +261,7 @@ function News() {
                     
                     <div className="flex justify-end">
                       <button className="flex items-center gap-2 text-primary font-semibold text-sm group/btn transition-all duration-300 flex-shrink-0 cursor-pointer">
-                        <span>Batafsil</span>
+                        <Link to={`/news/${news.id}`}>Batafsil</Link>
                         <FaArrowRight className="transition-transform duration-300 group-hover/btn:translate-x-2" size={14} />
                       </button>
                     </div>
@@ -307,7 +308,7 @@ function News() {
                     
                     <div className="flex justify-end">
                       <button className="flex items-center gap-1 text-primary font-semibold text-xs group/btn flex-shrink-0 cursor-pointer">
-                        <span>Batafsil</span>
+                        <Link to={`/news/${news.id}`}>Batafsil</Link>
                         <FaArrowRight className="transition-transform duration-300 group-hover/btn:translate-x-1" size={12} />
                       </button>
                     </div>
@@ -354,7 +355,7 @@ function News() {
                     
                     <div className="flex justify-end">
                       <button className="flex items-center gap-1 text-primary font-semibold text-xs group/btn flex-shrink-0 cursor-pointer">
-                        <span>Batafsil</span>
+                        <Link to={`/news/${news.id}`}>Batafsil</Link>
                         <FaArrowRight className="transition-transform duration-300 group-hover/btn:translate-x-1" size={12} />
                       </button>
                     </div>

@@ -30,7 +30,7 @@ function Partners() {
       ></div>
 
       {/* Blue Transparent Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-600/85 via-blue-500/80 to-cyan-500/85"></div>
+      <div className="absolute inset-0 bg-linear-to-br from-blue-700/85 via-blue-600/80 to-blue-500/85"></div>
 
       {/* Decorative Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -73,7 +73,7 @@ function Partners() {
                 
                 <div className="relative flex flex-col items-center justify-center h-full gap-4">
                   {/* Logo Container */}
-                  <div className="w-full h-32 flex items-center justify-center p-4 bg-gradient-to-br from-gray-50 to-blue-50 rounded-xl transition-all duration-300 group-hover:from-blue-50 group-hover:to-cyan-50">
+                  <div className="w-full h-32 flex items-center justify-center p-4 bg-linear-to-br from-gray-50 to-blue-50 rounded-xl transition-all duration-300 group-hover:from-blue-50 group-hover:to-cyan-50">
                     <img
                       src={partner.image}
                       alt={partner.name}

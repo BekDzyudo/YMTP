@@ -15,7 +15,10 @@ import RTRHero from "./RTRHero";
 import useGetFetch from "../../hooks/useGetFetch";
 
 function RTR() {
-  const [activeFilter, setActiveFilter] = useState(1);
+  const [activeFilter, setActiveFilter] = useState(() => {
+    const saved = sessionStorage.getItem('rtr_filter');
+    return saved ? parseInt(saved) : 1;
+  });
   const [data, setData] = useState(null);
   const [search, setSearch] = useState("");
 
@@ -60,10 +63,18 @@ function RTR() {
     fetchData(1);
   }, [search, activeFilter]);
 
+  useEffect(() => {
+    sessionStorage.setItem('rtr_filter', activeFilter.toString());
+  }, [activeFilter]);
+
+  const handleFilterChange = (filterId) => {
+    setActiveFilter(filterId);
+  };
+
   return (
     <>
       <RTRHero />
-      <section className="relative flex flex-col items-center -mt-10 z-20 ">
+      <section className="relative flex flex-col items-center -mt-10 z-20 mb-10 sm:mb-20">
         <div className="w-full mx-5 xl:max-w-7xl 2xl:max-w-10/12 grid sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-5 xl:gap-10 px-2 sm:px-4 shadow-xl rounded-2xl bg-base-100 py-2 sm:py-4 lg:py-10">
           {filterCards.map((card) => {
             const isActive = card.id === activeFilter;
@@ -78,7 +89,7 @@ function RTR() {
                     : "bg-slate-100 text-gray-800 shadow-sm border border-slate-50 hover:border-gray-200")
                 }
                 style={{ top: 0 }}
-                onClick={() => setActiveFilter(card.id)}
+                onClick={() => handleFilterChange(card.id)}
               >
                 <Icon
                   className={

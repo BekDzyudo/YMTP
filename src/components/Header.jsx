@@ -28,7 +28,7 @@ function Header() {
   const borderColor = useHeroStyle ? "border-gray-400" : "border-white/20";
   
   // Background rangi - hero ustida transparent, boshqa joylarda #002d6d gradient
-  const bgColor = useHeroStyle ? "bg-transparent" : "bg-linear-to-r from-[#002d6d]/95 via-[#003d7d]/95 to-[#002d6d]/95";
+  const bgColor = useHeroStyle ? "bg-transparent" : "bg-linear-to-r from-[#002d6d]/90 via-[#003d7d]/90 to-[#002d6d]/90";
 
   return (
     <div
@@ -57,7 +57,7 @@ function Header() {
           <ul
             className={`menu lg:menu-horizontal 2xl:gap-3 lg:text-[12px] border rounded-xl xl:text-[16px] ${borderColor}`}
           >
-            {/* <li className="relative">
+            <li className="relative">
               <div className="dropdown dropdown-hover group">
                 <div
                   tabIndex={0}
@@ -82,15 +82,15 @@ function Header() {
                   ))}
                 </ul>
               </div>
-            </li> */}
-            <li>
+            </li>
+            {/* <li>
               <Link
                 to="/"
                 className={textColor}
               >
                 Bosh sahifa
               </Link>
-            </li>
+            </li> */}
             <li>
               <Link
                 to="/digital-educational-resources"

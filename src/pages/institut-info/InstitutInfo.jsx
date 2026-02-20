@@ -16,26 +16,27 @@ function InstitutInfo() {
   }, [setOnHero]);
 
   return (
-    <section className="pt-26 pb-8 sm:pb-12">
+    <section className="bg-slate-100">
       {/* Main Content */}
-      <div className="px-3.5 sm:px-5 mx-auto w-full xl:w-full 2xl:w-11/12 mt-8">
+     <div className="sm:pt-26 pt-10 pb-8 sm:pb-12">
+       <div className="px-3.5 sm:px-5 mx-auto w-full xl:w-full 2xl:w-11/12 mt-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-6">
-          <div className="lg:col-span-8 xl:col-span-9">
+          <div className="col-span-1 lg:col-span-9 xl:col-span-9">
             <Outlet />
           </div>
 
-          <aside className="lg:col-span-4 xl:col-span-3">
+          <aside className="hidden lg:block lg:col-span-3 xl:col-span-3">
             <div className="bg-base-100 rounded-2xl border border-base-300 p-3 sm:p-4 sticky top-24">
-              <h3 className="text-lg font-bold mb-3">Institut bo'limlari</h3>
+              <h3 className="text-xl font-bold mb-3">Institut</h3>
               <ul className="menu w-full p-0 gap-1">
                 {institutLinks.map((link) => (
-                  <li key={link.to}>
+                  <li key={link.to} className="border-t border-base-300 py-1">
                     <NavLink
                       to={link.to}
                       className={({ isActive }) =>
-                        `rounded-xl px-3 py-2.5 transition-all duration-200 ${
+                        `rounded-lg px-3 py-3 text-[16px] transition-all duration-200 ${
                           isActive
-                            ? "bg-primary/15 text-primary font-semibold"
+                            ? "bg-[#eaeef5] text-blue-600 font-semibold"
                             : "hover:bg-base-200"
                         }`
                       }
@@ -49,6 +50,7 @@ function InstitutInfo() {
           </aside>
         </div>
       </div>
+     </div>
     </section>
   );
 }
