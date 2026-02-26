@@ -259,7 +259,7 @@ function MetodikTaminot() {
                   className="select select-sm md:select-lg outline-0 rounded-full min-w-44 text-sm md:text-[16px] shadow-sm border border-gray-200"
                   onChange={(e) => setBilimSoxasiId(e.target.value)}
                 >
-                  <option value="">{activeFilter === 2 ? "Modullar" : "Bilim sohasi"}</option>
+                  <option value="">{activeFilter === 1 ? "Bilim sohasi" : activeFilter === 2 ? "Modullar" : activeFilter === 3 ? "Ta'lim sohasi" : activeFilter === 4 ? "Sohalar" : ""}</option>
                   {bilimSoxasi?.map((bilim) => (
                     <option key={bilim.id} value={bilim.id}>
                       {bilim.name}

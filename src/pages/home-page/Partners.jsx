@@ -30,7 +30,7 @@ function Partners() {
       ></div>
 
       {/* Blue Transparent Overlay */}
-      <div className="absolute inset-0 bg-linear-to-br from-blue-700/85 via-blue-600/80 to-blue-500/85"></div>
+      <div className="absolute inset-0 bg-linear-to-br from-[#002d6d]/80 via-[#003d7d]/75 to-[#002d6d]/80"></div>
 
       {/* Decorative Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">

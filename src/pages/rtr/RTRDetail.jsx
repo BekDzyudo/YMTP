@@ -68,7 +68,8 @@ function RTRDetail() {
         if (!heroRef.current) return;
     
         const heroHeight = heroRef.current.offsetHeight;
-        setOnHero(window.scrollY < heroHeight);
+        const headerHeight = 80; // Header balandligi
+        setOnHero(window.scrollY < (heroHeight - headerHeight));
       };
     
       onScroll();

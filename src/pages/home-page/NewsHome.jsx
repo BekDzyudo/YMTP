@@ -17,7 +17,7 @@ function News() {
         icon: <FaHandshake size={20} />,
         gradient: "from-blue-500 to-cyan-500"
       },
-      "Talim": {
+      "Ta'lim": {
         icon: <FaGraduationCap size={20} />,
         gradient: "from-emerald-500 to-teal-500"
       },
@@ -146,10 +146,10 @@ function News() {
             Kasbiy ta'lim sohasidagi eng so'nggi yangiliklar va voqealar
           </p>
             </div>
-            <button className="hidden text-sm md:text-[16px] sm:flex items-center gap-2 px-6 py-3 bg-blue-200 hover:bg-blue-600 hover:text-white cursor-pointer rounded-full text-primary font-semibold group/btn transition-all duration-300 border border-primary/20 hover:border-primary/40">
+            <Link to="/news" className="hidden hover:scale-105 text-sm md:text-[16px] sm:flex items-center gap-2 px-6 py-3 cursor-pointer rounded-full text-white font-semibold group/btn transition-all duration-300 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700">
               <span>Barcha yangiliklar</span>
               <FaArrowRight className="transition-transform duration-300 group-hover/btn:translate-x-2" size={14} />
-            </button>
+            </Link>
           </div>
           
         </div>

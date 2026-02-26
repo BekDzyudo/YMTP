@@ -87,7 +87,7 @@ function RtrHome() {
               <Link 
                 to="/digital-educational-resources" 
                 rel="noopener noreferrer"
-                className="group inline-flex px-8 py-4 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 rounded-2xl text-white font-bold shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
+                className="rounded-full group inline-flex px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-bold shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
               >
                 <div className="flex items-center gap-3">
                   <span className="text-lg">Batafsil ma'lumot</span>
