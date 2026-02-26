@@ -28,7 +28,7 @@ function Header() {
   const borderColor = useHeroStyle ? "border-gray-400" : "border-white/20";
   
   // Background rangi - hero ustida transparent, boshqa joylarda #002d6d gradient
-  const bgColor = useHeroStyle ? "bg-transparent" : "bg-linear-to-r from-[#002d6d]/90 via-[#003d7d]/90 to-[#002d6d]/90";
+  const bgColor = useHeroStyle ? "bg-transparent" : "bg-gradient-to-r from-[#002d6d]/90 via-[#003d7d]/90 to-[#002d6d]/90";
 
   return (
     <div
@@ -101,7 +101,7 @@ function Header() {
             </li>
             <li>
               <Link
-                // to="/methodological-support"
+                to="/methodological-support"
                 className={textColor}
               >
                 Metodik ta'minot

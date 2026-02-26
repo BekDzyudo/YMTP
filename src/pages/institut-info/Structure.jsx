@@ -1,14 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import useGetFetch from "../../hooks/useGetFetch";
 import { FaHome } from "react-icons/fa";
-import DOMPurify from "dompurify";
+import useGetFetch from "../../hooks/useGetFetch";
 
 function Structure() {
-  const { data, isPending, error } = useGetFetch(
-    `${import.meta.env.VITE_BASE_URL}/shared_app/tuzilma/`
-  );
-console.log(data);
+
+  const {data} = useGetFetch(`${import.meta.env.VITE_BASE_URL}/shared_app/tuzilma/`)
+  console.log(data);
+  
+
 
   return (
     <section className="w-full bg-base-100 rounded-2xl border border-base-300 p-4 sm:p-6 lg:p-8 min-h-105">
@@ -35,24 +35,11 @@ console.log(data);
         <h1 className="text-2xl sm:text-3xl font-bold font-serif">Institut tuzilmasi</h1>
       </div>
 
-      {isPending ? (
-        <div className="flex justify-center items-center py-12">
-          <div className="loading loading-spinner loading-lg text-blue-600"></div>
-        </div>
-      ) : error ? (
-        <div className="alert alert-error">
-          <span>Ma'lumotlarni yuklashda xatolik yuz berdi</span>
-        </div>
-      ) : data?.description ? (
-        <div
-          className="prose prose-base sm:prose-lg max-w-none text-base-content/80"
-          dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data.description) }}
-        />
-      ) : (
-        <p className="text-base-content/70 text-sm sm:text-base">
-          Bu bo'lim uchun kontent topilmadi.
-        </p>
-      )}
+      {
+        data && data.length > 0 && (
+          <img src={data[0]?.file} alt="" className="w-full h-auto"/>
+        )
+      }
     </section>
   );
 }

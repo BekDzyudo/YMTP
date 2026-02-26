@@ -20,6 +20,7 @@ function NewsDetail() {
   const [newsDetail, setNewsDetail] = useState(null);
   const [relatedNews, setRelatedNews] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [currentSlide, setCurrentSlide] = useState(0);
 
   useEffect(() => {
     setOnHero(false);
@@ -58,6 +59,23 @@ function NewsDetail() {
       fetchNewsDetail();
     }
   }, [id]);
+
+  // Auto-play slider - hooks always called in the same order
+  useEffect(() => {
+    if (!newsDetail) return;
+    
+    const newsImages = newsDetail.rasmlar && newsDetail.rasmlar.length > 0
+      ? newsDetail.rasmlar.map(item => item.rasm)
+      : newsDetail.image ? [newsDetail.image] : [];
+    
+    if (newsImages.length <= 1) return;
+    
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % newsImages.length);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [newsDetail]);
 
   // Kategoriyaga mos icon va gradient
   const getCategoryStyle = (kategoriya) => {
@@ -158,7 +176,13 @@ function NewsDetail() {
   }
 
   const categoryStyle = getCategoryStyle(newsDetail.kategoriya);
-console.log(newsDetail);
+  console.log(newsDetail);
+
+  // Yangilik uchun rasmlar - slider uchun
+  const newsImages = newsDetail.rasmlar && newsDetail.rasmlar.length > 0
+    ? newsDetail.rasmlar.map(item => item.rasm)
+    : newsDetail.image ? [newsDetail.image] : [];
+
   return (
     <section className="bg-slate-100 relative min-h-screen w-full bg-linear-to-b from-base-100 via-base-200 to-base-100 py-24 mt-2 sm:mt-10 lg:mt-15">
       <div className="px-3.5 sm:px-5 mx-auto w-full xl:w-full 2xl:w-11/12">
@@ -192,27 +216,51 @@ console.log(newsDetail);
           {/* Main Content */}
           <div className="lg:col-span-3">
             <article className="bg-base-100 rounded-3xl overflow-hidden shadow-xl border border-base-300">
-              {/* Featured Image */}
-              {newsDetail.image && (
+              {/* Featured Image / Slider */}
+              {newsImages.length > 0 && (
                 <div className="p-6 sm:p-8">
-                    <div className="relative h-[200px] sm:h-[500px] md:h-[600px] xl:h-[700px] overflow-hidden">
-                  <img
-                    src={newsDetail.image}
-                    alt={newsDetail.title}
-                    className="w-full h-full object-cover rounded-t-2xl transition-transform duration-500 hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/20 to-transparent" />
+                  <div className="relative h-[200px] sm:h-[500px] md:h-[600px] xl:h-[700px] overflow-hidden">
+                    {/* Slider rasmlar */}
+                    {newsImages.map((image, index) => (
+                      <img
+                        key={index}
+                        src={image}
+                        alt={newsDetail.title}
+                        className={`absolute inset-0 w-full h-full object-cover rounded-t-2xl transition-all duration-700 ${
+                          index === currentSlide ? 'opacity-100 scale-100' : 'opacity-0 scale-105'
+                        }`}
+                      />
+                    ))}
+                    
+                    <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/20 to-transparent" />
 
-                  {/* Category Badge */}
-                  <div
-                    className={`absolute top-2 sm:top-6 left-2 sm:left-6 px-2 sm:px-4 py-1 sm:py-2 rounded-full bg-linear-to-r ${categoryStyle.gradient} flex items-center gap-2 shadow-lg`}
-                  >
-                    <span className="text-white">{categoryStyle.icon}</span>
-                    <span className="text-white text-sm sm:text-[16px] font-semibold">
-                      {newsDetail.kategoriya}
-                    </span>
+                    {/* Category Badge */}
+                    <div
+                      className={`absolute top-2 sm:top-6 left-2 sm:left-6 px-2 sm:px-4 py-1 sm:py-2 rounded-full bg-linear-to-r ${categoryStyle.gradient} flex items-center gap-2 shadow-lg`}
+                    >
+                      <span className="text-white">{categoryStyle.icon}</span>
+                      <span className="text-white text-sm sm:text-[16px] font-semibold">
+                        {newsDetail.kategoriya}
+                      </span>
+                    </div>
+
+                    {/* Dots indicator - faqat bir nechta rasm bo'lsa */}
+                    {newsImages.length > 1 && (
+                      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+                        {newsImages.map((_, index) => (
+                          <button
+                            key={index}
+                            onClick={() => setCurrentSlide(index)}
+                            className={`h-2 rounded-full transition-all duration-300 ${
+                              index === currentSlide
+                                ? 'w-6 bg-blue-600'
+                                : 'w-2 bg-white/50 hover:bg-white/70'
+                            }`}
+                          />
+                        ))}
+                      </div>
+                    )}
                   </div>
-                </div>
                 </div>
               )}
 

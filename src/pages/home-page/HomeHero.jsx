@@ -78,7 +78,7 @@ function HomeHero() {
       ref={heroRef}
     >
       {/* Carousel rasm fon */}
-      <div className="absolute inset-0 w-full h-full">
+      {/* <div className="absolute inset-0 w-full h-full">
         <div className="carousel w-full absolute inset-0 h-full flex items-center justify-center overflow-hidden">
           <div className="relative w-full h-full" style={{ height: '100%' }}>
             {items.map((item, idx) => {
@@ -103,7 +103,6 @@ function HomeHero() {
           </div>
         </div>
         
-        {/* Carousel navigation dots */}
         <div className="flex w-full justify-center gap-2 py-2 absolute bottom-4 z-20">
           {items.map((item, idx) => (
             <button
@@ -127,6 +126,19 @@ function HomeHero() {
             />
           ))}
         </div>
+      </div> */}
+
+      {/* Video fon */}
+      <div className="absolute inset-0 w-full h-full">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+        >
+          <source src="/video_fon.mp4" type="video/mp4" />
+        </video>
       </div>
 
       {/* Qora gradient overlay */}

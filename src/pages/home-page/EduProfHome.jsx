@@ -1,5 +1,6 @@
 import React from 'react'
 import { FaFolderOpen, FaBook, FaCertificate, FaLightbulb, FaFileAlt, FaRocket, FaCheckCircle, FaArrowRight } from 'react-icons/fa'
+import { Link } from 'react-router-dom';
 
 function EduProfHome() {
   const features = [
@@ -85,15 +86,13 @@ function EduProfHome() {
 
             {/* CTA Buttons */}
             <div className="flex flex-wrap gap-4">
-              <a 
-                href="https://edu.profedu.uz/" 
-                target="_blank" 
-                rel="noopener noreferrer"
+              <Link 
+                to="/methodological-support" 
                 className="group flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 rounded-full text-white font-bold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
               >
                 <span>Batafsil ma'lumot</span>
                 <FaArrowRight className="transition-transform duration-300 group-hover:translate-x-2" size={18} />
-              </a>
+              </Link>
             </div>
           </div>
 

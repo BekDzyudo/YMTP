@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { FaCalendar, FaArrowRight, FaNewspaper, FaTrophy, FaUsers, FaGraduationCap, FaHandshake, FaChalkboardTeacher, FaLightbulb } from 'react-icons/fa'
 import useGetFetch from '../../hooks/useGetFetch';
 import { Link } from 'react-router-dom';
@@ -6,6 +6,9 @@ import { Link } from 'react-router-dom';
 function News() {
 
   const {data, isPending, error} = useGetFetch(`${import.meta.env.VITE_BASE_URL}/shared_app/yangiliklar/latest/`)
+  
+  // Slider state - faqat birinchi yangilik uchun
+  const [currentSlide, setCurrentSlide] = useState(0);
   
   // Kategoriyaga mos icon va gradient
   const getCategoryStyle = (kategoriya) => {
@@ -84,11 +87,28 @@ function News() {
     title: item.title,
     excerpt: stripHtml(item.text || ""), // HTML taglarni olib tashlangan text
     date: formatDate(item.sana),
-    image: item.rasm,
+    image: item.image,
+    rasmlar: item.rasmlar || [], // Slider uchun rasmlar array
     category: item.kategoriya,
     icon: getCategoryStyle(item.kategoriya).icon,
     gradient: getCategoryStyle(item.kategoriya).gradient
   })) || [];
+
+  // Birinchi yangilik uchun rasmlar - slider uchun
+  const featuredImages = newsData.length > 0 && newsData[0].rasmlar.length > 0 
+    ? newsData[0].rasmlar.map(item => item.rasm)
+    : newsData.length > 0 ? [newsData[0].image] : [];
+
+  // Auto-play slider
+  useEffect(() => {
+    if (!data || featuredImages.length <= 1) return;
+    
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % featuredImages.length);
+    }, 5000); // Har 5 sekundda o'zgaradi
+
+    return () => clearInterval(interval);
+  }, [data, featuredImages.length]);
 
   if (isPending) {
     return (
@@ -141,15 +161,24 @@ function News() {
             <>
           {/* 2XL+ Layout: 1 Featured + 4 Side Cards */}
           <div className="hidden 2xl:grid 2xl:grid-cols-5 gap-6 h-[600px]">
-            {/* Featured News - Large Card */}
+            {/* Featured News - Large Card with Slider */}
             <div className="2xl:col-span-3 group relative min-h-0">
               <div className="relative h-full bg-base-100 rounded-3xl overflow-hidden shadow-lg border border-base-300">
                 <div className="relative h-full overflow-hidden">
-                  <img 
-                    src={newsData[0].image} 
-                    alt={newsData[0].title}
-                    className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
-                  />
+                  {/* Slider rasmlar */}
+                  <div className="relative h-full">
+                    {featuredImages.map((image, index) => (
+                      <img 
+                        key={index}
+                        src={image} 
+                        alt={newsData[0].title}
+                        className={`absolute inset-0 w-full h-full object-cover object-top transition-all duration-700 ${
+                          index === currentSlide ? 'opacity-100 scale-100' : 'opacity-0 scale-105'
+                        }`}
+                      />
+                    ))}
+                  </div>
+                  
                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
                   
                   <div className={`absolute top-6 left-6 px-4 py-2 rounded-full bg-gradient-to-r ${newsData[0].gradient} flex items-center gap-2 shadow-xl`}>
@@ -167,10 +196,29 @@ function News() {
                       {newsData[0].title}
                     </h3>
                     
-                    <button className="flex items-center gap-2 px-6 py-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white rounded-full font-semibold group/btn transition-all duration-300 border border-white/20 hover:border-white/40 cursor-pointer">
-                      <Link to={`/news/${newsData[0].id}`}>Batafsil</Link>
-                      <FaArrowRight className="transition-transform duration-300 group-hover/btn:translate-x-2" size={14} />
-                    </button>
+                    <div className="flex items-center justify-between">
+                      <button className="flex items-center gap-2 px-6 py-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white rounded-full font-semibold group/btn transition-all duration-300 border border-white/20 hover:border-white/40 cursor-pointer">
+                        <Link to={`/news/${newsData[0].id}`}>Batafsil</Link>
+                        <FaArrowRight className="transition-transform duration-300 group-hover/btn:translate-x-2" size={14} />
+                      </button>
+                      
+                      {/* Dots indicator - faqat bir nechta rasm bo'lsa */}
+                      {featuredImages.length > 1 && (
+                        <div className="flex gap-2">
+                          {featuredImages.map((_, index) => (
+                            <button
+                              key={index}
+                              onClick={() => setCurrentSlide(index)}
+                              className={`h-2 rounded-full transition-all duration-300 ${
+                                index === currentSlide 
+                                  ? 'w-6 bg-blue-600' 
+                                  : 'w-2 bg-white/50 hover:bg-white/70'
+                              }`}
+                            />
+                          ))}
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -232,12 +280,46 @@ function News() {
                 <div className="relative h-full bg-base-100 rounded-3xl overflow-hidden shadow-lg border border-base-300 flex flex-col">
                   
                   <div className="relative h-48 overflow-hidden flex-shrink-0">
-                    <img 
-                      src={news.image} 
-                      alt={news.title}
-                      className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-110"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                    {idx === 0 && featuredImages.length > 1 ? (
+                      // Slider faqat birinchi card uchun
+                      <>
+                        {featuredImages.map((image, imgIdx) => (
+                          <img 
+                            key={imgIdx}
+                            src={image} 
+                            alt={news.title}
+                            className={`absolute inset-0 w-full h-full object-cover object-top transition-all duration-700 ${
+                              imgIdx === currentSlide ? 'opacity-100 scale-100' : 'opacity-0 scale-105'
+                            }`}
+                          />
+                        ))}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                        
+                        {/* Dots indicator */}
+                        <div className="absolute bottom-1 left-1/2 -translate-x-1/2 flex gap-1">
+                          {featuredImages.map((_, imgIdx) => (
+                            <div
+                              key={imgIdx}
+                              className={`h-1.5 rounded-full transition-all duration-300 ${
+                                imgIdx === currentSlide 
+                                  ? 'w-6 bg-blue-600' 
+                                  : 'w-1.5 bg-white/50'
+                              }`}
+                            />
+                          ))}
+                        </div>
+                      </>
+                    ) : (
+                      // Oddiy rasm qolgan cardlar uchun
+                      <>
+                        <img 
+                          src={news.image} 
+                          alt={news.title}
+                          className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-110"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                      </>
+                    )}
                     
                     <div className={`absolute top-3 left-3 px-3 py-1.5 rounded-full bg-gradient-to-r ${news.gradient} flex items-center gap-2 shadow-lg`}>
                       <span className="text-white">{news.icon}</span>
@@ -279,12 +361,46 @@ function News() {
                 <div className="relative bg-base-100 rounded-2xl overflow-hidden shadow-lg border border-base-300 flex flex-col">
                   
                   <div className="relative h-40 overflow-hidden">
-                    <img 
-                      src={news.image} 
-                      alt={news.title}
-                      className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-110"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                    {idx === 0 && featuredImages.length > 1 ? (
+                      // Slider faqat birinchi card uchun
+                      <>
+                        {featuredImages.map((image, imgIdx) => (
+                          <img 
+                            key={imgIdx}
+                            src={image} 
+                            alt={news.title}
+                            className={`absolute inset-0 w-full h-full object-cover object-top transition-all duration-700 ${
+                              imgIdx === currentSlide ? 'opacity-100 scale-100' : 'opacity-0 scale-105'
+                            }`}
+                          />
+                        ))}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                        
+                        {/* Dots indicator */}
+                        <div className="absolute bottom-1 left-1/2 -translate-x-1/2 flex gap-1">
+                          {featuredImages.map((_, imgIdx) => (
+                            <div
+                              key={imgIdx}
+                              className={`h-1.5 rounded-full transition-all duration-300 ${
+                                imgIdx === currentSlide 
+                                  ? 'w-6 bg-blue-600' 
+                                  : 'w-1.5 bg-white/50'
+                              }`}
+                            />
+                          ))}
+                        </div>
+                      </>
+                    ) : (
+                      // Oddiy rasm qolgan cardlar uchun
+                      <>
+                        <img 
+                          src={news.image} 
+                          alt={news.title}
+                          className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-110"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                      </>
+                    )}
                     
                     <div className={`absolute top-2 left-2 px-2 py-1 rounded-full bg-gradient-to-r ${news.gradient} flex items-center gap-1.5 shadow-lg`}>
                       <span className="text-white text-xs">{news.icon}</span>
@@ -326,12 +442,46 @@ function News() {
                 <div className="relative bg-base-100 rounded-2xl overflow-hidden shadow-lg border border-base-300 flex flex-col">
                   
                   <div className="relative h-40 overflow-hidden">
-                    <img 
-                      src={news.image} 
-                      alt={news.title}
-                      className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-110"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                    {idx === 0 && featuredImages.length > 1 ? (
+                      // Slider faqat birinchi card uchun
+                      <>
+                        {featuredImages.map((image, imgIdx) => (
+                          <img 
+                            key={imgIdx}
+                            src={image} 
+                            alt={news.title}
+                            className={`absolute inset-0 w-full h-full object-cover object-top transition-all duration-700 ${
+                              imgIdx === currentSlide ? 'opacity-100 scale-100' : 'opacity-0 scale-105'
+                            }`}
+                          />
+                        ))}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                        
+                        {/* Dots indicator */}
+                        <div className="absolute bottom-1 left-1/2 -translate-x-1/2 flex gap-1">
+                          {featuredImages.map((_, imgIdx) => (
+                            <div
+                              key={imgIdx}
+                              className={`h-1.5 rounded-full transition-all duration-300 ${
+                                imgIdx === currentSlide 
+                                  ? 'w-6 bg-blue-600' 
+                                  : 'w-1.5 bg-white/50'
+                              }`}
+                            />
+                          ))}
+                        </div>
+                      </>
+                    ) : (
+                      // Oddiy rasm qolgan cardlar uchun
+                      <>
+                        <img 
+                          src={news.image} 
+                          alt={news.title}
+                          className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-110"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                      </>
+                    )}
                     
                     <div className={`absolute top-2 left-2 px-2 py-1 rounded-full bg-gradient-to-r ${news.gradient} flex items-center gap-1.5 shadow-lg`}>
                       <span className="text-white text-xs">{news.icon}</span>

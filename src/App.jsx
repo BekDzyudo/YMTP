@@ -29,7 +29,6 @@ import TeachersMaterial from "./pages/materials/TeachersMaterial";
 import AllMaterials from "./pages/materials/AllMaterials";
 import MaterialDetail from "./pages/materials/MaterialDetail";
 import RTR from "./pages/rtr/RTR";
-import EDUPROF from "./pages/edu-prof/EDUPROF";
 import RTRDetail from "./pages/rtr/RTRDetail";
 import InstitutInfo from "./pages/institut-info/InstitutInfo";
 import About from "./pages/institut-info/About";
@@ -40,6 +39,8 @@ import Contact from "./pages/institut-info/Contact";
 import { institutLinks } from "./constants/institutLinks";
 import NewsList from "./pages/news/NewsList";
 import NewsDetail from "./pages/news/NewsDetail";
+import MetodikTaminot from "./pages/metodik-taminot/MetodikTaminot";
+import MetodikTaminotDetail from "./pages/metodik-taminot/MetodikTaminotDetail";
 
 function App() {
 
@@ -124,7 +125,11 @@ function App() {
         },
         {
           path: "methodological-support",
-          element: <EDUPROF/>
+          element: <MetodikTaminot/>
+        },
+        {
+          path: "methodological-support/:eduId",
+          element: <MetodikTaminotDetail/>
         },
         {
           path: "news",
