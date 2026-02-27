@@ -43,10 +43,13 @@ function About() {
           <span>Ma'lumotlarni yuklashda xatolik yuz berdi</span>
         </div>
       ) : data?.length && data[0]?.description ? (
-        <div 
-          className="prose prose-base sm:prose-lg max-w-none text-base-content/80 text-justify"
-          dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data[0]?.description) }}
-        />
+        // <div 
+        //   className="prose prose-base sm:prose-lg max-w-none text-base-content/80 text-justify"
+        //   dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data[0]?.description) }}
+        // />
+        <p className="text-base-content/70 text-sm sm:text-base">
+            Bu bo'lim uchun kontent topilmadi.
+          </p>
       ) : (
         <p className="text-base-content/70 text-sm sm:text-base">
           Bu bo'lim uchun kontent topilmadi.

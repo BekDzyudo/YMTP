@@ -57,12 +57,24 @@ function MetodikTaminotHero() {
         safeStat(statistika?.data?.counts?.uquv_material),
         safeStat(statistika?.data?.counts?.qisqa_kurs)
       ];
-      const [cardNumbers, setCardNumbers] = useState(cardTargets.map(() => 0));
+      const [cardNumbers, setCardNumbers] = useState(cardTargets);
+      const [hasAnimated, setHasAnimated] = useState(false);
+      
       useEffect(() => {
+        // Faqat statistika yuklanganda va hali animation ishlamagan bo'lsa
+        if (!statistika?.data?.counts || hasAnimated) {
+          if (statistika?.data?.counts && !hasAnimated) {
+            setHasAnimated(true);
+          }
+          return;
+        }
+        
+        setHasAnimated(true);
         let frame = 0;
         const duration = 2000; // ms
         const steps = 60;
         const interval = duration / steps;
+        
         function animate() {
           frame++;
           setCardNumbers(
@@ -73,7 +85,7 @@ function MetodikTaminotHero() {
           if (frame < steps) setTimeout(animate, interval);
         }
         animate();
-      }, [statistika]);
+      }, [statistika?.data]);
 
   return (
     <>

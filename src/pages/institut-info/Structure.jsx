@@ -36,8 +36,13 @@ function Structure() {
       </div>
 
       {
-        data && data.length > 0 && (
-          <img src={data[0]?.file} alt="" className="w-full h-auto"/>
+        data && data.length > 0 ? (
+          // <img src={data[0]?.file} alt="" className="w-full h-auto"/>
+          <h1>Ma'lumot yuklanmagan</h1>
+        ) : (
+          <p className="text-base-content/70 text-sm sm:text-base">
+            Bu bo'lim uchun kontent topilmadi.
+          </p>
         )
       }
     </section>

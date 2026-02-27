@@ -59,6 +59,7 @@ function Partners() {
           autoplay={{
             delay: 2000,
             disableOnInteraction: false,
+            pauseOnMouseEnter: true,
           }}
           breakpoints={{
             640: { slidesPerView: 2, spaceBetween: 20 },
@@ -69,15 +70,15 @@ function Partners() {
         >
           {partners.map((partner, index) => (
             <SwiperSlide key={index}>
-              <div className="group relative bg-white/95 backdrop-blur-sm rounded-2xl p-6 shadow-xl border-2 border-gray-200 hover:border-cyan-400 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl h-full">
+              <div className="group relative bg-white/95 backdrop-blur-sm rounded-2xl p-6 shadow-xl border-2 border-gray-200 hover:border-cyan-400 transition-all duration-300  hover:shadow-2xl h-full overflow-hidden">
                 
                 <div className="relative flex flex-col items-center justify-center h-full gap-4">
                   {/* Logo Container */}
-                  <div className="w-full h-32 flex items-center justify-center p-4 bg-linear-to-br from-gray-50 to-blue-50 rounded-xl transition-all duration-300 group-hover:from-blue-50 group-hover:to-cyan-50">
+                  <div className="w-full h-32 flex items-center justify-center p-4 bg-gradient-to-br from-gray-50 to-blue-50 rounded-xl transition-all duration-300 group-hover:from-blue-50 group-hover:to-cyan-50 overflow-hidden">
                     <img
                       src={partner.image}
                       alt={partner.name}
-                      className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-110"
+                      className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-105"
                     />
                   </div>
                   
