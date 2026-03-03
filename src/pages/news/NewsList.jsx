@@ -49,43 +49,43 @@ function NewsList() {
   // Kategoriyaga mos icon va gradient
   const getCategoryStyle = (kategoriya) => {
     const styles = {
-      Uchrashuv: {
+      "Uchrashuv": {
         icon: <FaHandshake size={18} />,
         gradient: "from-blue-500 to-cyan-500",
         bgLight: "bg-blue-50",
         textColor: "text-blue-600",
       },
-      Talim: {
+      "Ta'lim": {
         icon: <FaGraduationCap size={18} />,
         gradient: "from-emerald-500 to-teal-500",
         bgLight: "bg-emerald-50",
         textColor: "text-emerald-600",
       },
-      Yutuqlar: {
+      "Yutuqlar": {
         icon: <FaTrophy size={18} />,
         gradient: "from-amber-500 to-orange-500",
         bgLight: "bg-amber-50",
         textColor: "text-amber-600",
       },
-      Tadbir: {
+      "Tadbir": {
         icon: <FaUsers size={18} />,
         gradient: "from-violet-500 to-purple-500",
         bgLight: "bg-violet-50",
         textColor: "text-violet-600",
       },
-      Texnologiya: {
+      "Texnologiya": {
         icon: <FaLightbulb size={18} />,
         gradient: "from-emerald-500 to-teal-500",
         bgLight: "bg-emerald-50",
         textColor: "text-emerald-600",
       },
-      Hamkorlik: {
+      "Hamkorlik": {
         icon: <FaHandshake size={18} />,
         gradient: "from-pink-500 to-rose-500",
         bgLight: "bg-pink-50",
         textColor: "text-pink-600",
       },
-      Elon: {
+      "Elon": {
         icon: <FaNewspaper size={18} />,
         gradient: "from-indigo-500 to-blue-500",
         bgLight: "bg-indigo-50",
