@@ -83,6 +83,14 @@ function Header() {
                 </ul>
               </div>
             </li>
+            <li>
+              <Link
+                to="/news"
+                className={textColor}
+              >
+                Yangiliklar
+              </Link>
+            </li>
             {/* <li>
               <Link
                 to="/"
@@ -105,14 +113,6 @@ function Header() {
                 className={textColor}
               >
                 Metodik ta'minot
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/news"
-                className={textColor}
-              >
-                Yangiliklar
               </Link>
             </li>
             {/* <li className="relative">

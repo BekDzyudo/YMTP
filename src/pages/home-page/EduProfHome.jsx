@@ -1,8 +1,56 @@
-import React from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { FaFolderOpen, FaBook, FaCertificate, FaLightbulb, FaFileAlt, FaRocket, FaCheckCircle, FaArrowRight } from 'react-icons/fa'
 import { Link } from 'react-router-dom';
 
 function EduProfHome() {
+  const [isVisible, setIsVisible] = useState(false);
+  const cardsRef = useRef(null);
+  const prevScrollY = useRef(0);
+  const hasShownOnce = useRef(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        const currentScrollY = window.scrollY;
+        const isScrollingDown = currentScrollY > prevScrollY.current;
+        
+        if (entry.isIntersecting) {
+          if (isScrollingDown) {
+            // Tepadan pastga scroll qilganda
+            if (!hasShownOnce.current) {
+              // Birinchi safar - animatsiya
+              setIsVisible(true);
+              hasShownOnce.current = true;
+            } else {
+              // Keyingi holatlar - animatsiyasiz ochiq
+              setIsVisible(true);
+            }
+          } else if (hasShownOnce.current) {
+            // Pastdan tepaga scroll qilganda (keyingi holatlar) - animatsiya
+            setIsVisible(false);
+            setTimeout(() => setIsVisible(true), 10);
+          }
+        } else if (isScrollingDown) {
+          // Pastga scroll qilganda va ko'rinishdan chiqsa reset
+          setIsVisible(false);
+        }
+        
+        prevScrollY.current = currentScrollY;
+      },
+      { threshold: 0.2 }
+    );
+
+    if (cardsRef.current) {
+      observer.observe(cardsRef.current);
+    }
+
+    return () => {
+      if (cardsRef.current) {
+        observer.unobserve(cardsRef.current);
+      }
+    };
+  }, []);
+  
   const features = [
     {
       icon: <FaFileAlt size={28} />,
@@ -97,11 +145,14 @@ function EduProfHome() {
           </div>
 
           {/* Right Content - Feature Cards */}
-          <div className="grid grid-cols-2 gap-4 lg:gap-6">
+          <div ref={cardsRef} className="grid grid-cols-2 gap-4 lg:gap-6">
             {features.map((feature, idx) => (
               <div 
                 key={idx}
-                className="group relative bg-white dark:bg-base-200 rounded-2xl p-6 shadow-lg hover:shadow-xl border border-base-300 transition-all duration-300 hover:-translate-y-2"
+                className={`group relative bg-white dark:bg-base-200 rounded-2xl p-6 shadow-lg hover:shadow-xl border border-base-300 transition-all duration-700 hover:-translate-y-2 ${
+                  isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+                }`}
+                style={{ transitionDelay: `${idx * 150}ms` }}
               >
                 <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl opacity-0 group-hover:opacity-20 blur transition duration-500"></div>
                 

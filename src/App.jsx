@@ -33,7 +33,9 @@ import RTRDetail from "./pages/rtr/RTRDetail";
 import InstitutInfo from "./pages/institut-info/InstitutInfo";
 import About from "./pages/institut-info/About";
 import Management from "./pages/institut-info/Management";
-import Structure from "./pages/institut-info/Structure";
+import Structure from "./pages/institut-info/struktura/Structure";
+import BolimDetail from "./pages/institut-info/struktura/BolimDetail";
+import XodimDetail from "./pages/institut-info/struktura/XodimDetail";
 import Vacancy from "./pages/institut-info/Vacancy";
 import Contact from "./pages/institut-info/Contact";
 import { institutLinks } from "./constants/institutLinks";
@@ -153,6 +155,14 @@ function App() {
             {
               path: "structure",
               element: <Structure />,
+            },
+            {
+              path: "structure/department/:id",
+              element: <BolimDetail />,
+            },
+            {
+              path: "structure/employee/:id",
+              element: <XodimDetail />,
             },
             {
               path: "vacansy",

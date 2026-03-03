@@ -6,7 +6,7 @@ import { Viewer, Worker } from "@react-pdf-viewer/core";
 import "@react-pdf-viewer/core/lib/styles/index.css";
 import "@react-pdf-viewer/default-layout/lib/styles/index.css";
 import { GrFormNextLink } from "react-icons/gr";
-import { FaBook } from "react-icons/fa";
+import { FaBook, FaExpand, FaTimes } from "react-icons/fa";
 import { FaVideo } from "react-icons/fa";
 import { FaImage } from "react-icons/fa6";
 import { FaSlidersH } from "react-icons/fa";
@@ -20,6 +20,17 @@ import { useGlobalContext } from "../../hooks/useGlobalContext";
 
 function RTRDetail() {
   const [themeNumber, setThemeNumber] = React.useState(1);
+  const [isImageFullscreen, setIsImageFullscreen] = React.useState(false);
+  
+  // Handle ESC key to close fullscreen
+  React.useEffect(() => {
+    const handleEsc = (e) => {
+      if (e.key === 'Escape') setIsImageFullscreen(false);
+    };
+    window.addEventListener('keydown', handleEsc);
+    return () => window.removeEventListener('keydown', handleEsc);
+  }, []);
+  
   // Clear localStorage and reset activeCard on unmount
   React.useEffect(() => {
     return () => {
@@ -404,14 +415,45 @@ function RTRDetail() {
                   )}
                   {/* ko'rgazma material */}
                   {activeCard === 3 && (
-                    <img
-                      src={data?.themes[themeNumber]?.show_material[0]?.content}
-                      title={
-                        data?.themes[themeNumber]?.title ||
-                        "Ko'rgazma materiali"
-                      }
-                      className="w-full min-h-[400px] object-cover rounded-t-2xl"
-                    />
+                    <div className="relative">
+                      <img
+                        src={data?.themes[themeNumber]?.show_material[0]?.content}
+                        title={
+                          data?.themes[themeNumber]?.title ||
+                          "Ko'rgazma materiali"
+                        }
+                        className="w-full min-h-[400px] object-cover rounded-t-2xl"
+                      />
+                      <button
+                        onClick={() => setIsImageFullscreen(true)}
+                        className="absolute right-4 bottom-4 bg-black/50 hover:bg-black/70 text-white p-3 rounded-lg transition-all duration-300 backdrop-blur-sm"
+                        title="To'liq ekranda ko'rish"
+                      >
+                        <FaExpand className="text-xl" />
+                      </button>
+                    </div>
+                  )}
+                  
+                  {/* Fullscreen Modal */}
+                  {isImageFullscreen && (
+                    <div 
+                      className="fixed inset-0 z-[9999] bg-black/70 backdrop-blur-sm flex items-center justify-center p-4"
+                      onClick={() => setIsImageFullscreen(false)}
+                    >
+                      <button
+                        onClick={() => setIsImageFullscreen(false)}
+                        className="absolute top-6 right-6 bg-white/10 hover:bg-white/20 text-white p-3 rounded-full transition-all duration-300 backdrop-blur-sm"
+                        title="Yopish (ESC)"
+                      >
+                        <FaTimes className="text-2xl" />
+                      </button>
+                      <img
+                        src={data?.themes[themeNumber]?.show_material[0]?.content}
+                        alt={data?.themes[themeNumber]?.title || "Ko'rgazma materiali"}
+                        className="max-w-full max-h-full object-contain"
+                        onClick={(e) => e.stopPropagation()}
+                      />
+                    </div>
                   )}
                   {/* taqdimot */}
                   {/* {activeCard === 4 && (

@@ -1,8 +1,50 @@
-import React from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { FaFileAlt, FaFilePowerpoint, FaVideo, FaImage, FaCogs, FaDownload, FaSearch, FaArrowRight, FaBookOpen } from 'react-icons/fa'
 import { Link } from 'react-router-dom';
 
 function RtrHome() {
+  const [isVisible, setIsVisible] = useState(false);
+  const cardsRef = useRef(null);
+  const prevScrollY = useRef(0);
+  const hasShownOnce = useRef(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        const currentScrollY = window.scrollY;
+        const isScrollingDown = currentScrollY > prevScrollY.current;
+        
+        if (entry.isIntersecting) {
+          if (isScrollingDown) {
+            if (!hasShownOnce.current) {
+              setIsVisible(true);
+              hasShownOnce.current = true;
+            } else {
+              setIsVisible(true);
+            }
+          } else if (hasShownOnce.current) {
+            setIsVisible(false);
+            setTimeout(() => setIsVisible(true), 10);
+          }
+        } else if (isScrollingDown) {
+          setIsVisible(false);
+        }
+        
+        prevScrollY.current = currentScrollY;
+      },
+      { threshold: 0.2 }
+    );
+
+    if (cardsRef.current) {
+      observer.observe(cardsRef.current);
+    }
+
+    return () => {
+      if (cardsRef.current) {
+        observer.unobserve(cardsRef.current);
+      }
+    };
+  }, []);
   const resources = [
     {
       icon: <FaFileAlt size={28} />,
@@ -99,11 +141,14 @@ function RtrHome() {
         </div>
 
         {/* Resources Grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+        <div ref={cardsRef} className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
           {resources.map((resource, index) => (
             <div 
               key={index}
-              className="group relative rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl border-2 border-gray-200 hover:border-blue-300 transition-all duration-300 hover:-translate-y-2 min-h-[320px]"
+              className={`group relative rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl border-2 border-gray-200 hover:border-blue-300 transition-all duration-700 hover:-translate-y-2 min-h-[320px] ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+              }`}
+              style={{ transitionDelay: `${index * 100}ms` }}
             >
               {/* Background Image - Full */}
               <div 

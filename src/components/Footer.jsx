@@ -22,7 +22,7 @@ function Footer() {
     ];
     
   return (
-    <div className="bg-linear-to-r from-[#002d6d] via-[#003d7d] to-[#002d6d] w-full py-5 px-5 relative mt-20">
+    <div className="bg-linear-to-r from-[#002d6d] via-[#003d7d] to-[#002d6d] w-full py-5 px-5 relative">
       
       {/* Foydali havolalar carousel - yarmi header ustida */}
       {/* <div className="absolute left-1/2 -translate-x-1/2 top-0 -translate-y-1/2 w-full xl:w-full 2xl:w-11/12 px-5">

@@ -1,0 +1,226 @@
+/* Direktor va yon bo'limlar uchun gorizontal liniyalar */
+.direktors {
+  position: relative;
+}
+
+.direktor-1 {
+  position: relative;
+  z-index: 1;
+}
+
+.direktor-1::after {
+  content: "";
+  position: absolute;
+  height: 2px;
+  width: 100%;
+  background: #ccc;
+  top: 50%;
+  left: 100%;
+  transform: translateY(-50%);
+  z-index: 0;
+}
+
+.direktor-2 {
+  position: relative;
+  z-index: 1;
+}
+
+.direktor-2::before {
+  content: "";
+  position: absolute;
+  height: 2px;
+  width: 100%;
+  background: #ccc;
+  top: 50%;
+  right: 100%;
+  transform: translateY(-50%);
+  z-index: 0;
+}
+
+/* Direktordan pastga vertikal liniya */
+.direktors::after {
+  content: "";
+  position: absolute;
+  width: 2px;
+  height: 80px;
+  background: #ccc;
+  bottom: -80px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 0;
+}
+
+/* O'rinbosarlar uchun liniyalar */
+.orinbosar-wrapper {
+  position: relative;
+}
+
+/* Yuqorida gorizontal liniya */
+.orinbosar-wrapper::after {
+  content: "";
+  position: absolute;
+  height: 2px;
+  background: #ccc;
+  top: -40px;
+  left: 16.66%;
+  width: 66.66%;
+  z-index: 0;
+}
+
+/* Har bir o'rinbosarga yuqoridan vertikal liniya */
+.orinbosar-wrapper li {
+  position: relative;
+  z-index: 1;
+}
+
+/* .orinbosar-wrapper li::before {
+  content: "";
+  position: absolute;
+  width: 2px;
+  height: 40px;
+  background: red;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 0;
+} */
+.orinbosar-wrapper .orinbosar-card{
+    position: relative;
+    z-index: 1;
+}
+.orinbosar-wrapper .orinbosar-card::after{
+    content: "";
+    position: absolute;
+    width: 2px;
+    height: 22px;
+    background: #ccc;
+    bottom: -22px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 0;
+}
+/* boshqarma */
+.boshqarma-wrapper{
+    position: relative;
+}
+.boshqarma-wrapper::before{
+      content: "";
+    position: absolute;
+    width: 2px;
+    height: 100%;
+    background: #ccc;
+    top: -20px;
+    left: -20px;
+    transform: translateX(-50%);
+    z-index: 0;
+}
+.boshqarma-wrapper::after{
+    content: "";
+    position: absolute;
+    width: 54%;
+    height: 2px;
+    background: #ccc;
+    top: -20px;
+    left: 0px;
+    transform: translateX(-20px);
+    z-index: 0;
+}
+.boshqarma-wrapper li .boshqarma-card{
+    position: relative;
+    z-index: 1;
+}
+.boshqarma-wrapper li .boshqarma-card::before{
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 2px;
+    background: #ccc;
+    top: 50%;
+    left: -20px;
+    z-index: 0;
+}
+/* bo'lim */
+.bolim-wrapper{
+    position: relative;
+}
+.bolim-wrapper li{
+    position: relative;
+    z-index: 1;
+}
+.bolim-wrapper li::before{
+    content: "";
+    position: absolute;
+    width: 2px;
+    height: 20px;
+    background: #ccc;
+    top: -20px;
+    left: 50%;
+    z-index: 0;
+}
+
+/* O'rinbosar kartalariga gradient border */
+.orinbosar-card {
+  position: relative;
+  overflow: visible;
+  padding-top: 0.25rem;
+}
+
+.orinbosar-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 8px;
+  background: linear-gradient(to right, #194882, #0ea5e9);
+  border-radius: 0.5rem 0.5rem 0 0;
+  z-index: 0;
+}
+
+/* Hover effektlari barcha kartalar uchun */
+.direktors li,
+.orinbosar-wrapper .orinbosar-card,
+.boshqarma-wrapper .boshqarma-card,
+.bolim-wrapper li > div {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.direktors li:hover,
+.orinbosar-wrapper .orinbosar-card:hover,
+.boshqarma-wrapper .boshqarma-card:hover,
+.bolim-wrapper li > div:hover {
+  transform: scale(1.01);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+
+@media screen and (max-width: 768px) {
+  /* Barcha after va before pseudo-elementlarni yashirish */
+  
+  /* Direktor liniyalari */
+  .direktor-1::after,
+  .direktor-2::before,
+  .direktors::after {
+    display: none !important;
+  }
+  
+  /* O'rinbosarlar liniyalari */
+  .orinbosar-wrapper::after,
+  .orinbosar-wrapper li::before,
+  .orinbosar-wrapper .orinbosar-card::after {
+    display: none !important;
+  }
+  
+  /* Bo'limlar liniyalari */
+  .boshqarma-card::before,
+  .boshqarma-wrapper::before,
+  .boshqarma-wrapper::after,
+  .boshqarma-wrapper li::before {
+    display: none !important;
+  }
+  
+  /* Gradient border esa qolsin */
+  .orinbosar-card::before {
+    display: block !important;
+  }
+}
