@@ -6,7 +6,7 @@ import { Viewer, Worker } from "@react-pdf-viewer/core";
 import "@react-pdf-viewer/core/lib/styles/index.css";
 import "@react-pdf-viewer/default-layout/lib/styles/index.css";
 import { GrFormNextLink } from "react-icons/gr";
-import { FaBook, FaExpand, FaTimes } from "react-icons/fa";
+import { FaArrowRight, FaBook, FaExpand, FaTimes } from "react-icons/fa";
 import { FaVideo } from "react-icons/fa";
 import { FaImage } from "react-icons/fa6";
 import { FaSlidersH } from "react-icons/fa";
@@ -21,11 +21,15 @@ import { useGlobalContext } from "../../hooks/useGlobalContext";
 function RTRDetail() {
   const [themeNumber, setThemeNumber] = React.useState(1);
   const [isImageFullscreen, setIsImageFullscreen] = React.useState(false);
+  const [isPdfFullscreen, setIsPdfFullscreen] = React.useState(false);
   
   // Handle ESC key to close fullscreen
   React.useEffect(() => {
     const handleEsc = (e) => {
-      if (e.key === 'Escape') setIsImageFullscreen(false);
+      if (e.key === 'Escape') {
+        setIsImageFullscreen(false);
+        setIsPdfFullscreen(false);
+      }
     };
     window.addEventListener('keydown', handleEsc);
     return () => window.removeEventListener('keydown', handleEsc);
@@ -52,7 +56,6 @@ function RTRDetail() {
   const { data } = useGetFetch(
     `${import.meta.env.VITE_BASE_URL_RTR}/v1/rtr_base_app/subject-list/${rtrId}/`,
   );
-  console.log(data);
 
   const processContent = (htmlContent) => {
     const parser = new DOMParser();
@@ -230,9 +233,7 @@ function RTRDetail() {
             
             {/* Card 4 */}
             {
-              data?.themes[themeNumber]?.presentation && <Link
-              to={data?.themes[themeNumber]?.presentation}
-              target="_blank"
+              data?.themes[themeNumber]?.presentation && <div
               className={
                 `cursor-pointer rounded-full flex gap-2 items-center py-1 sm:py-2 px-2 sm:px-4 transition-all duration-200 group ` +
                 (activeCard === 4
@@ -255,9 +256,9 @@ function RTRDetail() {
                 <RiNewsLine className="transition-transform duration-500 group-hover:scale-110" />
               </span>
               <div className="w-full text-sm sm:text-xs md:text-sm font-bold text-center flex items-center justify-center gap-1">
-                Taqdimotlar <RiShareForwardFill className="text-lg"/>
+                Taqdimotlar
               </div>
-            </Link>
+            </div>
             }
             
             {/* Card 5 */}
@@ -294,9 +295,7 @@ function RTRDetail() {
             {/* Card 6 */}
             {
               data?.themes[themeNumber]?.educational_technologies && 
-              <Link
-              to={data?.themes[themeNumber]?.educational_technologies}
-              target="_blank"
+              <div
               className={
                 `cursor-pointer rounded-full flex gap-2 items-center py-1 sm:py-2 px-2 sm:px-4 transition-all duration-200 group ` +
                 (activeCard === 6
@@ -319,9 +318,9 @@ function RTRDetail() {
                 <FaSlidersH className="transition-transform duration-500 group-hover:scale-110" />
               </span>
               <div className="w-full text-sm sm:text-xs md:text-sm font-bold text-center flex items-center gap-1">
-                Ta'lim texnologiyalari <RiShareForwardFill className="text-lg"/>
+                Ta'lim texnologiyalari
               </div>
-            </Link>
+            </div>
             }
             
           </div>
@@ -415,55 +414,108 @@ function RTRDetail() {
                   )}
                   {/* ko'rgazma material */}
                   {activeCard === 3 && (
-                    <div className="relative">
+                    <div className="relative w-full bg-gray-100 rounded-lg overflow-hidden shadow-xl">
                       <img
                         src={data?.themes[themeNumber]?.show_material[0]?.content}
                         title={
                           data?.themes[themeNumber]?.title ||
                           "Ko'rgazma materiali"
                         }
-                        className="w-full min-h-[400px] object-cover rounded-t-2xl"
+                        className="w-full min-h-[400px] object-cover rounded-lg"
                       />
+                      
+                      {/* Floating Fullscreen button - bottom right with animation */}
                       <button
                         onClick={() => setIsImageFullscreen(true)}
-                        className="absolute right-4 bottom-4 bg-black/50 hover:bg-black/70 text-white p-3 rounded-lg transition-all duration-300 backdrop-blur-sm"
-                        title="To'liq ekranda ko'rish"
+                        className="fixed bottom-6 right-6 z-50 bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-2xl transition-all duration-300 hover:scale-125 flex items-center justify-center animate-pulse hover:animate-none group"
+                        title="Katta qilib ko'rish"
                       >
-                        <FaExpand className="text-xl" />
+                        <FaExpand className="text-xl group-hover:rotate-90 transition-transform duration-300" />
                       </button>
                     </div>
                   )}
                   
-                  {/* Fullscreen Modal */}
+                  {/* Image Fullscreen Modal */}
                   {isImageFullscreen && (
                     <div 
-                      className="fixed inset-0 z-[9999] bg-black/70 backdrop-blur-sm flex items-center justify-center p-4"
+                      className="fixed inset-0 z-[9999] bg-black/90 backdrop-blur-sm flex flex-col p-4"
                       onClick={() => setIsImageFullscreen(false)}
                     >
-                      <button
-                        onClick={() => setIsImageFullscreen(false)}
-                        className="absolute top-6 right-6 bg-white/10 hover:bg-white/20 text-white p-3 rounded-full transition-all duration-300 backdrop-blur-sm"
-                        title="Yopish (ESC)"
-                      >
-                        <FaTimes className="text-2xl" />
-                      </button>
-                      <img
-                        src={data?.themes[themeNumber]?.show_material[0]?.content}
-                        alt={data?.themes[themeNumber]?.title || "Ko'rgazma materiali"}
-                        className="max-w-full max-h-full object-contain"
-                        onClick={(e) => e.stopPropagation()}
-                      />
+                      <div className="flex justify-between items-center mb-4">
+                        <h3 className="text-white text-xl font-bold">
+                          {data?.themes[themeNumber]?.title}
+                        </h3>
+                        <button
+                          onClick={() => setIsImageFullscreen(false)}
+                          className="btn btn-error btn-sm flex items-center gap-2"
+                        >
+                          <FaTimes className="text-xl" />
+                          Yopish (ESC)
+                        </button>
+                      </div>
+                      <div className="flex-1 flex items-center justify-center" onClick={(e) => e.stopPropagation()}>
+                        <img
+                          src={data?.themes[themeNumber]?.show_material[0]?.content}
+                          alt={data?.themes[themeNumber]?.title || "Ko'rgazma materiali"}
+                          className="max-w-full max-h-full object-contain rounded-lg"
+                        />
+                      </div>
                     </div>
                   )}
+                  
                   {/* taqdimot */}
-                  {/* {activeCard === 4 && (
-                    <Worker workerUrl={GlobalWorkerOptions.workerSrc}>
-                      <Viewer
-                        fileUrl={data?.themes[themeNumber]?.presentation}
-                        plugins={[newPlugin]}
+                  {activeCard === 4 && (
+                    <div className="relative w-full bg-gray-100 rounded-lg overflow-hidden shadow-xl">
+                      {/* PDF iframe with native controls */}
+                      <iframe
+                        src={`${data?.themes[themeNumber]?.presentation}#view=FitH&toolbar=1`}
+                        title="PDF Taqdimot"
+                        className="w-full h-[800px] border-0"
+                        type="application/pdf"
+                        style={{ minHeight: '700px' }}
                       />
-                    </Worker>
-                  )} */}
+                      
+                      {/* Floating Fullscreen button - bottom right with animation */}
+                      <button
+                        onClick={() => setIsPdfFullscreen(true)}
+                        className="fixed bottom-6 right-6 z-50 bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-2xl transition-all duration-300 hover:scale-125 flex items-center justify-center animate-pulse hover:animate-none group"
+                        title="Katta qilib ko'rish"
+                      >
+                        <FaExpand className="text-xl group-hover:rotate-90 transition-transform duration-300" />
+                      </button>
+                    </div>
+                  )}
+                  
+                  {/* PDF Fullscreen Modal */}
+                  {isPdfFullscreen && (activeCard === 4 || activeCard === 6) && (
+                    <div 
+                      className="fixed inset-0 z-[9999] bg-black/90 backdrop-blur-sm flex flex-col p-4"
+                      onClick={() => setIsPdfFullscreen(false)}
+                    >
+                      <div className="flex justify-between items-center mb-4">
+                        <h3 className="text-white text-xl font-bold">
+                          {data?.themes[themeNumber]?.title}
+                        </h3>
+                        <button
+                          onClick={() => setIsPdfFullscreen(false)}
+                          className="btn btn-error btn-sm flex items-center gap-2"
+                        >
+                          <FaTimes className="text-xl" />
+                          Yopish (ESC)
+                        </button>
+                      </div>
+                      <div className="flex-1 bg-white rounded-lg overflow-hidden" onClick={(e) => e.stopPropagation()}>
+                        <iframe
+                          src={`${activeCard === 4 ? data?.themes[themeNumber]?.presentation : data?.themes[themeNumber]?.educational_technologies}#view=FitH&toolbar=1`}
+                          title={activeCard === 4 ? "PDF Taqdimot - To'liq ekran" : "Ta'lim texnologiyalari - To'liq ekran"}
+                          className="w-full h-full border-0"
+                          type="application/pdf"
+                          style={{ minHeight: '100%' }}
+                        />
+                      </div>
+                    </div>
+                  )}
+                  
                   {/* nazariy-amaliy topshiriq */}
                   {activeCard === 5 && (
                     <div
@@ -476,6 +528,29 @@ function RTRDetail() {
                         ),
                       }}
                     ></div>
+                  )}
+                  
+                  {/* ta'lim texnologiyalari */}
+                  {activeCard === 6 && (
+                    <div className="relative w-full bg-gray-100 rounded-lg overflow-hidden shadow-xl">
+                      {/* PDF iframe with native controls */}
+                      <iframe
+                        src={`${data?.themes[themeNumber]?.educational_technologies}#view=FitH&toolbar=1`}
+                        title="Ta'lim texnologiyalari PDF"
+                        className="w-full h-[800px] border-0"
+                        type="application/pdf"
+                        style={{ minHeight: '700px' }}
+                      />
+                      
+                      {/* Floating Fullscreen button - bottom right with animation */}
+                      <button
+                        onClick={() => setIsPdfFullscreen(true)}
+                        className="fixed bottom-6 right-6 z-50 bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-2xl transition-all duration-300 hover:scale-125 flex items-center justify-center animate-pulse hover:animate-none group"
+                        title="Katta qilib ko'rish"
+                      >
+                        <FaExpand className="text-xl group-hover:rotate-90 transition-transform duration-300" />
+                      </button>
+                    </div>
                   )}
                 </div>
               </div>

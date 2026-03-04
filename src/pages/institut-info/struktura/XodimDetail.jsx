@@ -22,7 +22,7 @@ function XodimDetail() {
           <img
             src={data?.rasm || "/person.jpg"}
             alt={data?.FISH || "Xodim nomi"}
-            className="rounded-full w-48 h-48 object-cover border-4 border-blue-800  shadow-lg"
+            className="rounded-2xl w-48 h-48 object-cover border-2 border-blue-800  shadow-xl"
           />
         </div>
         <div className="h-full flex-col justify-between gap-5">
@@ -32,6 +32,7 @@ function XodimDetail() {
                 <Link
                   to="/"
                   className="text-base-content/70 hover:text-blue-700 transition-colors"
+                  
                 >
                   <FaHome className="w-4 h-4 mr-2" />
                   Bosh sahifa

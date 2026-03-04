@@ -140,11 +140,8 @@ function News() {
           <div className="flex items-center justify-between mb-4">
             <div className="flex flex-col items-center sm:items-start gap-1 sm:gap-2 md:gap-4">
               <h2 className="text-xl sm:text-3xl lg:text-4xl font-black bg-gradient-to-r from-blue-500 via-blue-600 to-blue-500 bg-clip-text text-transparent font-serif">
-                So'nggi yangiliklar
+                Yangiliklar
               </h2>
-              <p className="text-base-content/70 text-sm sm:text-base max-w-2xl text-center sm:text-start">
-            Kasbiy ta'lim sohasidagi eng so'nggi yangiliklar va voqealar
-          </p>
             </div>
             <Link to="/news" className="hidden hover:scale-105 text-sm md:text-[16px] sm:flex items-center gap-2 px-6 py-3 cursor-pointer rounded-full text-white font-semibold group/btn transition-all duration-300 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700">
               <span>Barcha yangiliklar</span>

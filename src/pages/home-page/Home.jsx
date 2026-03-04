@@ -1,5 +1,6 @@
 import EduProfHome from "./EduProfHome";
 import HomeHero from "./HomeHero";
+import InteractiveServices from "./InteractiveServices";
 import LidersExpert from "./lidersExpert";
 import NewsHome from "./NewsHome";
 import Partners from "./Partners";
@@ -13,6 +14,7 @@ function Home() {
     <>
       <HomeHero/>
       <NewsHome/>
+      {/* <InteractiveServices/> */}
       <PrezidentialSpeech/>
       <EduProfHome/>
       {/* <Statistics/> */}
