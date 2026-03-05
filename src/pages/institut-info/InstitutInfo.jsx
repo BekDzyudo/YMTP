@@ -15,6 +15,11 @@ function InstitutInfo() {
     return () => setOnHero(false);
   }, [setOnHero]);
 
+  // Har safar sahifa o'zgarganda tepaga scroll qilish
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
   return (
     <section className="bg-slate-100">
       {/* Main Content */}

@@ -48,7 +48,7 @@ function PrezidentialSpeech() {
   }, [isVisible]);
 
   return (
-    <div ref={sectionRef} className='relative w-full py-10 sm:py-14 overflow-hidden mt-10 sm:mt-20'>
+    <div ref={sectionRef} className='relative w-full py-8 sm:py-10 md:py-12 lg:py-14 overflow-hidden mt-4 sm:mt-6 md:mt-8 lg:mt-10'>
       {/* Background Image */}
       <div 
         className="absolute inset-0 bg-cover bg-center"
@@ -60,10 +60,10 @@ function PrezidentialSpeech() {
       {/* Transparent Blue Overlay */}
       <div className="absolute inset-0 bg-linear-to-br from-[#002d6d]/90 via-[#003d7d]/85 to-[#002d6d]/90"></div>
       
-     <div className='relative px-3.5 sm:px-5 mx-auto w-full 2xl:w-11/12 flex items-center justify-between gap-12 flex-col lg:flex-row'>
-       <div className='flex flex-col gap-10 text-white w-2/3'>
+     <div className='relative px-3.5 sm:px-5 mx-auto w-full 2xl:w-11/12 flex items-center justify-between gap-6 sm:gap-8 md:gap-10 lg:gap-12 flex-col lg:flex-row'>
+       <div className='flex flex-col gap-6 sm:gap-8 md:gap-10 text-white w-full lg:w-2/3'>
         <h1 
-          className='text-4xl font-bold text-start font-serif mb-4 text-white leading-14 min-h-[120px]'
+          className='text-center md:text-start text-lg sm:text-2xl md:text-3xl lg:text-4xl font-bold font-serif mb-2 sm:mb-4 text-white leading-relaxed sm:leading-14 min-h-20 sm:min-h-25 md:min-h-30'
           style={{
             textShadow: '0 4px 12px rgba(0, 0, 0, 0.4), 0 2px 4px rgba(0, 0, 0, 0.2)'
           }}
@@ -72,23 +72,23 @@ function PrezidentialSpeech() {
           {!isTypingComplete && <span className='animate-pulse'>|</span>}
         </h1>
         <div 
-          className={`flex items-center gap-5 transition-all duration-1000 ${
+          className={`flex items-center gap-3 sm:gap-4 md:gap-5 transition-all duration-1000 ${
             isTypingComplete ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
           }`}
         >
-          <img src="/gerb.png" alt="gerb" className='w-28 h-28'/>
-          <div className='flex flex-col gap-5'>
-            <h2 className='text-2xl font-bold text-white'>Shavkat Mirziyoyev</h2>
-            <p className='text-2xl text-white'>O'zbekiston Respublikasi Prezidenti</p>
+          <img src="/gerb.png" alt="gerb" className='w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 shrink-0'/>
+          <div className='flex flex-col gap-2 sm:gap-3 md:gap-4 lg:gap-5'>
+            <h2 className='text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-white'>Shavkat Mirziyoyev</h2>
+            <p className='text-sm sm:text-base md:text-lg lg:text-2xl text-white'>O'zbekiston Respublikasi Prezidenti</p>
           </div>
         </div>
       </div>
       <div 
-        className={`relative z-10 w-1/3 transition-all duration-2000 ${
+        className={`relative z-10 w-full lg:w-1/3 transition-all duration-2000 ${
           isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-20'
         }`}
       >
-        <img src="/president.jpg" alt="President" className='rounded-3xl shadow-2xl' />
+        <img src="/president.jpg" alt="President" className='rounded-2xl sm:rounded-3xl shadow-2xl w-full max-w-sm lg:max-w-none mx-auto' />
       </div>
      </div>
     </div>

@@ -1,5 +1,5 @@
-import React from "react";
-import { Link, Outlet, useNavigate, useParams } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, Outlet, useNavigate, useParams, useLocation } from "react-router-dom";
 import useGetFetch from "../../hooks/useGetFetch";
 import { RiProfileLine } from "react-icons/ri";
 import { LuUsers } from "react-icons/lu";
@@ -9,7 +9,13 @@ import { IoArrowBack } from "react-icons/io5";
 
 function CollageLayout() {
   const navigate = useNavigate();
+  const location = useLocation();
   let { collageId, districtId, Id } = useParams();
+
+  // Har safar sahifa o'zgarganda tepaga scroll qilish
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
 
   const {
     data: collage,

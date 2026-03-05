@@ -114,7 +114,7 @@ function MetodikTaminotDetail() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-100 sm:pt-35 pt-24 pb-8 sm:pb-12">
+    <div className="min-h-screen bg-slate-100 sm:pt-35 pt-24 pb-8 sm:pb-12 mb-25 sm:mb-35">
       <div className="bg-white w-full max-w-7xl mx-auto rounded-2xl shadow-lg border border-gray-200">
         {/* Hero Section */}
         <div className="bg-slate-200 border-t-8 border-blue-800 rounded-t-2xl py-3 sm:py-5 px-5 sm:px-8 flex items-center justify-between gap-5">

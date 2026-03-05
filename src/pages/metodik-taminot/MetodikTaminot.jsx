@@ -137,7 +137,7 @@ function MetodikTaminot() {
   return (
     <>
       <MetodikTaminotHero />
-      <section className="relative flex flex-col items-center -mt-10 z-20 mb-10 sm:mb-20">
+      <section className="relative flex flex-col items-center -mt-10 z-20 mb-25 sm:mb-40">
         <div className="w-full mx-5 xl:max-w-7xl 2xl:max-w-10/12 grid sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-5 xl:gap-10 px-2 sm:px-4 shadow-xl rounded-2xl bg-base-100 py-2 sm:py-4 lg:py-10">
           {filterCards.map((card) => {
             const isActive = card.id === activeFilter;

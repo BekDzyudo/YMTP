@@ -80,31 +80,31 @@ function NewsDetail() {
   // Kategoriyaga mos icon va gradient
   const getCategoryStyle = (kategoriya) => {
     const styles = {
-      Uchrashuv: {
+      "Uchrashuv": {
         icon: <FaHandshake size={18} />,
         gradient: "from-blue-500 to-cyan-500",
       },
-      Talim: {
+      "Ta'lim": {
         icon: <FaGraduationCap size={18} />,
         gradient: "from-emerald-500 to-teal-500",
       },
-      Yutuqlar: {
+      "Yutuqlar": {
         icon: <FaTrophy size={18} />,
         gradient: "from-amber-500 to-orange-500",
       },
-      Tadbir: {
+      "Tadbir": {
         icon: <FaUsers size={18} />,
         gradient: "from-violet-500 to-purple-500",
       },
-      Texnologiya: {
+      "Texnologiya": {
         icon: <FaLightbulb size={18} />,
         gradient: "from-emerald-500 to-teal-500",
       },
-      Hamkorlik: {
+      "Hamkorlik": {
         icon: <FaHandshake size={18} />,
         gradient: "from-pink-500 to-rose-500",
       },
-      Elon: {
+      "Elon": {
         icon: <FaNewspaper size={18} />,
         gradient: "from-indigo-500 to-blue-500",
       },
@@ -184,7 +184,7 @@ function NewsDetail() {
     : newsDetail.image ? [newsDetail.image] : [];
 
   return (
-    <section className="bg-slate-100 relative min-h-screen w-full bg-linear-to-b from-base-100 via-base-200 to-base-100 py-24 mt-2 sm:mt-10 lg:mt-15">
+    <section className="bg-slate-100 relative min-h-screen w-full bg-linear-to-b from-base-100 via-base-200 to-base-100 py-24 mt-2 sm:mt-10 lg:mt-15 mb-25 md:mb-35">
       <div className="px-3.5 sm:px-5 mx-auto w-full xl:w-full 2xl:w-11/12">
         {/* Breadcrumb */}
         <div className="breadcrumbs hidden md:block text-base mb-6">

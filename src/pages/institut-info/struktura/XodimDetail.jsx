@@ -16,7 +16,7 @@ function XodimDetail() {
   );
 
   return (
-    <section className="w-full bg-base-100 rounded-2xl border border-base-300 p-4 sm:p-6 lg:p-8 min-h-105">
+    <section className="w-full bg-base-100 rounded-2xl border border-base-300 p-4 sm:p-6 lg:p-8 min-h-105 mb-25 sm:mb-35">
       <div className="bg-slate-200 border-t-8 border-blue-800 rounded-t-2xl rounded-b-2xl py-3 sm:py-5 px-5 sm:px-8 flex gap-10">
         <div className="hidden md:block">
           <img

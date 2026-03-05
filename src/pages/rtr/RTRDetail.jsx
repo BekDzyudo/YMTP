@@ -113,7 +113,7 @@ function RTRDetail() {
         </h1>
       </div>
       {data?.themes?.length > 0 && (
-        <section className="relative min-h-[50vh] px-3.5 sm:px-5 mx-auto w-full xl:w-full 2xl:w-10/12">
+        <section className="relative min-h-[50vh] px-3.5 sm:px-5 mx-auto w-full xl:w-full 2xl:w-10/12 mb-25 sm:mb-35">
           <div className="flex items-center justify-between mb-8">
             <div className="breadcrumbs text-sm md:text-[16px] hidden md:block">
               <ul>
@@ -427,7 +427,7 @@ function RTRDetail() {
                       {/* Floating Fullscreen button - bottom right with animation */}
                       <button
                         onClick={() => setIsImageFullscreen(true)}
-                        className="fixed bottom-6 right-6 z-50 bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-2xl transition-all duration-300 hover:scale-125 flex items-center justify-center animate-pulse hover:animate-none group"
+                        className="fixed bottom-10 right-6 z-50 bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-2xl transition-all duration-300 hover:scale-125 flex items-center justify-center animate-pulse hover:animate-none group"
                         title="Katta qilib ko'rish"
                       >
                         <FaExpand className="text-xl group-hover:rotate-90 transition-transform duration-300" />
@@ -478,7 +478,7 @@ function RTRDetail() {
                       {/* Floating Fullscreen button - bottom right with animation */}
                       <button
                         onClick={() => setIsPdfFullscreen(true)}
-                        className="fixed bottom-6 right-6 z-50 bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-2xl transition-all duration-300 hover:scale-125 flex items-center justify-center animate-pulse hover:animate-none group"
+                        className="fixed bottom-10 right-6 z-50 bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-2xl transition-all duration-300 hover:scale-125 flex items-center justify-center animate-pulse hover:animate-none group"
                         title="Katta qilib ko'rish"
                       >
                         <FaExpand className="text-xl group-hover:rotate-90 transition-transform duration-300" />
@@ -545,7 +545,7 @@ function RTRDetail() {
                       {/* Floating Fullscreen button - bottom right with animation */}
                       <button
                         onClick={() => setIsPdfFullscreen(true)}
-                        className="fixed bottom-6 right-6 z-50 bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-2xl transition-all duration-300 hover:scale-125 flex items-center justify-center animate-pulse hover:animate-none group"
+                        className="fixed bottom-10 right-6 z-50 bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-2xl transition-all duration-300 hover:scale-125 flex items-center justify-center animate-pulse hover:animate-none group"
                         title="Katta qilib ko'rish"
                       >
                         <FaExpand className="text-xl group-hover:rotate-90 transition-transform duration-300" />

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, Outlet, useNavigate, useParams } from "react-router-dom";
+import { Link, Outlet, useNavigate, useParams, useLocation } from "react-router-dom";
 import useGetFetch from "../../hooks/useGetFetch";
 import { useGlobalContext } from "../../hooks/useGlobalContext";
 // react-icons
@@ -20,7 +20,13 @@ function AllMaterials() {
   const { theme } = useGlobalContext();
   const { teacherMaterialId } = useParams("teacherMaterialId");
   const navigate = useNavigate();
+  const location = useLocation();
   const [materialTypestate, setMaterialTypestate] = useState("");
+
+  // Har safar sahifa o'zgarganda tepaga scroll qilish
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
 
   // get material type
   const { data: materialType } = useGetFetch(
