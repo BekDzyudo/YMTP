@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { createPortal } from "react-dom";
 import { FaCalendarAlt, FaChevronLeft, FaChevronRight, FaClock, FaMapMarkerAlt } from "react-icons/fa";
 
 function InstitutCalendar() {
@@ -175,16 +176,16 @@ function InstitutCalendar() {
       </div>
 
       {/* Event Modal */}
-      {selectedEvent && (
+      {selectedEvent && createPortal(
         <>
           {/* Backdrop */}
           <div 
-            className="fixed inset-0 bg-black/50 z-50 animate-fadeIn"
+            className="fixed inset-0 bg-black/50 z-[9999] animate-fadeIn"
             onClick={() => setSelectedEvent(null)}
           ></div>
           
           {/* Modal */}
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none">
+          <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 pointer-events-none">
             <div 
               className="bg-base-100 rounded-2xl shadow-2xl max-w-md w-full pointer-events-auto animate-scaleIn overflow-hidden"
               onClick={(e) => e.stopPropagation()}
@@ -275,7 +276,8 @@ function InstitutCalendar() {
               </div>
             </div>
           </div>
-        </>
+        </>,
+        document.body
       )}
 
       {/* Upcoming Events List */}
