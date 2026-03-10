@@ -72,10 +72,10 @@ function Footer() {
                       <h4 className="font-semibold text-center text-gray-800 group-hover:text-[#002d6d] transition-colors text-sm sm:text-base">
                       {link.title}
                     </h4>
-                      <Link to={link.url} target='_blank' className="text-blue-600 hover:link px-4 py-2 flex items-center gap-2">
+                      <span className="text-blue-600 hover:link px-4 py-2 flex items-center gap-2">
                         {link.domen}
                         <HiOutlineExternalLink className="text-lg" />
-                      </Link>
+                      </span>
                     </div>
                   </div>
                 </Link>

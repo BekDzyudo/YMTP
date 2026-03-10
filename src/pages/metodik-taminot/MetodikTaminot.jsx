@@ -106,8 +106,27 @@ function MetodikTaminot() {
     sessionStorage.setItem("metodik_filter", activeFilter.toString());
   }, [activeFilter]);
 
+  // Set latest year when years data loads
+  useEffect(() => {
+    if (activeFilter === 1 && years && years.length > 0 && !yearId) {
+      setYearId(years[years.length - 1].id);
+    }
+    if (activeFilter === 3 && yearsOMT && yearsOMT.length > 0 && !yearId) {
+      setYearId(yearsOMT[yearsOMT.length - 1].id);
+    }
+  }, [years, yearsOMT, activeFilter]);
+
   const handleFilterChange = (filterId) => {
     setActiveFilter(filterId);
+    // Set to latest year for filters 1 and 3
+    if (filterId === 1 && years && years.length > 0) {
+      setYearId(years[years.length - 1].id);
+    } else if (filterId === 3 && yearsOMT && yearsOMT.length > 0) {
+      setYearId(yearsOMT[yearsOMT.length - 1].id);
+    } else {
+      setYearId("");
+    }
+    setBilimSoxasiId("");
   };
 
   // Item ID ning birinchi belgisiga qarab ta'lim turini aniqlash
@@ -169,128 +188,190 @@ function MetodikTaminot() {
             );
           })}
         </div>
-        <div className="w-full flex lg:flex-row flex-col items-center justify-between gap-4 mt-6 px-2 xl:max-w-7xl 2xl:max-w-10/12">
-          <div className="flex items-center gap-5">
-            <style>{`
-              .ok-glow {
-                position: relative;
-                z-index: 1;
-                animation: ok-glow-anim 1.8s infinite cubic-bezier(.68,-0.55,.27,1.55);
-              }
-              .ok-glow::before {
-                content: '';
-                position: absolute;
-                left: 50%;
-                top: 50%;
-                width: 200%;
-                height: 200%;
-                transform: translate(-50%, -50%) scale(0.7);
-                border-radius: 50%;
-                background: radial-gradient(rgba(34,197,94,0.18), transparent 70%);
-                opacity: 0;
-                pointer-events: none;
-                z-index: 0;
-                animation: ok-glow-wave 1.8s infinite cubic-bezier(.68,-0.55,.27,1.55);
-              }
-              @keyframes ok-glow-anim {
-                0%, 100% {
-                  transform: scale(1);
-                }
-                50% {
-                  transform: scale(1.13);
-                }
-              }
-              @keyframes ok-glow-wave {
-                0% {
-                  opacity: 0.5;
-                  transform: translate(-50%, -50%) scale(0.7);
-                }
-                70% {
-                  opacity: 0.15;
-                  transform: translate(-50%, -50%) scale(1.25);
-                }
-                100% {
-                  opacity: 0;
-                  transform: translate(-50%, -50%) scale(1.4);
-                }
-              }
-            `}</style>
-            <span className="font-semibold text-gray-700 bg-blue-100 sm:px-6 px-4 py-2 rounded-full sm:uppercase flex items-center gap-2 text-xs sm:text-[16px]">
-              <FcOk className="sm:text-xl text-lg ok-glow" />{" "}
-              {data?.total > 0
-                ? `${data?.total} ta hujjat topildi`
-                : "fanlar topilmadi"}
-            </span>
-          </div>
-          <div className="flex gap-5 sm:flex-row flex-col items-center">
-            <div className="flex flex-row items-center gap-5">
-              {activeFilter === 1 && (
-                <div className="relative">
-                  <select
-                    className="select select-sm md:select-lg outline-0 rounded-full min-w-32 text-sm md:text-[16px] shadow-sm border border-gray-200"
-                    onChange={(e) => setYearId(e.target.value)}
-                  >
-                    <option value="">Yil</option>
-                    {years?.map((year) => (
-                      <option key={year.id} value={year.id}>
-                        {year.year}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              )}
-              {activeFilter === 3 && (
-                <div className="relative">
-                  <select
-                    className="select select-sm md:select-lg outline-0 rounded-full min-w-32 text-sm md:text-[16px] shadow-sm border border-gray-200"
-                    onChange={(e) => setYearId(e.target.value)}
-                  >
-                    <option value="">Yil</option>
-                    {yearsOMT?.map((year) => (
-                      <option key={year.id} value={year.id}>
-                        {year.year}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              )}
-              <div className="relative">
-                <select
-                  className="select select-sm md:select-lg outline-0 rounded-full min-w-44 text-sm md:text-[16px] shadow-sm border border-gray-200"
-                  onChange={(e) => setBilimSoxasiId(e.target.value)}
+        <div className="w-full flex lg:flex-row flex-col items-start justify-between gap-10 mt-7 px-2 xl:max-w-7xl 2xl:max-w-10/12">
+          {/* Left Sidebar - Desktop only (XL+) for Sohalar */}
+          <aside className="hidden xl:block xl:w-80 shrink-0">
+            <div className="bg-base-100 rounded-2xl border border-base-300 p-4 sticky top-24">
+              <h3 className="text-lg font-bold mb-4 text-[#194882]">
+                {activeFilter === 1 ? "Bilim sohalari" : 
+                 activeFilter === 2 ? "Modullar" : 
+                 activeFilter === 3 ? "Ta'lim sohalari" : 
+                 activeFilter === 4 ? "Sohalar" : ""}
+              </h3>
+              <div className="space-y-2 max-h-[700px] overflow-y-auto">
+                <button
+                  onClick={() => setBilimSoxasiId("")}
+                  className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-all cursor-pointer ${
+                    bilimSoxasiId === "" 
+                      ? "bg-gradient-to-br from-[#194882] to-info text-white font-semibold" 
+                      : "hover:bg-base-200"
+                  }`}
                 >
-                  <option value="">{activeFilter === 1 ? "Bilim sohasi" : activeFilter === 2 ? "Modullar" : activeFilter === 3 ? "Ta'lim sohasi" : activeFilter === 4 ? "Sohalar" : ""}</option>
-                  {bilimSoxasi?.map((bilim) => (
-                    <option key={bilim.id} value={bilim.id}>
-                      {bilim.name}
-                    </option>
-                  ))}
-                </select>
+                  Barchasi
+                </button>
+                {bilimSoxasi?.map((bilim) => (
+                  <button
+                    key={bilim.id}
+                    onClick={() => setBilimSoxasiId(bilim.id)}
+                    className={`w-full text-left px-3 py-2 rounded-lg text-base transition-all cursor-pointer ${
+                      bilimSoxasiId === bilim.id 
+                        ? "bg-gradient-to-br from-[#194882] to-info text-white font-semibold" 
+                        : "hover:bg-base-200"
+                    }`}
+                  >
+                    {bilim.name}
+                  </button>
+                ))}
               </div>
             </div>
-            <div className="relative w-full sm:max-w-4/5 lg:w-96 h-8 md:h-12">
-              <input
-                onChange={(e) => setSearch(e.target.value)}
-                type="text"
-                placeholder="Izlash..."
-                className="w-full h-full rounded-full border border-gray-200 py-1 sm:py-2 pl-4 pr-10 focus:outline-none focus:border-blue-400 transition text-sm sm:text-[16px] bg-white shadow-sm"
-              />
-              <svg
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400"
-                width="20"
-                height="20"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-              >
-                <circle cx="11" cy="11" r="8" />
-                <path d="M21 21l-2-2" />
-              </svg>
+          </aside>
+
+          {/* Main Content Area */}
+          <div className="flex-1 w-full space-y-4">
+            {/* Top Section - Count and Filters */}
+            <div className="flex flex-col lg:flex-row items-center justify-between gap-4">
+              {/* Count Badge */}
+              <div className="flex items-center gap-5">
+                <style>{`
+                  .ok-glow {
+                    position: relative;
+                    z-index: 1;
+                    animation: ok-glow-anim 1.8s infinite cubic-bezier(.68,-0.55,.27,1.55);
+                  }
+                  .ok-glow::before {
+                    content: '';
+                    position: absolute;
+                    left: 50%;
+                    top: 50%;
+                    width: 200%;
+                    height: 200%;
+                    transform: translate(-50%, -50%) scale(0.7);
+                    border-radius: 50%;
+                    background: radial-gradient(rgba(34,197,94,0.18), transparent 70%);
+                    opacity: 0;
+                    pointer-events: none;
+                    z-index: 0;
+                    animation: ok-glow-wave 1.8s infinite cubic-bezier(.68,-0.55,.27,1.55);
+                  }
+                  @keyframes ok-glow-anim {
+                    0%, 100% {
+                      transform: scale(1);
+                    }
+                    50% {
+                      transform: scale(1.13);
+                    }
+                  }
+                  @keyframes ok-glow-wave {
+                    0% {
+                      opacity: 0.5;
+                      transform: translate(-50%, -50%) scale(0.7);
+                    }
+                    70% {
+                      opacity: 0.15;
+                      transform: translate(-50%, -50%) scale(1.25);
+                    }
+                    100% {
+                      opacity: 0;
+                      transform: translate(-50%, -50%) scale(1.4);
+                    }
+                  }
+                `}</style>
+                <span className="font-semibold text-gray-700 bg-blue-100 sm:px-6 px-4 py-2 rounded-full sm:uppercase flex items-center gap-2 text-xs sm:text-[16px]">
+                  <FcOk className="sm:text-xl text-lg ok-glow" />{" "}
+                  {data?.total > 0
+                    ? `${data?.total} ta hujjat topildi`
+                    : "fanlar topilmadi"}
+                </span>
+              </div>
+
+              {/* Filters Section */}
+              <div className="flex gap-5 sm:flex-row flex-col items-center w-full xl:w-auto">
+                <div className="flex flex-row items-center gap-5 w-full xl:w-auto">
+                  {/* Year Filter - Horizontal Buttons (XL+) */}
+                  {(activeFilter === 1 || activeFilter === 3) && (
+                    <>
+                      {/* Desktop Horizontal Buttons */}
+                      <div className="hidden xl:flex items-center gap-2">
+                        {(activeFilter === 1 ? years : yearsOMT)?.map((year) => (
+                          <button
+                            key={year.id}
+                            onClick={() => setYearId(year.id)}
+                            className={`btn btn-md rounded-full ${
+                              yearId === year.id 
+                                ? "bg-gradient-to-br from-[#194882] to-info text-white" 
+                                : "btn-outline"
+                            }`}
+                          >
+                            {year.year}
+                          </button>
+                        ))}
+                      </div>
+
+                      {/* Mobile Select */}
+                      <div className="xl:hidden relative">
+                        <select
+                          className="select select-sm md:select-lg outline-0 rounded-full min-w-32 text-sm md:text-[16px] shadow-sm border border-gray-200"
+                          value={yearId}
+                          onChange={(e) => setYearId(e.target.value)}
+                        >
+                          {(activeFilter === 1 ? years : yearsOMT)?.map((year) => (
+                            <option key={year.id} value={year.id}>
+                              {year.year}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </>
+                  )}
+
+                  {/* Soha Filter - Mobile Select (< XL) */}
+                  <div className="xl:hidden relative w-full sm:w-auto">
+                    <select
+                      className="select select-sm md:select-lg outline-0 rounded-full min-w-44 text-sm md:text-[16px] shadow-sm border border-gray-200 w-full"
+                      value={bilimSoxasiId}
+                      onChange={(e) => setBilimSoxasiId(e.target.value)}
+                    >
+                      <option value="">
+                        {activeFilter === 1 ? "Barcha bilim sohalari" : 
+                         activeFilter === 2 ? "Barcha modullar" : 
+                         activeFilter === 3 ? "Barcha ta'lim sohalari" : 
+                         activeFilter === 4 ? "Barcha sohalar" : ""}
+                      </option>
+                      {bilimSoxasi?.map((bilim) => (
+                        <option key={bilim.id} value={bilim.id}>
+                          {bilim.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+
+                {/* Search Input */}
+                <div className="relative w-full sm:max-w-4/5 lg:w-96 h-8 md:h-12">
+                  <input
+                    onChange={(e) => setSearch(e.target.value)}
+                    type="text"
+                    placeholder="Izlash..."
+                    className="w-full h-full rounded-full border border-gray-200 py-1 sm:py-2 pl-4 pr-10 focus:outline-none focus:border-blue-400 transition text-sm sm:text-[16px] bg-white shadow-sm"
+                  />
+                  <svg
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400"
+                    width="20"
+                    height="20"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle cx="11" cy="11" r="8" />
+                    <path d="M21 21l-2-2" />
+                  </svg>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 gap-5 sm:gap-8 mt-10 sm:mt-15 px-2 xl:max-w-7xl 2xl:max-w-10/12">
+
+            {/* Cards Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-2 gap-5 sm:gap-8 mt-7">
           {data?.results?.length > 0 ? (
             data.results.map((item) => {
               if (activeFilter === 1) {
@@ -495,21 +576,25 @@ function MetodikTaminot() {
               }
             })
           ) : (
-            <div className="text-info text-sm sm:text-2xl font-bold text-center w-full opacity-90 absolute left-0 top-40 sm:top-70 flex justify-center">
+            <div className="text-info text-sm sm:text-2xl font-bold text-center w-full opacity-90 flex justify-center items-center col-span-full py-20">
               <div className="flex items-center gap-3">
                 <MdReportGmailerrorred className="text-2xl sm:text-5xl" />
                 <p>Hech narsa topilmadi</p>
               </div>
             </div>
           )}
+            </div>
+
+            {/* Pagination */}
+            {data?.total > 0 && (
+              <Pagination
+                current_page={data?.current_page}
+                total_pages={data?.total_pages}
+                onPageChange={fetchData}
+              />
+            )}
+          </div>
         </div>
-        {data?.total > 0 && (
-          <Pagination
-            current_page={data?.current_page}
-            total_pages={data?.total_pages}
-            onPageChange={fetchData}
-          />
-        )}
       </section>
     </>
   );

@@ -37,12 +37,14 @@ import Structure from "./pages/institut-info/struktura/Structure";
 import BolimDetail from "./pages/institut-info/struktura/BolimDetail";
 import XodimDetail from "./pages/institut-info/struktura/XodimDetail";
 import Vacancy from "./pages/institut-info/Vacancy";
-import Contact from "./pages/institut-info/Contact";
+import Contact from "./pages/contact/Contact";
 import { institutLinks } from "./constants/institutLinks";
 import NewsList from "./pages/news/NewsList";
 import NewsDetail from "./pages/news/NewsDetail";
 import MetodikTaminot from "./pages/metodik-taminot/MetodikTaminot";
 import MetodikTaminotDetail from "./pages/metodik-taminot/MetodikTaminotDetail";
+import Faq from "./pages/faq/Faq";
+import NormativDocuments from "./pages/institut-info/NormativDocuments";
 
 function App() {
 
@@ -169,10 +171,18 @@ function App() {
               element: <Vacancy />,
             },
             {
-              path: "contact",
-              element: <Contact />,
+              path: "normativ-documents",
+              element: <NormativDocuments />,
             },
           ],
+        },
+        {
+          path: "faq",
+          element: <Faq />
+        },
+        {
+          path: "contact",
+          element: <Contact/>
         },
         {
           path: "rating",

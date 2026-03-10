@@ -101,14 +101,14 @@ function EduProfHome() {
           <div className="space-y-4 sm:space-y-6 lg:space-y-8">
             {/* Badge */}
             <div className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 bg-blue-500/10 border border-blue-500/20 rounded-full">
-              <FaRocket className="text-blue-600 dark:text-blue-400" size={16} />
-              <span className="text-blue-600 dark:text-blue-400 font-semibold text-xs sm:text-sm">Kasbiy Ta'lim Hujjatlar</span>
+              <FaRocket className="text-[#0d4ea3]" size={16} />
+              <span className="text-[#0d4ea3] font-semibold text-xs sm:text-sm">Kasbiy Ta'lim Hujjatlar</span>
             </div>
 
             {/* Heading */}
             <div>
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-3 sm:mb-4 leading-tight">
-                <span className="bg-linear-to-r from-blue-600 via-cyan-600 to-blue-600 bg-clip-text text-transparent font-serif">
+                <span className="text-[#0d4ea3] font-serif">
                   Metodik ta'minlash
                 </span>
                 <br />
@@ -136,7 +136,7 @@ function EduProfHome() {
             <div className="flex flex-wrap gap-3 sm:gap-4">
               <Link 
                 to="/methodological-support" 
-                className="group flex items-center gap-2 px-4 py-2 sm:px-8 sm:py-4 bg-linear-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 rounded-full text-white font-bold shadow-lg sm:hover:shadow-xl transition-all duration-300 sm:hover:scale-105"
+                className="group flex items-center gap-2 px-4 py-2 sm:px-8 sm:py-4 bg-gradient-to-br from-[#194882] to-info rounded-full text-white font-bold shadow-lg sm:hover:shadow-xl transition-all duration-300 sm:hover:scale-105"
               >
                 <span className="text-xs sm:text-base">Batafsil ma'lumot</span>
                 <FaArrowRight className="transition-transform duration-300 group-hover:translate-x-2" size={16} />
@@ -154,10 +154,10 @@ function EduProfHome() {
                 }`}
                 style={{ transitionDelay: `${idx * 150}ms` }}
               >
-                <div className="absolute -inset-0.5 bg-linear-to-r from-blue-500 to-cyan-500 rounded-xl sm:rounded-2xl opacity-0 group-hover:opacity-20 blur transition duration-500"></div>
+                <div className="absolute -inset-0.5 bg-gradient-to-br from-[#194882] to-info rounded-xl sm:rounded-2xl opacity-0 group-hover:opacity-20 transition duration-500"></div>
                 
                 <div className="relative">
-                  <div className="inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 bg-linear-to-r from-blue-500 to-cyan-500 rounded-lg sm:rounded-xl text-white mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300">
+                  <div className="inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-[#194882] to-info rounded-lg sm:rounded-xl text-white mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300">
                     <div className="text-xl sm:text-2xl md:text-[28px]">
                       {feature.icon}
                     </div>

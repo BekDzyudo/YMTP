@@ -244,7 +244,7 @@ function NewsList() {
 
           <div className="flex flex-col items-center lg:flex-row lg:items-end lg:justify-between gap-4 mb-10">
             <div>
-              <h1 className="text-2xl sm:text-4xl font-serif lg:text-5xl font-black bg-linear-to-r from-blue-700 via-blue-600 to-blue-500 bg-clip-text text-transparent">
+              <h1 className="text-2xl sm:text-4xl font-serif lg:text-5xl font-black text-[#0d4ea3]">
                 Barcha yangiliklar
               </h1>
             </div>
@@ -273,7 +273,7 @@ function NewsList() {
                   onClick={() => handleCategoryChange(category)}
                   className={`md:px-4 md:py-2 px-2 py-1 rounded-full text-xs md:text-sm font-semibold transition-all duration-300 cursor-pointer ${
                     selectedCategory === category
-                      ? "bg-linear-to-r from-blue-700 via-blue-600 to-blue-500 text-white shadow-lg scale-105"
+                      ? "bg-gradient-to-br from-[#194882] to-info text-white shadow-lg"
                       : "bg-base-100 text-base-content hover:bg-base-200 border border-base-300"
                   }`}
                 >

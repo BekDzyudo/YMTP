@@ -42,6 +42,9 @@ export const AuthProvider = ({children}) =>{
 
   const isTokenExpired = (token) => {
       try {
+        if (!token || typeof token !== 'string') {
+          return true; // Token yo'q yoki noto'g'ri turda bo'lsa, muddati tugagan deb hisoblaymiz
+        }
         const decoded = jwtDecode(token);
         
         const currentTime = Date.now() / 1000; // Hozirgi vaqtni sekundda olamiz

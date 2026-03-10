@@ -268,7 +268,7 @@ function NewsDetail() {
                 {/* Date and Views */}
                 <div className="flex flex-wrap items-center gap-4 mb-6">
                   <div className="flex items-center gap-3 px-4 py-2 bg-base-300 rounded-full">
-                    <FaCalendar size={16} className="text-blue-600" />
+                    <FaCalendar size={16} className="text-[#0d4ea3]" />
                     <span className="sm:text-base font-semibold text-base-content text-sm">
                       {formatDate(newsDetail.sana)}
                     </span>
@@ -310,7 +310,7 @@ function NewsDetail() {
           {/* Sidebar - Related News */}
           <div className="hidden xl:block lg:col-span-1">
             <div className="sticky top-24">
-              <h2 className="text-xl sm:text-2xl font-serif font-bold mb-6 bg-linear-to-r from-blue-700 via-blue-600 to-blue-500 bg-clip-text text-transparent">
+              <h2 className="text-xl sm:text-2xl font-serif font-bold mb-6 text-[#0d4ea3]">
                 O'xshash yangiliklar
               </h2>
 

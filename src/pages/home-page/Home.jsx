@@ -8,6 +8,7 @@ import PrezidentialSpeech from "./PrezidentialSpeech";
 import RtrHome from "./RtrHome";
 import Statistics from "./Statistics";
 import Teachers from "./Teachers";
+import FaqHome from "./FaqHome";
 
 function Home() {
   return (
@@ -21,6 +22,7 @@ function Home() {
       {/* <LidersExpert/> */}
       {/* <Teachers/> */}
       <Partners/>
+      <FaqHome/>
       <RtrHome/>
     </>
   );

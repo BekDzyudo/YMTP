@@ -24,16 +24,20 @@ function Header() {
   
   // Barcha komponentlar uchun yagona stil o'zgaruvchilari
   const logoSrc = "/new_logo_white.png"; // Doim oq logo
-  const textColor = useHeroStyle ? "text-white" : "text-white";
-  const borderColor = useHeroStyle ? "border-gray-400" : "border-white/20";
+  const textColor = "text-white"; // Doim oq matn
+  const borderColor = useHeroStyle ? "border-white/30" : "border-white/20";
   
-  // Background rangi - hero ustida transparent, boshqa joylarda #002d6d gradient
-  const bgColor = useHeroStyle ? "bg-transparent" : "bg-gradient-to-r from-[#002d6d]/90 via-[#003d7d]/90 to-[#002d6d]/90";
+  // Background style - hero ustida transparent, boshqa sahifalarda gradient
+  // onHero true bo'lsa (hero bor sahifada) - transparent
+  // onHero false bo'lsa (oddiy sahifa, masalan Contact) - gradient
+  const bgStyle = onHero 
+    ? { background: 'transparent' } 
+    : { background: 'linear-gradient(to right, rgba(0, 45, 109, 0.95), rgba(0, 61, 125, 0.95), rgba(0, 45, 109, 0.95))' };
 
   return (
     <div
-      className={`shadow-xl py-1 sm:py-2 fixed top-0 left-0 w-full z-30 backdrop-blur-3xl ${bgColor}
-  border-b border-white/10`}
+      className="shadow-xl py-1 sm:py-2 fixed top-0 left-0 w-full z-30 backdrop-blur-md border-b border-white/10"
+      style={bgStyle}
     >
       <div className="navbar gap-2 px-3.5 sm:px-5 mx-auto w-full xl:w-full 2xl:w-11/12 items-center">
         <div className="navbar-start">
@@ -113,6 +117,14 @@ function Header() {
                 className={textColor}
               >
                 Metodik ta'minot
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/contact"
+                className={textColor}
+              >
+                Bog‘lanish
               </Link>
             </li>
             {/* <li className="relative">

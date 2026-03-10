@@ -72,7 +72,7 @@ function RtrHome() {
             {/* Left - Text */}
             <div className="flex-1">
               <h1 className="text-2xl sm:text-4xl text-center sm:text-start md:text-5xl lg:text-5xl xl:text-6xl font-serif font-black mb-4 sm:mb-6 leading-tight">
-                <span className="bg-linear-to-r from-blue-500 via-blue-600 to-blue-500 bg-clip-text text-transparent">
+                <span className="text-[#0d4ea3] bg-clip-text">
                   Raqamli ta'lim resurslari
                 </span>
               </h1>
@@ -88,7 +88,7 @@ function RtrHome() {
               <Link 
                 to="/digital-educational-resources" 
                 rel="noopener noreferrer"
-                className="rounded-full group inline-flex px-4 py-2 sm:px-8 sm:py-4 bg-linear-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-bold shadow-xl sm:hover:shadow-2xl transition-all duration-300 sm:hover:scale-105"
+                className="rounded-full group inline-flex px-4 py-2 sm:px-8 sm:py-4 bg-gradient-to-br from-[#194882] to-info text-white font-bold shadow-xl sm:hover:shadow-2xl transition-all duration-300 sm:hover:scale-105"
               >
                 <div className="flex items-center gap-2 sm:gap-3">
                   <span className="text-xs sm:text-lg">Batafsil ma'lumot</span>

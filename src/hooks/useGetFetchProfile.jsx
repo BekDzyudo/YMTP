@@ -15,7 +15,7 @@ function useGetFetchProfile(url, lookAtLogout) {
       setIsPending(true);
       try {
         let req = ""
-        if(!(await isTokenExpired(refreshToken))){
+        if(refreshToken && !(await isTokenExpired(refreshToken))){
           req = await fetch(url, {
             headers: {
               "Content-Type": "application/json",
