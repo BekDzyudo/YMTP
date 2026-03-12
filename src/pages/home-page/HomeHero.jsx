@@ -201,7 +201,7 @@ function HomeHero() {
               },
               {
                 icon: <FaStar size={22} />,
-                desc: "MO tinglovchilari",
+                desc: "O‘quv adabiyotlari",
                 gradient: "from-info to-cyan-400",
                 glowColor: "rgba(6, 182, 212, 0.3)"
               },

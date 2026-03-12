@@ -19,7 +19,7 @@ import { useHero } from "../../context/HeroContext";
 import { useGlobalContext } from "../../hooks/useGlobalContext";
 
 function RTRDetail() {
-  const [themeNumber, setThemeNumber] = React.useState(1);
+  const [themeNumber, setThemeNumber] = React.useState(0);
   const [isImageFullscreen, setIsImageFullscreen] = React.useState(false);
   const [isPdfFullscreen, setIsPdfFullscreen] = React.useState(false);
   
@@ -56,6 +56,7 @@ function RTRDetail() {
   const { data } = useGetFetch(
     `${import.meta.env.VITE_BASE_URL_RTR}/v1/rtr_base_app/subject-list/${rtrId}/`,
   );
+console.log(data);
 
   const processContent = (htmlContent) => {
     const parser = new DOMParser();
@@ -332,16 +333,16 @@ function RTRDetail() {
               </div>
               {data?.themes?.map((topic, idx) => (
                 <button
-                  onClick={() => setThemeNumber(idx + 1)}
+                  onClick={() => setThemeNumber(idx)}
                   key={topic.id || idx}
                   className={`cursor-pointer flex items-center justify-between px-4 py-2 rounded-lg border  ${
-                    themeNumber == idx + 1
+                    themeNumber == idx
                       ? "bg-blue-600 border-blue-600 text-white shadow-sm font-semibold text-sm group"
                       : "bg-blue-50 border-blue-300 text-blue-700 shadow-sm hover:bg-blue-100 transition-all duration-200 font-semibold text-sm group"
                   }`}
                 >
                   <span>{idx + 1}-mavzu</span>
-                  <span className={`text-xl transition-transform duration-300 ${themeNumber == idx + 1 ? '' : 'group-hover:translate-x-2'}`}>&#8594;</span>
+                  <span className={`text-xl transition-transform duration-300 ${themeNumber == idx ? '' : 'group-hover:translate-x-2'}`}>&#8594;</span>
                 </button>
               ))}
             </aside>
@@ -424,6 +425,7 @@ function RTRDetail() {
                         className="w-full min-h-[400px] object-cover rounded-lg"
                       />
                       
+                      
                       {/* Floating Fullscreen button - bottom right with animation */}
                       <button
                         onClick={() => setIsImageFullscreen(true)}
@@ -438,10 +440,10 @@ function RTRDetail() {
                   {/* Image Fullscreen Modal */}
                   {isImageFullscreen && (
                     <div 
-                      className="fixed inset-0 z-[9999] bg-black/90 backdrop-blur-sm flex flex-col p-4"
+                      className="fixed inset-0 z-[9999] bg-black/90 backdrop-blur-sm flex flex-col"
                       onClick={() => setIsImageFullscreen(false)}
                     >
-                      <div className="flex justify-between items-center mb-4">
+                      <div className="flex justify-between items-center p-4 flex-shrink-0">
                         <h3 className="text-white text-xl font-bold">
                           {data?.themes[themeNumber]?.title}
                         </h3>
@@ -453,11 +455,11 @@ function RTRDetail() {
                           Yopish (ESC)
                         </button>
                       </div>
-                      <div className="flex-1 flex items-center justify-center" onClick={(e) => e.stopPropagation()}>
+                      <div className="flex-1 overflow-auto p-4 flex items-start justify-center" onClick={(e) => e.stopPropagation()}>
                         <img
                           src={data?.themes[themeNumber]?.show_material[0]?.content}
                           alt={data?.themes[themeNumber]?.title || "Ko'rgazma materiali"}
-                          className="max-w-full max-h-full object-contain rounded-lg"
+                          className="max-w-full h-auto object-contain rounded-lg"
                         />
                       </div>
                     </div>

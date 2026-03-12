@@ -45,6 +45,7 @@ import MetodikTaminot from "./pages/metodik-taminot/MetodikTaminot";
 import MetodikTaminotDetail from "./pages/metodik-taminot/MetodikTaminotDetail";
 import Faq from "./pages/faq/Faq";
 import NormativDocuments from "./pages/institut-info/NormativDocuments";
+import Adabiyotlar from "./pages/adabiyotlar/Adabiyotlar";
 
 function App() {
 
@@ -136,6 +137,10 @@ function App() {
           element: <MetodikTaminotDetail/>
         },
         {
+          path: "literature",
+          element: <Adabiyotlar/>
+        },
+        {
           path: "news",
           element: <NewsList/>
         },
@@ -151,7 +156,7 @@ function App() {
               element: <About />,
             },
             {
-              path: "management",
+              path: "leadership",
               element: <Management />,
             },
             {

@@ -12,6 +12,7 @@ import { institutLinks } from "../constants/institutLinks";
 function Header() {
   const { onHero } = useHero();
   const { pathname } = useLocation();
+  
   const { userData, auth, logout } = useContext(AuthContext);
   const { theme, changeTheme } = useGlobalContext();
 
@@ -117,6 +118,14 @@ function Header() {
                 className={textColor}
               >
                 Metodik ta'minot
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/literature"
+                className={textColor}
+              >
+                Adabiyotlar
               </Link>
             </li>
             <li>

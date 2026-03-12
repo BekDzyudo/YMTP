@@ -71,7 +71,7 @@ function Management() {
                   <img
                     src={person.image || '/default-avatar.png'}
                     alt={person.fullname}
-                    className="sm:w-64 sm:h-80 w-full h-80 rounded-xl object-cover shadow-lg border-2 border-blue-600"
+                    className="sm:w-64 sm:h-80 w-full h-80 rounded-xl object-cover shadow-lg border-2 border-gray-300"
                   />
                 </div>
 
@@ -88,7 +88,7 @@ function Management() {
                     {person.nomeri && (
                       <a
                         href={`tel:${person.nomeri}`}
-                        className="flex items-center gap-2 text-black transition-colors bg-slate-300 rounded-lg px-3 py-2 w-max"
+                        className="flex items-center gap-2 text-black transition-colors bg-slate-200 rounded-lg px-3 py-2 w-max"
                       >
                         <svg
                           className="w-5 h-5"
@@ -110,7 +110,7 @@ function Management() {
                     {person.pochtasi && (
                       <a
                         href={`mailto:${person.pochtasi}`}
-                        className="flex items-center gap-2 text-black transition-colors bg-slate-300 rounded-lg px-3 py-2 w-max"
+                        className="flex items-center gap-2 text-black transition-colors bg-slate-200 rounded-lg px-3 py-2 w-max"
                       >
                         <svg
                           className="w-5 h-5"
@@ -168,7 +168,7 @@ function Management() {
                 {/* Vazifasi Content */}
                 {person.vazifasi && openDropdowns[`${person.id}-vazifa`] && (
                   <div className="bg-slate-50 rounded-xl border border-slate-200 p-4 transition-all duration-300 mb-6">
-                    <h3 className="text-[16px] sm:text-lg font-semibold text-blue-800 mb-3">{person.lavozim}</h3>
+                    <h3 className="text-[16px] sm:text-lg font-bold text-blue-800 mb-3">{person.lavozim}</h3>
                     <div
                       className="prose prose-sm sm:prose-base max-w-none text-gray-600 text-justify text-sm sm:text-base"
                       dangerouslySetInnerHTML={{
@@ -181,7 +181,7 @@ function Management() {
                 {/* Faoliyati Content */}
                 {person.mehnat_faoliyati && openDropdowns[`${person.id}-faoliyat`] && (
                   <div className="bg-slate-50 rounded-xl border border-slate-200 p-4 transition-all duration-300 mb-6">
-                    <h3 className="text-[16px] sm:text-lg font-semibold text-blue-800 mb-3">Mehnat faoliyati</h3>
+                    <h3 className="text-[16px] sm:text-lg font-bold text-blue-800 mb-3">Mehnat faoliyati</h3>
                     <div
                       className="prose prose-sm sm:prose-base max-w-none text-gray-600 text-justify text-sm sm:text-base"
                       dangerouslySetInnerHTML={{

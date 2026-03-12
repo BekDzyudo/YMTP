@@ -1,128 +1,155 @@
-import React, { useRef } from 'react'
-import { useGlobalContext } from '../../../hooks/useGlobalContext';
-import { Link, useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import React, { useRef } from "react";
+import { useGlobalContext } from "../../../hooks/useGlobalContext";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function NewPassword() {
+  const { theme } = useGlobalContext();
+  const email = useRef();
+  const password = useRef();
+  const parolTiklashForm = useRef();
+  const navigate = useNavigate();
 
-    const { theme } = useGlobalContext();
-    const email = useRef()
-    const password = useRef()
-    const parolTiklashForm = useRef()
-    const navigate = useNavigate()
+  function addData(e) {
+    e.preventDefault();
+    
+    const dataObj = {
+      email: email.current.value,
+      password: password.current.value,
+    };
 
-     function addData(e){
-        e.preventDefault()
-        let dataObj = {
-            email: email.current.value,
-            password: password.current.value,
-          };
-          
-          let errorArr = Object.keys(dataObj).filter((key) => {
-            return !dataObj[key];
-          });
-      
-            errorArr.forEach((item) => {
-              document.getElementById(`${item}`).classList.add("border-red-600");
-            });
-            Array.from(parolTiklashForm.current).forEach((item) => {
-              item.addEventListener("change", (e) => {
-                if (e.target.value) {
-                  item.classList.remove("border-red-600");
-                } else {
-                  item.classList.add("border-red-600");
-                }
-              });
-            });
+    const errorArr = Object.keys(dataObj).filter((key) => !dataObj[key]);
 
-            if (errorArr.length == 0) {
-                  fetch(`${import.meta.env.VITE_BASE_URL}/password-reset/`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(dataObj),
-                  })
-                    .then(async(res) => {
-                      const errorObj = await res.json()
-                      if (!res.ok) throw new Error(JSON.stringify(errorObj));
-                      return res;
-                    })
-                    .then((data) => {
-                      parolTiklashForm.current.reset();
-                      toast.success("Parol o'zgartirildi 👍")
-                      navigate("/login")
-                    })
-                    .catch((err) => {
-                      const errorObj = JSON.parse(err.message)
-                        let errNewParolText = errorObj?.error?.join(" ")
-                        toast.error(errNewParolText && errNewParolText)
-                    })
-                    .finally(() => {
-                    //   saveMalumot.innerHTML = "Saqlash";
-                    });
-          
-            //       saveMalumot.innerHTML = `<button className="btn btn-primary btn-sm sm:btn-md w-1/2 sm:w-1/3 mt-4 text-sm sm:text-lg" type="submit" id="saveMalumot">
-            //     <span className="loading loading-ring loading-xs"></span>
-            //   </button>`;
-              }
+    errorArr.forEach((item) => {
+      document.getElementById(item).classList.add("border-red-600");
+    });
+
+    Array.from(parolTiklashForm.current).forEach((item) => {
+      item.addEventListener("change", (e) => {
+        if (e.target.value) {
+          item.classList.remove("border-red-600");
+        } else {
+          item.classList.add("border-red-600");
+        }
+      });
+    });
+
+    if (errorArr.length === 0) {
+      fetch(`${import.meta.env.VITE_BASE_URL}/password-reset/`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(dataObj),
+      })
+        .then(async (res) => {
+          const errorObj = await res.json();
+          if (!res.ok) throw new Error(JSON.stringify(errorObj));
+          return res;
+        })
+        .then(() => {
+          parolTiklashForm.current.reset();
+          toast.success("Parol o'zgartirildi 👍");
+          navigate("/login");
+        })
+        .catch((err) => {
+          const errorObj = JSON.parse(err.message);
+          const errNewParolText = errorObj?.error?.join(" ");
+          if (errNewParolText) toast.error(errNewParolText);
+        });
     }
+  }
 
   return (
-    <section className="flex justify-center items-center h-screen px-3.5 sm:px-5 w-full xl:w-full 2xl:w-11/12">
-      <div className="flex flex-col items-center bg-base-300 border-base-200 px-3 py-10 w-full sm:w-[500px] md:w-[600px] rounded-box">
-        <div className="flex flex-col items-center gap-3 sm:gap-4">
-          <div className="w-20 sm:w-24">
-            {theme == "night" ? (
-              <img src="/new_logo_white.png" alt="" />
-            ) : (
-              <img src="/new_logo_blue.png" alt="" />
-            )}
-          </div>
-          <h3 className="uppercase font-semibold text-sm sm:text-[16px]">
-            Kasbiy ta'limni rivojlantirish instituti
-          </h3>
-          <h3 className="text-[16px] md:text-lg font-bold text-primary mb-3 sm:mb-5">
-            Elektron pochtangizni tasdiqlang va yangi parol yarating
-          </h3>
+    <section className="min-h-screen flex">
+      {/* Left Side - Branding */}
+      <div className="hidden lg:flex lg:w-1/2 bg-[#0B2B4E] relative overflow-hidden items-center justify-center p-12">
+        <div className="absolute inset-0 opacity-20">
+          <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="network" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
+                <circle cx="10" cy="10" r="2" fill="#FDB913" opacity="0.3" />
+                <circle cx="90" cy="30" r="2" fill="#FDB913" opacity="0.3" />
+                <circle cx="50" cy="70" r="2" fill="#FDB913" opacity="0.3" />
+                <line x1="10" y1="10" x2="90" y2="30" stroke="#FDB913" strokeWidth="1" opacity="0.2" />
+                <line x1="90" y1="30" x2="50" y2="70" stroke="#FDB913" strokeWidth="1" opacity="0.2" />
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#network)" />
+          </svg>
         </div>
-        <form action="" ref={parolTiklashForm} className="w-full md:w-[80%] sm:w-[90%]">
-            <label className="label text-sm" htmlFor="email">
-              Elektron pochta*
-            </label>
-            <input
-              ref={email}
-              id="email"
-              name="email"
-              type="email"
-              className="input w-full mb-3 sm:mb-4 text-sm sm:text-lg outline-0 border"
-              placeholder="example@gmail.com"
-            />
+        <div className="relative z-10 text-center">
+          <div className="w-40 h-40 mx-auto mb-8">
+            <img src="/new_logo_white.png" alt="Logo" className="w-full h-full object-contain" />
+          </div>
+          <h1 className="text-white text-3xl font-bold mb-2">Kasbiy Ta'limni</h1>
+          <h2 className="text-[#D4A017] text-3xl font-bold">Rivojlantirish Instituti</h2>
+        </div>
+      </div>
 
-            <label className="label text-sm" htmlFor="password">
-              Parol*
-            </label>
-            <input
-              ref={password}
-              id="password"
-              type="password"
-              className="input w-full text-sm sm:text-lg outline-0 border"
-              placeholder="********"
-            />
+      {/* Right Side - Form */}
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-6 bg-gray-50">
+        <div className="w-full max-w-md">
+          <div className="mb-6 sm:mb-8">
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-2">Yangi parol yarating</h2>
+            <p className="text-sm sm:text-base text-gray-500">Elektron pochtangizni va yangi parolni kiriting.</p>
+          </div>
 
-            <div className="flex flex-col items-center gap-3 mt-3 sm:mt-6">
-              <button className="btn btn-primary btn-sm sm:btn-md w-1/2 sm:w-1/3 mt-4 text-sm sm:text-lg" type="submit" id="saveMalumot" onClick={addData}>
-                Saqlash
-              </button>
-              <Link
-              to="/login"
-                className={`${theme == "night" ? "text-neutral-400" : ""} text-sm link`}
-              >
-                Kirish sahifasiga o‘tish
+          <form ref={parolTiklashForm} onSubmit={addData} className="space-y-4">
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1.5">
+                Elektron pochta
+              </label>
+              <div className="relative">
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  </svg>
+                </span>
+                <input
+                  ref={email}
+                  id="email"
+                  name="email"
+                  type="email"
+                  className="w-full pl-10 pr-4 py-2.5 sm:py-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all text-sm sm:text-base"
+                  placeholder="example@mail.com"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1.5">
+                Yangi parol
+              </label>
+              <input
+                ref={password}
+                id="password"
+                type="password"
+                className="w-full px-4 py-2.5 sm:py-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all text-sm sm:text-base"
+                placeholder="••••••••"
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="w-full py-2.5 sm:py-3 bg-[#0B2B4E] hover:bg-[#0a2442] text-white font-semibold rounded-lg transition-all duration-200 cursor-pointer text-sm sm:text-base"
+            >
+              Saqlash
+            </button>
+
+            <div className="text-center text-sm text-gray-500 mt-4">
+              <Link to="/login" className="text-blue-600 hover:underline font-semibold">
+                Kirish sahifasiga o'tish
               </Link>
             </div>
-        </form>
+          </form>
+
+          <div className="mt-6 sm:mt-8 text-center text-xs text-gray-400">
+            © 2026 Kasbiy Ta'limni Rivojlantirish Instituti.<br />
+            Texnik yordam: <span className="text-gray-600">+998 94 616-33-66</span>
+          </div>
+        </div>
       </div>
     </section>
-  )
+  );
 }
 
-export default NewPassword
+export default NewPassword;
