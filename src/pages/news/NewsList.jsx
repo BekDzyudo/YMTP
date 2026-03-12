@@ -20,6 +20,7 @@ function NewsList() {
   const { setOnHero } = useHero();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
+console.log(data);
 
   const fetchData = async (page = 1) => {
     setLoading(true);
