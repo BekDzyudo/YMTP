@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useHero } from '../../context/HeroContext';
+import useGetFetch from '../../hooks/useGetFetch';
 
 function Adabiyotlar() {
   const navigate = useNavigate();
@@ -113,6 +114,46 @@ function Adabiyotlar() {
     setSearchTerm('');
   };
 
+  const [darajaa, setDaraja] = useState("");
+  const [yil, setYil] = useState("");
+  const [bilim, setBilim] = useState("");
+  const [talim, setTalim] = useState("");
+  const [yunalish, setYunalish] = useState("");
+  const [kasb, setKasb] = useState("");
+  const [masullarr, setMasullar] = useState("");
+  const [blok, setBlok] = useState("");
+  const [activeBtn, setActiveBtn] = useState(-1);
+  const [page, setPage] = useState(1);
+
+  const { data: darajalar } = useGetFetch(
+    `${import.meta.env.VITE_BASE_URL_ADABIYOTLAR}/talim-darajalari/`
+  );
+
+  const { data: uquv_yili } = useGetFetch(
+    `${import.meta.env.VITE_BASE_URL_ADABIYOTLAR}/oquv-yillari`
+  );
+
+  const { data: bilim_soha } = useGetFetch(
+    `${import.meta.env.VITE_BASE_URL_ADABIYOTLAR}/bilim-sohalar/`
+  );
+
+  const { data: talim_soha } = useGetFetch(
+    `${import.meta.env.VITE_BASE_URL_ADABIYOTLAR}/talim-sohalar/?bilim_soha=${bilim}`
+  );
+  const { data: talim_yunalish } = useGetFetch(
+    `${import.meta.env.VITE_BASE_URL_ADABIYOTLAR}/talim-yonalishlar/?talim_soha=${talim}`
+  );
+
+  const { data: kasb_mutaxassislik } = useGetFetch(
+    `${import.meta.env.VITE_BASE_URL_ADABIYOTLAR}/kasblar/?talim_yunalish=${yunalish}`
+  );
+  const { data: masullar } = useGetFetch(
+    `${import.meta.env.VITE_BASE_URL_ADABIYOTLAR}/masullar/?talim_soha=${talim}`
+  );
+  const { data: bloklar } = useGetFetch(
+    `${import.meta.env.VITE_BASE_URL_ADABIYOTLAR}/bloklar/`
+  );
+
   return (
     <div className='min-h-screen bg-slate-100'>
         <div className=" w-full mx-5 xl:max-w-7xl 2xl:max-w-10/12 mx-auto pt-35">
@@ -129,86 +170,174 @@ function Adabiyotlar() {
         <div className="mb-4">
           <h3 className="text-sm font-semibold text-gray-700 mb-3">Ta'lim sohasini tanlash</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-3">
-            <select 
-              className="select select-bordered w-full outline-none rounded-lg"
-              value={filters.year}
-              onChange={(e) => setFilters({...filters, year: e.target.value})}
-            >
-              <option value="">O'quv yili</option>
-              <option value="2024-2025">2024-2025</option>
-              <option value="2025-2026">2025-2026</option>
-            </select>
-
-            <select 
-              className="select select-bordered w-full outline-none rounded-lg"
-              value={filters.degree}
-              onChange={(e) => setFilters({...filters, degree: e.target.value})}
-            >
-              <option value="">Ta'lim darajasi</option>
-              <option value="o'rta">O'rta maxsus</option>
-              <option value="oliy">Oliy</option>
-            </select>
-
-            <select 
-              className="select select-bordered w-full outline-none rounded-lg"
-              value={filters.field}
-              onChange={(e) => setFilters({...filters, field: e.target.value})}
-            >
-              <option value="">Bilim sohasi</option>
-              <option value="texnika">Texnika</option>
-              <option value="iqtisod">Iqtisodiyot</option>
-            </select>
-
-            <select 
-              className="select select-bordered w-full outline-none rounded-lg"
-              value={filters.education}
-              onChange={(e) => setFilters({...filters, education: e.target.value})}
-            >
-              <option value="">Ta'lim sohasi</option>
-              <option value="texnika">Texnika</option>
-              <option value="pedagogika">Pedagogika</option>
-            </select>
-
-            <select 
-              className="select select-bordered w-full outline-none rounded-lg"
-              value={filters.direction}
-              onChange={(e) => setFilters({...filters, direction: e.target.value})}
-            >
-              <option value="">Ta'lim yo'nalish</option>
-              <option value="transport">Transport</option>
-              <option value="qurilish">Qurilish</option>
-            </select>
-
-            <select 
-              className="select select-bordered w-full outline-none rounded-lg"
-              value={filters.profession}
-              onChange={(e) => setFilters({...filters, profession: e.target.value})}
-            >
-              <option value="">Kasb va mutaxassislik</option>
-              <option value="haydovchi">Haydovchi</option>
-              <option value="mexanik">Mexanik</option>
-            </select>
-
-            <select 
-              className="select select-bordered w-full outline-none rounded-lg"
-              value={filters.responsible}
-              onChange={(e) => setFilters({...filters, responsible: e.target.value})}
-            >
-              <option value="">Mas'ullar</option>
-              <option value="user1">Foydalanuvchi 1</option>
-              <option value="user2">Foydalanuvchi 2</option>
-            </select>
+                <select
+                  onChange={(e) => setYil(e.target.value)}
+                  value={yil}
+                  className="select !bg-white text-black !select-neutral"
+                >
+                  <option value="" disabled={true}>
+                    O‘quv yili
+                  </option>
+                  {uquv_yili &&
+                    uquv_yili.map((item) => {
+                      return (
+                        <option
+                          key={item.id}
+                          value={item.id}
+                          className="!text-black"
+                        >
+                          {item.yil}
+                        </option>
+                      );
+                    })}
+                </select>
+                <select
+                  value={darajaa}
+                  className="select !bg-white text-black !select-neutral"
+                  onChange={(e) => setDaraja(e.target.value)}
+                >
+                  <option disabled={true} value="">
+                    Ta'lim darajasi
+                  </option>
+                  {darajalar &&
+                    darajalar.map((item) => {
+                      return (
+                        <option
+                          key={item.id}
+                          value={item.id}
+                          className="!text-black"
+                        >
+                          {item.nomi}
+                        </option>
+                      );
+                    })}
+                </select>
+                <select
+                  value={bilim}
+                  className="select !bg-white text-black !select-neutral"
+                  onChange={(e) => setBilim(e.target.value)}
+                >
+                  <option value="" disabled={true}>
+                    Bilim sohasi
+                  </option>
+                  {bilim_soha &&
+                    bilim_soha.map((item) => {
+                      return (
+                        <option
+                          key={item.id}
+                          value={item.id}
+                          className="!text-black"
+                        >
+                          {item.nomi}
+                        </option>
+                      );
+                    })}
+                </select>
+                <select
+                  value={talim}
+                  className="select !bg-white text-black !select-neutral"
+                  onChange={(e) => setTalim(e.target.value)}
+                >
+                  <option value="" disabled={true}>
+                    Ta'lim sohasi
+                  </option>
+                  {talim_soha &&
+                    talim_soha.map((item) => {
+                      return (
+                        <option
+                          key={item.id}
+                          value={item.id}
+                          className="!text-black"
+                        >
+                          {item.nomi}
+                        </option>
+                      );
+                    })}
+                </select>
+                <select
+                 value={yunalish}
+                  className="select !bg-white text-black !select-neutral"
+                  onChange={(e) => setYunalish(e.target.value)}
+                >
+                  <option value="" disabled={true}>
+                    Ta'lim yo'nalish
+                  </option>
+                  {talim_yunalish &&
+                    talim_yunalish.map((item) => {
+                      return (
+                        <option
+                          key={item.id}
+                          value={item.id}
+                          className="!text-black"
+                        >
+                          {item.nomi}
+                        </option>
+                      );
+                    })}
+                </select>
+                <select
+                  value={kasb}
+                  className="select !bg-white text-black !select-neutral"
+                  onChange={(e) => setKasb(e.target.value)}
+                >
+                  <option value="" disabled={true}>
+                    Kasb va mutaxasislik
+                  </option>
+                  {kasb_mutaxassislik &&
+                    kasb_mutaxassislik.map((item) => {
+                      return (
+                        <option
+                          key={item.id}
+                          value={item.id}
+                          className="!text-black"
+                        >
+                          {item.nomi}
+                        </option>
+                      );
+                    })}
+                </select>
+                <select
+                  value={masullarr}
+                  className="select !bg-white text-black !select-neutral"
+                  onChange={(e) => setMasullar(e.target.value)}
+                >
+                  <option value="" disabled={true}>
+                    Mas’ullar
+                  </option>
+                  {masullar &&
+                    masullar.map((item) => {
+                      return (
+                        <option
+                          key={item.id}
+                          value={item.id}
+                          className="!text-black"
+                        >
+                          {item.ism}
+                        </option>
+                      );
+                    })}
+                </select>
           </div>
         </div>
 
         <div className="flex flex-col sm:flex-row gap-3 items-center justify-between">
           <button
-            onClick={clearFilters}
+            onClick={() => {
+                    setBilim(""),
+                      setDaraja(""),
+                      setKasb(""),
+                      setMasullar(""),
+                      setSearch(""),
+                      setTalim(""),
+                      setYil(""),
+                      setYunalish("");
+                    setActiveBtn(-1)
+                    setBlok("")
+                  }}
             className="w-full sm:w-auto px-6 py-2 bg-green-700 hover:bg-green-800 text-white font-medium rounded-lg transition-colors cursor-pointer text-sm"
           >
             Filterlarni tozalash
           </button>
-
           <div className="flex flex-col sm:flex-row gap-3 items-center w-full sm:w-auto">
             <div className="relative w-full sm:w-64">
               <input
