@@ -48,6 +48,7 @@ function Login() {
       });
     });
 
+    console.log(dataObj);
     if (errorArr.length === 0) {
       const response = await login(dataObj);
       if (response) {

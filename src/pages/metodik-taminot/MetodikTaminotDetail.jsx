@@ -24,7 +24,6 @@ function MetodikTaminotDetail() {
   const { data: globalData } = useGetFetch(
     `${import.meta.env.VITE_BASE_URL_EDU}/kasb/${eduId}`,
   );
-  
 
   useEffect(() => {
     setOnHero(false);

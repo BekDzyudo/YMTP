@@ -46,6 +46,7 @@ import MetodikTaminotDetail from "./pages/metodik-taminot/MetodikTaminotDetail";
 import Faq from "./pages/faq/Faq";
 import NormativDocuments from "./pages/institut-info/NormativDocuments";
 import Adabiyotlar from "./pages/adabiyotlar/Adabiyotlar";
+import NotFound from "./pages/not-found/NotFound";
 
 function App() {
 
@@ -233,8 +234,10 @@ function App() {
     },
     {
       path:"create-new-parol",
-      element: auth.refreshToken ? <Navigate to="/"/> :  <NewPassword/>
-    }
+      element: auth.refreshToken ? <Navigate to="/"/> :  <NewPassword/>},
+    {
+      path: "*",
+      element: <NotFound />    }
   ]);
   return <RouterProvider router={routes} />;
 }

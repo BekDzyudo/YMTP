@@ -56,7 +56,6 @@ function RTRDetail() {
   const { data } = useGetFetch(
     `${import.meta.env.VITE_BASE_URL_RTR}/v1/rtr_base_app/subject-list/${rtrId}/`,
   );
-console.log(data);
 
   const processContent = (htmlContent) => {
     const parser = new DOMParser();
