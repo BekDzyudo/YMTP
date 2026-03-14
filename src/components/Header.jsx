@@ -120,14 +120,14 @@ function Header() {
                 Metodik ta'minot
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link
                 to="/literature"
                 className={textColor}
               >
                 Adabiyotlar
               </Link>
-            </li>
+            </li> */}
             <li>
               <Link
                 to="/contact"
