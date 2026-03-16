@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { FaAngleDown, FaAngleRight } from "react-icons/fa";
-import { Link, useLocation } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { IoMenu } from "react-icons/io5";
 import { useGlobalContext } from "../hooks/useGlobalContext";
 import { useHero } from "../context/HeroContext";
@@ -8,8 +8,10 @@ import { FiLogIn } from "react-icons/fi";
 import { AuthContext } from "../context/AuthContext";
 import useGetFetchProfile from "../hooks/useGetFetchProfile";
 import { institutLinks } from "../constants/institutLinks";
+import { useTranslation } from 'react-i18next';
 
 function Header() {
+  const { t, i18n } = useTranslation();
   const { onHero } = useHero();
   const { pathname } = useLocation();
   
@@ -69,7 +71,7 @@ function Header() {
                   role="button"
                   className={`${textColor} gap-2 items-center flex w-auto`}
                 >
-                  Institut
+                  {t('header.institute')}
                 </div>
                 <ul
                   tabIndex="-1"
@@ -77,24 +79,33 @@ function Header() {
                 >
                   {institutLinks.map((link) => (
                     <li key={link.to} className="group/item">
-                      <Link to={link.to} className="relative block py-2.5 text-[15px] font-medium transition-all duration-300 rounded-lg hover:translate-x-1 pl-0 group-hover/item:pl-4">
+                      <NavLink 
+                        to={link.to} 
+                        className={({ isActive }) => 
+                          `relative block py-2.5 text-[15px] font-medium transition-all duration-300 rounded-lg hover:translate-x-1 pl-0 group-hover/item:pl-4 ${
+                            isActive ? 'bg-primary text-primary-content' : ''
+                          }`
+                        }
+                      >
                         <span className="absolute left-0 top-1/2 -translate-y-1/2 opacity-0 group-hover/item:opacity-100 transition-opacity duration-300 text-primary">
                           <FaAngleRight size={13} />
                         </span>
-                        {link.label}
-                      </Link>
+                        {t(link.labelKey)}
+                      </NavLink>
                     </li>
                   ))}
                 </ul>
               </div>
             </li>
             <li>
-              <Link
+              <NavLink
                 to="/news"
-                className={textColor}
+                className={({ isActive }) => 
+                  `${textColor} ${isActive ? 'underline underline-offset-4' : ''}`
+                }
               >
-                Yangiliklar
-              </Link>
+                {t('header.news')}
+              </NavLink>
             </li>
             {/* <li>
               <Link
@@ -105,20 +116,24 @@ function Header() {
               </Link>
             </li> */}
             <li>
-              <Link
+              <NavLink
                 to="/digital-educational-resources"
-                className={textColor}
+                className={({ isActive }) => 
+                  `${textColor} ${isActive ? 'underline underline-offset-4' : ''}`
+                }
               >
-                Raqamli ta'lim resurslari
-              </Link>
+                {t('header.digitalResources')}
+              </NavLink>
             </li>
             <li>
-              <Link
+              <NavLink
                 to="/methodological-support"
-                className={textColor}
+                className={({ isActive }) => 
+                  `${textColor} ${isActive ? 'underline underline-offset-4' : ''}`
+                }
               >
-                Metodik ta'minot
-              </Link>
+                {t('header.methodologicalSupport')}
+              </NavLink>
             </li>
             {/* <li>
               <Link
@@ -129,12 +144,14 @@ function Header() {
               </Link>
             </li> */}
             <li>
-              <Link
+              <NavLink
                 to="/contact"
-                className={textColor}
+                className={({ isActive }) => 
+                  `${textColor} ${isActive ? 'underline underline-offset-4' : ''}`
+                }
               >
-                Bog‘lanish
-              </Link>
+                {t('header.contact')}
+              </NavLink>
             </li>
             {/* <li className="relative">
               <div className="dropdown dropdown-center group">
@@ -343,7 +360,7 @@ function Header() {
               className={`hidden sm:flex px-2 py-2.5 xl:py-3 sm:border rounded-lg gap-1 items-center text-sm xl:text-[16px] ${textColor} ${borderColor}`}
             >
               {" "}
-              Kirish <FiLogIn className="text-sm xl:text-lg" />
+              {t('header.login')} <FiLogIn className="text-sm xl:text-lg" />
             </Link>
           )}
 {/* sun and moon */}
@@ -406,16 +423,21 @@ function Header() {
               className={`px-3 py-2 xl:py-2.5 border rounded-lg flex items-center gap-2 ${textColor} ${borderColor} hover:bg-white/10 transition-colors`}
             >
               <img 
-                src="https://flagcdn.com/w20/uz.png" 
-                srcSet="https://flagcdn.com/w40/uz.png 2x"
-                alt="Uzbekistan"
+                src={`https://flagcdn.com/w20/${i18n.language === 'uz' ? 'uz' : i18n.language === 'ru' ? 'ru' : 'gb'}.png`}
+                srcSet={`https://flagcdn.com/w40/${i18n.language === 'uz' ? 'uz' : i18n.language === 'ru' ? 'ru' : 'gb'}.png 2x`}
+                alt={i18n.language}
                 className="w-5 h-3 sm:w-6 sm:h-4"
               />
-              <span className="hidden sm:inline text-sm xl:text-base font-medium">O'z</span>
+              <span className="hidden sm:inline text-sm xl:text-base font-medium">
+                {i18n.language === 'uz' ? "O'z" : i18n.language === 'ru' ? 'Ру' : 'En'}
+              </span>
             </button>
             <ul tabIndex={0} className="dropdown-content menu bg-base-300 rounded-lg z-40 w-min p-2 shadow-lg border border-gray-700 mt-2">
               <li>
-                <button className="flex items-center gap-3 hover:bg-base-100 rounded-lg py-2 pr-8">
+                <button 
+                  onClick={() => i18n.changeLanguage('uz')}
+                  className={`flex items-center gap-3 hover:bg-base-100 rounded-lg py-2 pr-8 ${i18n.language === 'uz' ? 'bg-primary text-primary-content' : ''}`}
+                >
                   <img 
                     src="https://flagcdn.com/w20/uz.png" 
                     srcSet="https://flagcdn.com/w40/uz.png 2x"
@@ -426,7 +448,10 @@ function Header() {
                 </button>
               </li>
               <li>
-                <button className="flex items-center gap-3 hover:bg-base-100 rounded-lg py-2 pr-8">
+                <button 
+                  onClick={() => i18n.changeLanguage('ru')}
+                  className={`flex items-center gap-3 hover:bg-base-100 rounded-lg py-2 pr-8 ${i18n.language === 'ru' ? 'bg-primary text-primary-content' : ''}`}
+                >
                   <img 
                     src="https://flagcdn.com/w20/ru.png" 
                     srcSet="https://flagcdn.com/w40/ru.png 2x"
@@ -437,7 +462,10 @@ function Header() {
                 </button>
               </li>
               <li>
-                <button className="flex items-center gap-3 hover:bg-base-100 rounded-lg py-2 pr-8">
+                <button 
+                  onClick={() => i18n.changeLanguage('en')}
+                  className={`flex items-center gap-3 hover:bg-base-100 rounded-lg py-2 pr-8 ${i18n.language === 'en' ? 'bg-primary text-primary-content' : ''}`}
+                >
                   <img 
                     src="https://flagcdn.com/w20/gb.png" 
                     srcSet="https://flagcdn.com/w40/gb.png 2x"
@@ -472,7 +500,7 @@ function Header() {
             </div>
             <ul
               tabIndex="-1"
-              className="menu menu-sm dropdown-content bg-base-300 rounded-lg z-40 mt-3 w-48 sm:w-52 p-2 shadow border border-gray-700"
+              className="menu menu-sm dropdown-content bg-base-300 rounded-lg z-40 mt-3 w-48 sm:w-52 p-2 shadow border border-gray-300"
             >
               {auth.refreshToken ? (
                 <></>
@@ -480,7 +508,7 @@ function Header() {
                 <li>
                   <Link to="/login" className={`text-[12px] sm:text-sm`}>
                     {" "}
-                    Kirish
+                    {t('header.login')}
                   </Link>
                 </li>
               )}
@@ -492,7 +520,7 @@ function Header() {
                     className="justify-between text-[12px] sm:text-sm"
                     to="/expert-profile"
                   >
-                    Profil
+                    {t('header.profile')}
                   </Link>
                 )}
                 { userData?.user_roles == "teacher" && (
@@ -500,50 +528,13 @@ function Header() {
                     className="justify-between text-[12px] sm:text-sm"
                     to="/profile"
                   >
-                    Profil
+                    {t('header.profile')}
                   </Link>
                 )}
               </li>
                 )
               }
-              
-              <li className="flex sm:hidden">
-                <label className="flex cursor-pointer gap-2">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="15"
-                    height="15"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <circle cx="12" cy="12" r="5" />
-                    <path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4" />
-                  </svg>
-                  <input
-                    onClick={changeTheme}
-                    type="checkbox"
-                    // value="synthwave"
-                    className="toggle toggle-sm theme-controller"
-                  />
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="15"
-                    height="15"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                  </svg>
-                </label>
-              </li>
+
               {auth.refreshToken ? (
                 <li>
                   <Link
@@ -551,42 +542,88 @@ function Header() {
                     onClick={logout}
                     className=" text-[12px] sm:text-sm"
                   >
-                    Chiqish
+                    {t('header.logout')}
                   </Link>
                 </li>
               ) : (
                 <></>
               )}
 
+              
+              <div className="lg:hidden">
+                <li>
+                  <NavLink
+                    to="/"
+                    className={({ isActive }) => 
+                      isActive ? "bg-primary text-primary-content" : ""
+                    }
+                  >
+                    {t('header.home')}
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/news"
+                    className={({ isActive }) => 
+                      isActive ? "bg-primary text-primary-content" : ""
+                    }
+                  >
+                    {t('header.news')}
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/digital-educational-resources"
+                    className={({ isActive }) => 
+                      isActive ? "bg-primary text-primary-content" : ""
+                    }
+                  >
+                    {t('header.digitalResources')}
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/methodological-support"
+                    className={({ isActive }) => 
+                      isActive ? "bg-primary text-primary-content" : ""
+                    }
+                  >
+                    {t('header.methodologicalSupport')}
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/contact"
+                    className={({ isActive }) => 
+                      isActive ? "bg-primary text-primary-content" : ""
+                    }
+                  >
+                    {t('header.contact')}
+                  </NavLink>
+                </li>
+                <li>
+                  <details>
+                    <summary>{t('header.institute')}</summary>
+                    <ul className="pl-4">
+                      {institutLinks.map((link) => (
+                        <li key={link.to}>
+                          <NavLink
+                            to={link.to}
+                            className={({ isActive }) => 
+                              isActive ? "bg-primary text-primary-content" : ""
+                            }
+                          >
+                            {t(link.labelKey)}
+                          </NavLink>
+                        </li>
+                      ))}
+                    </ul>
+                  </details>
+                </li>
+              </div>
               <div className="relative my-2">
                 <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-blue-500/40 to-transparent"></div>
                 <div className="absolute inset-0 h-[1px] blur-md bg-gradient-to-r from-transparent via-blue-700/20 to-transparent"></div>
-              </div>
-              <div className="lg:hidden">
-                <li>
-                  <Link>Bosh sahifa</Link>
-                </li>
-                <li>
-                  <Link>Kasbiy ta'lim tashkilotlari</Link>
-                </li>
-                <li>
-                  <Link>Adabiyotlar</Link>
-                </li>
-                <li>
-                  <Link>Reyting</Link>
-                </li>
-                <li>
-                  <Link>Materiallar</Link>
-                </li>
-                <li>
-                  <Link>Rasmiy veb-sayt</Link>
-                </li>
-                <li>
-                  <Link>Metodik taminlash</Link>
-                </li>
-                <li>
-                  <Link>Raqamli ta'lim resurslari</Link>
-                </li>
               </div>
             </ul>
           </div>

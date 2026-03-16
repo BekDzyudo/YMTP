@@ -48,10 +48,10 @@ function Login() {
       });
     });
 
-    console.log(dataObj);
     if (errorArr.length === 0) {
       const response = await login(dataObj);
       if (response) {
+        console.log(dataObj);
         if (rememberMe) {
           localStorage.setItem("rememberedEmail", dataObj.email);
           localStorage.setItem("rememberMe", "true");

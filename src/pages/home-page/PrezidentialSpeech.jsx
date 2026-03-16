@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react'
+import { useTranslation } from 'react-i18next';
 
 function PrezidentialSpeech() {
+  const { t } = useTranslation();
   const [displayedText, setDisplayedText] = useState('');
   const [isVisible, setIsVisible] = useState(false);
   const [isTypingComplete, setIsTypingComplete] = useState(false);
   const sectionRef = useRef(null);
-  const fullText = `"O'g'il-qizlarimizni mehnat bozorida talab yuqori bo'lgan zamonaviy kasb-hunarlarga o'rgatishga ustuvor ahamiyat qaratamiz."`;
+  const fullText = `"${t('presidential.quote')}"`;
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -45,7 +47,7 @@ function PrezidentialSpeech() {
 
       return () => clearInterval(interval);
     }
-  }, [isVisible]);
+  }, [isVisible, fullText]);
 
   return (
     <div ref={sectionRef} className='relative w-full py-8 sm:py-10 md:py-12 lg:py-14 overflow-hidden mt-4 sm:mt-6 md:mt-8 lg:mt-10'>
@@ -78,8 +80,8 @@ function PrezidentialSpeech() {
         >
           <img src="/gerb.png" alt="gerb" className='w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 shrink-0'/>
           <div className='flex flex-col gap-2 sm:gap-3 md:gap-4 lg:gap-5'>
-            <h2 className='text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-white'>Shavkat Mirziyoyev</h2>
-            <p className='text-sm sm:text-base md:text-lg lg:text-2xl text-white'>O'zbekiston Respublikasi Prezidenti</p>
+            <h2 className='text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-white'>{t('presidential.fullName')}</h2>
+            <p className='text-sm sm:text-base md:text-lg lg:text-2xl text-white'>{t('presidential.president')}</p>
           </div>
         </div>
       </div>

@@ -1,0 +1,170 @@
+{
+  "header": {
+    "institute": "Institut",
+    "news": "Yangiliklar",
+    "digitalResources": "Raqamli ta'lim resurslari",
+    "methodologicalSupport": "Metodik ta'minot",
+    "contact": "Bog'lanish",
+    "login": "Kirish",
+    "logout": "Chiqish",
+    "profile": "Profil",
+    "home": "Bosh sahifa",
+    "language": "O'z"
+  },
+  "institute": {
+    "about": "Institut haqida",
+    "leadership": "Rahbariyat",
+    "structure": "Institut tuzilmasi",
+    "vacancy": "Bo'sh ish o'rinlari",
+    "normativDocs": "Me'yoriy hujjatlar"
+  },
+  "hero": {
+    "instituteName": "Kasbiy ta'limni rivojlantirish instituti",
+    "mainTitle": "Kasbiy ta'limni rivojlantirish instituti yagona axborot-ta'lim portali",
+    "digitalResourcesTitle": "Raqamli ta'lim resurslari",
+    "digitalResourcesDesc": "Raqamli ta'lim resurslari (RTR) — ma'ruza matnlari, taqdimot, vizual-ko'rgazmali materiallar, multimediya materiallar, ta'lim texnologiyalari, glossariylar to'plami",
+    "methodologicalTitle": "Kasbiy ta'lim uchun metodik ta'minot",
+    "methodologicalDesc": "Kasbiy ta'lim tashkilotlari uchun metodik ta'minot - bu o'quv jarayonini qo'llab-quvvatlash va rivojlantirishga qaratilgan resurslar bo'lib, u kasbiy ta'lim tashkilotlari uchun metodik ta'minotni amalga oshiradi"
+  },
+  "stats": {
+    "basicVocational": "Boshlang'ich kasbiy ta'lim",
+    "secondaryVocational": "O'rta kasbiy ta'lim",
+    "specializedVocational": "O'rta maxsus kasbiy ta'lim",
+    "mediaResources": "Media materiallar",
+    "normativeDocs": "O'quv me'yoriy hujjatlar",
+    "educationalLiterature": "O'quv adabiyotlar",
+    "teachingMaterials": "O'qitish materiallari to'plami",
+    "methodologicalProducts": "Metodik mahsulotlar",
+    "users": "Foydalanuvchilar soni",
+    "count": "ta"
+  },
+  "common": {
+    "readMore": "Batafsil",
+    "back": "Orqaga",
+    "next": "Keyingi",
+    "previous": "Oldingi",
+    "search": "Qidirish",
+    "loading": "Yuklanmoqda...",
+    "error": "Xatolik yuz berdi",
+    "success": "Muvaffaqiyatli",
+    "noData": "Ma'lumot topilmadi",
+    "all": "Barchasi"
+  },
+  "news": {
+    "title": "So'nggi yangiliklar",
+    "categories": {
+      "Uchrashuv": "Uchrashuv",
+      "Ta'lim": "Ta'lim",
+      "Yutuqlar": "Yutuqlar",
+      "Tadbir": "Tadbir",
+      "Texnologiya": "Texnologiya",
+      "Hamkorlik": "Hamkorlik",
+      "Elon": "Elon"
+    },
+    "months": {
+      "0": "Yanvar",
+      "1": "Fevral",
+      "2": "Mart",
+      "3": "Aprel",
+      "4": "May",
+      "5": "Iyun",
+      "6": "Iyul",
+      "7": "Avgust",
+      "8": "Sentabr",
+      "9": "Oktabr",
+      "10": "Noyabr",
+      "11": "Dekabr"
+    }
+  },
+  "partners": {
+    "title": "Xalqaro hamkorlar",
+    "description": "Biz jahonning yetakchi ta'lim tashkilotlari bilan hamkorlik qilamiz"
+  },
+  "presidential": {
+    "quote": "O'g'il-qizlarimizni mehnat bozorida talab yuqori bo'lgan zamonaviy kasb-hunarlarga o'rgatishga ustuvor ahamiyat qaratamiz.",
+    "president": "Prezident",
+    "fullName": "Shavkat Mirziyoyev"
+  },
+  "teachers": {
+    "title": "Reytingi yuqori o'qituvchilar",
+    "rating": "Reyting",
+    "badges": "Nishonlar"
+  },
+  "institut": {
+    "title": "Institut",
+    "breadcrumbHome": "Bosh sahifa",
+    "loadingError": "Ma'lumotlarni yuklashda xatolik yuz berdi",
+    "noContent": "Bu bo'lim uchun kontent topilmadi"
+  },
+  "faq": {
+    "title": "Ko'p so'raladigan savollar",
+    "searchPlaceholder": "Savollarni qidiring...",
+    "contactUs": "Bizga murojaat qiling",
+    "categories": {
+      "all": "Barchasi",
+      "general": "Umumiy",
+      "registration": "Ro'yxatdan o'tish",
+      "materials": "Materiallar",
+      "rating": "Reyting",
+      "technical": "Texnik"
+    },
+    "noResults": "Hech narsa topilmadi",
+    "contactInfo": "Agar savolingizga javob topa olmagan bo'lsangiz, biz bilan bog'lanishingiz mumkin:"
+  },
+  "newsPage": {
+    "title": "Yangiliklar",
+    "allCategories": "Barchasi",
+    "readMore": "To'liq o'qish"
+  },
+  "auth": {
+    "login": "Kirish",
+    "register": "Ro'yxatdan o'tish",
+    "email": "Email",
+    "password": "Parol",
+    "rememberMe": "Eslab qolish",
+    "forgotPassword": "Parolni unutdingizmi?",
+    "noAccount": "Hisobingiz yo'qmi?",
+    "haveAccount": "Hisobingiz bormi?",
+    "fullName": "To'liq ism",
+    "confirmPassword": "Parolni tasdiqlash",
+    "phone": "Telefon",
+    "organization": "Tashkilot",
+    "welcomeBack": "Xush kelibsiz!",
+    "loginSuccess": "Xush kelibsiz",
+    "loginError": "Email yoki Parol noto'g'ri"
+  },
+  "contact": {
+    "title": "Biz bilan bog'laning",
+    "name": "Ism",
+    "phone": "Telefon",
+    "subject": "Mavzu",
+    "message": "Xabar",
+    "send": "Yuborish",
+    "sending": "Yuborilmoqda...",
+    "address": "Manzil",
+    "workingHours": "Ish vaqti",
+    "socialMedia": "Ijtimoiy tarmoqlar",
+    "calendar": "Kalendar",
+    "days": {
+      "0": "Yakshanba",
+      "1": "Dushanba",
+      "2": "Seshanba",
+      "3": "Chorshanba",
+      "4": "Payshanba",
+      "5": "Juma",
+      "6": "Shanba"
+    },
+    "validation": {
+      "nameRequired": "Ism kiritilishi shart",
+      "emailRequired": "Email kiritilishi shart",
+      "phoneRequired": "Telefon raqami kiritilishi shart",
+      "phoneInvalid": "To'g'ri telefon raqami kiriting (masalan: +998901234567)",
+      "subjectRequired": "Mavzu kiritilishi shart",
+      "messageRequired": "Xabar matni kiritilishi shart",
+      "success": "Xabaringiz muvaffaqiyatli yuborildi!",
+      "error": "Xatolik yuz berdi. Qaytadan urinib ko'ring"
+    },
+    "weekdays": "Dushanba - Juma: 09:00 - 18:00",
+    "weekend": "Shanba - Yakshanba: Dam olish kuni"
+  }
+}

@@ -1,8 +1,10 @@
 import { Swiper, SwiperSlide } from "swiper/react";
+import { useTranslation } from 'react-i18next';
 import Divider from "../../components/Dvider";
 import { Navigation, Autoplay } from "swiper/modules";
 
 function Partners() {
+  const { t } = useTranslation();
   const partners = [
     { name: "UNICEF", image: "/unicef.png", description: "BMT Bolalar jamg'armasi" },
     { name: "Askaniya", image: "/askaniya.png", description: "Askaniya ta'lim markazi" },
@@ -43,10 +45,10 @@ function Partners() {
         {/* Section Header */}
         <div className="text-center mb-8 sm:mb-12">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black mb-3 text-white font-serif">
-            Xalqaro hamkorlar
+            {t('partners.title')}
           </h2>
           <p className="text-white/90 text-base sm:text-lg max-w-2xl mx-auto">
-            Biz jahonning yetakchi ta'lim tashkilotlari bilan hamkorlik qilamiz
+            {t('partners.description')}
           </p>
         </div>
 

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useTranslation } from 'react-i18next';
 import { useGlobalContext } from "../../hooks/useGlobalContext";
 import { useHero } from "../../context/HeroContext";
 import {
@@ -31,8 +32,8 @@ function RTRHero() {
 
     const { theme } = useGlobalContext();
       const { setOnHero } = useHero();
+      const { t } = useTranslation();
       // Animated heading and description state
-      const headingText = "Raqamli ta'lim resurslari";
       const [showHeading, setShowHeading] = useState(false);
       const [showDesc, setShowDesc] = useState(false);
       useEffect(() => {
@@ -77,7 +78,7 @@ function RTRHero() {
   return (
      <section
      ref={heroRef}
-          className={`relative w-full h-[65vh] md:h-[80vh] flex items-center px-5 ${
+          className={`relative w-full h-[65vh] md:h-[80vh] flex items-center px-3 sm:px-5 pt-20 md:pt-0 ${
             theme === "light" ? "text-neutral-content" : ""
           }`}
         >
@@ -94,11 +95,11 @@ function RTRHero() {
               background: theme === "light" ? "rgba(0,0,0,0.7)" : "rgba(0,0,0,0.7)",
             }}
           ></div>
-          <div className="flex flex-col w-full justify-center">
-            <div className="w-full flex flex-col items-center z-20">
-              <div className="w-4/5 mt-10">
+          <div className="flex flex-col w-full justify-center items-center h-full">
+            <div className="w-full flex flex-col items-center z-20 pb-8 sm:pb-0">
+              <div className="w-full sm:w-4/5 mt-4 sm:mt-10 px-2">
                 <h2
-                  className="text-4xl text-center sm:text-5xl md:text-6xl mb-5 lg:mb-10 font-bold text-white lg:leading-17 font-serif"
+                  className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl mb-3 sm:mb-5 lg:mb-10 font-bold text-white leading-tight sm:leading-snug lg:leading-17 font-serif text-center"
                   style={{
                     textShadow: "0 2px 8px rgba(0,0,0,0.7), 0 1px 0 #000",
                     opacity: showHeading ? 1 : 0,
@@ -106,10 +107,10 @@ function RTRHero() {
                     transition: "opacity 0.5s, transform 0.5s",
                   }}
                 >
-                  {headingText}
+                  {t('hero.digitalResourcesTitle')}
                 </h2>
                 <p
-                  className="text-xs sm:text-sm md:text-[16px] lg:text-xl text-center w-full sm:max-w-[80%] mx-auto italic text-gray-200 font-medium"
+                  className="text-[11px] sm:text-xs md:text-sm lg:text-xl text-center w-full sm:max-w-[90%] lg:max-w-[80%] mx-auto italic text-gray-200 font-medium leading-snug"
                   style={{
                     textShadow: "0 2px 8px rgba(0,0,0,0.7), 0 1px 0 #000",
                     opacity: showDesc ? 1 : 0,
@@ -117,34 +118,32 @@ function RTRHero() {
                     transition: "opacity 0.5s, transform 0.5s",
                   }}
                 >
-                  Raqamli ta'lim resurslari (RTR) — ma'ruza matnlari, taqdimot,
-                  vizual-ko'rgazmali materiallar, multimediya materiallar, ta'lim
-                  texnologiyalari, glossariylar to'plami
+                  {t('hero.digitalResourcesDesc')}
                 </p>
               </div>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 lg:gap-5 mt-8 sm:mt-10 z-20 max-w-6xl mx-auto w-full sm:px-4">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3 lg:gap-5 mt-4 sm:mt-8 lg:mt-10 z-20 max-w-6xl mx-auto w-full px-2 sm:px-4">
                 {[
                   {
-                    icon: <FaChalkboardTeacher size={22} />,
-                    desc: "Boshlang'ich kasbiy ta'lim",
+                    icon: <FaChalkboardTeacher size={18} className="sm:w-[22px] sm:h-[22px]" />,
+                    descKey: "stats.basicVocational",
                     gradient: "from-green-700 to-emerald-700",
                     glowColor: "rgba(21, 128, 61, 0.35)"
                   },
                   {
-                    icon: <FaGraduationCap size={22} />,
-                    desc: "O'rta kasbiy ta'lim",
+                    icon: <FaGraduationCap size={18} className="sm:w-[22px] sm:h-[22px]" />,
+                    descKey: "stats.secondaryVocational",
                     gradient: "from-green-700 to-emerald-700",
                     glowColor: "rgba(21, 128, 61, 0.35)"
                   },
                   {
-                    icon: <FaStar size={22} />,
-                    desc: "O'rta maxsus kasbiy ta'lim",
+                    icon: <FaStar size={18} className="sm:w-[22px] sm:h-[22px]" />,
+                    descKey: "stats.specializedVocational",
                     gradient: "from-green-700 to-emerald-700",
                     glowColor: "rgba(21, 128, 61, 0.35)"
                   },
                   {
-                    icon: <FaVideo size={22} />,
-                    desc: "Media materiallar",
+                    icon: <FaVideo size={18} className="sm:w-[22px] sm:h-[22px]" />,
+                    descKey: "stats.mediaResources",
                     gradient: "from-green-700 to-emerald-700",
                     glowColor: "rgba(21, 128, 61, 0.35)"
                   },
@@ -158,14 +157,14 @@ function RTRHero() {
                   >
                     {/* Glow effect */}
                     <div 
-                      className={`absolute -inset-1 bg-gradient-to-r ${card.gradient} rounded-3xl blur-md opacity-10 group-hover:opacity-25 transition duration-500`}
+                      className={`absolute -inset-1 bg-gradient-to-r ${card.gradient} rounded-2xl sm:rounded-3xl blur-md opacity-10 group-hover:opacity-25 transition duration-500`}
                     />
                     
                     {/* Card */}
-                    <div className="relative backdrop-blur-md bg-black/60 hover:bg-black/70 rounded-3xl p-4 sm:p-5 flex flex-col items-center gap-2 border border-gray-700/50 hover:border-gray-600/70 transition-all duration-300 hover:scale-105 min-h-[160px] justify-center shadow-2xl">
+                    <div className="relative backdrop-blur-md bg-black/60 hover:bg-black/70 rounded-2xl sm:rounded-3xl p-2 sm:p-4 lg:p-5 flex flex-col items-center gap-1 sm:gap-2 border border-gray-700/50 hover:border-gray-600/70 transition-all duration-300 hover:scale-105 min-h-[130px] sm:min-h-[160px] justify-center shadow-2xl">
                       
                       {/* Icon circle */}
-                      <div className={`relative w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br ${card.gradient} flex items-center justify-center shadow-xl transform transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6`}>
+                      <div className={`relative w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-full bg-gradient-to-br ${card.gradient} flex items-center justify-center shadow-xl transform transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6`}>
                         <div className="absolute inset-0 rounded-full bg-gradient-to-t from-black/20 to-transparent" />
                         <div className="text-white drop-shadow-2xl relative z-10">
                           {card.icon}
@@ -173,18 +172,18 @@ function RTRHero() {
                       </div>
 
                       {/* Number */}
-                      <div className="flex flex-col items-center gap-1">
-                        <div className="flex items-baseline gap-1">
-                          <span className={`text-2xl sm:text-3xl lg:text-4xl font-black bg-gradient-to-r ${card.gradient} bg-clip-text text-transparent drop-shadow-[0_2px_10px_${card.glowColor}]`}>
+                      <div className="flex flex-col items-center gap-0.5 sm:gap-1">
+                        <div className="flex items-baseline gap-0.5 sm:gap-1">
+                          <span className={`text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-black bg-gradient-to-r ${card.gradient} bg-clip-text text-transparent drop-shadow-[0_2px_10px_${card.glowColor}]`}>
                             {cardNumbers[idx]}
                           </span>
-                          <span className="text-base sm:text-lg font-semibold text-gray-200">
+                          <span className="text-xs sm:text-base lg:text-lg font-semibold text-gray-200">
                             ta
                           </span>
                         </div>
                         
                         {/* Progress bar */}
-                        <div className="w-14 h-1 rounded-full bg-gray-800/80 overflow-hidden mt-1">
+                        <div className="w-10 sm:w-14 h-0.5 sm:h-1 rounded-full bg-gray-800/80 overflow-hidden mt-0.5 sm:mt-1">
                           <div 
                             className={`h-full bg-gradient-to-r ${card.gradient} transition-all duration-1000 shadow-[0_0_6px_currentColor]`}
                             style={{
@@ -195,8 +194,8 @@ function RTRHero() {
                       </div>
 
                       {/* Description */}
-                      <p className="text-xs sm:text-sm text-center text-gray-300 font-medium leading-tight px-2 min-h-[28px] flex items-center">
-                        {card.desc}
+                      <p className="text-[10px] sm:text-xs lg:text-sm text-center text-gray-300 font-medium leading-tight px-1 sm:px-2 min-h-[24px] sm:min-h-[28px] flex items-center">
+                        {t(card.descKey)}
                       </p>
 
                       {/* Top shine effect */}

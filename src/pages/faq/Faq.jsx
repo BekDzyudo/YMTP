@@ -1,21 +1,23 @@
 import { useState } from "react";
+import { useTranslation } from 'react-i18next';
 import { FaQuestionCircle, FaSearch, FaEnvelope, FaPhone, FaPlus, FaTimes } from "react-icons/fa";
 import { useGlobalContext } from "../../hooks/useGlobalContext";
 import { Link } from "react-router-dom";
 
 function Faq() {
+  const { t } = useTranslation();
   const { theme } = useGlobalContext();
   const [activeIndex, setActiveIndex] = useState(null);
   const [activeCategory, setActiveCategory] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
 
   const categories = [
-    { id: "all", name: "Barchasi" },
-    { id: "general", name: "Umumiy" },
-    { id: "registration", name: "Ro'yxatdan o'tish" },
-    { id: "materials", name: "Materiallar" },
-    { id: "rating", name: "Reyting" },
-    { id: "technical", name: "Texnik" }
+    { id: "all", name: t('faq.categories.all') },
+    { id: "general", name: t('faq.categories.general') },
+    { id: "registration", name: t('faq.categories.registration') },
+    { id: "materials", name: t('faq.categories.materials') },
+    { id: "rating", name: t('faq.categories.rating') },
+    { id: "technical", name: t('faq.categories.technical') }
   ];
 
   const faqs = [
@@ -112,7 +114,7 @@ function Faq() {
       {/* Title */}
       <div className="mb-8">
         <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-serif text-[#0d4ea3]">
-          Ko'p so'raladigan savollar
+          {t('faq.title')}
         </h1>
         <p className="text-base sm:text-lg opacity-70 mt-2">
           Platformamiz haqida eng ko'p beriladigan savollarga javoblar
@@ -124,12 +126,12 @@ function Faq() {
         <div className={`p-5 rounded-lg shadow-md ${theme === "night" ? "bg-gray-700" : "bg-base-200"}`}>
           <h3 className="text-lg font-semibold mb-3 text-[#194882] flex items-center gap-2">
             <FaSearch className="text-[#194882]" />
-            Qidirish
+            {t('common.search')}
           </h3>
           <div className="relative">
             <input
               type="text"
-              placeholder="Savollarni qidirish..."
+              placeholder={t('faq.searchPlaceholder')}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="input input-bordered outline-0 w-full"
@@ -145,7 +147,7 @@ function Faq() {
           {filteredFaqs.length === 0 ? (
             <div className="text-center py-12">
               <FaQuestionCircle className="mx-auto text-6xl opacity-30 mb-4" />
-              <p className="text-lg opacity-70">Savollar topilmadi</p>
+              <p className="text-lg opacity-70">{t('faq.noResults')}</p>
             </div>
           ) : (
             <div className="grid gap-4">
@@ -205,12 +207,12 @@ function Faq() {
             <div className={`hidden lg:block p-5 rounded-lg shadow-md ${theme === "night" ? "bg-gray-700" : "bg-base-200"}`}>
               <h3 className="text-lg font-semibold mb-3 text-[#194882] flex items-center gap-2">
                 <FaSearch className="text-[#194882]" />
-                Qidirish
+                {t('common.search')}
               </h3>
               <div className="relative">
                 <input
                   type="text"
-                  placeholder="Savollarni qidirish..."
+                  placeholder={t('faq.searchPlaceholder')}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="input input-bordered outline-0 w-full rounded-lg"
@@ -243,15 +245,15 @@ function Faq() {
             <div className={`p-5 rounded-lg shadow-md ${theme === "night" ? "bg-gray-700" : "bg-base-200"}`}>
               <h3 className="text-lg font-semibold mb-3 flex items-center gap-2 text-[#194882]">
                 <FaQuestionCircle className="text-[#194882]" />
-                Yordam kerakmi?
+                {t('faq.contactUs')}
               </h3>
               <p className="text-sm opacity-80 mb-4">
-                Savolingizga javob topmadingizmi? Biz bilan bog'laning!
+                {t('faq.contactInfo')}
               </p>
               <div className="flex flex-col gap-2">
                 <Link to="/contact" className="btn bg-gradient-to-br from-[#194882] to-info text-white btn-sm md:btn-md rounded-lg">
                   <FaEnvelope />
-                  Xabar yuborish
+                  {t('faq.contactUs')}
                 </Link>
                 <a href="tel:+998711234567" className="btn btn-outline btn-sm md:btn-md rounded-lg">
                   <FaPhone />

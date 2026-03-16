@@ -1,10 +1,12 @@
 import Divider from "../../components/Dvider";
+import { useTranslation } from 'react-i18next';
 import { GrFormNextLink } from "react-icons/gr";
 import { Link } from "react-router-dom";
 import "swiper/css";
 import "swiper/css/pagination";
 
 function Teachers() {
+  const { t } = useTranslation();
   const teachers = [
     {
       name: "Alijonov Valijon",
@@ -61,9 +63,9 @@ function Teachers() {
       <div className="flex justify-between items-center">
         <h2></h2>
         <h2 className="text-center text-2xl sm:text-4xl font-bold mb-10">
-        Reytingi yuqori o‘qituvchilar
+        {t('teachers.title')}
       </h2>
-      <Link to="/rating" className="btn btn-primary btn-sm">Barchasi <GrFormNextLink className="text-xl"/></Link>
+      <Link to="/rating" className="btn btn-primary btn-sm">{t('common.all')} <GrFormNextLink className="text-xl"/></Link>
       </div>
       <div className="grid gap-5 grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
           {teachers.map((t, i) => (

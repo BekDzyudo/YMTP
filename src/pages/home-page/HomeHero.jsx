@@ -6,9 +6,11 @@ import { useHero } from "../../context/HeroContext";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import { FaChalkboardTeacher, FaGraduationCap, FaStar, FaVideo } from "react-icons/fa";
+import { useTranslation } from 'react-i18next';
 
 
 function HomeHero() {
+  const { t } = useTranslation();
   const { theme } = useGlobalContext();
   const { auth } = useContext(AuthContext);
   const { setOnHero } = useHero();
@@ -73,7 +75,7 @@ function HomeHero() {
 
   return (
     <section
-      className={`relative w-full h-screen flex items-center px-5 ${
+      className={`relative w-full h-screen flex items-center px-3 sm:px-5 pt-20 md:pt-0 ${
         theme === "light" ? "text-neutral-content" : ""
       }`}
       ref={heroRef}
@@ -151,11 +153,11 @@ function HomeHero() {
       />
 
       {/* Main content */}
-      <div className="flex flex-col w-full justify-center">
-        <div className="w-full flex flex-col items-center z-20">
-          <div className="w-full sm:w-4/5 mt-10">
+      <div className="flex flex-col w-full justify-center items-center h-full">
+        <div className="w-full flex flex-col items-center z-20 pb-8 sm:pb-0">
+          <div className="w-full sm:w-4/5 mt-4 sm:mt-10 px-2">
             <h2
-              className="text-xl sm:text-2xl md:text-5xl w-full md:max-w-[90%] xl:max-w-[80%] mx-auto text-center lg:text-6xl mb-5 lg:mb-10 font-black font-serif relative text-white md:leading-13 lg:leading-16"
+              className="text-lg sm:text-xl md:text-3xl lg:text-5xl xl:text-6xl w-full md:max-w-[90%] xl:max-w-[80%] mx-auto text-center mb-3 sm:mb-5 lg:mb-10 font-black font-serif relative text-white leading-tight sm:leading-snug md:leading-13 lg:leading-16"
               style={{
                 opacity: showHeading ? 1 : 0,
                 transform: showHeading ? 'translateY(0) scale(1)' : 'translateY(50px) scale(0.9)',
@@ -164,50 +166,35 @@ function HomeHero() {
                 textShadow: '0 2px 10px rgba(0, 0, 0, 0.8)',
               }}
             >
-              {headingText.split(' ').slice(0, -3).map((word, idx) => (
-                <span
-                  key={idx}
-                  className="inline-block mx-1"
-                  style={{
-                    opacity: showHeading ? 1 : 0,
-                    transform: showHeading ? 'translateY(0)' : 'translateY(20px)',
-                    transition: `all 0.5s ease-out ${0.05 * idx}s`,
-                  }}
-                >
-                  {word}
-                </span>
-              ))}
-              <span className="text-blue-400 block">
-                {headingText.split(' ').slice(-3).join(' ')}
-              </span>
+              {t('hero.mainTitle')}
             </h2>
             <Divider color="white" />
           </div>
 
           {/* Statistika kartochalari */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 lg:gap-5 mt-4 sm:mt-12 z-20 max-w-6xl mx-auto w-full sm:px-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3 lg:gap-5 mt-3 sm:mt-8 lg:mt-12 z-20 max-w-6xl mx-auto w-full px-2 sm:px-4">
             {[
               {
-                icon: <FaChalkboardTeacher size={22} />,
-                desc: "O'quv meyoriy hujjatlar",
+                icon: <FaChalkboardTeacher size={18} className="sm:w-[22px] sm:h-[22px]" />,
+                descKey: "stats.normativeDocs",
                 gradient: "from-info to-cyan-400",
                 glowColor: "rgba(6, 182, 212, 0.3)"
               },
               {
-                icon: <FaGraduationCap size={22} />,
-                desc: "Raqamli ta'lim resurslari",
+                icon: <FaGraduationCap size={18} className="sm:w-[22px] sm:h-[22px]" />,
+                descKey: "stats.digitalResources",
                 gradient: "from-info to-cyan-400",
                 glowColor: "rgba(6, 182, 212, 0.3)"
               },
               {
-                icon: <FaStar size={22} />,
-                desc: "O‘quv adabiyotlari",
+                icon: <FaStar size={18} className="sm:w-[22px] sm:h-[22px]" />,
+                descKey: "stats.educationalLiterature",
                 gradient: "from-info to-cyan-400",
                 glowColor: "rgba(6, 182, 212, 0.3)"
               },
               {
-                icon: <FaVideo size={22} />,
-                desc: "Foydalanuvchilar soni",
+                icon: <FaVideo size={18} className="sm:w-[22px] sm:h-[22px]" />,
+                descKey: "stats.users",
                 gradient: "from-info to-cyan-400",
                 glowColor: "rgba(6, 182, 212, 0.3)"
               },
@@ -221,14 +208,14 @@ function HomeHero() {
               >
                 {/* Glow effect */}
                 <div 
-                  className={`absolute -inset-1 bg-gradient-to-r ${card.gradient} rounded-3xl blur-md opacity-10 group-hover:opacity-25 transition duration-500`}
+                  className={`absolute -inset-1 bg-gradient-to-r ${card.gradient} rounded-2xl sm:rounded-3xl blur-md opacity-10 group-hover:opacity-25 transition duration-500`}
                 />
                 
                 {/* Card */}
-                <div className="relative backdrop-blur-md bg-black/60 hover:bg-black/70 rounded-3xl p-4 sm:p-5 flex flex-col items-center gap-2 border border-gray-700/50 hover:border-gray-600/70 transition-all duration-300 hover:scale-105 min-h-[160px] justify-center shadow-2xl">
+                <div className="relative backdrop-blur-md bg-black/60 hover:bg-black/70 rounded-2xl sm:rounded-3xl p-2 sm:p-4 lg:p-5 flex flex-col items-center gap-1 sm:gap-2 border border-gray-700/50 hover:border-gray-600/70 transition-all duration-300 hover:scale-105 min-h-[130px] sm:min-h-[160px] justify-center shadow-2xl">
                   
                   {/* Icon circle */}
-                  <div className={`relative w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br ${card.gradient} flex items-center justify-center shadow-xl transform transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6`}>
+                  <div className={`relative w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-full bg-gradient-to-br ${card.gradient} flex items-center justify-center shadow-xl transform transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6`}>
                     <div className="absolute inset-0 rounded-full bg-gradient-to-t from-black/20 to-transparent" />
                     <div className="text-white drop-shadow-2xl relative z-10">
                       {card.icon}
@@ -236,18 +223,18 @@ function HomeHero() {
                   </div>
 
                   {/* Number */}
-                  <div className="flex flex-col items-center gap-1">
-                    <div className="flex items-baseline gap-1">
-                      <span className={`text-2xl sm:text-3xl lg:text-4xl font-black bg-gradient-to-r ${card.gradient} bg-clip-text text-transparent drop-shadow-[0_2px_10px_${card.glowColor}]`}>
+                  <div className="flex flex-col items-center gap-0.5 sm:gap-1">
+                    <div className="flex items-baseline gap-0.5 sm:gap-1">
+                      <span className={`text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-black bg-gradient-to-r ${card.gradient} bg-clip-text text-transparent drop-shadow-[0_2px_10px_${card.glowColor}]`}>
                         {cardNumbers[idx]}
                       </span>
-                      <span className="text-base sm:text-lg font-semibold text-gray-200">
+                      <span className="text-xs sm:text-base lg:text-lg font-semibold text-gray-200">
                         ta
                       </span>
                     </div>
                     
                     {/* Progress bar */}
-                    <div className="w-14 h-1 rounded-full bg-gray-800/80 overflow-hidden mt-1">
+                    <div className="w-10 sm:w-14 h-0.5 sm:h-1 rounded-full bg-gray-800/80 overflow-hidden mt-0.5 sm:mt-1">
                       <div 
                         className={`h-full bg-gradient-to-r ${card.gradient} transition-all duration-1000 shadow-[0_0_6px_currentColor]`}
                         style={{
@@ -258,8 +245,8 @@ function HomeHero() {
                   </div>
 
                   {/* Description */}
-                  <p className="text-xs sm:text-sm text-center text-gray-300 font-medium leading-tight px-2 min-h-[28px] flex items-center">
-                    {card.desc}
+                  <p className="text-[10px] sm:text-xs lg:text-sm text-center text-gray-300 font-medium leading-tight px-1 sm:px-2 min-h-[24px] sm:min-h-[28px] flex items-center">
+                    {t(card.descKey)}
                   </p>
 
                   {/* Top shine effect */}
