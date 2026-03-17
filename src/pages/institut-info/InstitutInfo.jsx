@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { NavLink, Outlet, useLocation, Link } from "react-router-dom";
 import { institutLinks } from "../../constants/institutLinks";
 import { useHero } from "../../context/HeroContext";
-import InstitutCalendar from "../../components/InstitutCalendar";
+import { FaUsers, FaChalkboardTeacher, FaBuilding, FaChartLine } from "react-icons/fa";
 
 function InstitutInfo() {
   const location = useLocation();
@@ -56,8 +56,90 @@ function InstitutInfo() {
                 </ul>
               </div>
 
-              {/* Calendar Card */}
-              <InstitutCalendar />
+              {/* Institut Statistics Card */}
+              <div className="bg-base-100 rounded-2xl border border-base-100 p-4 shadow-sm overflow-hidden">
+                <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
+                  <FaChartLine className="text-blue-600" />
+                  Institut statistikasi
+                </h3>
+                
+                <div className="space-y-3">
+                  {/* Xodimlar */}
+                  <div className="relative group">
+                    <div className="p-4 rounded-xl bg-gradient-to-br from-blue-50 to-blue-100 hover:from-blue-100 hover:to-blue-200 transition-all duration-300">
+                      <div className="flex items-center gap-3 mb-3">
+                        <div className="bg-white p-3 rounded-lg shadow-sm group-hover:scale-110 transition-transform">
+                          <FaUsers className="text-blue-600 text-xl" />
+                        </div>
+                        <div className="flex-1">
+                          <p className="text-xs text-gray-600 font-medium">Xodimlar</p>
+                          <p className="text-2xl font-bold text-blue-700">150+</p>
+                        </div>
+                      </div>
+                      {/* Progress bar */}
+                      <div className="space-y-1">
+                        <div className="flex justify-between text-xs text-gray-600">
+                          <span>Ilmiy darajaga ega</span>
+                          <span>42%</span>
+                        </div>
+                        <div className="h-1.5 bg-blue-200 rounded-full overflow-hidden">
+                          <div className="h-full bg-blue-600 rounded-full" style={{width: '42%'}}></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* O'qituvchilar */}
+                  <div className="relative group">
+                    <div className="p-4 rounded-xl bg-gradient-to-br from-green-50 to-green-100 hover:from-green-100 hover:to-green-200 transition-all duration-300">
+                      <div className="flex items-center gap-3 mb-3">
+                        <div className="bg-white p-3 rounded-lg shadow-sm group-hover:scale-110 transition-transform">
+                          <FaChalkboardTeacher className="text-green-600 text-xl" />
+                        </div>
+                        <div className="flex-1">
+                          <p className="text-xs text-gray-600 font-medium">O'qituvchilar</p>
+                          <p className="text-2xl font-bold text-green-700">80+</p>
+                        </div>
+                      </div>
+                      {/* Progress bar */}
+                      <div className="space-y-1">
+                        <div className="flex justify-between text-xs text-gray-600">
+                          <span>Professor-o'qituvchilar</span>
+                          <span>85%</span>
+                        </div>
+                        <div className="h-1.5 bg-green-200 rounded-full overflow-hidden">
+                          <div className="h-full bg-green-600 rounded-full" style={{width: '85%'}}></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Bo'limlar */}
+                  <div className="relative group">
+                    <div className="p-4 rounded-xl bg-gradient-to-br from-purple-50 to-purple-100 hover:from-purple-100 hover:to-purple-200 transition-all duration-300">
+                      <div className="flex items-center gap-3">
+                        <div className="bg-white p-3 rounded-lg shadow-sm group-hover:scale-110 transition-transform">
+                          <FaBuilding className="text-purple-600 text-xl" />
+                        </div>
+                        <div className="flex-1">
+                          <p className="text-xs text-gray-600 font-medium">Bo'limlar</p>
+                          <p className="text-2xl font-bold text-purple-700">12</p>
+                          <p className="text-xs text-purple-600 mt-1">
+                            Strukturaviy bo'linmalar
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Bottom decoration */}
+                <div className="mt-4 pt-4 border-t border-base-300">
+                  <p className="text-xs text-center text-gray-500 italic">
+                    Ma'lumotlar 2026 yil mart holatiga
+                  </p>
+                </div>
+              </div>
             </div>
           </aside>
         </div>

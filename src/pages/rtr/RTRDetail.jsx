@@ -414,25 +414,29 @@ function RTRDetail() {
                   )}
                   {/* ko'rgazma material */}
                   {activeCard === 3 && (
-                    <div className="relative w-full bg-gray-100 rounded-lg overflow-hidden shadow-xl">
-                      <img
-                        src={data?.themes[themeNumber]?.show_material[0]?.content}
-                        title={
-                          data?.themes[themeNumber]?.title ||
-                          "Ko'rgazma materiali"
-                        }
-                        className="w-full min-h-[400px] object-cover rounded-lg"
-                      />
+                    <div className="w-full space-y-4">
+                      <div className="relative w-full bg-gray-100 rounded-lg overflow-hidden shadow-xl">
+                        <img
+                          src={data?.themes[themeNumber]?.show_material[0]?.content}
+                          title={
+                            data?.themes[themeNumber]?.title ||
+                            "Ko'rgazma materiali"
+                          }
+                          className="w-full min-h-[400px] object-cover rounded-lg"
+                        />
+                      </div>
                       
-                      
-                      {/* Floating Fullscreen button - bottom right with animation */}
-                      <button
-                        onClick={() => setIsImageFullscreen(true)}
-                        className="fixed bottom-10 right-6 z-50 bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-2xl transition-all duration-300 hover:scale-125 flex items-center justify-center animate-pulse hover:animate-none group"
-                        title="Katta qilib ko'rish"
-                      >
-                        <FaExpand className="text-xl group-hover:rotate-90 transition-transform duration-300" />
-                      </button>
+                      {/* Fullscreen button - below content */}
+                      <div className="flex justify-center">
+                        <button
+                          onClick={() => setIsImageFullscreen(true)}
+                          className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 flex items-center gap-2 group"
+                          title="Katta qilib ko'rish"
+                        >
+                          <FaExpand className="text-lg group-hover:rotate-90 transition-transform duration-300" />
+                          <span className="font-semibold">To'liq ekranda ko'rish</span>
+                        </button>
+                      </div>
                     </div>
                   )}
                   
@@ -466,24 +470,29 @@ function RTRDetail() {
                   
                   {/* taqdimot */}
                   {activeCard === 4 && (
-                    <div className="relative w-full bg-gray-100 rounded-lg overflow-hidden shadow-xl">
-                      {/* PDF iframe with native controls */}
-                      <iframe
-                        src={`${data?.themes[themeNumber]?.presentation}#view=FitH&toolbar=1`}
-                        title="PDF Taqdimot"
-                        className="w-full h-[800px] border-0"
-                        type="application/pdf"
-                        style={{ minHeight: '700px' }}
-                      />
+                    <div className="w-full space-y-4">
+                      <div className="relative w-full bg-gray-100 rounded-lg overflow-hidden shadow-xl">
+                        {/* PDF iframe with native controls */}
+                        <iframe
+                          src={`${data?.themes[themeNumber]?.presentation}#view=FitH&toolbar=1`}
+                          title="PDF Taqdimot"
+                          className="w-full h-[800px] border-0"
+                          type="application/pdf"
+                          style={{ minHeight: '700px' }}
+                        />
+                      </div>
                       
-                      {/* Floating Fullscreen button - bottom right with animation */}
-                      <button
-                        onClick={() => setIsPdfFullscreen(true)}
-                        className="fixed bottom-10 right-6 z-50 bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-2xl transition-all duration-300 hover:scale-125 flex items-center justify-center animate-pulse hover:animate-none group"
-                        title="Katta qilib ko'rish"
-                      >
-                        <FaExpand className="text-xl group-hover:rotate-90 transition-transform duration-300" />
-                      </button>
+                      {/* Fullscreen button - below content */}
+                      <div className="flex justify-center">
+                        <button
+                          onClick={() => setIsPdfFullscreen(true)}
+                          className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 flex items-center gap-2 group"
+                          title="Katta qilib ko'rish"
+                        >
+                          <FaExpand className="text-lg group-hover:rotate-90 transition-transform duration-300" />
+                          <span className="font-semibold">To'liq ekranda ko'rish</span>
+                        </button>
+                      </div>
                     </div>
                   )}
                   
@@ -533,24 +542,29 @@ function RTRDetail() {
                   
                   {/* ta'lim texnologiyalari */}
                   {activeCard === 6 && (
-                    <div className="relative w-full bg-gray-100 rounded-lg overflow-hidden shadow-xl">
-                      {/* PDF iframe with native controls */}
-                      <iframe
-                        src={`${data?.themes[themeNumber]?.educational_technologies}#view=FitH&toolbar=1`}
-                        title="Ta'lim texnologiyalari PDF"
-                        className="w-full h-[800px] border-0"
-                        type="application/pdf"
-                        style={{ minHeight: '700px' }}
-                      />
+                    <div className="w-full space-y-4">
+                      <div className="relative w-full bg-gray-100 rounded-lg overflow-hidden shadow-xl">
+                        {/* PDF iframe with native controls */}
+                        <iframe
+                          src={`${data?.themes[themeNumber]?.educational_technologies}#view=FitH&toolbar=1`}
+                          title="Ta'lim texnologiyalari PDF"
+                          className="w-full h-[800px] border-0"
+                          type="application/pdf"
+                          style={{ minHeight: '700px' }}
+                        />
+                      </div>
                       
-                      {/* Floating Fullscreen button - bottom right with animation */}
-                      <button
-                        onClick={() => setIsPdfFullscreen(true)}
-                        className="fixed bottom-10 right-6 z-50 bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-2xl transition-all duration-300 hover:scale-125 flex items-center justify-center animate-pulse hover:animate-none group"
-                        title="Katta qilib ko'rish"
-                      >
-                        <FaExpand className="text-xl group-hover:rotate-90 transition-transform duration-300" />
-                      </button>
+                      {/* Fullscreen button - below content */}
+                      <div className="flex justify-center">
+                        <button
+                          onClick={() => setIsPdfFullscreen(true)}
+                          className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 flex items-center gap-2 group"
+                          title="Katta qilib ko'rish"
+                        >
+                          <FaExpand className="text-lg group-hover:rotate-90 transition-transform duration-300" />
+                          <span className="font-semibold">To'liq ekranda ko'rish</span>
+                        </button>
+                      </div>
                     </div>
                   )}
                 </div>

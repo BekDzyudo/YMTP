@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { createPortal } from "react-dom";
-import { FaCalendarAlt, FaChevronLeft, FaChevronRight, FaClock, FaMapMarkerAlt } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import { FaCalendarAlt, FaChevronLeft, FaChevronRight, FaClock, FaMapMarkerAlt, FaUsers, FaExternalLinkAlt, FaCheckCircle, FaPhone, FaEnvelope } from "react-icons/fa";
 
 function InstitutCalendar() {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -13,45 +14,97 @@ function InstitutCalendar() {
       title: "O'qituvchilar seminari",
       date: "2026-03-15",
       time: "10:00",
+      endTime: "16:00",
       location: "Institut majlislar zali",
-      status: "upcoming", // upcoming yoki past
-      description: "Zamonaviy ta'lim texnologiyalari bo'yicha seminar"
+      status: "upcoming",
+      description: "Zamonaviy ta'lim texnologiyalari bo'yicha seminar. O'qituvchilar uchun innovatsion metodlar va zamonaviy pedagogik tizimlar haqida ma'lumot taqdim etiladi.",
+      program: [
+        "10:00-11:00 - Ta'lim texnologiyalari kirish",
+        "11:00-13:00 - Amaliy mashg'ulotlar",
+        "13:00-14:00 - Tushlik tanaffus",
+        "14:00-16:00 - Interaktiv sessiya"
+      ],
+      speakers: ["Prof. Ahmedov A.A.", "Dots. Karimova M.K."],
+      participants: "80 ta ishtirokchilar kutilmoqda",
+      contact: "+998 71 246-90-37",
+      registrationRequired: true
     },
     {
       id: 2,
       title: "Xalqaro konferensiya",
       date: "2026-03-05",
       time: "09:00",
+      endTime: "18:00",
       location: "Asosiy bino",
       status: "past",
-      description: "Kasbiy ta'limni rivojlantirish masalalari"
+      description: "Kasbiy ta'limni rivojlantirish masalalari bo'yicha xalqaro konferensiya muvaffaqiyatli o'tdi.",
+      image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800",
+      participants: "120 ishtirokchi, 5 mamlakatdan",
+      highlights: [
+        "15 ta ilmiy maqola taqdim etildi",
+        "3 ta master-klass o'tkazildi",
+        "Xalqaro hamkorlik shartnomasi imzolandi"
+      ],
+      newsLink: "/news/1",
+      organizer: "Institut Xalqaro aloqalar bo'limi"
     },
     {
       id: 3,
       title: "Metodistlar yig'ilishi",
       date: "2026-03-20",
       time: "14:00",
+      endTime: "17:00",
       location: "2-qavat, 204-xona",
       status: "upcoming",
-      description: "Oylik hisobot va rejalashtirish"
+      description: "Oylik hisobot va keyingi oy uchun ish rejasini muhokama qilish. O'quv dasturlari va metodik ko'rsatmalarni takomillashtirish.",
+      program: [
+        "14:00-15:00 - Oylik natijalar tahlili",
+        "15:00-16:00 - Yangi dasturlarni ko'rib chiqish",
+        "16:00-17:00 - Reja va topshiriqlar"
+      ],
+      participants: "Barcha metodistlar",
+      responsiblePerson: "Metodistlar kengashi raisi",
+      contact: "metodist@edu.uz"
     },
     {
       id: 4,
       title: "Master-class",
       date: "2026-03-25",
       time: "11:00",
+      endTime: "14:00",
       location: "Trening markazi",
       status: "upcoming",
-      description: "Raqamli resurslar yaratish bo'yicha"
+      description: "Raqamli resurslar yaratish bo'yicha amaliy master-klass. O'quv jarayonida foydalanish uchun multimedia materiallar tayyorlash.",
+      program: [
+        "11:00-11:30 - Raqamli vositalar bilan tanishuv",
+        "11:30-13:00 - Amaliy ishlar",
+        "13:00-14:00 - Savollar va javoblar"
+      ],
+      speakers: ["IT mutaxassis - Aliyev S.M."],
+      participants: "30 o'rin mavjud",
+      requirements: "Noutbuk bilan kelish talab etiladi",
+      registrationRequired: true,
+      registrationDeadline: "2026-03-22",
+      contact: "+998 91 601-72-22"
     },
     {
       id: 5,
       title: "Kadrlar tayyorlash kursi",
       date: "2026-02-28",
       time: "09:00",
+      endTime: "17:00",
       location: "Institut",
       status: "past",
-      description: "O'qituvchilar uchun malaka oshirish kursi"
+      description: "O'qituvchilar uchun malaka oshirish kursi yakunlandi. Ishtirokchilar zamonaviy ta'lim metodlari bilan tanishdilar.",
+      image: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800",
+      participants: "45 o'qituvchi",
+      highlights: [
+        "5 kunlik intensiv kurs",
+        "Sertifikatlar topshirildi",
+        "Yuqori baholar olindi"
+      ],
+      newsLink: "/news/2",
+      organizer: "Kadrlar bo'limi"
     }
   ];
 
@@ -216,15 +269,26 @@ function InstitutCalendar() {
               </div>
 
               {/* Modal Body */}
-              <div className="p-5 space-y-4">
+              <div className="p-5 space-y-4 max-h-[70vh] overflow-y-auto">
+                {/* Image for past events */}
+                {selectedEvent.status === 'past' && selectedEvent.image && (
+                  <div className="rounded-xl overflow-hidden -mt-2">
+                    <img 
+                      src={selectedEvent.image} 
+                      alt={selectedEvent.title}
+                      className="w-full h-48 object-cover"
+                    />
+                  </div>
+                )}
+
                 {/* Description */}
                 <div>
-                  <p className="text-sm opacity-80 leading-relaxed">
+                  <p className="text-sm leading-relaxed text-gray-700">
                     {selectedEvent.description}
                   </p>
                 </div>
 
-                {/* Details */}
+                {/* Basic Details */}
                 <div className="space-y-3 pt-2">
                   <div className="flex items-center gap-3">
                     <div className="bg-gradient-to-br from-[#194882] to-info p-2 rounded-lg">
@@ -232,7 +296,7 @@ function InstitutCalendar() {
                     </div>
                     <div>
                       <p className="text-xs opacity-60">Sana</p>
-                      <p className="font-semibold">
+                      <p className="font-semibold text-sm">
                         {new Date(selectedEvent.date).toLocaleDateString('uz-UZ', {
                           weekday: 'long',
                           year: 'numeric',
@@ -249,7 +313,10 @@ function InstitutCalendar() {
                     </div>
                     <div>
                       <p className="text-xs opacity-60">Vaqt</p>
-                      <p className="font-semibold">{selectedEvent.time}</p>
+                      <p className="font-semibold text-sm">
+                        {selectedEvent.time}
+                        {selectedEvent.endTime && ` - ${selectedEvent.endTime}`}
+                      </p>
                     </div>
                   </div>
 
@@ -259,16 +326,153 @@ function InstitutCalendar() {
                     </div>
                     <div>
                       <p className="text-xs opacity-60">Joylashuv</p>
-                      <p className="font-semibold">{selectedEvent.location}</p>
+                      <p className="font-semibold text-sm">{selectedEvent.location}</p>
                     </div>
                   </div>
+
+                  {selectedEvent.participants && (
+                    <div className="flex items-center gap-3">
+                      <div className="bg-gradient-to-br from-[#194882] to-info p-2 rounded-lg">
+                        <FaUsers className="text-white text-sm" />
+                      </div>
+                      <div>
+                        <p className="text-xs opacity-60">Ishtirokchilar</p>
+                        <p className="font-semibold text-sm">{selectedEvent.participants}</p>
+                      </div>
+                    </div>
+                  )}
                 </div>
 
-                {/* Action Button */}
+                {/* PAST EVENT - Highlights & News Link */}
+                {selectedEvent.status === 'past' && (
+                  <>
+                    {selectedEvent.highlights && (
+                      <div className="bg-green-50 rounded-xl p-4 border border-green-200">
+                        <h5 className="font-bold text-sm mb-3 flex items-center gap-2 text-green-800">
+                          <FaCheckCircle className="text-green-600" />
+                          Asosiy natijalar
+                        </h5>
+                        <ul className="space-y-2">
+                          {selectedEvent.highlights.map((item, index) => (
+                            <li key={index} className="flex items-start gap-2 text-sm text-gray-700">
+                              <span className="text-green-600 mt-0.5">•</span>
+                              <span>{item}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+
+                    {selectedEvent.organizer && (
+                      <div className="text-xs text-gray-600 italic">
+                        Tashkilotchi: {selectedEvent.organizer}
+                      </div>
+                    )}
+
+                    {selectedEvent.newsLink && (
+                      <Link
+                        to={selectedEvent.newsLink}
+                        onClick={() => setSelectedEvent(null)}
+                        className="btn bg-gradient-to-br from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white w-full"
+                      >
+                        <FaExternalLinkAlt className="mr-2" />
+                        Batafsil yangilikda
+                      </Link>
+                    )}
+                  </>
+                )}
+
+                {/* UPCOMING EVENT - Program & Contact */}
+                {selectedEvent.status === 'upcoming' && (
+                  <>
+                    {selectedEvent.program && (
+                      <div className="bg-blue-50 rounded-xl p-4 border border-blue-200">
+                        <h5 className="font-bold text-sm mb-3 text-blue-800">
+                          📋 Dastur
+                        </h5>
+                        <ul className="space-y-2">
+                          {selectedEvent.program.map((item, index) => (
+                            <li key={index} className="text-xs text-gray-700 pl-4">
+                              • {item}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+
+                    {selectedEvent.speakers && selectedEvent.speakers.length > 0 && (
+                      <div className="bg-purple-50 rounded-xl p-4 border border-purple-200">
+                        <h5 className="font-bold text-sm mb-2 text-purple-800">
+                          🎤 Ma'ruzachilar
+                        </h5>
+                        <div className="space-y-1">
+                          {selectedEvent.speakers.map((speaker, index) => (
+                            <p key={index} className="text-sm text-gray-700">{speaker}</p>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {selectedEvent.requirements && (
+                      <div className="bg-orange-50 rounded-xl p-3 border border-orange-200">
+                        <p className="text-xs text-orange-800">
+                          <span className="font-bold">⚠️ Eslatma:</span> {selectedEvent.requirements}
+                        </p>
+                      </div>
+                    )}
+
+                    {selectedEvent.registrationRequired && (
+                      <div className="bg-yellow-50 rounded-xl p-3 border border-yellow-300">
+                        <p className="text-xs font-bold text-yellow-800">
+                          ✋ Ro'yxatdan o'tish talab etiladi
+                        </p>
+                        {selectedEvent.registrationDeadline && (
+                          <p className="text-xs text-yellow-700 mt-1">
+                            Muddat: {new Date(selectedEvent.registrationDeadline).toLocaleDateString('uz-UZ')}
+                          </p>
+                        )}
+                      </div>
+                    )}
+
+                    {(selectedEvent.contact || selectedEvent.responsiblePerson) && (
+                      <div className="bg-gray-50 rounded-xl p-4 border border-gray-200">
+                        <h5 className="font-bold text-sm mb-2 text-gray-800">
+                          📞 Bog'lanish
+                        </h5>
+                        {selectedEvent.responsiblePerson && (
+                          <p className="text-xs text-gray-700 mb-1">
+                            <span className="font-semibold">Mas'ul shaxs:</span> {selectedEvent.responsiblePerson}
+                          </p>
+                        )}
+                        {selectedEvent.contact && (
+                          <p className="text-sm text-gray-700 flex items-center gap-2">
+                            {selectedEvent.contact.includes('@') ? (
+                              <>
+                                <FaEnvelope className="text-gray-500" />
+                                <a href={`mailto:${selectedEvent.contact}`} className="hover:text-blue-600">
+                                  {selectedEvent.contact}
+                                </a>
+                              </>
+                            ) : (
+                              <>
+                                <FaPhone className="text-gray-500" />
+                                <a href={`tel:${selectedEvent.contact}`} className="hover:text-blue-600">
+                                  {selectedEvent.contact}
+                                </a>
+                              </>
+                            )}
+                          </p>
+                        )}
+                      </div>
+                    )}
+                  </>
+                )}
+
+                {/* Close Button */}
                 <div className="pt-2">
                   <button 
                     onClick={() => setSelectedEvent(null)}
-                    className="btn bg-gradient-to-br from-[#194882] to-info text-white w-full"
+                    className="btn bg-gradient-to-br from-[#194882] to-info text-white w-full hover:shadow-lg"
                   >
                     Yopish
                   </button>
