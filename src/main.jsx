@@ -5,7 +5,6 @@ import App from "./App.jsx";
 import { GlobalContextProvider } from "./context/GlobalContext.jsx";
 import { ToastContainer } from "react-toastify";
 import { AuthProvider } from "./context/AuthContext.jsx";
-import './i18n'; // i18n konfiguratsiyasini yuklash
 
 createRoot(document.getElementById("root")).render(
   <AuthProvider>

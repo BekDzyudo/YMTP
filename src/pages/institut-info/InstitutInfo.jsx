@@ -1,12 +1,10 @@
 import React, { useEffect } from "react";
 import { NavLink, Outlet, useLocation, Link } from "react-router-dom";
-import { useTranslation } from 'react-i18next';
 import { institutLinks } from "../../constants/institutLinks";
 import { useHero } from "../../context/HeroContext";
 import InstitutCalendar from "../../components/InstitutCalendar";
 
 function InstitutInfo() {
-  const { t } = useTranslation();
   const location = useLocation();
   const currentLink = institutLinks.find((link) =>
     location.pathname.startsWith(link.to)
@@ -37,7 +35,7 @@ function InstitutInfo() {
             <div className="sticky top-24 space-y-5 mb-25 sm:mb-35">
               {/* Navigation Card */}
               <div className="bg-base-100 rounded-2xl border border-base-300 p-3 sm:p-4">
-                <h3 className="text-xl font-bold mb-3">{t('institut.title')}</h3>
+                <h3 className="text-xl font-bold mb-3">Institut</h3>
                 <ul className="menu w-full p-0 gap-1">
                   {institutLinks.map((link) => (
                     <li key={link.to} className="border-t border-base-300 py-1">
@@ -51,7 +49,7 @@ function InstitutInfo() {
                           }`
                         }
                       >
-                        {t(link.labelKey)}
+                        {link.label}
                       </NavLink>
                     </li>
                   ))}

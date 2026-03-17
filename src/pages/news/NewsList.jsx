@@ -1,5 +1,4 @@
 import React, { useState, useMemo, useEffect } from "react";
-import { useTranslation } from 'react-i18next';
 import {
   FaCalendar,
   FaNewspaper,
@@ -16,8 +15,7 @@ import { useHero } from "../../context/HeroContext";
 import Pagination from "../../components/Pagination";
 
 function NewsList() {
-  const { t, i18n } = useTranslation();
-  const [selectedCategory, setSelectedCategory] = useState(t('newsPage.allCategories'));
+  const [selectedCategory, setSelectedCategory] = useState("Barchasi");
   const [currentPage, setCurrentPage] = useState(1);
   const { setOnHero } = useHero();
   const [data, setData] = useState(null);
@@ -48,11 +46,6 @@ console.log(data);
     setOnHero(false);
     return () => setOnHero(false);
   }, [setOnHero]);
-
-  // Til o'zgarganda selectedCategory ni yangilash
-  useEffect(() => {
-    setSelectedCategory(t('newsPage.allCategories'));
-  }, [i18n.language, t]);
 
   // Kategoriyaga mos icon va gradient
   const getCategoryStyle = (kategoriya) => {
@@ -114,8 +107,21 @@ console.log(data);
   // Sanani formatlash
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    const monthKey = date.getMonth().toString();
-    return `${date.getDate()} ${t(`news.months.${monthKey}`)} ${date.getFullYear()}`;
+    const months = [
+      "Yanvar",
+      "Fevral",
+      "Mart",
+      "Aprel",
+      "May",
+      "Iyun",
+      "Iyul",
+      "Avgust",
+      "Sentabr",
+      "Oktabr",
+      "Noyabr",
+      "Dekabr",
+    ];
+    return `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
   };
 
   // HTML taglarini olib tashlash
@@ -154,17 +160,17 @@ console.log(data);
 
   // Kategoriyalar ro'yxati
   const categories = [
-    t('newsPage.allCategories'),
+    "Barchasi",
     ...new Set(newsData.map((item) => item.category)),
   ];
 
   // Filter - faqat kategoriya bo'yicha
   const filteredNews = useMemo(() => {
-    if (selectedCategory === t('newsPage.allCategories')) {
+    if (selectedCategory === "Barchasi") {
       return newsData;
     }
     return newsData.filter((item) => item.category === selectedCategory);
-  }, [newsData, selectedCategory, t]);
+  }, [newsData, selectedCategory]);
 
   // Kategoriya o'zgarganda sahifani tiklash
   const handleCategoryChange = (category) => {
@@ -174,7 +180,7 @@ console.log(data);
 
   // Sahifa o'zgarganda faqat barcha yangiliklar ko'rsatilganda API ga murojaat qilish
   const handlePageChange = (page) => {
-    if (selectedCategory === t('newsPage.allCategories')) {
+    if (selectedCategory === "Barchasi") {
       fetchData(page);
       window.scrollTo({ top: 0, behavior: "smooth" });
     } else {
@@ -186,13 +192,13 @@ console.log(data);
   // Lokal pagination (kategoriya filterlanganda)
   const itemsPerPage = 12;
   const totalPages =
-    selectedCategory === t('newsPage.allCategories')
+    selectedCategory === "Barchasi"
       ? data?.total_pages || 1
       : Math.ceil(filteredNews.length / itemsPerPage);
   
   const startIndex = (currentPage - 1) * itemsPerPage;
   const currentNews =
-    selectedCategory === t('newsPage.allCategories')
+    selectedCategory === "Barchasi"
       ? filteredNews
       : filteredNews.slice(startIndex, startIndex + itemsPerPage);
 
@@ -202,7 +208,7 @@ console.log(data);
         <div className="text-center">
           <div className="loading loading-spinner loading-lg text-primary"></div>
           <p className="mt-4 text-base-content/70">
-            {t('common.loading')}
+            Yangiliklar yuklanmoqda...
           </p>
         </div>
       </section>
@@ -213,7 +219,7 @@ console.log(data);
     return (
       <section className="relative min-h-screen w-full bg-linear-to-b from-base-100 via-base-200 to-base-100 py-24 flex items-center justify-center">
         <div className="text-center">
-          <p className="text-error">{t('common.noData')}</p>
+          <p className="text-error">Ma'lumot topilmadi</p>
         </div>
       </section>
     );
@@ -230,10 +236,9 @@ console.log(data);
               <li>
                 <Link to="/" className="text-base-content/70 hover:text-blue-700 transition-colors">
                   <FaHome className="w-4 h-4 mr-1" />
-                  {t('institut.breadcrumbHome')}
+                  Bosh sahifa
                 </Link>
               </li>
-              <li className="text-blue-700 font-semibold">{t('newsPage.title')}</li>
               <li className="text-blue-700 font-semibold">Yangiliklar</li>
             </ul>
           </div>
@@ -241,7 +246,7 @@ console.log(data);
           <div className="flex flex-col items-center lg:flex-row lg:items-end lg:justify-between gap-4 mb-10">
             <div>
               <h1 className="text-2xl sm:text-4xl font-serif lg:text-5xl font-black text-[#0d4ea3]">
-                {t('newsPage.title')}
+                Barcha yangiliklar
               </h1>
             </div>
 
@@ -327,7 +332,7 @@ console.log(data);
 
                       {/* Read More Link */}
                       <div className="inline-flex items-center gap-2 text-primary font-semibold text-sm group-hover:gap-3 transition-all duration-300 cursor-pointer">
-                        <span>{t('common.readMore')}</span>
+                        <span>Batafsil o'qish</span>
                         <svg
                           className="w-4 h-4"
                           fill="none"

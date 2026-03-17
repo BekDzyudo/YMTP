@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useTranslation } from 'react-i18next';
 import {
   FaPhone,
   FaEnvelope,
@@ -17,7 +16,6 @@ import { Link } from "react-router-dom";
 import { useHero } from "../../context/HeroContext";
 
 function Contact() {
-  const { t, i18n } = useTranslation();
   const { setOnHero } = useHero();
   
   const [formData, setFormData] = useState({
@@ -49,10 +47,34 @@ function Contact() {
 
   // Sana va vaqt formatlash
   const formatDate = (date) => {
+    const days = [
+      "Yakshanba",
+      "Dushanba",
+      "Seshanba",
+      "Chorshanba",
+      "Payshanba",
+      "Juma",
+      "Shanba",
+    ];
+    const months = [
+      "Yanvar",
+      "Fevral",
+      "Mart",
+      "Aprel",
+      "May",
+      "Iyun",
+      "Iyul",
+      "Avgust",
+      "Sentabr",
+      "Oktabr",
+      "Noyabr",
+      "Dekabr",
+    ];
+
     return {
-      day: t(`contact.days.${date.getDay()}`),
+      day: days[date.getDay()],
       date: date.getDate(),
-      month: t(`news.months.${date.getMonth()}`),
+      month: months[date.getMonth()],
       year: date.getFullYear(),
       hours: String(date.getHours()).padStart(2, "0"),
       minutes: String(date.getMinutes()).padStart(2, "0"),
@@ -84,7 +106,7 @@ function Contact() {
     if (!formData.name.trim()) {
       setSubmitMessage({
         type: "error",
-        text: t('contact.validation.nameRequired'),
+        text: "Iltimos, ism va familiyangizni kiriting!",
       });
       return false;
     }
@@ -92,7 +114,7 @@ function Contact() {
     if (!formData.email.trim()) {
       setSubmitMessage({
         type: "error",
-        text: t('contact.validation.emailRequired'),
+        text: "Iltimos, email manzilingizni kiriting!",
       });
       return false;
     }
@@ -100,7 +122,7 @@ function Contact() {
     if (!formData.subject.trim()) {
       setSubmitMessage({
         type: "error",
-        text: t('contact.validation.subjectRequired'),
+        text: "Iltimos, xabar mavzusini kiriting!",
       });
       return false;
     }
@@ -108,7 +130,7 @@ function Contact() {
     if (!formData.message.trim()) {
       setSubmitMessage({
         type: "error",
-        text: t('contact.validation.messageRequired'),
+        text: "Iltimos, xabar matnini kiriting!",
       });
       return false;
     }
@@ -117,7 +139,7 @@ function Contact() {
     if (!formData.phone || !formData.phone.trim()) {
       setSubmitMessage({
         type: "error",
-        text: t('contact.validation.phoneRequired'),
+        text: "Iltimos, telefon raqamingizni kiriting!",
       });
       return false;
     }
@@ -125,7 +147,7 @@ function Contact() {
     if (!validatePhone(formData.phone)) {
       setSubmitMessage({
         type: "error",
-        text: t('contact.validation.phoneInvalid'),
+        text: "Telefon raqami noto'g'ri formatda! Masalan: +998901234567",
       });
       return false;
     }
@@ -172,7 +194,7 @@ function Contact() {
 
       setSubmitMessage({
         type: "success",
-        text: t('contact.validation.success'),
+        text: "Xabaringiz muvaffaqiyatli yuborildi! Tez orada siz bilan bog'lanamiz.",
       });
       setIsSubmitting(false);
       setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
@@ -183,7 +205,7 @@ function Contact() {
       console.error("Xatolik:", error);
       setSubmitMessage({
         type: "error",
-        text: t('contact.validation.error'),
+        text: "Xabar yuborishda xatolik yuz berdi. Iltimos, qaytadan urinib ko'ring.",
       });
       setIsSubmitting(false);
 
@@ -204,8 +226,8 @@ function Contact() {
         >
           <div className="px-4 sm:px-6">
             <div className="text-center">
-              <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold mb-4 font-serif">
-                {t('contact.title')}
+              <h1 className="text-2xl font-serif sm:text-4xl lg:text-5xl font-bold mb-4 font-serif">
+                Biz bilan bog‘laning
               </h1>
               <p className="text-base sm:text-xl text-blue-100 max-w-2xl mx-auto">
                 Sizning fikr va takliflaringiz biz uchun muhim. Biz bilan
@@ -230,7 +252,7 @@ function Contact() {
                     </div>
                     <div className="flex-1">
                       <h3 className="text-lg font-bold text-gray-800 mb-2">
-                        {t('contact.address')}
+                        Manzil
                       </h3>
                       <p className="text-gray-600 leading-relaxed">
                        Toshkent shahar, Olmazor tumani, Talabalar ko‘chasi, 96-uy
@@ -247,7 +269,7 @@ function Contact() {
                     </div>
                     <div className="flex-1">
                       <h3 className="text-lg font-bold text-gray-800 mb-2">
-                        {t('contact.phone')}
+                        Telefon
                       </h3>
                       <a
                         href="tel:+998712024515"
@@ -273,7 +295,7 @@ function Contact() {
                     </div>
                     <div className="flex-1">
                       <h3 className="text-lg font-bold text-gray-800 mb-2">
-                        {t('auth.email')}
+                        Email
                       </h3>
                       <a
                         href="mailto:info@profedu.uz"
@@ -299,13 +321,19 @@ function Contact() {
                     </div>
                     <div className="flex-1">
                       <h3 className="text-lg font-bold text-gray-800 mb-2">
-                        {t('contact.workingHours')}
+                        Ish vaqti
                       </h3>
                       <p className="text-gray-600">
-                        {t('contact.weekdays')}
+                        <span className="font-semibold">Dushanba - Juma:</span>
+                        <br />
+                        09:00 - 18:00
                       </p>
                       <p className="text-gray-600 mt-2">
-                        {t('contact.weekend')}
+                        <span className="font-semibold">
+                          Shanba - Yakshanba:
+                        </span>
+                        <br />
+                        Dam olish kuni
                       </p>
                     </div>
                   </div>
@@ -341,7 +369,7 @@ function Contact() {
                     {/* Name */}
                     <div>
                       <label className="block text-gray-700 font-semibold mb-2">
-                        {t('contact.name')} <span className="text-red-500">*</span>
+                        Ism va Familiya <span className="text-red-500">*</span>
                       </label>
                       <div className="relative">
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -354,7 +382,7 @@ function Contact() {
                           onChange={handleChange}
                           required
                           className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
-                          placeholder={t('contact.name')}
+                          placeholder="Ismingizni kiriting"
                         />
                       </div>
                     </div>
@@ -362,7 +390,7 @@ function Contact() {
                     {/* Email */}
                     <div>
                       <label className="block text-gray-700 font-semibold mb-2">
-                        {t('auth.email')} <span className="text-red-500">*</span>
+                        Email <span className="text-red-500">*</span>
                       </label>
                       <div className="relative">
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -385,7 +413,7 @@ function Contact() {
                     {/* Phone */}
                     <div>
                       <label className="block text-gray-700 font-semibold mb-2">
-                        {t('contact.phone')} <span className="text-red-500">*</span>
+                        Telefon raqami <span className="text-red-500">*</span>
                       </label>
                       <div className="relative">
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -406,7 +434,7 @@ function Contact() {
                     {/* Subject */}
                     <div>
                       <label className="block text-gray-700 font-semibold mb-2">
-                        {t('contact.subject')} <span className="text-red-500">*</span>
+                        Mavzu <span className="text-red-500">*</span>
                       </label>
                       <input
                         type="text"
@@ -415,7 +443,7 @@ function Contact() {
                         onChange={handleChange}
                         required
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
-                        placeholder={t('contact.subject')}
+                        placeholder="Xabar mavzusi"
                       />
                     </div>
                   </div>
@@ -423,7 +451,7 @@ function Contact() {
                   {/* Message */}
                   <div>
                     <label className="block text-gray-700 font-semibold mb-2">
-                      {t('contact.message')} <span className="text-red-500">*</span>
+                      Xabar matni <span className="text-red-500">*</span>
                     </label>
                     <textarea
                       name="message"
@@ -432,7 +460,7 @@ function Contact() {
                       required
                       rows="6"
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all resize-none"
-                      placeholder={t('contact.message')}
+                      placeholder="Xabaringizni bu yerga yozing..."
                     ></textarea>
                   </div>
 
@@ -445,12 +473,12 @@ function Contact() {
                     {isSubmitting ? (
                       <>
                         <span className="loading loading-spinner"></span>
-                        {t('contact.sending')}
+                        Yuborilmoqda...
                       </>
                     ) : (
                       <>
                         <FaPaperPlane />
-                        {t('contact.send')}
+                        Xabar yuborish
                       </>
                     )}
                   </button>
@@ -467,7 +495,7 @@ function Contact() {
                 //   background: 'linear-gradient(to bottom right, #002d6d, #003d7d)'
                 // }}
               >
-                <h3 className="text-lg font-bold mb-4">{t('contact.socialMedia')}</h3>
+                <h3 className="text-lg font-bold mb-4">Ijtimoiy tarmoqlar</h3>
                 <div className="flex flex-wrap gap-3">
                   <a
                     href="https://facebook.com"
@@ -514,7 +542,7 @@ function Contact() {
                 >
                   <div className="flex items-center justify-center gap-2 mb-4">
                     <FaCalendarAlt className="text-yellow-400 text-2xl" />
-                    <h3 className="text-white font-bold text-xl">{t('contact.calendar')}</h3>
+                    <h3 className="text-white font-bold text-xl">Kalendar</h3>
                   </div>
 
                   {/* Vaqt - katta raqamlar */}

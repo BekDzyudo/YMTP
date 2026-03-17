@@ -1,12 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useTranslation } from 'react-i18next';
 import useGetFetch from "../../hooks/useGetFetch";
 import { FaHome, FaCircle, FaBuilding } from "react-icons/fa";
 import DOMPurify from "dompurify";
 
 function About() {
-  const { t } = useTranslation();
   const { data, isPending, error } = useGetFetch(
     `${import.meta.env.VITE_BASE_URL}/shared_app/institut/`,
   );
@@ -22,19 +20,19 @@ function About() {
                 className="text-base-content/70 hover:text-blue-700 transition-colors"
               >
                 <FaHome className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
-                {t('institut.breadcrumbHome')}
+                Bosh sahifa
               </Link>
             </li>
             <li>
               <Link className="text-base-content/70 hover:text-blue-700 transition-colors">
-                {t('institut.title')}
+                Institut
               </Link>
             </li>
-            <li className="text-blue-700 font-semibold">{t('institute.about')}</li>
+            <li className="text-blue-700 font-semibold">Institut haqida</li>
           </ul>
         </div>
         <h1 className="text-xl sm:text-2xl md:text-3xl font-bold font-serif">
-          {t('institute.about')}
+          Institut haqida
         </h1>
       </div>
 
@@ -44,7 +42,7 @@ function About() {
         </div>
       ) : error ? (
         <div className="alert alert-error">
-          <span>{t('institut.loadingError')}</span>
+          <span>Ma'lumotlarni yuklashda xatolik yuz berdi</span>
         </div>
       ) : data?.length ? (
         <div className="relative">
@@ -79,7 +77,7 @@ function About() {
         </div>
       ) : (
         <p className="text-base-content/70 text-sm sm:text-base">
-          {t('institut.noContent')}
+          Bu bo'lim uchun kontent topilmadi.
         </p>
       )}
     </section>

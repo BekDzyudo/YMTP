@@ -1,7 +1,8 @@
 export const institutLinks = [
-  { to: "/about", labelKey: "institute.about", slug: "about" },
-  { to: "/leadership", labelKey: "institute.leadership", slug: "leadership" },
-  { to: "/structure", labelKey: "institute.structure", slug: "structure" },
-  { to: "/normativ-documents", labelKey: "institute.normativeDocs", slug: "normativ-documents" },
-  // { to: "/vacansy", labelKey: "institute.vacancy", slug: "vacansy" },
+  { to: "/about", label: "Institut haqida", slug: "about" },
+  { to: "/leadership", label: "Rahbariyat", slug: "leadership" },
+  { to: "/structure", label: "Institut tuzilmasi", slug: "structure" },
+  { to: "/normativ-documents", label: "Me'yoriy hujjatlar", slug: "normativ-documents" },
+  // { to: "/vacansy", label: "Bo'sh ish o'rinlari", slug: "vacansy" },
+  // { to: "/contact", label: "Aloqa", slug: "contact" },
 ];
