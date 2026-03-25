@@ -118,27 +118,27 @@ function RTRHero() {
                   }}
                 >
                   Raqamli ta'lim resurslari (RTR) — ma'ruza matnlari, taqdimot,
-                  vizual-ko'rgazmali materiallar, multimediya materiallar, ta'lim
-                  texnologiyalari, glossariylar to'plami
+                  vizual-ko‘rgazmali materiallar, multimediya materiallar, ta'lim
+                  texnologiyalari, glossariylar to‘plami
                 </p>
               </div>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 lg:gap-5 mt-8 sm:mt-10 z-20 max-w-6xl mx-auto w-full sm:px-4">
                 {[
                   {
                     icon: <FaChalkboardTeacher size={22} />,
-                    desc: "Boshlang'ich kasbiy ta'lim",
+                    desc: "Boshlang‘ich kasbiy ta'lim",
                     gradient: "from-green-700 to-emerald-700",
                     glowColor: "rgba(21, 128, 61, 0.35)"
                   },
                   {
                     icon: <FaGraduationCap size={22} />,
-                    desc: "O'rta kasbiy ta'lim",
+                    desc: "O‘rta kasbiy ta'lim",
                     gradient: "from-green-700 to-emerald-700",
                     glowColor: "rgba(21, 128, 61, 0.35)"
                   },
                   {
                     icon: <FaStar size={22} />,
-                    desc: "O'rta maxsus kasbiy ta'lim",
+                    desc: "O‘rta maxsus kasbiy ta'lim",
                     gradient: "from-green-700 to-emerald-700",
                     glowColor: "rgba(21, 128, 61, 0.35)"
                   },

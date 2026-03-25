@@ -11,6 +11,7 @@ import {
   FaLightbulb,
   FaEye,
   FaArrowLeft,
+  FaBalanceScale,
 } from "react-icons/fa";
 import { useHero } from "../../context/HeroContext";
 
@@ -107,6 +108,10 @@ function NewsDetail() {
       "Elon": {
         icon: <FaNewspaper size={18} />,
         gradient: "from-indigo-500 to-blue-500",
+      },
+      "Korrupsiya": {
+        icon: <FaBalanceScale size={18} />,
+        gradient: "from-red-500 to-pink-500",
       },
     };
 

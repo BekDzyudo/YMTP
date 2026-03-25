@@ -8,6 +8,7 @@ import {
   FaHandshake,
   FaLightbulb,
   FaHome,
+  FaBalanceScale,
 } from "react-icons/fa";
 import useGetFetch from "../../hooks/useGetFetch";
 import { Link } from "react-router-dom";
@@ -20,7 +21,6 @@ function NewsList() {
   const { setOnHero } = useHero();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
-console.log(data);
 
   const fetchData = async (page = 1) => {
     setLoading(true);
@@ -91,6 +91,12 @@ console.log(data);
         gradient: "from-indigo-500 to-blue-500",
         bgLight: "bg-indigo-50",
         textColor: "text-indigo-600",
+      },
+      "Korrupsiya": {
+        icon: <FaBalanceScale size={18} />,
+        gradient: "from-red-500 to-pink-500",
+        bgLight: "bg-red-50",
+        textColor: "text-red-600",
       },
     };
 

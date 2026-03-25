@@ -209,7 +209,7 @@ function MetodikTaminotHero() {
                         transition: "opacity 0.5s, transform 0.5s",
                       }}
                     >
-                      Kasbiy ta'lim tashkilotlari uchun metodik ta'minot - bu o'quv jarayonini qo'llab-quvvatlash va rivojlantirishga qaratilgan resurslar bo'lib, u
+                      Kasbiy ta'lim tashkilotlari uchun metodik ta'minot - bu o‘quv jarayonini qo'llab-quvvatlash va rivojlantirishga qaratilgan resurslar bo‘lib, u
                       kasbiy ta'lim tashkilotlari uchun metodik ta'minotni amalga oshiradi
                     </p>
                   </div>
@@ -223,13 +223,13 @@ function MetodikTaminotHero() {
                       },
                       {
                         icon: <FaBook size={22} />,
-                        desc: "O'quv adabiyotlar",
+                        desc: "O‘quv adabiyotlar",
                         gradient: "from-[#32b9c1] to-[#14a1a8]",
                         glowColor: "rgba(20, 161, 168, 0.35)"
                       },
                       {
                         icon: <FaFolderOpen size={22} />,
-                        desc: "O'qitish materiallari to'plami",
+                        desc: "O‘qitish materiallari to'plami",
                         gradient: "from-[#32b9c1] to-[#14a1a8]",
                         glowColor: "rgba(20, 161, 168, 0.35)"
                       },

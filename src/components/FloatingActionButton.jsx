@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { useCalendar } from '../context/CalendarContext';
+import { useNavigate } from 'react-router-dom';
 
 function FloatingActionButton() {
   const [isOpen, setIsOpen] = useState(false);
   const { openCalendar } = useCalendar();
+  const navigate = useNavigate();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -60,8 +62,7 @@ function FloatingActionButton() {
             </button>
 
             {/* Messages Button */}
-            <button
-              onClick={() => {/* TODO: Add functionality */}}
+            {/* <button
               className="group flex items-center gap-3 transition-all duration-200 hover:scale-105"
               title="Xabarlar"
             >
@@ -85,7 +86,7 @@ function FloatingActionButton() {
                   />
                 </svg>
               </div>
-            </button>
+            </button> */}
 
             {/* Notifications Button */}
             <button
@@ -119,7 +120,7 @@ function FloatingActionButton() {
 
             {/* Help/Support Button */}
             <button
-              onClick={() => {/* TODO: Add functionality */}}
+              onClick={()=>navigate('/contact')}
               className="group flex items-center gap-3 transition-all duration-200 hover:scale-105"
               title="Yordam"
             >

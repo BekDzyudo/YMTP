@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { FaCalendar, FaArrowRight, FaNewspaper, FaTrophy, FaUsers, FaGraduationCap, FaHandshake, FaChalkboardTeacher, FaLightbulb } from 'react-icons/fa'
+import { FaCalendar, FaArrowRight, FaNewspaper, FaTrophy, FaUsers, FaGraduationCap, FaHandshake, FaChalkboardTeacher, FaLightbulb, FaBalanceScale } from 'react-icons/fa'
 import useGetFetch from '../../hooks/useGetFetch';
 import { Link } from 'react-router-dom';
 
@@ -40,6 +40,10 @@ function News() {
       "Elon": {
         icon: <FaNewspaper size={20} />,
         gradient: "from-indigo-500 to-blue-500"
+      },
+      "Korrupsiya": {
+        icon: <FaBalanceScale size={20} />,
+        gradient: "from-red-500 to-pink-500"
       }
     };
     
