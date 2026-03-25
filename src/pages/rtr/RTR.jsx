@@ -280,9 +280,10 @@ function RTR() {
                   </div>
                 </div>
               ) : (
-                <div
+                <Link
                   key={item.id}
-                  className="bg-slate-100 rounded-2xl shadow-md group border-2 border-gray-100 flex flex-col hover:shadow-xl transition-all duration-500 hover:border-blue-500"
+                  to={`rtr-detail/${item.id}`}
+                  className="bg-slate-100 rounded-2xl shadow-md group border-2 border-gray-100 flex flex-col hover:shadow-xl transition-all duration-500 hover:border-blue-500 cursor-pointer"
                 >
                   <div className="overflow-hidden w-full h-54 rounded-t-2xl transition-all duration-500 group-hover:shadow-lg">
                     <img
@@ -316,18 +317,15 @@ function RTR() {
                         </svg>
                         {item.view_count} ko'rishlar
                       </span>
-                      <Link
-                        to={`rtr-detail/${item.id}`}
-                        className="text-blue-600 font-bold text-sm flex items-center gap-1 uppercase group"
-                      >
+                      <span className="text-blue-600 font-bold text-sm flex items-center gap-1 uppercase group">
                         Batafsil
                         <span className="inline-block transition-transform duration-300 group-hover:translate-x-2">
                           <GrFormNextLink className="text-lg font-bold" />
                         </span>
-                      </Link>
+                      </span>
                     </div>
                   </div>
-                </div>
+                </Link>
               ),
             )
           ) : (

@@ -212,7 +212,7 @@ function NormativDocuments() {
                   </div>
                   <div className="flex items-center gap-2">
                     <a
-                      href={doc.file}
+                      href={doc.fileUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="btn bg-gradient-to-br from-[#194882] to-info text-white btn-sm sm:btn-md rounded-lg"
