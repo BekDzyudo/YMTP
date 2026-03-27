@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import useGetFetch from "../../hooks/useGetFetch";
 import { FaHome, FaChevronDown, FaChevronUp } from "react-icons/fa";
 import DOMPurify from "dompurify";
+import SEO from "../../components/SEO";
 
 function Management() {
   const { data, isPending, error } = useGetFetch(
@@ -25,7 +26,14 @@ function Management() {
   console.log(data);
 
   return (
-    <section className="w-full bg-base-100 rounded-2xl border border-base-300 p-4 sm:p-6 lg:p-8 min-h-105 mb-25 sm:mb-35">
+    <>
+      <SEO 
+        title="Rahbariyat"
+        description="Kasbiy ta'limni rivojlantirish instituti rahbariyati: direktor, o'rinbosarlar va mas'ul xodimlar haqida ma'lumot"
+        keywords="rahbariyat, direktor, o'rinbosarlar, institut rahbariyati, xodimlar"
+      />
+      
+      <section className="w-full bg-base-100 rounded-2xl border border-base-300 p-4 sm:p-6 lg:p-8 min-h-105 mb-25 sm:mb-35">
       <div className="rounded-xl sm:rounded-2xl mb-5 sm:mb-8 px-6 pt-3 pb-4 sm:pb-6 bg-slate-100 border-t-4 sm:border-t-8 border-blue-800">
         <div className="breadcrumbs hidden md:block text-base mb-5">
           <ul>
@@ -200,6 +208,7 @@ function Management() {
         </p>
       )}
     </section>
+    </>
   );
 }
 

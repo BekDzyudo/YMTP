@@ -3,6 +3,7 @@ import useGetFetch from "../../hooks/useGetFetch";
 import Divider from "../../components/Dvider";
 import { FaSearch } from "react-icons/fa";
 import { GrClearOption } from "react-icons/gr";
+import SEO from "../../components/SEO";
 
 function Rating() {
 
@@ -95,7 +96,14 @@ function Rating() {
   }, [kasb]);
 
   return (
-    <section className="relative min-h-[60vh] mt-24 md:mt-35 px-3.5 sm:px-5 mx-auto w-full xl:w-full 2xl:w-11/12">
+    <>
+      <SEO 
+        title="O'qituvchilar reytingi"
+        description="Kasbiy ta'lim o'qituvchilar reytingi. Fanlar, kasblar va ixtisosliklar bo'yicha o'qituvchilarning faoliyati, natijalari va yutuqlari reytingi"
+        keywords="reyting, o'qituvchilar reytingi, fan o'qituvchilari, kasb o'qituvchilari, baholash, natijalar"
+      />
+      
+      <section className="relative min-h-[60vh] mt-24 md:mt-35 px-3.5 sm:px-5 mx-auto w-full xl:w-full 2xl:w-11/12">
       {isPending && (
         <span className="loading loading-ring loading-xl absolute sm:w-24 w-10 sm:h-24 h-10 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"></span>
       )}
@@ -406,6 +414,7 @@ function Rating() {
         </>
       )}
     </section>
+    </>
   );
 }
 

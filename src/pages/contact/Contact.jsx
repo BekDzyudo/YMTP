@@ -14,6 +14,7 @@ import {
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useHero } from "../../context/HeroContext";
+import SEO from "../../components/SEO";
 
 function Contact() {
   const { setOnHero } = useHero();
@@ -215,7 +216,14 @@ function Contact() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+    <>
+      <SEO 
+        title="Aloqa"
+        description="Kasb-hunar ta'limi markazi bilan bog'lanish: telefon, email, manzil va ijtimoiy tarmoqlar. Onlayn xabar yuborish formasi mavjud"
+        keywords="aloqa, kontakt, telefon, email, manzil, murojaat, xabar yuborish"
+      />
+      
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
       <div className="px-3.5 sm:px-5 mx-auto w-full xl:w-full 2xl:w-11/12 mt-2 pt-25 lg:pt-35 pb-25 md:pb-35">
         {/* Hero Section */}
         <div 
@@ -614,6 +622,7 @@ function Contact() {
         </div>
       </div>
     </div>
+    </>
   );
 }
 

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, Outlet, useNavigate, useParams, useLocation } from "react-router-dom";
 import useGetFetch from "../../hooks/useGetFetch";
 import { useGlobalContext } from "../../hooks/useGlobalContext";
+import SEO from "../../components/SEO";
 // react-icons
 import { MdReportGmailerrorred } from "react-icons/md";
 import { RiProfileLine } from "react-icons/ri";
@@ -57,7 +58,14 @@ function AllMaterials() {
   console.log(teacherMaterialList);
 
   return (
-    <section className="flex flex-col min-h-[60vh] mt-24 sm:mt-35 px-3.5 sm:px-5 mx-auto w-full xl:w-full 2xl:w-10/12">
+    <>
+      <SEO 
+        title="O'qituvchilar materiallari"
+        description="O'qituvchilar tomonidan yuklangan o'quv materiallari, darsliklar, metodikalar va taqdimotlar. Kasbiy ta'lim resurslari"
+        keywords="o'qituvchilar materiallari, o'quv materiallari, darsliklar, metodika, taqdimot, resurslar"
+      />
+      
+      <section className="flex flex-col min-h-[60vh] mt-24 sm:mt-35 px-3.5 sm:px-5 mx-auto w-full xl:w-full 2xl:w-10/12">
       {!teacherMaterialList?.materiallar ? (
         <div className="w-full flex items-center justify-center md:mt-20">
           <div className="flex flex-col items-center gap-3 text-primary text-sm sm:text-2xl font-bold text-center opacity-90">
@@ -234,6 +242,7 @@ function AllMaterials() {
         </div>
       )}
     </section>
+    </>
   );
 }
 

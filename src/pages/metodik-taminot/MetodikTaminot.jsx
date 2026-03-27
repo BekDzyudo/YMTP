@@ -15,6 +15,7 @@ import { MdReportGmailerrorred } from "react-icons/md";
 import Pagination from "../../components/Pagination";
 import useGetFetch from "../../hooks/useGetFetch";
 import MetodikTaminotHero from "./MetodikTaminotHero";
+import SEO from "../../components/SEO";
 
 function MetodikTaminot() {
   const [activeFilter, setActiveFilter] = useState(() => {
@@ -155,6 +156,12 @@ function MetodikTaminot() {
 
   return (
     <>
+      <SEO 
+        title="Metodik ta'minot"
+        description="Kasbiy ta'lim uchun o'quv dasturlari, ishchi o'quv dasturlari, kalendar-tematik rejalar va metodik ko'rsatma hujjatlari"
+        keywords="metodik ta'minot, o'quv rejalar, o'quv dasturlari, ishchi dastur, kalendar reja, metodik ko'rsatma, darslik"
+      />
+      
       <MetodikTaminotHero />
       <section className="relative flex flex-col items-center -mt-10 z-20 mb-25 sm:mb-40">
         <div className="w-full mx-5 xl:max-w-7xl 2xl:max-w-10/12 grid sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-5 xl:gap-10 px-2 sm:px-4 shadow-xl rounded-2xl bg-base-100 py-2 sm:py-4 lg:py-10">

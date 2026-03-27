@@ -14,6 +14,8 @@ import {
   FaBalanceScale,
 } from "react-icons/fa";
 import { useHero } from "../../context/HeroContext";
+import SEO from "../../components/SEO";
+import { ArticleSchema } from "../../components/StructuredData";
 
 function NewsDetail() {
   const { id } = useParams();
@@ -184,12 +186,42 @@ function NewsDetail() {
   console.log(newsDetail);
 
   // Yangilik uchun rasmlar - slider uchun
-  const newsImages = newsDetail.rasmlar && newsDetail.rasmlar.length > 0
+  // Strip HTML from text for clean description
+  const stripHtmlForSEO = (html) => {
+    const tmp = document.createElement("div");
+    tmp.innerHTML = html;
+    const text = tmp.textContent || tmp.innerText || "";
+    return text.substring(0, 160); // Meta description max 160 chars
+  };
+
+  const allImages = newsDetail?.rasmlar && newsDetail.rasmlar.length > 0
     ? newsDetail.rasmlar.map(item => item.rasm)
     : newsDetail.image ? [newsDetail.image] : [];
 
   return (
-    <section className="bg-slate-100 relative min-h-screen w-full bg-linear-to-b from-base-100 via-base-200 to-base-100 py-24 mt-2 sm:mt-10 lg:mt-15 mb-25 md:mb-35">
+    <>
+      {newsDetail && (
+        <>
+          <SEO 
+            title={newsDetail.title}
+            description={stripHtmlForSEO(newsDetail.text || "")}
+            keywords={`${newsDetail.kategoriya}, yangilik, kasbiy ta'lim, ta'lim`}
+            image={newsDetail.image}
+            type="article"
+          />
+          <ArticleSchema 
+            article={{
+              title: newsDetail.title,
+              description: stripHtmlForSEO(newsDetail.text || ""),
+              image: newsDetail.image,
+              published_date: newsDetail.sana,
+              modified_date: newsDetail.sana
+            }}
+          />
+        </>
+      )}
+      
+      <section className="bg-slate-100 relative min-h-screen w-full bg-linear-to-b from-base-100 via-base-200 to-base-100 py-24 mt-2 sm:mt-10 lg:mt-15 mb-25 md:mb-35">
       <div className="px-3.5 sm:px-5 mx-auto w-full xl:w-full 2xl:w-11/12">
         {/* Breadcrumb */}
         <div className="breadcrumbs hidden md:block text-base mb-6">
@@ -380,6 +412,7 @@ function NewsDetail() {
         </div>
       </div>
     </section>
+    </>
   );
 }
 

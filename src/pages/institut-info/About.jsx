@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import useGetFetch from "../../hooks/useGetFetch";
 import { FaHome, FaCircle, FaBuilding } from "react-icons/fa";
 import DOMPurify from "dompurify";
+import SEO from "../../components/SEO";
 
 function About() {
   const { data, isPending, error } = useGetFetch(
@@ -10,7 +11,14 @@ function About() {
   );
 
   return (
-    <section className="w-full bg-base-100 rounded-xl sm:rounded-2xl border border-base-300 p-3 sm:p-4 md:p-6 lg:p-8 min-h-105 mb-25 sm:mb-35">
+    <>
+      <SEO 
+        title="Institut haqida"
+        description="O'zbekiston Respublikasi Kasbiy ta'limni rivojlantirish instituti tarixi, maqsad va vazifalari, faoliyat yo'nalishlari haqida to'liq ma'lumot"
+        keywords="institut haqida, ymtp, kasb-hunar markazi, tarixi, faoliyat, maqsad, vazifalar"
+      />
+      
+      <section className="w-full bg-base-100 rounded-xl sm:rounded-2xl border border-base-300 p-3 sm:p-4 md:p-6 lg:p-8 min-h-105 mb-25 sm:mb-35">
       <div className="rounded-xl sm:rounded-2xl mb-6 sm:mb-8 px-4 sm:px-6 pt-2 sm:pt-3 pb-4 sm:pb-6 bg-slate-100 border-t-4 sm:border-t-8 border-blue-800">
         <div className="breadcrumbs hidden md:block text-sm sm:text-base mb-4 sm:mb-5">
           <ul>
@@ -81,6 +89,7 @@ function About() {
         </p>
       )}
     </section>
+    </>
   );
 }
 

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { FaQuestionCircle, FaSearch, FaEnvelope, FaPhone, FaPlus, FaTimes } from "react-icons/fa";
 import { useGlobalContext } from "../../hooks/useGlobalContext";
 import { Link } from "react-router-dom";
+import SEO from "../../components/SEO";
 
 function Faq() {
   const { theme } = useGlobalContext();
@@ -108,7 +109,14 @@ function Faq() {
   });
 
   return (
-    <section className="relative mt-28 md:mt-35 px-3.5 sm:px-5 mx-auto w-full xl:w-full 2xl:w-11/12 mb-35">
+    <>
+      <SEO 
+        title="Ko'p beriladigan savollar (FAQ)"
+        description="Kasbiy ta'limni rivojlantirish instituti platformasi haqida eng ko'p so'raladigan savollar va javoblar. Ro'yxat, materiallar, reyting va texnik masalalar bo'yicha"
+        keywords="faq, savollar, javoblar, yordam, qo'llanma, platformadan foydalanish"
+      />
+      
+      <section className="relative mt-28 md:mt-35 px-3.5 sm:px-5 mx-auto w-full xl:w-full 2xl:w-11/12 mb-35">
       {/* Title */}
       <div className="mb-8">
         <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-serif text-[#0d4ea3]">
@@ -263,6 +271,7 @@ function Faq() {
         </div>
       </div>
     </section>
+    </>
   );
 }
 

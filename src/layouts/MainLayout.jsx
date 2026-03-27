@@ -7,6 +7,7 @@ import TestModeBanner from "../components/TestModeBanner";
 import { CalendarProvider } from "../context/CalendarContext";
 import FloatingActionButton from "../components/FloatingActionButton";
 import CalendarModal from "../components/CalendarModal";
+import SEO from "../components/SEO";
 
 function MainLayout() {
   const [onHero, setOnHero] = useState(true);
@@ -20,6 +21,13 @@ function MainLayout() {
   return (
     <CalendarProvider>
       <HeroContext.Provider value={{ onHero, setOnHero }}>
+        {/* Default SEO - agar sahifa o'zi ko'rsatmasa */}
+        <SEO 
+          title="Kasbiy ta'limni rivojlantirish instituti"
+          description="O'zbekiston Respublikasi Kasbiy ta'limni rivojlantirish instituti - kasbiy ta'lim, treninglar, sertifikatlashtirish"
+          keywords="kasb-hunar, kasbiy ta'lim, treninglar, sertifikat, o'zbekiston"
+        />
+        
         <div className="flex flex-col min-h-screen">
           <header>
             <Header />

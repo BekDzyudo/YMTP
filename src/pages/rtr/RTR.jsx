@@ -13,6 +13,7 @@ import { MdReportGmailerrorred } from "react-icons/md";
 import Pagination from "../../components/Pagination";
 import RTRHero from "./RTRHero";
 import useGetFetch from "../../hooks/useGetFetch";
+import SEO from "../../components/SEO";
 
 function RTR() {
   const [activeFilter, setActiveFilter] = useState(() => {
@@ -73,6 +74,12 @@ function RTR() {
 
   return (
     <>
+      <SEO 
+        title="Raqamli ta'lim resurslari (RTR)"
+        description="Kasbiy ta'lim o'qituvchilari uchun video darsliklar, metodikalar va o'quv materiallari platformasi. Boshlang'ich va o'rta kasbiy ta'lim resurslari"
+        keywords="rtr, raqamli ta'lim, ta'lim resurslari, video darsliklar, metodika, o'quv materiallari, o'qituvchilar uchun"
+      />
+      
       <RTRHero />
       <section className="relative flex flex-col items-center -mt-10 z-20 mb-25 sm:mb-40">
         <div className="w-full mx-5 xl:max-w-7xl 2xl:max-w-10/12 grid sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-5 xl:gap-10 px-2 sm:px-4 shadow-xl rounded-2xl bg-base-100 py-2 sm:py-4 lg:py-10">

@@ -14,6 +14,7 @@ import useGetFetch from "../../hooks/useGetFetch";
 import { Link } from "react-router-dom";
 import { useHero } from "../../context/HeroContext";
 import Pagination from "../../components/Pagination";
+import SEO from "../../components/SEO";
 
 function NewsList() {
   const [selectedCategory, setSelectedCategory] = useState("Barchasi");
@@ -232,7 +233,14 @@ function NewsList() {
   }
 
   return (
-    <section className="bg-slate-100 relative min-h-screen w-full bg-linear-to-b from-base-100 via-base-200 to-base-100 py-24 mt-2 sm:mt-10 lg:mt-15 mb-25 sm:mb-40">
+    <>
+      <SEO 
+        title="Yangiliklar"
+        description="Kasbiy ta'limni rivojlantirish instituti yangiliklari, tadbirlar, yutuqlar, hamkorlik va elon konseptlari. Eng so'nggi yangiliklardan xabardor bo'ling"
+        keywords="yangiliklar, tadbirlar, elon, hamkorlik, yutuqlar, kasbiy ta'lim yangiliklari"
+      />
+      
+      <section className="bg-slate-100 relative min-h-screen w-full bg-linear-to-b from-base-100 via-base-200 to-base-100 py-24 mt-2 sm:mt-10 lg:mt-15 mb-25 sm:mb-40">
       <div className="px-3.5 sm:px-5 mx-auto w-full xl:w-full 2xl:w-11/12">
         {/* Header with Filter */}
         <div className="mb-4 sm:mb-8">
@@ -378,6 +386,7 @@ function NewsList() {
         )}
       </div>
     </section>
+    </>
   );
 }
 

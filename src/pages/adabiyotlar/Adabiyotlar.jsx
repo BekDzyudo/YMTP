@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useHero } from '../../context/HeroContext';
 import useGetFetch from '../../hooks/useGetFetch';
+import SEO from '../../components/SEO';
 
 function Adabiyotlar() {
   const navigate = useNavigate();
@@ -155,7 +156,14 @@ function Adabiyotlar() {
   );
 
   return (
-    <div className='min-h-screen bg-slate-100'>
+    <>
+      <SEO 
+        title="Adabiyotlar"
+        description="Kasbiy ta'lim tizimida qo'llaniladigan darsliklar, qo'llanmalar va o'quv adabiyotlari katalogi. Barcha kasblar va yo'nalishlar uchun"
+        keywords="adabiyotlar, darsliklar, qo'llanma, o'quv adabiyotlari, kasb darsliklari, katalog"
+      />
+      
+      <div className='min-h-screen bg-slate-100'>
         <div className=" w-full mx-5 xl:max-w-7xl 2xl:max-w-10/12 mx-auto pt-35">
       {/* Header */}
       <div className="bg-white border-b border-gray-200 px-4 sm:px-6 lg:px-8 py-6 rounded-t-2xl">
@@ -483,6 +491,7 @@ function Adabiyotlar() {
       </div>
     </div>
     </div>
+    </>
   );
 }
 

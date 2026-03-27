@@ -3,6 +3,7 @@ import { defaultLayoutPlugin } from "@react-pdf-viewer/default-layout";
 import { Link, useParams } from "react-router-dom";
 import useGetFetchProfile from "../../hooks/useGetFetchProfile";
 import { AuthContext } from "../../context/AuthContext";
+import SEO from "../../components/SEO";
 
 function MaterialDetail() {
   const materialDetailId = useParams("materialDetailId");
@@ -66,7 +67,16 @@ function MaterialDetail() {
   const newPlugin = defaultLayoutPlugin();
 
   return (
-    <section className="flex flex-col mt-24 sm:mt-35 px-3.5 sm:px-5 mx-auto w-full xl:w-full 2xl:w-8/12">
+    <>
+      {data && (
+        <SEO 
+          title={data.title || "Material"}
+          description={`${data.title || 'Material'} - O'qituvchi materiallari, o'quv resursi`}
+          keywords={`material, ${data.title}, o'quv resursi, darslik`}
+        />
+      )}
+      
+      <section className="flex flex-col mt-24 sm:mt-35 px-3.5 sm:px-5 mx-auto w-full xl:w-full 2xl:w-8/12">
       <div className="flex flex-col gap-5">
         <div className="breadcrumbs text-sm md:text-[16px] hidden md:block">
           <ul>
@@ -96,6 +106,7 @@ function MaterialDetail() {
         </div>
       </div>
     </section>
+    </>
   );
 }
 

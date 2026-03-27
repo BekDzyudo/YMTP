@@ -17,6 +17,7 @@ import { defaultLayoutPlugin } from "@react-pdf-viewer/default-layout";
 import { RiShareForwardFill } from "react-icons/ri";
 import { useHero } from "../../context/HeroContext";
 import { useGlobalContext } from "../../hooks/useGlobalContext";
+import SEO from "../../components/SEO";
 
 function RTRDetail() {
   const [themeNumber, setThemeNumber] = React.useState(0);
@@ -96,6 +97,14 @@ function RTRDetail() {
 
   return (
     <>
+      {data && (
+        <SEO 
+          title={data.title || "RTR Material"}
+          description={`${data.title} - Raqamli ta'lim resurslari platformasidan video darslik va o'quv materiallari`}
+          keywords={`rtr, ${data.title}, video darslik, o'quv materiali, kasbiy ta'lim`}
+        />
+      )}
+      
       {/* IT-themed header with overlayed fan nomi */}
       <div  ref={heroRef} className="relative w-full h-[50vh] flex items-center px-25 mb-5 rounded-2xl overflow-hidden shadow-lg">
         <img
