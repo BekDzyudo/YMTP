@@ -173,7 +173,7 @@ function App() {
               element: <XodimDetail />,
             },
             {
-              path: "vacansy",
+              path: "vacancy",
               element: <Vacancy />,
             },
             {
