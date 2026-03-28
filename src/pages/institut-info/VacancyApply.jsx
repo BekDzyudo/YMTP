@@ -655,7 +655,7 @@ function FileUploadField({ label, fieldName, file, onChange, onRemove, required 
   };
 
   return (
-    <div className="form-control">
+    <div className="form-control w-full">
       <label className="label">
         <span className="label-text font-medium">
           {label} {required && <span className="text-error">*</span>}
@@ -663,7 +663,7 @@ function FileUploadField({ label, fieldName, file, onChange, onRemove, required 
       </label>
       
       {!file ? (
-        <label className="border-2 border-dashed border-base-300 rounded-lg p-6 hover:border-blue-500 transition-colors cursor-pointer bg-base-200/50">
+        <label className="w-full border-2 border-dashed border-base-300 rounded-lg p-6 hover:border-blue-500 hover:bg-blue-50/30 transition-all cursor-pointer bg-base-200/30 block">
           <input
             type="file"
             className="hidden"
@@ -673,14 +673,16 @@ function FileUploadField({ label, fieldName, file, onChange, onRemove, required 
           />
           <div className="flex flex-col items-center gap-2 text-base-content/60">
             <FaCloudUploadAlt className="w-12 h-12" />
-            <p className="text-sm">Faylni tanlash uchun bosing</p>
+            <p className="text-sm font-medium">Faylni tanlash uchun bosing</p>
             <p className="text-xs">PDF, JPG, PNG (Max: 5MB)</p>
           </div>
         </label>
       ) : (
-        <div className="bg-green-50 border border-green-300 rounded-lg p-4 flex items-center justify-between">
+        <div className="w-full bg-green-50 border-2 border-green-300 rounded-lg p-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <FaCheck className="w-5 h-5 text-green-600" />
+            <div className="bg-green-100 p-2 rounded-full">
+              <FaCheck className="w-5 h-5 text-green-600" />
+            </div>
             <div>
               <p className="font-medium text-green-800">{file.name}</p>
               <p className="text-xs text-green-600">
