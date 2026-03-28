@@ -40,7 +40,6 @@ function Vacancy() {
   const { data, isPending, error } = useGetFetch(
     `${import.meta.env.VITE_BASE_URL}/shared_app/vacancies/?page=${currentPage}`
   );
-  console.log(data);
   
 
   const vacancyData = data?.results || [];
@@ -73,7 +72,10 @@ function Vacancy() {
               </Link>
             </li>
             <li>
-              <Link className="text-base-content/70 hover:text-blue-700 transition-colors">
+              <Link 
+                to="/about"
+                className="text-base-content/70 hover:text-blue-700 transition-colors"
+              >
                 Institut
               </Link>
             </li>
@@ -228,9 +230,12 @@ function Vacancy() {
                       </div>
                     </div>
 
-                    <button className="btn btn-primary btn-sm">
-                      Ariza yuborish
-                    </button>
+                    <Link 
+                      to={`${vacancy.id}`}
+                      className="btn btn-primary btn-sm"
+                    >
+                      Batafsil ko'rish
+                    </Link>
                   </div>
                 </div>
               </div>

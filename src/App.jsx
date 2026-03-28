@@ -37,6 +37,8 @@ import Structure from "./pages/institut-info/struktura/Structure";
 import BolimDetail from "./pages/institut-info/struktura/BolimDetail";
 import XodimDetail from "./pages/institut-info/struktura/XodimDetail";
 import Vacancy from "./pages/institut-info/Vacancy";
+import VacancyDetail from "./pages/institut-info/VacancyDetail";
+import VacancyApply from "./pages/institut-info/VacancyApply";
 import Contact from "./pages/contact/Contact";
 import { institutLinks } from "./constants/institutLinks";
 import NewsList from "./pages/news/NewsList";
@@ -175,6 +177,14 @@ function App() {
             {
               path: "vacancy",
               element: <Vacancy />,
+            },
+            {
+              path: "vacancy/:id",
+              element: <VacancyDetail />,
+            },
+            {
+              path: "vacancy/:id/apply",
+              element: <VacancyApply />,
             },
             {
               path: "normativ-documents",
