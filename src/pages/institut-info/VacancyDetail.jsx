@@ -102,8 +102,6 @@ function VacancyDetail() {
     `${import.meta.env.VITE_BASE_URL}/shared_app/vacancies/${id}/`
   );
 
-  console.log("vacancy data:", vacancy);
-
   const handlePrint = () => {
     window.print();
   };

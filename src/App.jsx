@@ -1,4 +1,6 @@
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import MainLayout from "./layouts/MainLayout";
 import Home from "./pages/home-page/Home";
 import Region from "./pages/kasbiy-talim-tashkilotlari/Region";
@@ -249,7 +251,23 @@ function App() {
       path: "*",
       element: <NotFound />    }
   ]);
-  return <RouterProvider router={routes} />;
+  return (
+    <>
+      <RouterProvider router={routes} />
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+    </>
+  );
 }
 
 export default App;

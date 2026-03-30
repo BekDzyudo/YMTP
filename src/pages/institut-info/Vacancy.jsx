@@ -72,10 +72,7 @@ function Vacancy() {
               </Link>
             </li>
             <li>
-              <Link 
-                to="/about"
-                className="text-base-content/70 hover:text-blue-700 transition-colors"
-              >
+              <Link className="text-base-content/70 hover:text-blue-700 transition-colors">
                 Institut
               </Link>
             </li>

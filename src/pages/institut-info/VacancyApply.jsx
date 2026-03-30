@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import useGetFetch from "../../hooks/useGetFetch";
 import SEO from "../../components/SEO";
+import { toast } from "react-toastify";
 import { 
   FaHome, FaChevronRight, FaUser, FaGraduationCap, FaBriefcase, 
   FaFileUpload, FaCheck, FaArrowLeft, FaArrowRight, FaCloudUploadAlt,
@@ -12,6 +13,8 @@ function VacancyApply() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
+  const [errors, setErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
   
   // Form data states
   const [personalInfo, setPersonalInfo] = useState({
@@ -78,8 +81,41 @@ function VacancyApply() {
     }));
   };
 
+  const validateStep = () => {
+    const newErrors = {};
+    
+    if (currentStep === 1) {
+      // Personal Info validation
+      if (!personalInfo.firstName.trim()) newErrors.firstName = "Ism to'ldirilishi shart";
+      if (!personalInfo.lastName.trim()) newErrors.lastName = "Familiya to'ldirilishi shart";
+      if (!personalInfo.birthDate) newErrors.birthDate = "Tug'ilgan sana to'ldirilishi shart";
+      if (!personalInfo.phone.trim()) newErrors.phone = "Telefon raqami to'ldirilishi shart";
+      if (!personalInfo.email.trim()) newErrors.email = "Email to'ldirilishi shart";
+      if (!personalInfo.address.trim()) newErrors.address = "Manzil to'ldirilishi shart";
+      if (!personalInfo.passportSeries.trim()) newErrors.passportSeries = "Passport seriyasi to'ldirilishi shart";
+      if (!personalInfo.passportNumber.trim()) newErrors.passportNumber = "Passport raqami to'ldirilishi shart";
+    } else if (currentStep === 2) {
+      // Education Info validation
+      if (!educationInfo.degree) newErrors.degree = "Ta'lim darajasi to'ldirilishi shart";
+      if (!educationInfo.institution.trim()) newErrors.institution = "Ta'lim muassasasi to'ldirilishi shart";
+      if (!educationInfo.specialty.trim()) newErrors.specialty = "Mutaxassislik to'ldirilishi shart";
+      if (!educationInfo.graduationYear) newErrors.graduationYear = "Tugatgan yili to'ldirilishi shart";
+    } else if (currentStep === 3) {
+      // Work Experience validation - no required fields based on user requirements
+    } else if (currentStep === 4) {
+      // Documents validation
+      if (!documents.resume) newErrors.resume = "Resume (CV) yuklash shart";
+      if (!documents.diploma) newErrors.diploma = "Diplom yuklash shart";
+      if (!documents.passport) newErrors.passport = "Passport nusxasi yuklash shart";
+    }
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleNext = () => {
-    if (currentStep < 4) {
+    if (validateStep() && currentStep < 4) {
+      setErrors({});
       setCurrentStep(currentStep + 1);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -92,17 +128,99 @@ function VacancyApply() {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // API ga yuborish logikasi keyinchalik qo'shiladi
-    console.log({
-      personalInfo,
-      educationInfo,
-      workExperience,
-      documents
-    });
-    alert("Ariza muvaffaqiyatli yuborildi!");
-    navigate(`/vacancy/${id}`);
+    
+    // Validate step 4 before submitting
+    if (!validateStep()) {
+      return;
+    }
+    
+    setIsSubmitting(true);
+    
+    try {
+      // Create FormData to handle file uploads
+      const formData = new FormData();
+      
+      // Add vacancy ID
+      formData.append('vacancy', id);
+      
+      // Add personal info
+      formData.append('firstName', personalInfo.firstName);
+      formData.append('lastName', personalInfo.lastName);
+      if (personalInfo.middleName) formData.append('middleName', personalInfo.middleName);
+      formData.append('birthDate', personalInfo.birthDate);
+      formData.append('phone', personalInfo.phone);
+      formData.append('email', personalInfo.email);
+      formData.append('address', personalInfo.address);
+      formData.append('passportSeries', personalInfo.passportSeries);
+      formData.append('passportNumber', personalInfo.passportNumber);
+      
+      // Add education info
+      formData.append('degree', educationInfo.degree);
+      formData.append('institution', educationInfo.institution);
+      formData.append('specialty', educationInfo.specialty);
+      formData.append('graduationYear', parseInt(educationInfo.graduationYear, 10));
+      if (educationInfo.additionalEducation) formData.append('additionalEducation', educationInfo.additionalEducation);
+      
+      // Add work experience
+      if (workExperience.currentPosition) formData.append('currentPosition', workExperience.currentPosition);
+      if (workExperience.currentOrganization) formData.append('currentOrganization', workExperience.currentOrganization);
+      if (workExperience.experienceYears && workExperience.experienceYears !== "") {
+        formData.append('experienceYears', parseInt(workExperience.experienceYears, 10));
+      }
+      if (workExperience.achievements) formData.append('achievements', workExperience.achievements);
+      if (workExperience.additionalSkills) formData.append('additionalSkills', workExperience.additionalSkills);
+      
+      // Add documents (files)
+      if (documents.languageCert) formData.append('languageCert', documents.languageCert);
+      if (documents.resume) formData.append('resume', documents.resume);
+      if (documents.qualificationCert) formData.append('qualificationCert', documents.qualificationCert);
+      if (documents.diploma) formData.append('diploma', documents.diploma);
+      if (documents.passport) formData.append('passport', documents.passport);
+      if (documents.retrainingCert) formData.append('retrainingCert', documents.retrainingCert);
+      
+      // Debug: Log FormData contents
+      // console.log('Sending data to API:');
+      for (let [key, value] of formData.entries()) {
+        // console.log(key, ':', value);
+      }
+      
+      // Send POST request to API
+      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/shared_app/vacancies/${id}/apply/`, {
+        method: 'POST',
+        body: formData,
+        // Don't set Content-Type header, browser will set it automatically with boundary for multipart/form-data
+      });
+      
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        
+        // Display specific field errors if available
+        if (errorData && typeof errorData === 'object') {
+          for (const [field, messages] of Object.entries(errorData)) {
+            const errorMsg = Array.isArray(messages) ? messages.join(', ') : messages;
+            toast.error(`${field}: ${errorMsg}`);
+          }
+          throw new Error('Ma\'lumotlarni tekshiring');
+        }
+        
+        throw new Error(errorData.message || 'Arizani yuborishda xatolik yuz berdi');
+      }
+      
+      const data = await response.json();
+      
+      toast.success("Ariza muvaffaqiyatli yuborildi! Tez orada siz bilan bog'lanamiz.");
+      navigate(`/vacancy/${id}`);
+      
+    } catch (error) {
+      console.error('Error submitting application:', error);
+      if (error.message !== 'Ma\'lumotlarni tekshiring') {
+        toast.error(error.message || "Arizani yuborishda xatolik yuz berdi. Iltimos, qaytadan urinib ko'ring.");
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (isPending) {
@@ -135,9 +253,9 @@ function VacancyApply() {
         keywords="ariza, vakansiya, ish, kasbiy ta'lim"
       />
 
-      <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+      <section className="max-w-5xl mx-auto px-1 sm:px-6 lg:px-8 py-8 sm:py-12 mb-25 sm:mb-40">
         {/* Breadcrumb */}
-        <div className="flex items-center gap-2 text-sm mb-6">
+        <div className="hidden md:flex items-center gap-2 text-sm mb-6">
           <Link to="/" className="text-blue-600 hover:text-blue-700 flex items-center gap-1">
             <FaHome /> Bosh sahifa
           </Link>
@@ -231,11 +349,11 @@ function VacancyApply() {
                     <input
                       type="text"
                       placeholder="Ismingizni kiriting"
-                      className="input input-bordered w-full"
+                      className={`input input-bordered w-full ${errors.firstName ? 'border-red-500 border-2' : ''}`}
                       value={personalInfo.firstName}
                       onChange={(e) => setPersonalInfo({...personalInfo, firstName: e.target.value})}
-                      required
                     />
+                    {errors.firstName && <p className="text-red-500 text-sm mt-1">{errors.firstName}</p>}
                   </div>
 
                   <div className="form-control w-full">
@@ -245,11 +363,11 @@ function VacancyApply() {
                     <input
                       type="text"
                       placeholder="Familiyangizni kiriting"
-                      className="input input-bordered w-full"
+                      className={`input input-bordered w-full ${errors.lastName ? 'border-red-500 border-2' : ''}`}
                       value={personalInfo.lastName}
                       onChange={(e) => setPersonalInfo({...personalInfo, lastName: e.target.value})}
-                      required
                     />
+                    {errors.lastName && <p className="text-red-500 text-sm mt-1">{errors.lastName}</p>}
                   </div>
 
                   <div className="form-control w-full">
@@ -273,11 +391,11 @@ function VacancyApply() {
                     </label>
                     <input
                       type="date"
-                      className="input input-bordered w-full"
+                      className={`input input-bordered w-full ${errors.birthDate ? 'border-red-500 border-2' : ''}`}
                       value={personalInfo.birthDate}
                       onChange={(e) => setPersonalInfo({...personalInfo, birthDate: e.target.value})}
-                      required
                     />
+                    {errors.birthDate && <p className="text-red-500 text-sm mt-1">{errors.birthDate}</p>}
                   </div>
 
                   <div className="form-control w-full">
@@ -287,11 +405,11 @@ function VacancyApply() {
                     <input
                       type="tel"
                       placeholder="+998 90 123 45 67"
-                      className="input input-bordered w-full"
+                      className={`input input-bordered w-full ${errors.phone ? 'border-red-500 border-2' : ''}`}
                       value={personalInfo.phone}
                       onChange={(e) => setPersonalInfo({...personalInfo, phone: e.target.value})}
-                      required
                     />
+                    {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone}</p>}
                   </div>
                 </div>
 
@@ -302,11 +420,11 @@ function VacancyApply() {
                   <input
                     type="email"
                     placeholder="email@example.com"
-                    className="input input-bordered w-full"
+                    className={`input input-bordered w-full ${errors.email ? 'border-red-500 border-2' : ''}`}
                     value={personalInfo.email}
                     onChange={(e) => setPersonalInfo({...personalInfo, email: e.target.value})}
-                    required
                   />
+                  {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
                 </div>
 
                 <div className="form-control w-full">
@@ -314,13 +432,13 @@ function VacancyApply() {
                     <span className="label-text font-medium">Yashash manzili *</span>
                   </label>
                   <textarea
-                    className="textarea textarea-bordered w-full"
+                    className={`textarea textarea-bordered w-full ${errors.address ? 'border-red-500 border-2' : ''}`}
                     placeholder="To'liq yashash manzilingizni kiriting"
                     rows="2"
                     value={personalInfo.address}
                     onChange={(e) => setPersonalInfo({...personalInfo, address: e.target.value})}
-                    required
                   ></textarea>
+                  {errors.address && <p className="text-red-500 text-sm mt-1">{errors.address}</p>}
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -331,12 +449,12 @@ function VacancyApply() {
                     <input
                       type="text"
                       placeholder="AA"
-                      className="input input-bordered uppercase w-full"
+                      className={`input input-bordered uppercase w-full ${errors.passportSeries ? 'border-red-500 border-2' : ''}`}
                       maxLength="2"
                       value={personalInfo.passportSeries}
                       onChange={(e) => setPersonalInfo({...personalInfo, passportSeries: e.target.value.toUpperCase()})}
-                      required
                     />
+                    {errors.passportSeries && <p className="text-red-500 text-sm mt-1">{errors.passportSeries}</p>}
                   </div>
 
                   <div className="form-control w-full">
@@ -346,12 +464,12 @@ function VacancyApply() {
                     <input
                       type="text"
                       placeholder="1234567"
-                      className="input input-bordered w-full"
+                      className={`input input-bordered w-full ${errors.passportNumber ? 'border-red-500 border-2' : ''}`}
                       maxLength="7"
                       value={personalInfo.passportNumber}
                       onChange={(e) => setPersonalInfo({...personalInfo, passportNumber: e.target.value})}
-                      required
                     />
+                    {errors.passportNumber && <p className="text-red-500 text-sm mt-1">{errors.passportNumber}</p>}
                   </div>
                 </div>
               </div>
@@ -370,16 +488,16 @@ function VacancyApply() {
                     <span className="label-text font-medium">Ta'lim darajasi *</span>
                   </label>
                   <select
-                    className="select select-bordered w-full"
+                    className={`select select-bordered w-full ${errors.degree ? 'border-red-500 border-2' : ''}`}
                     value={educationInfo.degree}
                     onChange={(e) => setEducationInfo({...educationInfo, degree: e.target.value})}
-                    required
                   >
                     <option value="">Tanlang</option>
                     <option value="bakalavr">Bakalavr</option>
                     <option value="magistr">Magistr</option>
                     <option value="phd">PhD / Doktorantura</option>
                   </select>
+                  {errors.degree && <p className="text-red-500 text-sm mt-1">{errors.degree}</p>}
                 </div>
 
                 <div className="form-control w-full">
@@ -389,11 +507,11 @@ function VacancyApply() {
                   <input
                     type="text"
                     placeholder="Universitet yoki institut nomi"
-                    className="input input-bordered w-full"
+                    className={`input input-bordered w-full ${errors.institution ? 'border-red-500 border-2' : ''}`}
                     value={educationInfo.institution}
                     onChange={(e) => setEducationInfo({...educationInfo, institution: e.target.value})}
-                    required
                   />
+                  {errors.institution && <p className="text-red-500 text-sm mt-1">{errors.institution}</p>}
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -404,11 +522,11 @@ function VacancyApply() {
                     <input
                       type="text"
                       placeholder="O'qigan mutaxassislik"
-                      className="input input-bordered w-full"
+                      className={`input input-bordered w-full ${errors.specialty ? 'border-red-500 border-2' : ''}`}
                       value={educationInfo.specialty}
                       onChange={(e) => setEducationInfo({...educationInfo, specialty: e.target.value})}
-                      required
                     />
+                    {errors.specialty && <p className="text-red-500 text-sm mt-1">{errors.specialty}</p>}
                   </div>
 
                   <div className="form-control w-full">
@@ -420,11 +538,11 @@ function VacancyApply() {
                       placeholder="2020"
                       min="1950"
                       max={new Date().getFullYear()}
-                      className="input input-bordered w-full"
+                      className={`input input-bordered w-full ${errors.graduationYear ? 'border-red-500 border-2' : ''}`}
                       value={educationInfo.graduationYear}
                       onChange={(e) => setEducationInfo({...educationInfo, graduationYear: e.target.value})}
-                      required
                     />
+                    {errors.graduationYear && <p className="text-red-500 text-sm mt-1">{errors.graduationYear}</p>}
                   </div>
                 </div>
 
@@ -481,20 +599,19 @@ function VacancyApply() {
 
                 <div className="form-control w-full">
                   <label className="label">
-                    <span className="label-text font-medium">Umumiy ish tajribasi *</span>
+                    <span className="label-text font-medium">Umumiy ish tajribasi</span>
                   </label>
                   <select
                     className="select select-bordered w-full"
                     value={workExperience.experienceYears}
                     onChange={(e) => setWorkExperience({...workExperience, experienceYears: e.target.value})}
-                    required
                   >
                     <option value="">Tanlang</option>
-                    <option value="0-1">1 yilgacha</option>
-                    <option value="1-3">1-3 yil</option>
-                    <option value="3-5">3-5 yil</option>
-                    <option value="5-10">5-10 yil</option>
-                    <option value="10+">10 yildan ko'p</option>
+                    <option value="0">1 yilgacha</option>
+                    <option value="2">1-3 yil</option>
+                    <option value="4">3-5 yil</option>
+                    <option value="7">5-10 yil</option>
+                    <option value="10">10 yildan ko'p</option>
                   </select>
                 </div>
 
@@ -546,6 +663,7 @@ function VacancyApply() {
                   file={documents.languageCert}
                   onChange={handleFileChange}
                   onRemove={handleRemoveFile}
+                  error={errors.languageCert}
                 />
 
                 {/* Obyektivka */}
@@ -556,6 +674,7 @@ function VacancyApply() {
                   onChange={handleFileChange}
                   onRemove={handleRemoveFile}
                   required
+                  error={errors.resume}
                 />
 
                 {/* Malaka toifa sertifikati */}
@@ -565,6 +684,7 @@ function VacancyApply() {
                   file={documents.qualificationCert}
                   onChange={handleFileChange}
                   onRemove={handleRemoveFile}
+                  error={errors.qualificationCert}
                 />
 
                 {/* Diplom */}
@@ -575,6 +695,7 @@ function VacancyApply() {
                   onChange={handleFileChange}
                   onRemove={handleRemoveFile}
                   required
+                  error={errors.diploma}
                 />
 
                 {/* Passport */}
@@ -585,6 +706,7 @@ function VacancyApply() {
                   onChange={handleFileChange}
                   onRemove={handleRemoveFile}
                   required
+                  error={errors.passport}
                 />
 
                 {/* Qayta tayyorlov */}
@@ -594,6 +716,7 @@ function VacancyApply() {
                   file={documents.retrainingCert}
                   onChange={handleFileChange}
                   onRemove={handleRemoveFile}
+                  error={errors.retrainingCert}
                 />
               </div>
             )}
@@ -627,9 +750,19 @@ function VacancyApply() {
                 <button
                   type="submit"
                   className="btn btn-success gap-2 text-white"
+                  disabled={isSubmitting}
                 >
-                  <FaCheck />
-                  Yuborish
+                  {isSubmitting ? (
+                    <>
+                      <span className="loading loading-spinner loading-sm"></span>
+                      Yuborilmoqda...
+                    </>
+                  ) : (
+                    <>
+                      <FaCheck />
+                      Yuborish
+                    </>
+                  )}
                 </button>
               )}
             </div>
@@ -641,13 +774,13 @@ function VacancyApply() {
 }
 
 // File Upload Component
-function FileUploadField({ label, fieldName, file, onChange, onRemove, required = false }) {
+function FileUploadField({ label, fieldName, file, onChange, onRemove, required = false, error = null }) {
   const handleChange = (e) => {
     const selectedFile = e.target.files[0];
     if (selectedFile) {
       // Check file size (5MB)
       if (selectedFile.size > 5 * 1024 * 1024) {
-        alert("Fayl hajmi 5MB dan oshmasligi kerak!");
+        toast.error("Fayl hajmi 5MB dan oshmasligi kerak!");
         return;
       }
       onChange(fieldName, selectedFile);
@@ -663,13 +796,12 @@ function FileUploadField({ label, fieldName, file, onChange, onRemove, required 
       </label>
       
       {!file ? (
-        <label className="w-full border-2 border-dashed border-base-300 rounded-lg p-6 hover:border-blue-500 hover:bg-blue-50/30 transition-all cursor-pointer bg-base-200/30 block">
+        <label className={`w-full border-2 border-dashed rounded-lg p-6 hover:border-blue-500 hover:bg-blue-50/30 transition-all cursor-pointer bg-base-200/30 block ${error ? 'border-red-500' : 'border-base-300'}`}>
           <input
             type="file"
             className="hidden"
             accept=".pdf,.jpg,.jpeg,.png"
             onChange={handleChange}
-            required={required}
           />
           <div className="flex flex-col items-center gap-2 text-base-content/60">
             <FaCloudUploadAlt className="w-12 h-12" />
@@ -699,6 +831,7 @@ function FileUploadField({ label, fieldName, file, onChange, onRemove, required 
           </button>
         </div>
       )}
+      {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
     </div>
   );
 }
