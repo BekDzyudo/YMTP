@@ -10,8 +10,15 @@ import CalendarModal from "../components/CalendarModal";
 import SEO from "../components/SEO";
 
 function MainLayout() {
-  const [onHero, setOnHero] = useState(true);
   const location = useLocation();
+  
+  // onHero faqat Home sahifasida (/) true bo'ladi, boshqa sahifalarda false
+  const [onHero, setOnHero] = useState(location.pathname === '/');
+
+  // pathname o'zgarganda onHero ni yangilash
+  useEffect(() => {
+    setOnHero(location.pathname === '/');
+  }, [location.pathname]);
 
   // Har safar sahifa o'zgarganda tepaga scroll qilish
   useEffect(() => {

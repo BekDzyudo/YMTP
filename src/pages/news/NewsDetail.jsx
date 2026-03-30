@@ -183,7 +183,7 @@ function NewsDetail() {
   }
 
   const categoryStyle = getCategoryStyle(newsDetail.kategoriya);
-  console.log(newsDetail);
+  
 
   // Yangilik uchun rasmlar - slider uchun
   // Strip HTML from text for clean description

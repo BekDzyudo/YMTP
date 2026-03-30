@@ -88,6 +88,14 @@ function Header() {
                 </ul>
               </div>
             </li>
+             {/* <li>
+              <Link
+                to="/region"
+                className={textColor}
+              >
+                Texnikumlar
+              </Link>
+            </li> */}
             <li>
               <Link
                 to="/news"

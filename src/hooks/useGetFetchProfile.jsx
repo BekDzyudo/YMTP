@@ -49,7 +49,7 @@ function useGetFetchProfile(url, lookAtLogout) {
         setIsPending(false);
       } catch (err) {
         setError(err.message);
-        console.log(err.message);
+        // console.log(err.message);
         setIsPending(false);
       }
     };
