@@ -63,18 +63,18 @@ function NewsDetail() {
     }
   }, [id]);
 
-  // Auto-play slider - hooks always called in the same order
+  // Auto-play slider
   useEffect(() => {
     if (!newsDetail) return;
     
-    const newsImages = newsDetail.rasmlar && newsDetail.rasmlar.length > 0
+    const images = newsDetail?.rasmlar && newsDetail.rasmlar.length > 0
       ? newsDetail.rasmlar.map(item => item.rasm)
       : newsDetail.image ? [newsDetail.image] : [];
     
-    if (newsImages.length <= 1) return;
+    if (images.length <= 1) return;
     
     const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % newsImages.length);
+      setCurrentSlide((prev) => (prev + 1) % images.length);
     }, 5000);
 
     return () => clearInterval(interval);
@@ -194,7 +194,7 @@ function NewsDetail() {
     return text.substring(0, 160); // Meta description max 160 chars
   };
 
-  const allImages = newsDetail?.rasmlar && newsDetail.rasmlar.length > 0
+  const newsImages = newsDetail?.rasmlar && newsDetail.rasmlar.length > 0
     ? newsDetail.rasmlar.map(item => item.rasm)
     : newsDetail.image ? [newsDetail.image] : [];
 
