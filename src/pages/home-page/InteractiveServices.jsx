@@ -67,7 +67,7 @@ function InteractiveServices() {
           
           {/* Left Side: 4 Cards - Max Width 2/3 */}
           <div className="w-full lg:max-w-[66.666667%] mx-auto flex-1">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-x-15 sm:gap-y-5">
               {services.map((service) => (
                 <div 
                   key={service.id} 

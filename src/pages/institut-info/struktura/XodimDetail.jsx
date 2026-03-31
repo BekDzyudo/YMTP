@@ -20,7 +20,7 @@ function XodimDetail() {
       <div className="bg-slate-200 border-t-8 border-blue-800 rounded-t-2xl rounded-b-2xl py-3 sm:py-5 px-5 sm:px-8 flex gap-10">
         <div className="hidden md:block">
           <img
-            src={data?.rasm || "/person.jpg"}
+            src={data?.rasm || "/person.png"}
             alt={data?.FISH || "Xodim nomi"}
             className="rounded-2xl w-48 h-48 object-cover border-2 border-blue-800  shadow-xl"
           />

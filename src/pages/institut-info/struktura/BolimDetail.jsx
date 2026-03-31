@@ -60,7 +60,7 @@ function BolimDetail() {
               className="bg-white border h-54 border-gray-300 rounded-2xl shadow hover:shadow-lg transition-all duration-300 overflow-hidden flex"
             >
               <img
-                src={xodim.rasm || "/person.jpg"}
+                src={xodim.rasm || "/person.png"}
                 alt={xodim.FISH}
                 className="rounded-l-2xl w-1/3 object-cover"
               />
