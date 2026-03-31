@@ -12,12 +12,20 @@ import SEO from "../components/SEO";
 function MainLayout() {
   const location = useLocation();
   
-  // onHero faqat Home sahifasida (/) true bo'ladi, boshqa sahifalarda false
-  const [onHero, setOnHero] = useState(location.pathname === '/');
+  // Hero bor sahifalar ro'yxati (aniq path'lar)
+  const heroPages = ['/', '/digital-educational-resources', '/methodological-support', '/region'];
+  
+  // onHero hero bor sahifalarda default true
+  const [onHero, setOnHero] = useState(heroPages.includes(location.pathname));
 
   // pathname o'zgarganda onHero ni yangilash
   useEffect(() => {
-    setOnHero(location.pathname === '/');
+    const hasHero = heroPages.includes(location.pathname);
+    if (!hasHero) {
+      setOnHero(false);
+    } else {
+      setOnHero(true); // Hero bor sahifaga o'tganda darhol true
+    }
   }, [location.pathname]);
 
   // Har safar sahifa o'zgarganda tepaga scroll qilish
@@ -39,7 +47,7 @@ function MainLayout() {
           <header>
             <Header />
           </header>
-          <main>
+          <main className={onHero ? "" : "pt-20"}>
             <Outlet />
           </main>
           <footer>

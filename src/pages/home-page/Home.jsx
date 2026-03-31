@@ -26,7 +26,6 @@ function Home() {
       
       <HomeHero/>
       <NewsHome/>
-      {/* <InteractiveServices/> */}
       <PrezidentialSpeech/>
       <EduProfHome/>
       {/* <Statistics/> */}
@@ -34,6 +33,7 @@ function Home() {
       {/* <Teachers/> */}
       <Partners/>
       <FaqHome/>
+      <InteractiveServices/>
       <RtrHome/>
     </>
   );

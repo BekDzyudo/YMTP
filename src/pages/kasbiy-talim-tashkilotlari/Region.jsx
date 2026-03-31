@@ -1,324 +1,329 @@
-import Uzbekistan from "@react-map/uzbekistan";
+import { useState, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import useGetFetch from "../../hooks/useGetFetch";
-import { 
-  FaMapMarkerAlt, 
-  FaBuilding, 
-  FaGraduationCap, 
-  FaUsers,
+import CollegesHero from "./CollegesHero";
+import {
+  FaMapMarkerAlt,
+  FaBuilding,
+  FaGraduationCap,
   FaArrowRight,
-  FaCity
+  FaSearch,
+  FaFilter,
 } from "react-icons/fa";
 
 function Region() {
-  // Statik hududlar ma'lumotlari
-  const regions = [
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedRegion, setSelectedRegion] = useState("all");
+
+  // Statik texnikumlar ma'lumotlari
+  const colleges = [
     {
       id: 1,
-      name: "Qoraqalpog'iston Respublikasi",
-      code: "QR",
-      color: "from-blue-500 to-cyan-500",
-      image: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=300&fit=crop",
-      institutions: 12,
-      students: 15420,
-      teachers: 1240
+      name: "Toshkent kimyo-texnologiya texnikumi",
+      image:
+        "https://images.unsplash.com/photo-1562774053-701939374585?w=400&h=300&fit=crop",
+      region: "Toshkent shahri",
+      students: 1250,
+      address: "Yunusobod tumani, Qorasuv ko'chasi 12",
     },
     {
       id: 2,
-      name: "Andijon viloyati",
-      code: "AN",
-      color: "from-emerald-500 to-teal-500",
-      image: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=400&h=300&fit=crop",
-      institutions: 18,
-      students: 24500,
-      teachers: 1850
+      name: "Andijon mashinasozlik texnikumi",
+      image:
+        "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=300&fit=crop",
+      region: "Andijon viloyati",
+      students: 980,
+      address: "Andijon shahri, Bobur ko'chasi 45",
     },
     {
       id: 3,
-      name: "Buxoro viloyati",
-      code: "BU",
-      color: "from-amber-500 to-orange-500",
-      image: "https://images.unsplash.com/photo-1564507592333-c60657eea523?w=400&h=300&fit=crop",
-      institutions: 15,
-      students: 19800,
-      teachers: 1520
+      name: "Samarqand transport va kommunikatsiya texnikumi",
+      image:
+        "https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?w=400&h=300&fit=crop",
+      region: "Samarqand viloyati",
+      students: 1120,
+      address: "Samarqand shahri, Amir Temur shoh ko'chasi 78",
     },
     {
       id: 4,
-      name: "Farg'ona viloyati",
-      code: "FA",
-      color: "from-violet-500 to-purple-500",
-      image: "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=400&h=300&fit=crop",
-      institutions: 22,
-      students: 28900,
-      teachers: 2180
+      name: "Buxoro pedagogika texnikumi",
+      image:
+        "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=400&h=300&fit=crop",
+      region: "Buxoro viloyati",
+      students: 850,
+      address: "Buxoro shahri, M. Iqbol ko'chasi 23",
     },
     {
       id: 5,
-      name: "Jizzax viloyati",
-      code: "JI",
-      color: "from-pink-500 to-rose-500",
-      image: "https://images.unsplash.com/photo-1623848648810-d2260e1a05c5?w=400&h=300&fit=crop",
-      institutions: 14,
-      students: 17600,
-      teachers: 1340
+      name: "Farg'ona politexnika texnikumi",
+      image:
+        "https://images.unsplash.com/photo-1498243691581-b145c3f54a5a?w=400&h=300&fit=crop",
+      region: "Farg'ona viloyati",
+      students: 1340,
+      address: "Farg'ona shahri, Al-Farg'oniy ko'chasi 56",
     },
     {
       id: 6,
-      name: "Xorazm viloyati",
-      code: "XO",
-      color: "from-indigo-500 to-blue-500",
-      image: "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=400&h=300&fit=crop",
-      institutions: 13,
-      students: 16800,
-      teachers: 1280
+      name: "Namangan to'qimachilik texnikumi",
+      image:
+        "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=300&fit=crop",
+      region: "Namangan viloyati",
+      students: 890,
+      address: "Namangan shahri, Istiqlol ko'chasi 34",
     },
     {
       id: 7,
-      name: "Namangan viloyati",
-      code: "NA",
-      color: "from-green-500 to-emerald-500",
-      image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop",
-      institutions: 19,
-      students: 25300,
-      teachers: 1920
+      name: "Nukus qishloq xo'jaligi texnikumi",
+      image:
+        "https://images.unsplash.com/photo-1560264280-88b68371db39?w=400&h=300&fit=crop",
+      region: "Qoraqalpog'iston Respublikasi",
+      students: 720,
+      address: "Nukus shahri, Ernazar Alakoz ko'chasi 12",
     },
     {
       id: 8,
-      name: "Navoiy viloyati",
-      code: "NV",
-      color: "from-orange-500 to-red-500",
-      image: "https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=400&h=300&fit=crop",
-      institutions: 11,
-      students: 14200,
-      teachers: 1090
+      name: "Toshkent axborot texnologiyalari texnikumi",
+      image:
+        "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=400&h=300&fit=crop",
+      region: "Toshkent shahri",
+      students: 1580,
+      address: "Chilonzor tumani, Bunyodkor ko'chasi 90",
     },
     {
       id: 9,
-      name: "Qashqadaryo viloyati",
-      code: "QA",
-      color: "from-purple-500 to-pink-500",
-      image: "https://images.unsplash.com/photo-1604999333679-b86d54738315?w=400&h=300&fit=crop",
-      institutions: 20,
-      students: 26700,
-      teachers: 2040
+      name: "Qashqadaryo qurilish texnikumi",
+      image:
+        "https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=400&h=300&fit=crop",
+      region: "Qashqadaryo viloyati",
+      students: 1050,
+      address: "Qarshi shahri, Nasaf ko'chasi 67",
     },
     {
       id: 10,
-      name: "Samarqand viloyati",
-      code: "SA",
-      color: "from-cyan-500 to-blue-500",
-      image: "https://images.unsplash.com/photo-1585208798174-6cedd86e019a?w=400&h=300&fit=crop",
-      institutions: 21,
-      students: 27800,
-      teachers: 2120
+      name: "Navoiy kon-metallurgiya texnikumi",
+      image:
+        "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=400&h=300&fit=crop",
+      region: "Navoiy viloyati",
+      students: 950,
+      address: "Navoiy shahri, G'alaba ko'chasi 28",
     },
     {
       id: 11,
-      name: "Sirdaryo viloyati",
-      code: "SI",
-      color: "from-teal-500 to-green-500",
-      image: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=400&h=300&fit=crop",
-      institutions: 10,
-      students: 12500,
-      teachers: 960
+      name: "Jizzax elektrotexnika texnikumi",
+      image:
+        "https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=400&h=300&fit=crop",
+      region: "Jizzax viloyati",
+      students: 780,
+      address: "Jizzax shahri, Sharof Rashidov ko'chasi 45",
     },
     {
       id: 12,
-      name: "Surxondaryo viloyati",
-      code: "SU",
-      color: "from-red-500 to-pink-500",
-      image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop",
-      institutions: 16,
-      students: 21400,
-      teachers: 1640
+      name: "Xorazm sanoat texnikumi",
+      image:
+        "https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?w=400&h=300&fit=crop",
+      region: "Xorazm viloyati",
+      students: 820,
+      address: "Urganch shahri, Al-Xorazmiy ko'chasi 89",
     },
     {
       id: 13,
-      name: "Toshkent viloyati",
-      code: "TO",
-      color: "from-blue-500 to-indigo-500",
-      image: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=400&h=300&fit=crop",
-      institutions: 25,
-      students: 32400,
-      teachers: 2460
+      name: "Surxondaryo tibbiyot texnikumi",
+      image:
+        "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=400&h=300&fit=crop",
+      region: "Surxondaryo viloyati",
+      students: 690,
+      address: "Termiz shahri, Ibn Sino ko'chasi 23",
     },
     {
       id: 14,
-      name: "Toshkent shahri",
-      code: "TS",
-      color: "from-indigo-600 to-purple-600",
-      image: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=400&h=300&fit=crop",
-      institutions: 28,
-      students: 36800,
-      teachers: 2780,
-      isCity: true
-    }
+      name: "Sirdaryo energetika texnikumi",
+      image:
+        "https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=400&h=300&fit=crop",
+      region: "Sirdaryo viloyati",
+      students: 640,
+      address: "Guliston shahri, Mustaqillik ko'chasi 56",
+    },
+    {
+      id: 15,
+      name: "Toshkent iqtisodiyot va turizm texnikumi",
+      image:
+        "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400&h=300&fit=crop",
+      region: "Toshkent viloyati",
+      students: 1180,
+      address: "Olmaliq shahri, Tinchlik ko'chasi 34",
+    },
+    {
+      id: 16,
+      name: "Buxoro tabiiy gazni qayta ishlash texnikumi",
+      image:
+        "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=300&fit=crop",
+      region: "Buxoro viloyati",
+      students: 870,
+      address: "Kogon shahri, Mustaqillik ko'chasi 12",
+    },
   ];
 
   const navigate = useNavigate();
 
-  const handleRegionClick = (regionId) => {
-    // Keyinchalik dynamic route ga o'tkaziladi
-    navigate(`/region/districts/${regionId}`);
+  // Hududlar ro'yxati filter uchun
+  const regions = [...new Set(colleges.map((c) => c.region))].sort();
+
+  // Search va filter
+  const filteredColleges = useMemo(() => {
+    return colleges.filter((college) => {
+      const matchesSearch = college.name
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase());
+      const matchesRegion =
+        selectedRegion === "all" || college.region === selectedRegion;
+      return matchesSearch && matchesRegion;
+    });
+  }, [searchQuery, selectedRegion]);
+
+  const handleCollegeClick = (collegeId) => {
+    // Keyinchalik detail sahifasiga o'tkaziladi
+    navigate(`/college/${collegeId}`);
   };
- 
+
   return (
-    <section className="relative flex flex-col mt-24 md:mt-35 mb-20 px-3.5 sm:px-5 mx-auto w-full xl:w-full 2xl:w-11/12 overflow-hidden">
-      {/* Background Decoration */}
-      <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
-        {/* Animated gradient blobs */}
-        <div className="absolute top-0 left-0 w-96 h-96 bg-blue-200/30 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute top-40 right-0 w-80 h-80 bg-purple-200/30 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
-        <div className="absolute bottom-0 left-1/3 w-72 h-72 bg-green-200/30 rounded-full blur-3xl animate-pulse" style={{animationDelay: '2s'}}></div>
-        <div className="absolute top-1/2 right-1/4 w-64 h-64 bg-orange-200/30 rounded-full blur-3xl animate-pulse" style={{animationDelay: '3s'}}></div>
-        
-        {/* Grid pattern overlay */}
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.02)_1px,transparent_1px)] bg-[size:50px_50px]"></div>
-      </div>
+    <>
+      {/* Hero Section */}
+      <CollegesHero colleges={colleges} regions={regions} />
 
-      {/* Header Section */}
-      <div className="relative text-center mb-12 p-8 sm:p-12 rounded-3xl bg-linear-to-br from-blue-600 via-indigo-600 to-purple-600 shadow-2xl overflow-hidden">
-        {/* Animated circles background */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 right-0 w-32 h-32 bg-white rounded-full -mr-16 -mt-16"></div>
-          <div className="absolute top-1/2 left-0 w-24 h-24 bg-white rounded-full -ml-12"></div>
-          <div className="absolute bottom-0 right-1/3 w-40 h-40 bg-white rounded-full -mb-20"></div>
-        </div>
-        
-        <div className="relative z-10">
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 drop-shadow-lg">
-            Kasbiy ta'lim tashkilotlari
-          </h1>
-          <p className="text-base sm:text-lg text-white/90 max-w-3xl mx-auto drop-shadow">
-            O'zbekiston hududlari bo'yicha kasbiy ta'lim muassasalari va statistik ma'lumotlar
-          </p>
-        </div>
-      </div>
-
-      {/* Regions Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {regions.map((region) => (
-          <div
-            key={region.id}
-            onClick={() => handleRegionClick(region.id)}
-            className="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-pointer transform hover:-translate-y-2"
-          >
-            {/* Region Image */}
-            <div className="relative h-48 overflow-hidden">
-              <img 
-                src={region.image} 
-                alt={region.name}
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+      {/* Main Content Section */}
+      <section className="relative flex flex-col mb-20 px-3.5 sm:px-5 mx-auto w-full xl:w-full 2xl:w-11/12 overflow-hidden -mt-10 z-20 pb-25 md:pb-35">
+        <div className="bg-base-100 rounded-3xl p-6 sm:p-10 mb-12 shadow-2xl">
+          {/* Search and Filter Section */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {/* Results Count */}
+            <div className="text-gray-600 relative top-1/4">
+              <span className="py-3 px-4 bg-blue-100 rounded-full">
+                <span className="font-bold text-blue-600">
+                  • {filteredColleges.length}
+                </span>{" "}
+                ta texnikum topildi
+              </span>
+            </div>
+            {/* Region Filter */}
+            <div className="relative">
+              <FaFilter className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 z-10 pointer-events-none" />
+              <select
+                value={selectedRegion}
+                onChange={(e) => setSelectedRegion(e.target.value)}
+                className="w-full pl-12 pr-4 py-3 rounded-xl border-2 border-gray-200 focus:border-blue-500 focus:outline-none transition-colors appearance-none bg-white cursor-pointer"
+              >
+                <option value="all">Barcha hududlar</option>
+                {regions.map((region) => (
+                  <option key={region} value={region}>
+                    {region}
+                  </option>
+                ))}
+              </select>
+              <svg className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+            {/* Search Input */}
+            <div className="relative">
+              <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+              <input
+                type="text"
+                placeholder="Texnikum nomini qidiring..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-12 pr-4 py-3 rounded-xl border-2 border-gray-200 focus:border-blue-500 focus:outline-none transition-colors"
               />
-              <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/20 to-transparent"></div>
-              
-              {/* Gradient Badge */}
-              <div className={`absolute top-4 left-4 px-3 py-1.5 rounded-full bg-linear-to-r ${region.color} flex items-center gap-2 shadow-lg`}>
-                {region.isCity ? <FaCity className="text-white text-sm" /> : <FaMapMarkerAlt className="text-white text-sm" />}
-                <span className="text-white text-sm font-bold">{region.code}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Colleges Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {filteredColleges.map((college) => (
+            <div
+              key={college.id}
+              onClick={() => handleCollegeClick(college.id)}
+              className="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-pointer transform hover:-translate-y-2"
+            >
+              {/* College Image */}
+              <div className="relative h-48 overflow-hidden">
+                <img
+                  src={college.image}
+                  alt={college.name}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/30 to-transparent"></div>
+
+                {/* Region Badge */}
+                <div className="absolute top-4 left-4 px-3 py-1.5 rounded-full bg-blue-500 flex items-center gap-2 shadow-lg">
+                  <FaMapMarkerAlt className="text-white text-sm" />
+                  <span className="text-white text-xs font-semibold">
+                    {college.region}
+                  </span>
+                </div>
               </div>
 
-              {/* Region Name Overlay */}
-              <div className="absolute bottom-0 left-0 right-0 p-4">
-                <h3 className="text-white text-xl font-bold drop-shadow-lg line-clamp-2">
-                  {region.name}
+              {/* Content */}
+              <div className="p-5">
+                {/* College Name */}
+                <h3 className="text-lg font-bold text-gray-800 mb-3 line-clamp-2 min-h-14">
+                  {college.name}
                 </h3>
-              </div>
-            </div>
 
-            {/* Content */}
-            <div className="p-6">
-              {/* Statistics */}
-              <div className="space-y-3 mb-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2 text-gray-600">
-                    <FaBuilding className="text-blue-500" />
-                    <span className="text-sm font-medium">Muassasalar</span>
+                {/* Statistics */}
+                <div className="space-y-3 mb-4">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2 text-gray-600">
+                      <FaGraduationCap className="text-green-500" />
+                      <span className="text-sm font-medium">O'quvchilar</span>
+                    </div>
+                    <span className="text-base font-bold text-gray-800">
+                      {college.students.toLocaleString()}{" "}
+                      <span className="font-light text-sm">nafar</span>
+                    </span>
                   </div>
-                  <span className="text-lg font-bold text-gray-800">{region.institutions}</span>
+
+                  <div className="flex items-start gap-2 text-gray-600">
+                    <FaMapMarkerAlt className="text-red-500 mt-1 shrink-0" />
+                    <div className="flex-1">
+                      <p className="text-xs font-medium text-gray-500 mb-0.5">
+                        Manzil:
+                      </p>
+                      <p className="text-sm text-gray-700 line-clamp-2">
+                        {college.address}
+                      </p>
+                    </div>
+                  </div>
                 </div>
 
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2 text-gray-600">
-                    <FaGraduationCap className="text-green-500" />
-                    <span className="text-sm font-medium">O'quvchilar</span>
-                  </div>
-                  <span className="text-lg font-bold text-gray-800">
-                    {region.students.toLocaleString()}
-                  </span>
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2 text-gray-600">
-                    <FaUsers className="text-purple-500" />
-                    <span className="text-sm font-medium">O'qituvchilar</span>
-                  </div>
-                  <span className="text-lg font-bold text-gray-800">
-                    {region.teachers.toLocaleString()}
-                  </span>
-                </div>
+                {/* Action Button */}
+                <button className="w-full mt-4 px-4 py-2.5 bg-gray-100 hover:bg-blue-500 text-gray-700 hover:text-white rounded-xl font-semibold transition-all duration-300 flex items-center justify-center gap-2 group-hover:gap-3">
+                  <span>Batafsil</span>
+                  <FaArrowRight className="text-sm" />
+                </button>
               </div>
 
-              {/* Action Button */}
-              <button className="w-full mt-4 px-4 py-3 bg-gray-100 hover:bg-blue-500 text-gray-700 hover:text-white rounded-xl font-semibold transition-all duration-300 flex items-center justify-center gap-2 group-hover:gap-3">
-                <span>Batafsil</span>
-                <FaArrowRight className="text-sm" />
-              </button>
+              {/* Hover Effect Border */}
+              <div className="absolute inset-0 border-2 border-transparent group-hover:border-blue-400 rounded-2xl transition-all duration-300 pointer-events-none"></div>
             </div>
-
-            {/* Hover Effect Border */}
-            <div className={`absolute inset-0 border-2 border-transparent group-hover:border-blue-400 rounded-2xl transition-all duration-300 pointer-events-none`}></div>
-          </div>
-        ))}
-      </div>
-
-      {/* Summary Statistics */}
-      <div className="mt-16 grid grid-cols-1 sm:grid-cols-3 gap-6">
-        <div className="bg-linear-to-br from-blue-500 to-cyan-500 rounded-2xl p-6 text-white shadow-xl">
-          <div className="flex items-center gap-4">
-            <div className="bg-white/20 p-4 rounded-xl">
-              <FaBuilding className="text-3xl" />
-            </div>
-            <div>
-              <div className="text-white/80 text-sm font-medium mb-1">Jami muassasalar</div>
-              <div className="text-3xl font-bold">
-                {regions.reduce((sum, r) => sum + r.institutions, 0)}
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
 
-        <div className="bg-linear-to-br from-green-500 to-emerald-500 rounded-2xl p-6 text-white shadow-xl">
-          <div className="flex items-center gap-4">
-            <div className="bg-white/20 p-4 rounded-xl">
-              <FaGraduationCap className="text-3xl" />
-            </div>
-            <div>
-              <div className="text-white/80 text-sm font-medium mb-1">Jami o'quvchilar</div>
-              <div className="text-3xl font-bold">
-                {regions.reduce((sum, r) => sum + r.students, 0).toLocaleString()}
-              </div>
-            </div>
+        {/* Empty State */}
+        {filteredColleges.length === 0 && (
+          <div className="text-center py-16">
+            <FaBuilding className="text-6xl text-gray-300 mx-auto mb-4" />
+            <h3 className="text-xl font-semibold text-gray-600 mb-2">
+              Texnikum topilmadi
+            </h3>
+            <p className="text-gray-500">
+              Qidiruv natijasiga mos texnikum mavjud emas
+            </p>
           </div>
-        </div>
-
-        <div className="bg-linear-to-br from-purple-500 to-pink-500 rounded-2xl p-6 text-white shadow-xl">
-          <div className="flex items-center gap-4">
-            <div className="bg-white/20 p-4 rounded-xl">
-              <FaUsers className="text-3xl" />
-            </div>
-            <div>
-              <div className="text-white/80 text-sm font-medium mb-1">Jami o'qituvchilar</div>
-              <div className="text-3xl font-bold">
-                {regions.reduce((sum, r) => sum + r.teachers, 0).toLocaleString()}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+        )}
+      </section>
+    </>
   );
 }
 

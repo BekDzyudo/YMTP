@@ -98,22 +98,6 @@ function Header() {
             </li> */}
             <li>
               <Link
-                to="/news"
-                className={textColor}
-              >
-                Yangiliklar
-              </Link>
-            </li>
-            {/* <li>
-              <Link
-                to="/"
-                className={textColor}
-              >
-                Bosh sahifa
-              </Link>
-            </li> */}
-            <li>
-              <Link
                 to="/digital-educational-resources"
                 className={textColor}
               >
@@ -126,6 +110,14 @@ function Header() {
                 className={textColor}
               >
                 Metodik ta'minot
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/news"
+                className={textColor}
+              >
+                Yangiliklar
               </Link>
             </li>
             {/* <li>
