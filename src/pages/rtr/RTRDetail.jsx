@@ -364,14 +364,25 @@ function RTRDetail() {
                 <div className="px-6">
                   {/* maruza */}
                   {activeCard === 1 && (
-                    <div
-                      className="prose max-w-none text-gray-800 text-base leading-relaxed"
-                      dangerouslySetInnerHTML={{
-                        __html: DOMPurify.sanitize(
-                          processContent(data?.themes[themeNumber]?.content),
-                        ),
-                      }}
-                    ></div> 
+                    <>
+                      <style>{`
+                        .maruza-content img {
+                          display: block;
+                          margin-left: auto;
+                          margin-right: auto;
+                          max-width: 100%;
+                          height: auto;
+                        }
+                      `}</style>
+                      <div
+                        className="prose max-w-none text-gray-800 text-base leading-relaxed maruza-content"
+                        dangerouslySetInnerHTML={{
+                          __html: DOMPurify.sanitize(
+                            processContent(data?.themes[themeNumber]?.content),
+                          ),
+                        }}
+                      ></div>
+                    </>
                   )}
                   {/* media */}
                   {activeCard === 2 && (

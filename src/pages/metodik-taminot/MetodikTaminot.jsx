@@ -3,12 +3,15 @@ import {
   FaBook,
   FaBookOpen,
   FaCalendar,
+  FaCertificate,
   FaDownload,
   FaFileAlt,
   FaFolderOpen,
   FaTools,
+  FaSearchPlus,
+  FaTimes,
 } from "react-icons/fa";
-import { GrFormNextLink } from "react-icons/gr";
+import { GrCertificate, GrFormNextLink } from "react-icons/gr";
 import { FcOk } from "react-icons/fc";
 import { Link } from "react-router-dom";
 import { MdReportGmailerrorred } from "react-icons/md";
@@ -16,6 +19,10 @@ import Pagination from "../../components/Pagination";
 import useGetFetch from "../../hooks/useGetFetch";
 import MetodikTaminotHero from "./MetodikTaminotHero";
 import SEO from "../../components/SEO";
+import { BiCertification } from "react-icons/bi";
+import { PiCertificate, PiCertificateBold, PiCertificateDuotone } from "react-icons/pi";
+import { TbCertificate } from "react-icons/tb";
+import { MdFullscreenExit } from "react-icons/md";
 
 function MetodikTaminot() {
   const [activeFilter, setActiveFilter] = useState(() => {
@@ -23,9 +30,12 @@ function MetodikTaminot() {
     return saved ? parseInt(saved) : 1;
   });
   const [data, setData] = useState(null);
+  
   const [search, setSearch] = useState("");
   const [yearId, setYearId] = useState("");
   const [bilimSoxasiId, setBilimSoxasiId] = useState("");
+  const [selectedImage, setSelectedImage] = useState(null);
+  // console.log(data);
   
   // Format date from YYYY-MM-DD to DD.MM.YYYY
   const formatDate = (dateString) => {
@@ -59,6 +69,11 @@ function MetodikTaminot() {
       icon: FaTools,
       title: "Metodik mahsulotlar",
     },
+      {
+      id: 5,
+      icon: TbCertificate,
+      title: "Malaka oshirish kurslari",
+    },
   ];
 
   // Dinamik URL yaratish
@@ -71,15 +86,21 @@ function MetodikTaminot() {
           ? `${import.meta.env.VITE_BASE_URL_EDU}/talim-soxasi/?year=${yearId}`
           : activeFilter === 4
             ? `${import.meta.env.VITE_BASE_URL_EDU}/qisqa-kurs-tur/`
-            : ``;
+            : activeFilter === 5
+              ? `${import.meta.env.VITE_BASE_URL_EDU}/new-category/?year=${yearId}`
+              : ``;
 
-  const { data: bilimSoxasi } = useGetFetch(bilimSoxasiUrl);    
+  const { data: bilimSoxasi } = useGetFetch(bilimSoxasiUrl);
   const { data: years } = useGetFetch(
     `${import.meta.env.VITE_BASE_URL_EDU}/education-years/`,
   );
   // omt
     const { data: yearsOMT } = useGetFetch(
     `${import.meta.env.VITE_BASE_URL_EDU}/talim-soxa-years/`,
+  );
+    // certificate
+    const { data: yearCertificate } = useGetFetch(
+    `${import.meta.env.VITE_BASE_URL_EDU}/new-year/`,
   );
   
 
@@ -93,11 +114,14 @@ function MetodikTaminot() {
       url = `${import.meta.env.VITE_BASE_URL_EDU}/uquv-material/?page=${page}&search=${search}&year=${yearId}&soxa=${bilimSoxasiId}`;
     } else if (activeFilter === 4) {
       url = `${import.meta.env.VITE_BASE_URL_EDU}/qisqa-kurs/?page=${page}&search=${search}&kurs_tur_id=${bilimSoxasiId}`;
+    } else if (activeFilter === 5) {
+      url = `${import.meta.env.VITE_BASE_URL_EDU}/new-item/?page=${page}&search=${search}&year=${yearId}&category=${bilimSoxasiId}`;
     }
     const res = await fetch(url);
     const json = await res.json();
     setData(json);
   };  
+
 
   useEffect(() => {
     fetchData(1);
@@ -107,6 +131,18 @@ function MetodikTaminot() {
     sessionStorage.setItem("metodik_filter", activeFilter.toString());
   }, [activeFilter]);
 
+  // Prevent body scroll when modal is open
+  useEffect(() => {
+    if (selectedImage) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [selectedImage]);
+
   // Set latest year when years data loads
   useEffect(() => {
     if (activeFilter === 1 && years && years.length > 0 && !yearId) {
@@ -115,16 +151,23 @@ function MetodikTaminot() {
     if (activeFilter === 3 && yearsOMT && yearsOMT.length > 0 && !yearId) {
       setYearId(yearsOMT[yearsOMT.length - 1].id);
     }
-  }, [years, yearsOMT, activeFilter]);
+    if (activeFilter === 5 && yearCertificate && yearCertificate.length > 0 && !yearId) {
+      setYearId(yearCertificate[yearCertificate.length - 1].id);
+    }
+  }, [years, yearsOMT, yearCertificate, activeFilter]);
 
   const handleFilterChange = (filterId) => {
     setActiveFilter(filterId);
-    // Set to latest year for filters 1 and 3
+    // Set to latest year for filters 1, 3, and 5
     if (filterId === 1 && years && years.length > 0) {
       setYearId(years[years.length - 1].id);
     } else if (filterId === 3 && yearsOMT && yearsOMT.length > 0) {
       setYearId(yearsOMT[yearsOMT.length - 1].id);
-    } else {
+    }
+    else if (filterId === 5 && yearCertificate && yearCertificate.length > 0) {
+      setYearId(yearCertificate[yearCertificate.length - 1].id);
+    }
+    else {
       setYearId("");
     }
     setBilimSoxasiId("");
@@ -162,9 +205,48 @@ function MetodikTaminot() {
         keywords="metodik ta'minot, o'quv rejalar, o'quv dasturlari, ishchi dastur, kalendar reja, metodik ko'rsatma, darslik"
       />
       
+      {/* Image Modal */}
+      {selectedImage && (
+        <div 
+          className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4 animate-fadeIn backdrop-blur-sm"
+          onClick={() => setSelectedImage(null)}
+        >
+          <style>{`
+            @keyframes fadeIn {
+              from { opacity: 0; }
+              to { opacity: 1; }
+            }
+            @keyframes scaleIn {
+              from { transform: scale(0.9); opacity: 0; }
+              to { transform: scale(1); opacity: 1; }
+            }
+            .animate-fadeIn {
+              animation: fadeIn 0.3s ease-out;
+            }
+            .animate-scaleIn {
+              animation: scaleIn 0.3s ease-out;
+            }
+          `}</style>
+          <div className="relative max-w-5xl w-full max-h-[90vh] animate-scaleIn">
+            <button
+              onClick={() => setSelectedImage(null)}
+              className="absolute -top-12 right-0 text-white hover:text-gray-300 transition-colors cursor-pointer"
+            >
+              <FaTimes className="text-3xl" />
+            </button>
+            <img
+              src={selectedImage}
+              alt="Katta rasm"
+              className="w-full h-full object-contain rounded-lg"
+              onClick={(e) => e.stopPropagation()}
+            />
+          </div>
+        </div>
+      )}
+      
       <MetodikTaminotHero />
       <section className="relative flex flex-col items-center -mt-10 z-20 mb-25 sm:mb-40">
-        <div className="w-full mx-5 xl:max-w-7xl 2xl:max-w-10/12 grid sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-5 xl:gap-10 px-2 sm:px-4 shadow-xl rounded-2xl bg-base-100 py-2 sm:py-4 lg:py-10">
+        <div className="w-full mx-5 xl:max-w-7xl 2xl:max-w-10/12 grid sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-2 sm:gap-5 xl:gap-7 px-2 sm:px-4 shadow-xl rounded-2xl bg-base-100 py-2 sm:py-4 lg:py-10">
           {filterCards.map((card) => {
             const isActive = card.id === activeFilter;
             const Icon = card.icon;
@@ -188,7 +270,7 @@ function MetodikTaminot() {
                       : "text-info border-info bg-white")
                   }
                 />
-                <div className="w-full text-sm sm:text-[16px] md:text-lg font-bold text-center">
+                <div className="w-full text-sm sm:text-sm md:text-[16px] font-bold text-center">
                   {card.title}
                 </div>
               </div>
@@ -295,11 +377,11 @@ function MetodikTaminot() {
               <div className="flex gap-5 sm:flex-row flex-col items-center w-full xl:w-auto">
                 <div className="flex flex-row items-center gap-5 w-full xl:w-auto">
                   {/* Year Filter - Horizontal Buttons (XL+) */}
-                  {(activeFilter === 1 || activeFilter === 3) && (
+                  {(activeFilter === 1 || activeFilter === 3 || activeFilter === 5) && (
                     <>
                       {/* Desktop Horizontal Buttons */}
                       <div className="hidden xl:flex items-center gap-2">
-                        {(activeFilter === 1 ? years : yearsOMT)?.map((year) => (
+                        {(activeFilter === 1 ? years : activeFilter === 3 ? yearsOMT : yearCertificate)?.map((year) => (
                           <button
                             key={year.id}
                             onClick={() => setYearId(year.id)}
@@ -321,7 +403,7 @@ function MetodikTaminot() {
                           value={yearId}
                           onChange={(e) => setYearId(e.target.value)}
                         >
-                          {(activeFilter === 1 ? years : yearsOMT)?.map((year) => (
+                          {(activeFilter === 1 ? years : activeFilter === 3 ? yearsOMT : yearCertificate)?.map((year) => (
                             <option key={year.id} value={year.id}>
                               {year.year}
                             </option>
@@ -577,6 +659,50 @@ function MetodikTaminot() {
                         alt={`Card image for ${item.name}`}
                         className="w-full h-full object-cover rounded-r-2xl"
                       />
+                    </div>
+                  </div>
+                );
+              }
+              else if (activeFilter === 5) {
+                return (
+                  <div
+                    key={item.id}
+                    className="bg-slate-100 group rounded-2xl shadow-md group border-2 border-gray-100 flex gap-2 hover:shadow-xl transition-all duration-300 hover:-translate-y-2"
+                  >
+                    <div className="p-3 sm:p-5 flex flex-col justify-between flex-1 w-3/5 gap-3">
+                      <div>
+                        <div className="text-sm sm:text-lg font-bold mb-2 text-gray-800 group-hover:text-blue-600">
+                          {item.name}
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-between mt-auto">
+                         <span className="text-xs text-gray-400 flex items-center gap-1">
+                          <FaCalendar className="text-sm" />
+                          {formatDate(item.date)}
+                        </span>
+                       <Link
+                          to={item.files[0]?.file}
+                          target="_blank"
+                          className="text-blue-600 font-bold text-xs sm:text-sm flex items-center gap-1 group"
+                        >
+                          <span className="inline-block">
+                            <FaDownload className="text-md font-bold" />
+                          </span>
+                          Yuklab olish
+                        </Link>
+                      </div>
+                    </div>
+                    <div className="overflow-hidden w-2/5 h-full p-1 sm:p-2 rounded-r-2xl cursor-pointer" onClick={() => setSelectedImage(item.img)}>
+                      <div className="relative w-full h-full rounded-lg">
+                        <img
+                          src={item.img}
+                          alt={`Card image for ${item.name}`}
+                          className="w-full h-full object-cover rounded-lg"
+                        />
+                        <div className="absolute inset-0 group-hover:bg-black group-hover:opacity-20 transition-all duration-300 flex items-center justify-center rounded-lg pointer-events-none">
+                          <MdFullscreenExit className="text-white cursor-pointer text-3xl md:text-5xl opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-75 group-hover:scale-100" />
+                        </div>
+                      </div>
                     </div>
                   </div>
                 );
