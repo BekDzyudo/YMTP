@@ -30,7 +30,6 @@ function MetodikTaminot() {
     return saved ? parseInt(saved) : 1;
   });
   const [data, setData] = useState(null);
-  
   const [search, setSearch] = useState("");
   const [yearId, setYearId] = useState("");
   const [bilimSoxasiId, setBilimSoxasiId] = useState("");
@@ -117,6 +116,8 @@ function MetodikTaminot() {
     } else if (activeFilter === 5) {
       url = `${import.meta.env.VITE_BASE_URL_EDU}/new-item/?page=${page}&search=${search}&year=${yearId}&category=${bilimSoxasiId}`;
     }
+    console.log(`/new-item/?page=${page}&search=${search}&year=${yearId}&category=${bilimSoxasiId}`);
+    
     const res = await fetch(url);
     const json = await res.json();
     setData(json);
@@ -681,7 +682,7 @@ function MetodikTaminot() {
                           {formatDate(item.date)}
                         </span>
                        <Link
-                          to={item.files[0]?.file}
+                          to={item.files?.[0]?.file}
                           target="_blank"
                           className="text-blue-600 font-bold text-xs sm:text-sm flex items-center gap-1 group"
                         >
