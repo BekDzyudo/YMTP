@@ -29,7 +29,7 @@ function HomeHero() {
   }, [setOnHero]);
 
   // Kartochkalar uchun animatsiya
-  const cardTargets = [60, 22, 35, 1458];
+  const cardTargets = [2405, 119, 1053, 38206];
   const [cardNumbers, setCardNumbers] = useState(cardTargets.map(() => 0));
   useEffect(() => {
     let frame = 0;

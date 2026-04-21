@@ -114,6 +114,15 @@ function Header() {
             </li>
             <li>
               <Link
+                to="https://newjournal.ktri.uz/"
+                target="_blank"
+                className={textColor}
+              >
+                Ilmiy jurnal
+              </Link>
+            </li>
+            <li>
+              <Link
                 to="/news"
                 className={textColor}
               >
@@ -506,44 +515,6 @@ function Header() {
               </li>
                 )
               }
-              
-              <li className="flex sm:hidden">
-                <label className="flex cursor-pointer gap-2">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="15"
-                    height="15"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <circle cx="12" cy="12" r="5" />
-                    <path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4" />
-                  </svg>
-                  <input
-                    onClick={changeTheme}
-                    type="checkbox"
-                    // value="synthwave"
-                    className="toggle toggle-sm theme-controller"
-                  />
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="15"
-                    height="15"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                  </svg>
-                </label>
-              </li>
               {auth.refreshToken ? (
                 <li>
                   <Link
@@ -564,28 +535,24 @@ function Header() {
               </div>
               <div className="lg:hidden">
                 <li>
-                  <Link>Bosh sahifa</Link>
+                  <Link to="/">Bosh sahifa</Link>
+                </li>
+                {institutLinks.map((link) => (
+                  <li key={link.to}>
+                    <Link to={link.to}>{link.label}</Link>
+                  </li>
+                ))}
+                <li>
+                  <Link to="/digital-educational-resources">Raqamli ta'lim resurslari</Link>
                 </li>
                 <li>
-                  <Link>Kasbiy ta'lim tashkilotlari</Link>
+                  <Link to="/methodological-support">Metodik ta'minot</Link>
                 </li>
                 <li>
-                  <Link>Adabiyotlar</Link>
+                  <Link to="/news">Yangiliklar</Link>
                 </li>
                 <li>
-                  <Link>Reyting</Link>
-                </li>
-                <li>
-                  <Link>Materiallar</Link>
-                </li>
-                <li>
-                  <Link>Rasmiy veb-sayt</Link>
-                </li>
-                <li>
-                  <Link>Metodik taminlash</Link>
-                </li>
-                <li>
-                  <Link>Raqamli ta'lim resurslari</Link>
+                  <Link to="/contact">Bog'lanish</Link>
                 </li>
               </div>
             </ul>

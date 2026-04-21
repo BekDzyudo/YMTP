@@ -9,8 +9,8 @@ function InteractiveServices() {
       title: "Hujjat topshirish",
       description: "Qat'iy tartibdagi hujjatlarni topshirish",
       icon: <FaFileAlt className="text-4xl" />,
-      tel: "+998 90 123 45 67",
-      email: "kasbedu@gmail.com",
+      tel: "+998 97 707 06 80",
+      email: "kasbiytalim@edu.uz",
       link: "#",
     },
     {
@@ -18,8 +18,8 @@ function InteractiveServices() {
       title: "Doktorantura",
       description: "Doktoranturaga hujjat topshirish",
       icon: <FaUserGraduate className="text-4xl" />,
-      tel: "+998 90 123 45 67",
-      email: "kasbedu@gmail.com",
+      tel: "+998 99 864 49 88",
+      email: "kasbiytalim@edu.uz",
       link: "#",
     },
     {
@@ -27,8 +27,8 @@ function InteractiveServices() {
       title: "Qayta tayyorlash",
       description: "Qayta tayyorlash kurslari",
       icon: <FaRedo className="text-4xl" />,
-      tel: "+998 90 123 45 67",
-      email: "kasbedu@gmail.com",
+      tel: "+998 99 920 93 95",
+      email: "kasbiytalim@edu.uz",
       link: "#",
     },
     {
@@ -36,8 +36,8 @@ function InteractiveServices() {
       title: "Malaka oshirish",
       description: "Malaka oshirish kurslari",
       icon: <FaChartLine className="text-4xl" />,
-      tel: "+998 90 123 45 67",
-      email: "kasbedu@gmail.com",
+      tel: "+998 99 920 93 95",
+      email: "kasbiytalim@edu.uz",
       link: "#",
     },
   ];

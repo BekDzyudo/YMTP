@@ -105,6 +105,130 @@ function InstitutCalendar() {
       ],
       newsLink: "/news/2",
       organizer: "Kadrlar bo'limi"
+    },
+    {
+      id: 6,
+      title: "Raqamli texnologiyalar bo'yicha seminar",
+      date: "2026-04-05",
+      time: "10:00",
+      endTime: "15:00",
+      location: "Konferentsiya zali",
+      status: "past",
+      description: "Ta'lim jarayonida zamonaviy raqamli texnologiyalardan foydalanish bo'yicha seminar muvaffaqiyatli o'tkazildi.",
+      image: "https://images.unsplash.com/photo-1591115765373-5207764f72e7?w=800",
+      participants: "65 ta o'qituvchi",
+      highlights: [
+        "AI vositalari bilan tanishuv",
+        "Virtual laboratoriyalar demo",
+        "Interaktiv o'quv platformalari taqdimoti"
+      ],
+      newsLink: "/news/3",
+      organizer: "Innovatsiya va raqamlashtirish bo'limi"
+    },
+    {
+      id: 7,
+      title: "Kasbiy yo'naltirish bo'yicha trening",
+      date: "2026-04-10",
+      time: "09:30",
+      endTime: "13:30",
+      location: "Trening markazi",
+      status: "past",
+      description: "O'quvchilarga kasbiy yo'naltirish berish metodlari bo'yicha o'qituvchilar uchun trening o'tkazildi.",
+      image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800",
+      participants: "40 ta o'qituvchi va psixolog",
+      highlights: [
+        "Kasbiy testlar o'tkazish usullari",
+        "Talabalar bilan ishlash strategiyalari",
+        "Amaliy mashg'ulotlar"
+      ],
+      newsLink: "/news/4",
+      organizer: "Pedagogika va psixologiya bo'limi"
+    },
+    {
+      id: 8,
+      title: "Yoshlar forumi - 2026",
+      date: "2026-04-18",
+      time: "11:00",
+      endTime: "18:00",
+      location: "Institut asosiy binosi",
+      status: "past",
+      description: "Yosh o'qituvchilar va talabalar uchun yillik forum o'tkazildi. Innovatsion g'oyalar va loyihalar taqdim etildi.",
+      image: "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=800",
+      participants: "150+ ishtirokchi",
+      highlights: [
+        "20 ta innovatsion loyiha namoyishi",
+        "3 ta eng yaxshi g'oya tanlandi",
+        "Networking sessiyasi",
+        "Sovrindorlar e'lon qilindi"
+      ],
+      newsLink: "/news/5",
+      organizer: "Yoshlar ishlari bo'limi"
+    },
+    {
+      id: 9,
+      title: "Ilmiy-amaliy konferensiya",
+      date: "2026-04-23",
+      time: "10:00",
+      endTime: "16:00",
+      location: "Asosiy majlislar zali",
+      status: "upcoming",
+      description: "Kasbiy ta'limda zamonaviy yondashuvlar va innovatsiyalar mavzusida ilmiy-amaliy konferensiya. Mamlakatning turli mintaqalaridan olimlar va amaliyotchilar ishtirok etadi.",
+      program: [
+        "10:00-10:30 - Ochilish marosimi",
+        "10:30-12:00 - Plenار majlis",
+        "12:00-13:00 - Tushlik tanaffus",
+        "13:00-15:00 - Sektsiya ishlari",
+        "15:00-16:00 - Yakuniy muhokama va yopilish"
+      ],
+      speakers: ["Prof. Normatov B.N.", "Prof. Tursunova D.A.", "Dots. Rahimov F.S."],
+      participants: "100+ ishtirokchi kutilmoqda",
+      contact: "+998 71 246-90-37",
+      registrationRequired: true,
+      registrationDeadline: "2026-04-21",
+      responsiblePerson: "Ilmiy ishlar bo'limi mudiri"
+    },
+    {
+      id: 10,
+      title: "Metodistlar uchun master-klass",
+      date: "2026-04-25",
+      time: "14:00",
+      endTime: "17:00",
+      location: "3-qavat, 305-xona",
+      status: "upcoming",
+      description: "O'quv dasturlarini ishlab chiqish va takomillashtirish bo'yicha amaliy master-klass. Xalqaro standartlar va mahalliy ehtiyojlarni muvofiqlashtirish.",
+      program: [
+        "14:00-14:30 - Davlat ta'lim standartlari tahlili",
+        "14:30-15:30 - Dastur tuzish amaliyoti",
+        "15:30-16:30 - Guruh ishlari",
+        "16:30-17:00 - Natijalarni muhokama qilish"
+      ],
+      speakers: ["Bosh metodist - Karimova L.M."],
+      participants: "Barcha metodistlar va kurslar boshliqlari",
+      requirements: "Kompyuter va o'quv dastur namunalari bilan kelish",
+      contact: "metodist@edu.uz",
+      registrationRequired: false
+    },
+    {
+      id: 11,
+      title: "Ta'lim sifatini baholash seminari",
+      date: "2026-04-28",
+      time: "09:00",
+      endTime: "14:00",
+      location: "Institut",
+      status: "upcoming",
+      description: "Ta'lim sifatini baholash mezonlari va zamonaviy monitoring tizimlarini joriy etish bo'yicha seminar. Xalqaro tajribalar bilan tanishuv.",
+      program: [
+        "09:00-10:00 - Sifat mezonlari: nazariya va amaliyot",
+        "10:00-11:30 - Monitoring vositalari bilan ishlash",
+        "11:30-12:00 - Choy-tanaffus",
+        "12:00-14:00 - Amaliy mashg'ulotlar va munozaralar"
+      ],
+      speakers: ["UNDP eksperti - Smith J.", "Dots. Abdullayev M.T."],
+      participants: "50 ta o'rin mavjud",
+      contact: "+998 71 246-90-37",
+      registrationRequired: true,
+      registrationDeadline: "2026-04-26",
+      responsiblePerson: "Sifat nazorati bo'limi"
     }
   ];
 
