@@ -240,7 +240,7 @@ function NewsList() {
         keywords="yangiliklar, tadbirlar, elon, hamkorlik, yutuqlar, kasbiy ta'lim yangiliklari"
       />
       
-      <section className="bg-slate-100 relative min-h-screen w-full bg-linear-to-b from-base-100 via-base-200 to-base-100 py-24 mt-2 sm:mt-10 lg:mt-15 mb-25 sm:mb-40">
+      <section className="bg-slate-100 relative min-h-screen w-full bg-linear-to-b from-base-100 via-base-200 to-base-100 py-10 sm:py-24 mb-16 sm:mb-40">
       <div className="px-3.5 sm:px-5 mx-auto w-full xl:w-full 2xl:w-11/12">
         {/* Header with Filter */}
         <div className="mb-4 sm:mb-8">
