@@ -114,6 +114,14 @@ function Header() {
             </li>
             <li>
               <Link
+                to="/https://my.moqt.uz/"
+                className={textColor}
+              >
+                Malaka oshirish
+              </Link>
+            </li>
+            <li>
+              <Link
                 to="https://newjournal.ktri.uz/"
                 target="_blank"
                 className={textColor}
