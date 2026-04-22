@@ -114,7 +114,8 @@ function Header() {
             </li>
             <li>
               <Link
-                to="/https://my.moqt.uz/"
+                to="https://my.moqt.uz/"
+                target="_blank"
                 className={textColor}
               >
                 Malaka oshirish
