@@ -5,7 +5,7 @@ function PrezidentialSpeech() {
   const [isVisible, setIsVisible] = useState(false);
   const [isTypingComplete, setIsTypingComplete] = useState(false);
   const sectionRef = useRef(null);
-  const fullText = `"O'g'il-qizlarimizni mehnat bozorida talab yuqori bo'lgan zamonaviy kasb-hunarlarga o'rgatishga ustuvor ahamiyat qaratamiz."`;
+  const fullText = `"O‘g‘il-qizlarimizni mehnat bozorida talab yuqori bo‘lgan zamonaviy kasb-hunarlarga o‘rgatishga ustuvor ahamiyat qaratamiz."`;
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -79,7 +79,7 @@ function PrezidentialSpeech() {
           <img src="/gerb.png" alt="gerb" className='w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 shrink-0'/>
           <div className='flex flex-col gap-2 sm:gap-3 md:gap-4 lg:gap-5'>
             <h2 className='text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-white'>Shavkat Mirziyoyev</h2>
-            <p className='text-sm sm:text-base md:text-lg lg:text-2xl text-white'>O'zbekiston Respublikasi Prezidenti</p>
+            <p className='text-sm sm:text-base md:text-lg lg:text-2xl text-white'>O‘zbekiston Respublikasi Prezidenti</p>
           </div>
         </div>
       </div>
