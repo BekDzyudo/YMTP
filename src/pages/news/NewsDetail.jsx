@@ -12,6 +12,7 @@ import {
   FaEye,
   FaArrowLeft,
   FaBalanceScale,
+  FaDownload,
 } from "react-icons/fa";
 import { useHero } from "../../context/HeroContext";
 import SEO from "../../components/SEO";
@@ -24,6 +25,7 @@ function NewsDetail() {
   const [relatedNews, setRelatedNews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentSlide, setCurrentSlide] = useState(0);
+console.log(newsDetail);
 
   useEffect(() => {
     setOnHero(false);
@@ -310,14 +312,20 @@ function NewsDetail() {
                       {formatDate(newsDetail.sana)}
                     </span>
                   </div>
-                  {newsDetail.views && (
+                  {newsDetail.visit_count && (
                     <div className="flex items-center gap-3 px-4 py-2 bg-base-200 rounded-full">
                       <FaEye size={16} className="text-blue-600" />
                       <span className="text-base font-semibold text-base-content">
-                        {newsDetail.views} ko'rildi
+                        {newsDetail.visit_count} ko'rilganlar
                       </span>
                     </div>
                   )}
+                   <a href={newsDetail.file} download target="_blank" className="flex items-center gap-3 px-4 py-2 bg-base-300 rounded-full">
+                    <FaDownload size={16} className="text-[#0d4ea3]" />
+                    <span className="sm:text-base font-semibold text-base-content text-sm">
+                      yuklab olish
+                    </span>
+                  </a>
                 </div>
 
                 {/* Title */}
