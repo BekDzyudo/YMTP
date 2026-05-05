@@ -320,12 +320,16 @@ console.log(newsDetail);
                       </span>
                     </div>
                   )}
-                   <a href={newsDetail.file} download target="_blank" className="flex items-center gap-3 px-4 py-2 bg-base-300 rounded-full">
+                   {
+                    newsDetail.file && (
+                      <a href={newsDetail.file} target="_blank" className="flex items-center gap-3 px-4 py-2 bg-base-300 rounded-full">
                     <FaDownload size={16} className="text-[#0d4ea3]" />
                     <span className="sm:text-base font-semibold text-base-content text-sm">
                       yuklab olish
                     </span>
                   </a>
+                    )
+                   }
                 </div>
 
                 {/* Title */}
