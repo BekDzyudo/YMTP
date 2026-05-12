@@ -123,7 +123,7 @@ function Header() {
             </li>
             <li>
               <Link
-                to="https://newjournal.ktri.uz/"
+                to="https://journal.ktri.uz/"
                 target="_blank"
                 className={textColor}
               >
