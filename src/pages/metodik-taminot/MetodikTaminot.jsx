@@ -144,33 +144,9 @@ function MetodikTaminot() {
     };
   }, [selectedImage]);
 
-  // Set latest year when years data loads
-  useEffect(() => {
-    if (activeFilter === 1 && years && years.length > 0 && !yearId) {
-      setYearId(years[years.length - 1].id);
-    }
-    if (activeFilter === 3 && yearsOMT && yearsOMT.length > 0 && !yearId) {
-      setYearId(yearsOMT[yearsOMT.length - 1].id);
-    }
-    if (activeFilter === 5 && yearCertificate && yearCertificate.length > 0 && !yearId) {
-      setYearId(yearCertificate[yearCertificate.length - 1].id);
-    }
-  }, [years, yearsOMT, yearCertificate, activeFilter]);
-
   const handleFilterChange = (filterId) => {
     setActiveFilter(filterId);
-    // Set to latest year for filters 1, 3, and 5
-    if (filterId === 1 && years && years.length > 0) {
-      setYearId(years[years.length - 1].id);
-    } else if (filterId === 3 && yearsOMT && yearsOMT.length > 0) {
-      setYearId(yearsOMT[yearsOMT.length - 1].id);
-    }
-    else if (filterId === 5 && yearCertificate && yearCertificate.length > 0) {
-      setYearId(yearCertificate[yearCertificate.length - 1].id);
-    }
-    else {
-      setYearId("");
-    }
+    setYearId("");
     setBilimSoxasiId("");
   };
 
@@ -376,48 +352,29 @@ function MetodikTaminot() {
 
               {/* Filters Section */}
               <div className="flex gap-5 sm:flex-row flex-col items-center w-full xl:w-auto">
-                <div className="flex flex-row items-center gap-5 w-full xl:w-auto">
+                <div className="flex flex-row items-stretch gap-2 sm:gap-4 w-full min-w-0 xl:w-auto">
                   {/* Year Filter - Horizontal Buttons (XL+) */}
                   {(activeFilter === 1 || activeFilter === 3 || activeFilter === 5) && (
-                    <>
-                      {/* Desktop Horizontal Buttons */}
-                      <div className="hidden xl:flex items-center gap-2">
+                    <div className="relative h-8 md:h-12 w-27 sm:w-28 xl:min-w-36 xl:w-36 shrink-0 min-w-0">
+                      <select
+                        className="select select-bordered w-full h-full min-h-0 rounded-full border-base-300 bg-base-100 text-sm md:text-[16px] px-3 py-0 leading-normal shadow-sm focus:outline-none focus:border-blue-400"
+                        value={yearId === "" ? "" : String(yearId)}
+                        onChange={(e) => setYearId(e.target.value)}
+                      >
+                        <option value="">Barchasi</option>
                         {(activeFilter === 1 ? years : activeFilter === 3 ? yearsOMT : yearCertificate)?.map((year) => (
-                          <button
-                            key={year.id}
-                            onClick={() => setYearId(year.id)}
-                            className={`btn btn-md rounded-full ${
-                              yearId === year.id 
-                                ? "bg-gradient-to-br from-[#194882] to-info text-white" 
-                                : "btn-outline"
-                            }`}
-                          >
+                          <option key={year.id} value={String(year.id)}>
                             {year.year}
-                          </button>
+                          </option>
                         ))}
-                      </div>
-
-                      {/* Mobile Select */}
-                      <div className="xl:hidden relative">
-                        <select
-                          className="select select-sm md:select-lg outline-0 rounded-full min-w-32 text-sm md:text-[16px] shadow-sm border border-gray-200"
-                          value={yearId}
-                          onChange={(e) => setYearId(e.target.value)}
-                        >
-                          {(activeFilter === 1 ? years : activeFilter === 3 ? yearsOMT : yearCertificate)?.map((year) => (
-                            <option key={year.id} value={year.id}>
-                              {year.year}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                    </>
+                      </select>
+                    </div>
                   )}
 
                   {/* Soha Filter - Mobile Select (< XL) */}
-                  <div className="xl:hidden relative w-full sm:w-auto">
+                  <div className="xl:hidden relative h-8 md:h-12 flex-1 min-w-0 sm:min-w-44">
                     <select
-                      className="select select-sm md:select-lg outline-0 rounded-full min-w-44 text-sm md:text-[16px] shadow-sm border border-gray-200 w-full"
+                      className="select select-bordered w-full h-full min-h-0 rounded-full border-base-300 bg-base-100 text-sm md:text-[16px] px-3 py-0 leading-normal shadow-sm focus:outline-none focus:border-blue-400"
                       value={bilimSoxasiId}
                       onChange={(e) => setBilimSoxasiId(e.target.value)}
                     >
@@ -437,12 +394,12 @@ function MetodikTaminot() {
                 </div>
 
                 {/* Search Input */}
-                <div className="relative w-full sm:max-w-4/5 lg:w-96 h-8 md:h-12">
+                <div className="relative w-full min-w-0 flex-1 sm:max-w-4/5 lg:w-96 lg:flex-none h-8 md:h-12 self-stretch">
                   <input
                     onChange={(e) => setSearch(e.target.value)}
                     type="text"
                     placeholder="Izlash..."
-                    className="w-full h-full rounded-full border border-gray-200 py-1 sm:py-2 pl-4 pr-10 focus:outline-none focus:border-blue-400 transition text-sm sm:text-[16px] bg-white shadow-sm"
+                    className="w-full h-full min-h-0 rounded-full border border-gray-200 py-0 pl-4 pr-10 focus:outline-none focus:border-blue-400 transition text-sm sm:text-[16px] bg-white shadow-sm"
                   />
                   <svg
                     className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400"
