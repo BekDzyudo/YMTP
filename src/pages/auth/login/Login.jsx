@@ -91,7 +91,7 @@ function Login() {
         {/* Logo and Text */}
         <div className="relative z-10 text-center">
           <div className="w-40 h-40 mx-auto mb-8">
-            <img src="/new_logo_white.png" alt="Logo" className="w-full h-full object-contain" />
+            <img src="/new_logo_white_2026.png" alt="Logo" className="w-full h-full object-contain" />
           </div>
           <h1 className="text-white text-3xl font-bold mb-2">
             Kasbiy Ta'limni

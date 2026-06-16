@@ -69,9 +69,9 @@ function ConfirmEmail() {
         <div className="flex flex-col items-center gap-3 sm:gap-4">
           <div className="w-20 sm:w-24">
             {theme == "night" ? (
-              <img src="/new_logo_white.png" alt="" />
+              <img src="/new_logo_white_2026.png" alt="" />
             ) : (
-              <img src="/new_logo_blue.png" alt="" />
+              <img src="/new_logo_blue_2026.png" alt="" />
             )}
           </div>
           <h3 className="uppercase font-semibold text-sm sm:text-[16px]">

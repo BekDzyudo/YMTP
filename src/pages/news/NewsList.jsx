@@ -10,7 +10,6 @@ import {
   FaHome,
   FaBalanceScale,
 } from "react-icons/fa";
-import useGetFetch from "../../hooks/useGetFetch";
 import { Link } from "react-router-dom";
 import { useHero } from "../../context/HeroContext";
 import Pagination from "../../components/Pagination";
@@ -20,27 +19,45 @@ function NewsList() {
   const [selectedCategory, setSelectedCategory] = useState("Barchasi");
   const [currentPage, setCurrentPage] = useState(1);
   const { setOnHero } = useHero();
-  const [data, setData] = useState(null);
+  const [allNews, setAllNews] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const fetchData = async (page = 1) => {
-    setLoading(true);
-    try {
-      const res = await fetch(
-        `${import.meta.env.VITE_BASE_URL}/shared_app/yangiliklar/?page=${page}`
-      );
-      const json = await res.json();
-      setData(json);
-      setCurrentPage(page);
-    } catch (error) {
-      console.error("Ma'lumot yuklashda xatolik:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
-    fetchData(1);
+    const fetchAll = async () => {
+      setLoading(true);
+      try {
+        const firstRes = await fetch(
+          `${import.meta.env.VITE_BASE_URL}/shared_app/yangiliklar/?page=1`
+        );
+        const firstJson = await firstRes.json();
+        const totalPages = firstJson.total_pages || 1;
+
+        let allResults = [...(firstJson.results || [])];
+
+        if (totalPages > 1) {
+          const pagePromises = [];
+          for (let p = 2; p <= totalPages; p++) {
+            pagePromises.push(
+              fetch(`${import.meta.env.VITE_BASE_URL}/shared_app/yangiliklar/?page=${p}`)
+                .then((r) => r.json())
+                .then((j) => j.results || [])
+            );
+          }
+          const restPages = await Promise.all(pagePromises);
+          restPages.forEach((results) => {
+            allResults = [...allResults, ...results];
+          });
+        }
+
+        setAllNews(allResults);
+      } catch (error) {
+        console.error("Ma'lumot yuklashda xatolik:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAll();
   }, []);
 
   useEffect(() => {
@@ -154,28 +171,29 @@ function NewsList() {
     return truncated.substr(0, lastSpace) + "...";
   };
 
-  const newsData =
-    data?.results?.map((item) => ({
-      id: item.id,
-      title: item.title,
-      excerpt: stripHtml(item.text || ""),
-      date: formatDate(item.sana),
-      image: item.image,
-      category: item.kategoriya,
-      ...getCategoryStyle(item.kategoriya),
-    })) || [];
+  const newsData = useMemo(
+    () =>
+      allNews.map((item) => ({
+        id: item.id,
+        title: item.title,
+        excerpt: stripHtml(item.text || ""),
+        date: formatDate(item.sana),
+        image: item.image,
+        category: item.kategoriya,
+        ...getCategoryStyle(item.kategoriya),
+      })),
+    [allNews]
+  );
 
   // Kategoriyalar ro'yxati
-  const categories = [
-    "Barchasi",
-    ...new Set(newsData.map((item) => item.category)),
-  ];
+  const categories = useMemo(
+    () => ["Barchasi", ...new Set(newsData.map((item) => item.category))],
+    [newsData]
+  );
 
-  // Filter - faqat kategoriya bo'yicha
+  // Filter - barcha datadan
   const filteredNews = useMemo(() => {
-    if (selectedCategory === "Barchasi") {
-      return newsData;
-    }
+    if (selectedCategory === "Barchasi") return newsData;
     return newsData.filter((item) => item.category === selectedCategory);
   }, [newsData, selectedCategory]);
 
@@ -185,29 +203,15 @@ function NewsList() {
     setCurrentPage(1);
   };
 
-  // Sahifa o'zgarganda faqat barcha yangiliklar ko'rsatilganda API ga murojaat qilish
   const handlePageChange = (page) => {
-    if (selectedCategory === "Barchasi") {
-      fetchData(page);
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    } else {
-      setCurrentPage(page);
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  // Lokal pagination (kategoriya filterlanganda)
   const itemsPerPage = 12;
-  const totalPages =
-    selectedCategory === "Barchasi"
-      ? data?.total_pages || 1
-      : Math.ceil(filteredNews.length / itemsPerPage);
-  
+  const totalPages = Math.ceil(filteredNews.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const currentNews =
-    selectedCategory === "Barchasi"
-      ? filteredNews
-      : filteredNews.slice(startIndex, startIndex + itemsPerPage);
+  const currentNews = filteredNews.slice(startIndex, startIndex + itemsPerPage);
 
   if (loading) {
     return (
@@ -222,7 +226,7 @@ function NewsList() {
     );
   }
 
-  if (!data && !loading) {
+  if (!allNews.length && !loading) {
     return (
       <section className="relative min-h-screen w-full bg-linear-to-b from-base-100 via-base-200 to-base-100 py-24 flex items-center justify-center">
         <div className="text-center">
