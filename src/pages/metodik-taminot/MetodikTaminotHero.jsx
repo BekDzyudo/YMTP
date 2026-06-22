@@ -182,10 +182,8 @@ function MetodikTaminotHero() {
               </div>
               <div
                 className="absolute inset-0 w-full h-[65vh] md:h-[80vh] pointer-events-none z-10"
-                style={{
-                  background: theme === "light" ? "rgba(0,0,0,0.7)" : "rgba(0,0,0,0.7)",
-                }}
-              ></div>
+                style={{ background: "rgba(0,0,0,0.2)" }}
+              />
               <div className="flex flex-col w-full justify-center">
                 <div className="w-full flex flex-col items-center z-20">
                   <div className="w-4/5 mt-10">
@@ -253,7 +251,7 @@ function MetodikTaminotHero() {
                         />
                         
                         {/* Card */}
-                        <div className="relative backdrop-blur-md bg-black/60 hover:bg-black/70 rounded-3xl p-4 sm:p-5 flex flex-col items-center gap-2 border border-gray-700/50 hover:border-gray-600/70 transition-all duration-300 hover:scale-105 min-h-[160px] justify-center shadow-2xl">
+                        <div className="relative rounded-3xl p-4 sm:p-5 flex flex-col items-center gap-2 border border-white/20 hover:border-white/35 transition-all duration-300 hover:scale-105 min-h-40 justify-center shadow-2xl" style={{ background: "rgba(10,10,30,0.45)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)" }}>
                           
                           {/* Icon circle */}
                           <div className={`relative w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br ${card.gradient} flex items-center justify-center shadow-xl transform transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6`}>

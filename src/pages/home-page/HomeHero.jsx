@@ -145,7 +145,7 @@ function HomeHero() {
       {/* Matn o'qilishi uchun yengil overlay */}
       <div
         className="absolute inset-0 w-full h-screen pointer-events-none z-10"
-        style={{ background: "rgba(0,0,0,0.38)" }}
+        style={{ background: "rgba(0,0,0,0.2)" }}
       />
 
       {/* Main content */}
