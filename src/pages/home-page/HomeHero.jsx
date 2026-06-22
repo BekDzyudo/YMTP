@@ -142,12 +142,10 @@ function HomeHero() {
         </video>
       </div>
 
-      {/* Qora gradient overlay */}
+      {/* Matn o'qilishi uchun yengil overlay */}
       <div
         className="absolute inset-0 w-full h-screen pointer-events-none z-10"
-        style={{
-          background: "linear-gradient(90deg, rgba(0,0,0,0.98) 0%, rgba(0,0,0,0.85) 20%, rgba(0,0,0,0.7) 40%, rgba(0,0,0,0.7) 60%, rgba(0,0,0,0.85) 80%, rgba(0,0,0,0.98) 100%)"
-        }}
+        style={{ background: "rgba(0,0,0,0.38)" }}
       />
 
       {/* Main content */}
@@ -177,7 +175,7 @@ function HomeHero() {
                   {word}
                 </span>
               ))}
-              <span className="text-blue-400 block">
+              <span className="block">
                 {headingText.split(' ').slice(-3).join(' ')}
               </span>
             </h2>
@@ -219,17 +217,11 @@ function HomeHero() {
                   animation: `fadeInUp 0.6s ease-out ${0.1 * idx}s both`
                 }}
               >
-                {/* Glow effect */}
-                <div 
-                  className={`absolute -inset-1 bg-gradient-to-r ${card.gradient} rounded-3xl blur-md opacity-10 group-hover:opacity-25 transition duration-500`}
-                />
-                
                 {/* Card */}
-                <div className="relative backdrop-blur-md bg-black/60 hover:bg-black/70 rounded-3xl p-4 sm:p-5 flex flex-col items-center gap-2 border border-gray-700/50 hover:border-gray-600/70 transition-all duration-300 hover:scale-105 min-h-[160px] justify-center shadow-2xl">
-                  
+                <div className="relative rounded-3xl p-4 sm:p-5 flex flex-col items-center gap-2 border border-white/20 hover:border-white/35 transition-all duration-300 hover:scale-105 min-h-40 justify-center shadow-2xl" style={{ background: "rgba(10,10,30,0.30)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)" }}>
+
                   {/* Icon circle */}
                   <div className={`relative w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br ${card.gradient} flex items-center justify-center shadow-xl transform transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6`}>
-                    <div className="absolute inset-0 rounded-full bg-gradient-to-t from-black/20 to-transparent" />
                     <div className="text-white drop-shadow-2xl relative z-10">
                       {card.icon}
                     </div>
@@ -238,35 +230,27 @@ function HomeHero() {
                   {/* Number */}
                   <div className="flex flex-col items-center gap-1">
                     <div className="flex items-baseline gap-1">
-                      <span className={`text-2xl sm:text-3xl lg:text-4xl font-black bg-gradient-to-r ${card.gradient} bg-clip-text text-transparent drop-shadow-[0_2px_10px_${card.glowColor}]`}>
+                      <span className={`text-2xl sm:text-3xl lg:text-4xl font-black bg-gradient-to-r ${card.gradient} bg-clip-text text-transparent`}>
                         {cardNumbers[idx]}
                       </span>
-                      <span className="text-base sm:text-lg font-semibold text-gray-200">
+                      <span className="text-base sm:text-lg font-semibold text-white">
                         ta
                       </span>
                     </div>
-                    
+
                     {/* Progress bar */}
-                    <div className="w-14 h-1 rounded-full bg-gray-800/80 overflow-hidden mt-1">
-                      <div 
-                        className={`h-full bg-gradient-to-r ${card.gradient} transition-all duration-1000 shadow-[0_0_6px_currentColor]`}
-                        style={{
-                          width: `${(cardNumbers[idx] / cardTargets[idx]) * 100}%`
-                        }}
+                    <div className="w-14 h-1 rounded-full bg-white/20 overflow-hidden mt-1">
+                      <div
+                        className={`h-full bg-gradient-to-r ${card.gradient} transition-all duration-1000`}
+                        style={{ width: `${(cardNumbers[idx] / cardTargets[idx]) * 100}%` }}
                       />
                     </div>
                   </div>
 
                   {/* Description */}
-                  <p className="text-xs sm:text-sm text-center text-gray-300 font-medium leading-tight px-2 min-h-[28px] flex items-center">
+                  <p className="text-xs sm:text-sm text-center text-white/80 font-medium leading-tight px-2 min-h-[28px] flex items-center">
                     {card.desc}
                   </p>
-
-                  {/* Top shine effect */}
-                  <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gray-500/40 to-transparent" />
-                  
-                  {/* Bottom shine effect */}
-                  <div className={`absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gray-500/20 to-transparent`} />
                 </div>
               </div>
             ))}
