@@ -138,14 +138,14 @@ function HomeHero() {
           playsInline
           className="absolute inset-0 w-full h-full object-cover"
         >
-          <source src="/video_fon.mp4" type="video/mp4" />
+          <source src="/home_bg_video.MP4" type="video/mp4" />
         </video>
       </div>
 
       {/* Matn o'qilishi uchun yengil overlay */}
       <div
         className="absolute inset-0 w-full h-screen pointer-events-none z-10"
-        style={{ background: "rgba(0,0,0,0.2)" }}
+        style={{ background: "linear-gradient(160deg, rgba(2,8,40,0.55) 0%, rgba(4,14,60,0.48) 50%, rgba(2,8,40,0.55) 100%)" }}
       />
 
       {/* Main content */}
