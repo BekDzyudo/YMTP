@@ -7,7 +7,6 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import { FaChalkboardTeacher, FaGraduationCap, FaStar, FaVideo } from "react-icons/fa";
 
-
 function HomeHero() {
   const { theme } = useGlobalContext();
   const { auth } = useContext(AuthContext);
@@ -16,16 +15,33 @@ function HomeHero() {
   const heroRef = useRef(null);
 
   useEffect(() => {
-    const onScroll = () => {
-      if (!heroRef.current) return;
-      const heroHeight = heroRef.current.offsetHeight;
-      const headerHeight = 80; // Header balandligi
-      setOnHero(window.scrollY < (heroHeight - headerHeight));
+    const headerHeight = 80; // Header balandligi
+    let heroHeight = heroRef.current?.offsetHeight ?? 0;
+    let ticking = false;
+
+    const measure = () => {
+      heroHeight = heroRef.current?.offsetHeight ?? heroHeight;
     };
 
-    onScroll();
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
+    const evaluate = () => {
+      ticking = false;
+      setOnHero(window.scrollY < heroHeight - headerHeight);
+    };
+
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(evaluate);
+    };
+
+    measure();
+    evaluate();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", measure);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", measure);
+    };
   }, [setOnHero]);
 
   // Kartochkalar uchun animatsiya
@@ -70,6 +86,20 @@ function HomeHero() {
     }, 4000);
     return () => clearInterval(interval);
   }, [items.length]);
+
+  // Mustaqillik bayrami (35 yillik) sharafiga konfetti
+  const flagColors = ["#0099B5", "#1EB53A", "#CE1126", "#ffffff", "#FFD700"];
+  const [confetti] = useState(() =>
+    Array.from({ length: 32 }).map((_, i) => ({
+      id: i,
+      left: Math.random() * 100,
+      delay: Math.random() * 6,
+      duration: 5 + Math.random() * 5,
+      size: 6 + Math.random() * 7,
+      color: flagColors[i % flagColors.length],
+      round: i % 2 === 0,
+    }))
+  );
 
   return (
     <section
@@ -142,16 +172,109 @@ function HomeHero() {
         </video>
       </div>
 
-      {/* Matn o'qilishi uchun yengil overlay */}
+      {/* Matn o'qilishi uchun yengil overlay (bayroq ranglari bilan) */}
       <div
         className="absolute inset-0 w-full h-screen pointer-events-none z-10"
-        style={{ background: "linear-gradient(160deg, rgba(2,8,40,0.55) 0%, rgba(4,14,60,0.48) 50%, rgba(2,8,40,0.55) 100%)" }}
+        style={{
+          background:
+            "linear-gradient(160deg, rgba(0,153,181,0.35) 0%, rgba(2,8,40,0.6) 30%, rgba(2,8,40,0.6) 70%, rgba(30,181,58,0.3) 100%)",
+        }}
       />
+
+      {/* Mustaqillik bayrami konfettisi */}
+      <div className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden z-10">
+        {confetti.map((c) => (
+          <span
+            key={c.id}
+            style={{
+              position: "absolute",
+              top: "-5vh",
+              left: `${c.left}%`,
+              width: c.size,
+              height: c.size,
+              background: c.color,
+              borderRadius: c.round ? "50%" : "2px",
+              opacity: 0.85,
+              boxShadow: `0 0 6px ${c.color}99`,
+              animation: `confetti-fall ${c.duration}s linear ${c.delay}s infinite`,
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Mustaqillikning 35 yilligi nishoni */}
+      <div
+        className="hidden sm:flex absolute top-24 md:top-28 right-4 md:right-10 z-20 flex-col items-center"
+        style={{ animation: "badge-float 3.5s ease-in-out infinite" }}
+      >
+        <div
+          className="relative w-24 h-24 md:w-32 md:h-32 rounded-full flex flex-col items-center justify-center gap-0.5 shadow-2xl border-[3px] overflow-hidden"
+          style={{ borderColor: "#FFD700" }}
+        >
+          <img
+            src="/uzb_flag.jpg"
+            alt=""
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(circle, rgba(0,20,40,0.35) 0%, rgba(0,10,30,0.78) 100%)",
+            }}
+          />
+          <img
+            src="/new_logo_white_2026.png"
+            alt="Institut logosi"
+            className="relative w-7 h-7 md:w-9 md:h-9 object-contain drop-shadow-lg"
+          />
+          <span className="relative text-white font-black text-xl md:text-3xl leading-none drop-shadow-lg">
+            35
+          </span>
+          <span
+            className="relative font-bold text-[8px] md:text-[10px] tracking-[0.2em]"
+            style={{ color: "#FFD700" }}
+          >
+            YIL
+          </span>
+        </div>
+      </div>
 
       {/* Main content */}
       <div className="flex flex-col w-full justify-center">
         <div className="w-full flex flex-col items-center z-20">
           <div className="w-full sm:w-4/5 mt-10">
+            {/* Mustaqillik bayrami banneri */}
+            <div
+              className="flex justify-center mb-4 sm:mb-6"
+              style={{
+                opacity: showHeading ? 1 : 0,
+                transform: showHeading ? "translateY(0)" : "translateY(-20px)",
+                transition: "all 0.8s ease-out",
+              }}
+            >
+              <div
+                className="inline-flex items-center gap-2 sm:gap-3 px-4 py-2 sm:px-6 sm:py-2.5 rounded-full border border-white/30 shadow-2xl"
+                style={{
+                  background:
+                    "linear-gradient(90deg, rgba(0,153,181,0.55) 0%, rgba(0,153,181,0.55) 30%, rgba(255,255,255,0.2) 45%, rgba(255,255,255,0.2) 55%, rgba(30,181,58,0.55) 70%, rgba(30,181,58,0.55) 100%)",
+                  backdropFilter: "blur(10px)",
+                  WebkitBackdropFilter: "blur(10px)",
+                }}
+              >
+                <img
+                  src="/uzb_flag.jpg"
+                  alt="O'zbekiston bayrog'i"
+                  className="w-6 h-4 sm:w-9 sm:h-6 rounded-sm shadow-md border border-white/40 shrink-0 object-cover"
+                />
+                <span className="text-white font-bold text-xs sm:text-base tracking-wide text-center">
+                  Mustaqilligimizning{" "}
+                  <span style={{ color: "#FFD700" }}>35 yilligi</span> muborak
+                  bo'lsin!
+                </span>
+                {/* <span className="text-lg sm:text-2xl">🎆</span> */}
+              </div>
+            </div>
             <h2
               className="text-xl sm:text-2xl md:text-5xl w-full md:max-w-[90%] xl:max-w-[80%] mx-auto text-center lg:text-6xl mb-5 lg:mb-10 font-black font-serif relative text-white md:leading-13 lg:leading-16"
               style={{
@@ -279,12 +402,44 @@ function HomeHero() {
                 background-position: 0% 50%;
               }
             }
+
+            @keyframes confetti-fall {
+              0% {
+                transform: translateY(-10vh) rotate(0deg);
+                opacity: 0;
+              }
+              10% {
+                opacity: 1;
+              }
+              100% {
+                transform: translateY(110vh) rotate(720deg);
+                opacity: 0.9;
+              }
+            }
+
+            @keyframes badge-float {
+              0%, 100% {
+                transform: translateY(0) rotate(-2deg);
+              }
+              50% {
+                transform: translateY(-10px) rotate(2deg);
+              }
+            }
           `}</style>
         </div>
       </div>
 
       {/* Bottom gradient */}
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-primary/10 via-primary/5 to-transparent" />
+
+      {/* Mustaqillik bayrog'i ranglaridagi lenta */}
+      <div
+        className="pointer-events-none absolute bottom-0 left-0 w-full h-1.5 z-20"
+        style={{
+          background:
+            "linear-gradient(90deg, #0099B5 0%, #0099B5 33%, #1EB53A 33%, #1EB53A 66%, #CE1126 66%, #CE1126 100%)",
+        }}
+      />
     </section>
   );
 }

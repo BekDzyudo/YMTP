@@ -58,7 +58,40 @@ function RTRDetail() {
     `${import.meta.env.VITE_BASE_URL_RTR}/v1/rtr_base_app/subject-list/${rtrId}/`,
   );
 
+  // Mundarija ro'yxati faqat id/title beradi - har bir mavzuning
+  // haqiqiy kontenti (content, media, show_material va h.k.) alohida
+  // theme-detail so'rovidan keladi
+  const currentThemeId = data?.themes?.[themeNumber]?.id;
+  const { data: themeDetail, isPending: themeDetailPending } = useGetFetch(
+    currentThemeId
+      ? `${import.meta.env.VITE_BASE_URL_RTR}/v1/rtr_base_app/theme-detail/${currentThemeId}/`
+      : null,
+  );
+
+  // Joriy mavzuda haqiqatda mavjud bo'lgan bo'limlar (kartochkalar) ro'yxati
+  const getAvailableCards = (theme) => {
+    if (!theme) return [];
+    const cards = [];
+    if (theme.content) cards.push(1);
+    if (theme.media) cards.push(2);
+    if (theme.show_material?.length > 0) cards.push(3);
+    if (theme.presentation) cards.push(4);
+    if (theme.practical_assignment) cards.push(5);
+    if (theme.educational_technologies) cards.push(6);
+    return cards;
+  };
+
+  // Mavzu almashganda activeCard shu mavzuda mavjud bo'limga moslashadi
+  React.useEffect(() => {
+    if (!themeDetail) return;
+    const available = getAvailableCards(themeDetail);
+    if (available.length > 0 && !available.includes(activeCard)) {
+      setActiveCard(available[0]);
+    }
+  }, [themeDetail]);
+
   const processContent = (htmlContent) => {
+    if (!htmlContent) return "";
     const parser = new DOMParser();
     const doc = parser.parseFromString(htmlContent, "text/html");
     doc.querySelectorAll("img").forEach((img) => {
@@ -151,7 +184,7 @@ function RTRDetail() {
           <div className="w-full grid sm:grid-cols-2 lg:grid-cols-6 gap-1 sm:gap-2 xl:gap-4 px-2 sm:px-4 shadow-xl rounded-2xl bg-blue-900 py-1 sm:py-3 lg:py-5">
             {/* Card 1 */}
             {
-               data?.themes[themeNumber]?.content &&
+               themeDetail?.content &&
                 <div
               className={
                 `cursor-pointer rounded-full flex gap-2 items-center py-1 sm:py-2 px-2 sm:px-3 transition-all duration-200 group ` +
@@ -181,7 +214,7 @@ function RTRDetail() {
             }
             {/* Card 2 */}
             {
-              data?.themes[themeNumber]?.media && <div
+              themeDetail?.media && <div
               className={
                 `cursor-pointer rounded-full flex gap-2 items-center py-1 sm:py-2 px-2 sm:px-4 transition-all duration-200 group ` +
                 (activeCard === 2
@@ -211,7 +244,7 @@ function RTRDetail() {
             
             {/* Card 3 */}
             {
-              data?.themes[themeNumber]?.show_material?.length>0 && 
+              themeDetail?.show_material?.length>0 && 
               <div
               className={
                 `cursor-pointer rounded-full flex gap-2 items-center py-1 sm:py-2 px-2 sm:px-4 transition-all duration-200 group ` +
@@ -242,7 +275,7 @@ function RTRDetail() {
             
             {/* Card 4 */}
             {
-              data?.themes[themeNumber]?.presentation && <div
+              themeDetail?.presentation && <div
               className={
                 `cursor-pointer rounded-full flex gap-2 items-center py-1 sm:py-2 px-2 sm:px-4 transition-all duration-200 group ` +
                 (activeCard === 4
@@ -272,7 +305,7 @@ function RTRDetail() {
             
             {/* Card 5 */}
             {
-              data?.themes[themeNumber]?.practical_assignment && 
+              themeDetail?.practical_assignment && 
                <div
               className={
                 `cursor-pointer rounded-full flex gap-2 items-center py-1 sm:py-2 px-2 sm:px-4 transition-all duration-200 group ` +
@@ -303,7 +336,7 @@ function RTRDetail() {
            
             {/* Card 6 */}
             {
-              data?.themes[themeNumber]?.educational_technologies && 
+              themeDetail?.educational_technologies && 
               <div
               className={
                 `cursor-pointer rounded-full flex gap-2 items-center py-1 sm:py-2 px-2 sm:px-4 transition-all duration-200 group ` +
@@ -362,8 +395,19 @@ function RTRDetail() {
                 </div>
                 {/* Main text content */}
                 <div className="px-6">
+                  {themeDetailPending && (
+                    <div className="text-center text-gray-500 py-16 font-medium">
+                      Yuklanmoqda...
+                    </div>
+                  )}
+                  {!themeDetailPending &&
+                    getAvailableCards(themeDetail).length === 0 && (
+                      <div className="text-center text-gray-500 py-16 font-medium">
+                        Ushbu mavzu uchun material hozircha mavjud emas.
+                      </div>
+                    )}
                   {/* maruza */}
-                  {activeCard === 1 && (
+                  {activeCard === 1 && themeDetail?.content && (
                     <>
                       <style>{`
                         .maruza-content img {
@@ -378,7 +422,7 @@ function RTRDetail() {
                         className="prose max-w-none text-gray-800 text-base leading-relaxed maruza-content"
                         dangerouslySetInnerHTML={{
                           __html: DOMPurify.sanitize(
-                            processContent(data?.themes[themeNumber]?.content),
+                            processContent(themeDetail?.content),
                           ),
                         }}
                       ></div>
@@ -388,32 +432,32 @@ function RTRDetail() {
                   {activeCard === 2 && (
                     <iframe
                       src={(() => {
-                        if (data?.themes[themeNumber]?.media) {
+                        if (themeDetail?.media) {
                           let videoId = null;
                           if (
-                            data?.themes[themeNumber]?.media.includes(
+                            themeDetail?.media.includes(
                               "youtube.com/watch",
                             )
                           ) {
                             const match =
-                              data?.themes[themeNumber]?.media.match(
+                              themeDetail?.media.match(
                                 /[?&]v=([^&]+)/,
                               );
                             videoId = match ? match[1] : null;
                           } else if (
-                            data?.themes[themeNumber]?.media.includes(
+                            themeDetail?.media.includes(
                               "youtu.be/",
                             )
                           ) {
                             const match =
-                              data?.themes[themeNumber]?.media.match(
+                              themeDetail?.media.match(
                                 /youtu\.be\/([^?&]+)/,
                               );
                             videoId = match ? match[1] : null;
                           }
                           return videoId
                             ? `https://www.youtube.com/embed/${videoId}`
-                            : data?.themes[themeNumber]?.media;
+                            : themeDetail?.media;
                         }
                         return "";
                       })()}
@@ -437,7 +481,7 @@ function RTRDetail() {
                     <div className="w-full space-y-4">
                       <div className="relative w-full bg-gray-100 rounded-lg overflow-hidden shadow-xl">
                         <img
-                          src={data?.themes[themeNumber]?.show_material[0]?.content}
+                          src={themeDetail?.show_material[0]?.content}
                           title={
                             data?.themes[themeNumber]?.title ||
                             "Ko'rgazma materiali"
@@ -480,7 +524,7 @@ function RTRDetail() {
                       </div>
                       <div className="flex-1 overflow-auto p-4 flex items-start justify-center" onClick={(e) => e.stopPropagation()}>
                         <img
-                          src={data?.themes[themeNumber]?.show_material[0]?.content}
+                          src={themeDetail?.show_material[0]?.content}
                           alt={data?.themes[themeNumber]?.title || "Ko'rgazma materiali"}
                           className="max-w-full h-auto object-contain rounded-lg"
                         />
@@ -494,7 +538,7 @@ function RTRDetail() {
                       <div className="relative w-full bg-gray-100 rounded-lg overflow-hidden shadow-xl">
                         {/* PDF iframe with native controls */}
                         <iframe
-                          src={`${data?.themes[themeNumber]?.presentation}#view=FitH&toolbar=1`}
+                          src={`${themeDetail?.presentation}#view=FitH&toolbar=1`}
                           title="PDF Taqdimot"
                           className="w-full h-[800px] border-0"
                           type="application/pdf"
@@ -536,7 +580,7 @@ function RTRDetail() {
                       </div>
                       <div className="flex-1 bg-white rounded-lg overflow-hidden" onClick={(e) => e.stopPropagation()}>
                         <iframe
-                          src={`${activeCard === 4 ? data?.themes[themeNumber]?.presentation : data?.themes[themeNumber]?.educational_technologies}#view=FitH&toolbar=1`}
+                          src={`${activeCard === 4 ? themeDetail?.presentation : themeDetail?.educational_technologies}#view=FitH&toolbar=1`}
                           title={activeCard === 4 ? "PDF Taqdimot - To'liq ekran" : "Ta'lim texnologiyalari - To'liq ekran"}
                           className="w-full h-full border-0"
                           type="application/pdf"
@@ -547,13 +591,13 @@ function RTRDetail() {
                   )}
                   
                   {/* nazariy-amaliy topshiriq */}
-                  {activeCard === 5 && (
+                  {activeCard === 5 && themeDetail?.practical_assignment && (
                     <div
                       className="prose max-w-none text-gray-800 text-base leading-relaxed"
                       dangerouslySetInnerHTML={{
                         __html: DOMPurify.sanitize(
                           processContent(
-                            data?.themes[themeNumber]?.practical_assignment,
+                            themeDetail?.practical_assignment,
                           ),
                         ),
                       }}
@@ -566,7 +610,7 @@ function RTRDetail() {
                       <div className="relative w-full bg-gray-100 rounded-lg overflow-hidden shadow-xl">
                         {/* PDF iframe with native controls */}
                         <iframe
-                          src={`${data?.themes[themeNumber]?.educational_technologies}#view=FitH&toolbar=1`}
+                          src={`${themeDetail?.educational_technologies}#view=FitH&toolbar=1`}
                           title="Ta'lim texnologiyalari PDF"
                           className="w-full h-[800px] border-0"
                           type="application/pdf"
