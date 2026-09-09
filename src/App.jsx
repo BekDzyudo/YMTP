@@ -51,6 +51,9 @@ import Faq from "./pages/faq/Faq";
 import NormativDocuments from "./pages/institut-info/NormativDocuments";
 import Adabiyotlar from "./pages/adabiyotlar/Adabiyotlar";
 import NotFound from "./pages/not-found/NotFound";
+import Science from "./pages/science/Science";
+import AntiCorruption from "./pages/institut-info/AntiCorruption";
+import KorikTanlov from "./pages/institut-info/KorikTanlov";
 
 function App() {
 
@@ -150,6 +153,10 @@ function App() {
           element: <NewsList/>
         },
         {
+          path: "science",
+          element: <Science/>
+        },
+        {
           path: "news/:id",
           element: <NewsDetail/>
         },
@@ -191,6 +198,14 @@ function App() {
             {
               path: "normativ-documents",
               element: <NormativDocuments />,
+            },
+            {
+              path: "anti-corruption",
+              element: <AntiCorruption />,
+            },
+            {
+              path: "korik-tanlov",
+              element: <KorikTanlov />,
             },
           ],
         },

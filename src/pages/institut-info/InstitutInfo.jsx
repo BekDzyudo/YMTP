@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { NavLink, Outlet, useLocation, Link } from "react-router-dom";
 import { institutLinks } from "../../constants/institutLinks";
 import { useHero } from "../../context/HeroContext";
-import { FaUsers, FaChalkboardTeacher, FaBuilding, FaChartLine } from "react-icons/fa";
+import { FaUsers, FaChalkboardTeacher, FaBuilding, FaChartLine, FaExternalLinkAlt } from "react-icons/fa";
 
 function InstitutInfo() {
   const location = useLocation();
@@ -39,18 +39,30 @@ function InstitutInfo() {
                 <ul className="menu w-full p-0 gap-1">
                   {institutLinks.map((link) => (
                     <li key={link.to} className="border-t border-base-300 py-1">
-                      <NavLink
-                        to={link.to}
-                        className={({ isActive }) =>
-                          `rounded-lg px-3 py-3 text-[16px] transition-all duration-200 ${
-                            isActive
-                              ? "bg-[#eaeef5] text-blue-600 font-semibold"
-                              : "hover:bg-base-200"
-                          }`
-                        }
-                      >
-                        {link.label}
-                      </NavLink>
+                      {link.external ? (
+                        <a
+                          href={link.to}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="rounded-lg px-3 py-3 text-[16px] transition-all duration-200 hover:bg-base-200 flex items-center gap-2"
+                        >
+                          {link.label}
+                          <FaExternalLinkAlt className="text-xs opacity-60" />
+                        </a>
+                      ) : (
+                        <NavLink
+                          to={link.to}
+                          className={({ isActive }) =>
+                            `rounded-lg px-3 py-3 text-[16px] transition-all duration-200 ${
+                              isActive
+                                ? "bg-[#eaeef5] text-blue-600 font-semibold"
+                                : "hover:bg-base-200"
+                            }`
+                          }
+                        >
+                          {link.label}
+                        </NavLink>
+                      )}
                     </li>
                   ))}
                 </ul>

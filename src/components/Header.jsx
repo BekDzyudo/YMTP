@@ -77,12 +77,26 @@ function Header() {
                 >
                   {institutLinks.map((link) => (
                     <li key={link.to} className="group/item">
-                      <Link to={link.to} className="relative block py-2.5 text-[15px] font-medium transition-all duration-300 rounded-lg hover:translate-x-1 pl-0 group-hover/item:pl-4">
-                        <span className="absolute left-0 top-1/2 -translate-y-1/2 opacity-0 group-hover/item:opacity-100 transition-opacity duration-300 text-primary">
-                          <FaAngleRight size={13} />
-                        </span>
-                        {link.label}
-                      </Link>
+                      {link.external ? (
+                        <a
+                          href={link.to}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="relative block py-2.5 text-[15px] font-medium transition-all duration-300 rounded-lg hover:translate-x-1 pl-0 group-hover/item:pl-4"
+                        >
+                          <span className="absolute left-0 top-1/2 -translate-y-1/2 opacity-0 group-hover/item:opacity-100 transition-opacity duration-300 text-primary">
+                            <FaAngleRight size={13} />
+                          </span>
+                          {link.label}
+                        </a>
+                      ) : (
+                        <Link to={link.to} className="relative block py-2.5 text-[15px] font-medium transition-all duration-300 rounded-lg hover:translate-x-1 pl-0 group-hover/item:pl-4">
+                          <span className="absolute left-0 top-1/2 -translate-y-1/2 opacity-0 group-hover/item:opacity-100 transition-opacity duration-300 text-primary">
+                            <FaAngleRight size={13} />
+                          </span>
+                          {link.label}
+                        </Link>
+                      )}
                     </li>
                   ))}
                 </ul>
@@ -123,11 +137,10 @@ function Header() {
             </li>
             <li>
               <Link
-                to="https://journal.ktri.uz/"
-                target="_blank"
+                to="/science"
                 className={textColor}
               >
-                Ilmiy jurnal
+                Ilmiy faoliyat
               </Link>
             </li>
             <li>
@@ -548,7 +561,13 @@ function Header() {
                 </li>
                 {institutLinks.map((link) => (
                   <li key={link.to}>
-                    <Link to={link.to}>{link.label}</Link>
+                    {link.external ? (
+                      <a href={link.to} target="_blank" rel="noopener noreferrer">
+                        {link.label}
+                      </a>
+                    ) : (
+                      <Link to={link.to}>{link.label}</Link>
+                    )}
                   </li>
                 ))}
                 <li>
@@ -556,6 +575,9 @@ function Header() {
                 </li>
                 <li>
                   <Link to="/methodological-support">Metodik ta'minot</Link>
+                </li>
+                <li>
+                  <Link to="/science">Ilmiy faoliyat</Link>
                 </li>
                 <li>
                   <Link to="/news">Yangiliklar</Link>
