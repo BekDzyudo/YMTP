@@ -10,6 +10,7 @@ import {
   FaTools,
   FaSearchPlus,
   FaTimes,
+  FaPlay,
 } from "react-icons/fa";
 import { GrCertificate, GrFormNextLink } from "react-icons/gr";
 import { FcOk } from "react-icons/fc";
@@ -45,7 +46,16 @@ function MetodikTaminot() {
     const year = date.getFullYear();
     return `${day}.${month}.${year}`;
   };
-  
+
+  // YouTube havolasidan video ID va thumbnail olish
+  const getYoutubeId = (url) => {
+    if (!url) return null;
+    const match = url.match(
+      /(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/))([^?&]+)/,
+    );
+    return match ? match[1] : null;
+  };
+
 
   const filterCards = [
     {
@@ -583,6 +593,10 @@ function MetodikTaminot() {
                   </div>
                 );
               } else if (activeFilter === 4) {
+                const youtubeId = getYoutubeId(item.video);
+                const thumb = youtubeId
+                  ? `https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg`
+                  : item.img;
                 return (
                   <div
                     key={item.id}
@@ -599,24 +613,62 @@ function MetodikTaminot() {
                           <FaCalendar className="text-sm" />
                           {formatDate(item.date)}
                         </span>
-                        <Link
-                          to={item.pdf}
-                          target="_blank"
-                          className="text-blue-600 font-bold text-xs sm:text-sm flex items-center gap-1 group"
-                        >
-                          <span className="inline-block">
-                            <FaDownload className="text-md font-bold" />
-                          </span>
-                          Yuklab olish
-                        </Link>
+                        {item.video ? (
+                          <Link
+                            to={item.video}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-blue-600 font-bold text-xs sm:text-sm flex items-center gap-1 group"
+                          >
+                            <span className="inline-block">
+                              <FaPlay className="text-md font-bold" />
+                            </span>
+                            Videoni ko'rish
+                          </Link>
+                        ) : (
+                          item.pdf && (
+                            <Link
+                              to={item.pdf}
+                              target="_blank"
+                              className="text-blue-600 font-bold text-xs sm:text-sm flex items-center gap-1 group"
+                            >
+                              <span className="inline-block">
+                                <FaDownload className="text-md font-bold" />
+                              </span>
+                              Yuklab olish
+                            </Link>
+                          )
+                        )}
                       </div>
                     </div>
                     <div className="overflow-hidden w-1/3 h-full rounded-r-2xl">
-                      <img
-                        src={item.img}
-                        alt={`Card image for ${item.name}`}
-                        className="w-full h-full object-cover rounded-r-2xl"
-                      />
+                      {thumb && (
+                        item.video ? (
+                          <Link
+                            to={item.video}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="relative block w-full h-full group/thumb"
+                          >
+                            <img
+                              src={thumb}
+                              alt={`Video thumbnail for ${item.name}`}
+                              className="w-full h-full object-cover rounded-r-2xl"
+                            />
+                            <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover/thumb:bg-black/40 transition-all duration-300">
+                              <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-white/90 flex items-center justify-center shadow-lg">
+                                <FaPlay className="text-blue-600 text-sm sm:text-xl ml-0.5" />
+                              </div>
+                            </div>
+                          </Link>
+                        ) : (
+                          <img
+                            src={thumb}
+                            alt={`Card image for ${item.name}`}
+                            className="w-full h-full object-cover rounded-r-2xl"
+                          />
+                        )
+                      )}
                     </div>
                   </div>
                 );
