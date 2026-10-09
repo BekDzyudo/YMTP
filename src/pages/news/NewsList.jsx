@@ -312,12 +312,19 @@ function NewsList() {
                   <div className="relative h-full bg-base-100 rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl border border-base-300 flex flex-col transition-all duration-300 hover:-translate-y-2">
                     {/* Image */}
                     <div className="relative h-60.5 overflow-hidden shrink-0">
+                      {/* Bo'sh joylarni to'ldirish uchun blur fon */}
+                      <img
+                        src={news.image}
+                        alt=""
+                        aria-hidden="true"
+                        className="absolute inset-0 w-full h-full object-cover scale-110 blur-xl brightness-75"
+                      />
+                      {/* Asl o'lchamdagi rasm */}
                       <img
                         src={news.image}
                         alt={news.title}
-                        className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-110"
+                        className="relative w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
                       />
-                      <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/20 to-transparent" />
 
                       {/* Category Badge */}
                       <div

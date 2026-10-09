@@ -261,14 +261,26 @@ console.log(newsDetail);
                   <div className="relative h-[200px] sm:h-[500px] md:h-[600px] xl:h-[700px] overflow-hidden">
                     {/* Slider rasmlar */}
                     {newsImages.map((image, index) => (
-                      <img
+                      <div
                         key={index}
-                        src={image}
-                        alt={newsDetail.title}
-                        className={`absolute inset-0 w-full h-full object-cover rounded-t-2xl transition-all duration-700 ${
-                          index === currentSlide ? 'opacity-100 scale-100' : 'opacity-0 scale-105'
+                        className={`absolute inset-0 overflow-hidden rounded-t-2xl transition-opacity duration-700 ${
+                          index === currentSlide ? 'opacity-100' : 'opacity-0'
                         }`}
-                      />
+                      >
+                        {/* Bo'sh joylarni to'ldirish uchun blur fon */}
+                        <img
+                          src={image}
+                          alt=""
+                          aria-hidden="true"
+                          className="absolute inset-0 w-full h-full object-cover scale-110 blur-2xl brightness-75"
+                        />
+                        {/* Asl o'lchamdagi rasm */}
+                        <img
+                          src={image}
+                          alt={newsDetail.title}
+                          className="relative w-full h-full object-contain"
+                        />
+                      </div>
                     ))}
                     
                     <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/20 to-transparent" />
@@ -376,12 +388,19 @@ console.log(newsDetail);
                         <div className="bg-base-100 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl border border-base-300 transition-all duration-300 hover:-translate-y-1">
                           {/* Image */}
                           <div className="relative h-50 overflow-hidden">
+                            {/* Bo'sh joylarni to'ldirish uchun blur fon */}
+                            <img
+                              src={news.image}
+                              alt=""
+                              aria-hidden="true"
+                              className="absolute inset-0 w-full h-full object-cover scale-110 blur-xl brightness-75"
+                            />
+                            {/* Asl o'lchamdagi rasm */}
                             <img
                               src={news.image}
                               alt={news.title}
-                              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                              className="relative w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
                             />
-                            <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/20 to-transparent" />
 
                             {/* Category Badge */}
                             <div

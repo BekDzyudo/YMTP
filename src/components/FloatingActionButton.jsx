@@ -346,7 +346,7 @@ function FloatingActionButton() {
       )}
 
       {/* FAB Container */}
-      <div className="fixed bottom-[48px] right-6 z-50 flex flex-col items-end gap-2.5">
+      <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-2.5">
         {/* Speed Dial Options */}
         {isOpen && (
           <div className="flex flex-col items-end gap-2.5 animate-slideUp">
