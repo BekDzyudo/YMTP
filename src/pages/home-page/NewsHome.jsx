@@ -169,14 +169,26 @@ function News() {
                   {/* Slider rasmlar */}
                   <div className="relative h-full">
                     {featuredImages.map((image, index) => (
-                      <img 
+                      <div
                         key={index}
-                        src={image} 
-                        alt={newsData[0].title}
-                        className={`absolute inset-0 w-full h-full object-cover object-top transition-all duration-700 ${
-                          index === currentSlide ? 'opacity-100 scale-100' : 'opacity-0 scale-105'
+                        className={`absolute inset-0 overflow-hidden transition-opacity duration-700 ${
+                          index === currentSlide ? 'opacity-100' : 'opacity-0'
                         }`}
-                      />
+                      >
+                        {/* Bo'sh joylarni to'ldirish uchun blur fon */}
+                        <img
+                          src={image}
+                          alt=""
+                          aria-hidden="true"
+                          className="absolute inset-0 w-full h-full object-cover scale-110 blur-xl brightness-75"
+                        />
+                        {/* Asl o'lchamdagi rasm */}
+                        <img
+                          src={image}
+                          alt={newsData[0].title}
+                          className="relative w-full h-full object-contain"
+                        />
+                      </div>
                     ))}
                   </div>
                   
@@ -233,12 +245,19 @@ function News() {
                   <div className="relative h-full bg-base-100 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl border border-base-300 flex flex-col transition-all duration-300 hover:-translate-y-1">
                     
                     <div className="relative w-full aspect-[5/3] overflow-hidden flex-shrink-0">
-                      <img 
-                        src={news.image} 
-                        alt={news.title}
-                        className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-110"
+                      {/* Bo'sh joylarni to'ldirish uchun blur fon */}
+                      <img
+                        src={news.image}
+                        alt=""
+                        aria-hidden="true"
+                        className="absolute inset-0 w-full h-full object-cover scale-110 blur-xl brightness-75"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-black/10 to-transparent" />
+                      {/* Asl o'lchamdagi rasm */}
+                      <img
+                        src={news.image}
+                        alt={news.title}
+                        className="relative w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
+                      />
                       
                       <div className={`absolute top-2 left-2 px-2 py-1 rounded-full bg-gradient-to-r ${news.gradient} flex items-center gap-1 shadow-lg`}>
                         <span className="text-white text-xs">{news.icon}</span>
@@ -285,14 +304,26 @@ function News() {
                       // Slider faqat birinchi card uchun
                       <>
                         {featuredImages.map((image, imgIdx) => (
-                          <img 
+                          <div
                             key={imgIdx}
-                            src={image} 
-                            alt={news.title}
-                            className={`absolute inset-0 w-full h-full object-cover object-top transition-all duration-700 ${
-                              imgIdx === currentSlide ? 'opacity-100 scale-100' : 'opacity-0 scale-105'
+                            className={`absolute inset-0 overflow-hidden transition-opacity duration-700 ${
+                              imgIdx === currentSlide ? 'opacity-100' : 'opacity-0'
                             }`}
-                          />
+                          >
+                            {/* Bo'sh joylarni to'ldirish uchun blur fon */}
+                            <img
+                              src={image}
+                              alt=""
+                              aria-hidden="true"
+                              className="absolute inset-0 w-full h-full object-cover scale-110 blur-xl brightness-75"
+                            />
+                            {/* Asl o'lchamdagi rasm */}
+                            <img
+                              src={image}
+                              alt={news.title}
+                              className="relative w-full h-full object-contain"
+                            />
+                          </div>
                         ))}
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
                         
@@ -313,12 +344,19 @@ function News() {
                     ) : (
                       // Oddiy rasm qolgan cardlar uchun
                       <>
-                        <img 
-                          src={news.image} 
-                          alt={news.title}
-                          className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-110"
+                        {/* Bo'sh joylarni to'ldirish uchun blur fon */}
+                        <img
+                          src={news.image}
+                          alt=""
+                          aria-hidden="true"
+                          className="absolute inset-0 w-full h-full object-cover scale-110 blur-xl brightness-75"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                        {/* Asl o'lchamdagi rasm */}
+                        <img
+                          src={news.image}
+                          alt={news.title}
+                          className="relative w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
+                        />
                       </>
                     )}
                     
@@ -366,14 +404,26 @@ function News() {
                       // Slider faqat birinchi card uchun
                       <>
                         {featuredImages.map((image, imgIdx) => (
-                          <img 
+                          <div
                             key={imgIdx}
-                            src={image} 
-                            alt={news.title}
-                            className={`absolute inset-0 w-full h-full object-cover object-top transition-all duration-700 ${
-                              imgIdx === currentSlide ? 'opacity-100 scale-100' : 'opacity-0 scale-105'
+                            className={`absolute inset-0 overflow-hidden transition-opacity duration-700 ${
+                              imgIdx === currentSlide ? 'opacity-100' : 'opacity-0'
                             }`}
-                          />
+                          >
+                            {/* Bo'sh joylarni to'ldirish uchun blur fon */}
+                            <img
+                              src={image}
+                              alt=""
+                              aria-hidden="true"
+                              className="absolute inset-0 w-full h-full object-cover scale-110 blur-xl brightness-75"
+                            />
+                            {/* Asl o'lchamdagi rasm */}
+                            <img
+                              src={image}
+                              alt={news.title}
+                              className="relative w-full h-full object-contain"
+                            />
+                          </div>
                         ))}
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
                         
@@ -394,12 +444,19 @@ function News() {
                     ) : (
                       // Oddiy rasm qolgan cardlar uchun
                       <>
-                        <img 
-                          src={news.image} 
-                          alt={news.title}
-                          className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-110"
+                        {/* Bo'sh joylarni to'ldirish uchun blur fon */}
+                        <img
+                          src={news.image}
+                          alt=""
+                          aria-hidden="true"
+                          className="absolute inset-0 w-full h-full object-cover scale-110 blur-xl brightness-75"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                        {/* Asl o'lchamdagi rasm */}
+                        <img
+                          src={news.image}
+                          alt={news.title}
+                          className="relative w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
+                        />
                       </>
                     )}
                     
@@ -447,14 +504,26 @@ function News() {
                       // Slider faqat birinchi card uchun
                       <>
                         {featuredImages.map((image, imgIdx) => (
-                          <img 
+                          <div
                             key={imgIdx}
-                            src={image} 
-                            alt={news.title}
-                            className={`absolute inset-0 w-full h-full object-cover object-top transition-all duration-700 ${
-                              imgIdx === currentSlide ? 'opacity-100 scale-100' : 'opacity-0 scale-105'
+                            className={`absolute inset-0 overflow-hidden transition-opacity duration-700 ${
+                              imgIdx === currentSlide ? 'opacity-100' : 'opacity-0'
                             }`}
-                          />
+                          >
+                            {/* Bo'sh joylarni to'ldirish uchun blur fon */}
+                            <img
+                              src={image}
+                              alt=""
+                              aria-hidden="true"
+                              className="absolute inset-0 w-full h-full object-cover scale-110 blur-xl brightness-75"
+                            />
+                            {/* Asl o'lchamdagi rasm */}
+                            <img
+                              src={image}
+                              alt={news.title}
+                              className="relative w-full h-full object-contain"
+                            />
+                          </div>
                         ))}
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
                         
@@ -475,12 +544,19 @@ function News() {
                     ) : (
                       // Oddiy rasm qolgan cardlar uchun
                       <>
-                        <img 
-                          src={news.image} 
-                          alt={news.title}
-                          className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-110"
+                        {/* Bo'sh joylarni to'ldirish uchun blur fon */}
+                        <img
+                          src={news.image}
+                          alt=""
+                          aria-hidden="true"
+                          className="absolute inset-0 w-full h-full object-cover scale-110 blur-xl brightness-75"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                        {/* Asl o'lchamdagi rasm */}
+                        <img
+                          src={news.image}
+                          alt={news.title}
+                          className="relative w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
+                        />
                       </>
                     )}
                     
