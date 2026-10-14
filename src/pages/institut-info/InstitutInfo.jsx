@@ -148,7 +148,7 @@ function InstitutInfo() {
                 {/* Bottom decoration */}
                 <div className="mt-4 pt-4 border-t border-base-300">
                   <p className="text-xs text-center text-gray-500 italic">
-                    Ma'lumotlar 2026 yil mart holatiga
+                    Ma'lumotlar 2026 yil oktabr holatiga
                   </p>
                 </div>
               </div>
