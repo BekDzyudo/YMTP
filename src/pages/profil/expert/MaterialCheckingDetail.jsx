@@ -8,8 +8,10 @@ import { useGlobalContext } from "../../../hooks/useGlobalContext";
 import { FiDownload } from "react-icons/fi";
 import ExpertChat from "./ExpertChat";
 import { TbSend } from "react-icons/tb";
+import { useTranslation } from "../../../i18n/LanguageContext";
 
 function MaterialCheckingDetail() {
+  const { t } = useTranslation();
   const { materialId } = useParams();
   const { auth, lookAtActionMetodist } = useContext(AuthContext);
   const { theme } = useGlobalContext();
@@ -106,7 +108,7 @@ function MaterialCheckingDetail() {
         return res;
       })
       .then((data) => {
-        toast.success("Material tasdiqlandi");
+        toast.success(t("expert.approvedToast"));
         setRefresh(1);
         // navigate("/Document/documents");
       })
@@ -135,7 +137,7 @@ function MaterialCheckingDetail() {
       })
       .then((data) => {
         setRefresh(2);
-        toast.success("Material rad etildi");
+        toast.success(t("expert.rejectedToast"));
         // navigate("/Document/documents");
       })
       .catch((err) => console.log(JSON.parse(err.message)))
@@ -166,7 +168,7 @@ function MaterialCheckingDetail() {
       })
       .then((data) => {
         setRefresh(3);
-        toast.success("Material birlashmaga yuborildi");
+        toast.success(t("expert.sentToast"));
         // navigate("/Document/documents");
       })
       .catch((err) => console.log(JSON.parse(err.message)))
@@ -185,27 +187,27 @@ function MaterialCheckingDetail() {
       >
         <div className="flex items-center gap-3 md:gap-5 mb-5">
           {Material?.holat == "yangi" && (
-            <span className="text-md md:text-lg font-bold">Kiruvchi material</span>
+            <span className="text-md md:text-lg font-bold">{t("expert.incoming")}</span>
           )}
           {Material?.holat == "rad_etildi" && (
-            <span className="text-md md:text-lg font-bold">Qaytgan material</span>
+            <span className="text-md md:text-lg font-bold">{t("expert.returned")}</span>
           )}
           {Material?.holat == "tasdiqlandi" && (
-            <span className="text-md md:text-lg font-bold">Tasdiqlangan material</span>
+            <span className="text-md md:text-lg font-bold">{t("expert.approved")}</span>
           )}
           {Material?.holat == "yangi" && (
             <span className="badge bg-blue-500 border-0 badge-sm md:badge-md">
-              Yangi
+              {t("status.new")}
             </span>
           )}
           {Material?.holat == "rad_etildi" && (
             <span className="badge bg-red-500 border-0 badge-sm md:badge-md">
-              Rad etildi
+              {t("status.rejected")}
             </span>
           )}
           {Material?.holat == "tasdiqlandi" && (
             <span className="badge bg-green-600 badge-sm md:badge-md border-0">
-              Tasdiqlandi
+              {t("status.approved")}
             </span>
           )}
         </div>
@@ -214,7 +216,7 @@ function MaterialCheckingDetail() {
             <div className="flex flex-col gap-5 md:gap-10">
               <div>
                 <h2 className="md:uppercase text-sm md:text-[16px] font-semibold text-primary">
-                  Jo'natuvchi hudud
+                  {t("expert.region")}
                 </h2>
                 <div>
                   <p className="text-sm md:text-[16px]">{Material.teacher?.region?.name},</p>
@@ -224,7 +226,7 @@ function MaterialCheckingDetail() {
               </div>
               <div>
                 <h2 className="md:uppercase text-sm md:text-[16px] font-semibold text-primary">
-                  Yaratilgan vaqt
+                  {t("expert.created")}
                 </h2>
                 <p className="text-sm md:text-[16px]">
                   {new Date(Material.created_at).getDate() < 10
@@ -239,7 +241,7 @@ function MaterialCheckingDetail() {
               </div>
               <div>
                 <h2 className="md:uppercase text-sm md:text-[16px] font-semibold text-primary">
-                  Biriktirilgan fayl
+                  {t("expert.file")}
                 </h2>
                 <p className="flex flex-col gap-1 sm:flex-row sm:gap-3 text-sm md:text-[16px]">
                   <p className="m-0 p-0">{Material?.kategoriya_material?.name}</p>
@@ -258,7 +260,7 @@ function MaterialCheckingDetail() {
 
               <div>
                 <h2 className="md:uppercase text-sm md:text-[16px] font-semibold text-primary">
-                  Muallif
+                  {t("expert.author")}
                 </h2>
                 <p className="text-sm md:text-[16px]">
                   {Material?.teacher?.last_name +
@@ -268,7 +270,7 @@ function MaterialCheckingDetail() {
               </div>
               <div>
                 <h2 className="md:uppercase text-sm md:text-[16px] font-semibold text-primary">
-                  Fan nomi
+                  {t("prof.subject")}
                 </h2>
                 <p className="text-sm md:text-[16px]">{Material?.fan.name}</p>
               </div>
@@ -299,13 +301,13 @@ function MaterialCheckingDetail() {
                       className="btn bg-green-600 sm:px-5 sm:py-2 px-3 py-1 text-[12px] sm:text-sm outline-0 border-0 text-white"
                       onClick={qabulQilindi}
                     >
-                      Qabul qilish
+                      {t("expert.accept")}
                     </Link>
                     <Link
                       className="btn bg-red-500 sm:px-5 sm:py-2 px-3 py-1 text-[12px] sm:text-sm outline-0 border-0 text-white"
                       onClick={radEtildi}
                     >
-                      Rad etish
+                      {t("expert.reject")}
                     </Link>
                   </div>
                 </div>
@@ -314,7 +316,7 @@ function MaterialCheckingDetail() {
             {/* <div className="flex flex-col gap-8">
               <div>
                 <h2 className="uppercase font-semibold text-primary">
-                  Muallif
+                  {t("expert.author")}
                 </h2>
                 <p>
                   {Material?.teacher?.last_name +
@@ -324,7 +326,7 @@ function MaterialCheckingDetail() {
               </div>
               <div>
                 <h2 className="uppercase font-semibold text-primary">
-                  Fan nomi
+                  {t("prof.subject")}
                 </h2>
                 <p>{Material?.fan.name}</p>
               </div>
@@ -343,7 +345,7 @@ function MaterialCheckingDetail() {
                       style={{ background: "gray" }}
                       className="btn btn-neutral px-5 py-2 disabled border-none"
                     >
-                      Birlashmaga yuborildi
+                      {t("expert.sentToAssociation")}
                     </Link>
                   )}
                 </div>
@@ -355,13 +357,13 @@ function MaterialCheckingDetail() {
                       className="btn bg-green-600 px-5 py-2 outline-0 border-0 text-white"
                       onClick={qabulQilindi}
                     >
-                      Qabul qilish
+                      {t("expert.accept")}
                     </Link>
                     <Link
                       className="btn bg-red-500 px-5 py-2 outline-0 border-0 text-white"
                       onClick={radEtildi}
                     >
-                      Rad etish
+                      {t("expert.reject")}
                     </Link>
                   </div>
                 </div>

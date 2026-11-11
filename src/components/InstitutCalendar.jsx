@@ -2,8 +2,10 @@ import { useState } from "react";
 import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
 import { FaCalendarAlt, FaChevronLeft, FaChevronRight, FaClock, FaMapMarkerAlt, FaUsers, FaExternalLinkAlt, FaCheckCircle, FaPhone, FaEnvelope } from "react-icons/fa";
+import { useTranslation } from "../i18n/LanguageContext";
 
 function InstitutCalendar() {
+  const { t, locale } = useTranslation();
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedEvent, setSelectedEvent] = useState(null);
 
@@ -232,10 +234,7 @@ function InstitutCalendar() {
     }
   ];
 
-  const monthNames = [
-    "Yanvar", "Fevral", "Mart", "Aprel", "May", "Iyun",
-    "Iyul", "Avgust", "Sentabr", "Oktabr", "Noyabr", "Dekabr"
-  ];
+  const monthNames = t("common.monthsNominative");
 
   const getDaysInMonth = (date) => {
     const year = date.getFullYear();
@@ -309,7 +308,7 @@ function InstitutCalendar() {
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-lg font-bold flex items-center gap-2">
           <FaCalendarAlt className="text-blue-600" />
-          Voqealar kalendari
+          {t("fab.calendar")}
         </h3>
       </div>
 
@@ -329,7 +328,7 @@ function InstitutCalendar() {
       {/* Calendar Grid */}
       <div className="mb-4">
         <div className="grid grid-cols-7 gap-1 mb-2">
-          {['Ya', 'Du', 'Se', 'Ch', 'Pa', 'Ju', 'Sh'].map(day => (
+          {t("common.weekdaysShort").map(day => (
             <div key={day} className="text-center text-xs font-semibold opacity-60">
               {day}
             </div>
@@ -344,11 +343,11 @@ function InstitutCalendar() {
       <div className="flex items-center gap-4 text-xs mb-4 pb-4 border-b">
         <div className="flex items-center gap-1">
           <span className="w-3 h-3 rounded-full bg-green-500"></span>
-          <span>Rejalashtirilgan</span>
+          <span>{t("cal.upcoming")}</span>
         </div>
         <div className="flex items-center gap-1">
           <span className="w-3 h-3 rounded-full bg-gray-400"></span>
-          <span>O'tgan</span>
+          <span>{t("cal.past")}</span>
         </div>
       </div>
 
@@ -386,7 +385,7 @@ function InstitutCalendar() {
                         ? 'bg-green-500 border-0 text-white' 
                         : 'bg-gray-300 border-0 text-gray-700'
                     }`}>
-                      {selectedEvent.status === 'upcoming' ? 'Rejalashtirilgan' : 'O\'tgan'}
+                      {selectedEvent.status === 'upcoming' ? t("cal.upcoming") : t("cal.past")}
                     </span>
                   </div>
                 </div>
@@ -419,9 +418,9 @@ function InstitutCalendar() {
                       <FaCalendarAlt className="text-white text-sm" />
                     </div>
                     <div>
-                      <p className="text-xs opacity-60">Sana</p>
+                      <p className="text-xs opacity-60">{t("cal.date")}</p>
                       <p className="font-semibold text-sm">
-                        {new Date(selectedEvent.date).toLocaleDateString('uz-UZ', {
+                        {new Date(selectedEvent.date).toLocaleDateString(locale, {
                           weekday: 'long',
                           year: 'numeric',
                           month: 'long',
@@ -436,7 +435,7 @@ function InstitutCalendar() {
                       <FaClock className="text-white text-sm" />
                     </div>
                     <div>
-                      <p className="text-xs opacity-60">Vaqt</p>
+                      <p className="text-xs opacity-60">{t("cal.time")}</p>
                       <p className="font-semibold text-sm">
                         {selectedEvent.time}
                         {selectedEvent.endTime && ` - ${selectedEvent.endTime}`}
@@ -449,7 +448,7 @@ function InstitutCalendar() {
                       <FaMapMarkerAlt className="text-white text-sm" />
                     </div>
                     <div>
-                      <p className="text-xs opacity-60">Joylashuv</p>
+                      <p className="text-xs opacity-60">{t("cal.location")}</p>
                       <p className="font-semibold text-sm">{selectedEvent.location}</p>
                     </div>
                   </div>
@@ -460,7 +459,7 @@ function InstitutCalendar() {
                         <FaUsers className="text-white text-sm" />
                       </div>
                       <div>
-                        <p className="text-xs opacity-60">Ishtirokchilar</p>
+                        <p className="text-xs opacity-60">{t("cal.participants")}</p>
                         <p className="font-semibold text-sm">{selectedEvent.participants}</p>
                       </div>
                     </div>
@@ -474,7 +473,7 @@ function InstitutCalendar() {
                       <div className="bg-green-50 rounded-xl p-4 border border-green-200">
                         <h5 className="font-bold text-sm mb-3 flex items-center gap-2 text-green-800">
                           <FaCheckCircle className="text-green-600" />
-                          Asosiy natijalar
+                          {t("cal.results")}
                         </h5>
                         <ul className="space-y-2">
                           {selectedEvent.highlights.map((item, index) => (
@@ -500,7 +499,7 @@ function InstitutCalendar() {
                         className="btn bg-gradient-to-br from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white w-full"
                       >
                         <FaExternalLinkAlt className="mr-2" />
-                        Batafsil yangilikda
+                        {t("cal.moreInNews")}
                       </Link>
                     )}
                   </>
@@ -512,7 +511,7 @@ function InstitutCalendar() {
                     {selectedEvent.program && (
                       <div className="bg-blue-50 rounded-xl p-4 border border-blue-200">
                         <h5 className="font-bold text-sm mb-3 text-blue-800">
-                          📋 Dastur
+                          📋 {t("cal.program")}
                         </h5>
                         <ul className="space-y-2">
                           {selectedEvent.program.map((item, index) => (
@@ -527,7 +526,7 @@ function InstitutCalendar() {
                     {selectedEvent.speakers && selectedEvent.speakers.length > 0 && (
                       <div className="bg-purple-50 rounded-xl p-4 border border-purple-200">
                         <h5 className="font-bold text-sm mb-2 text-purple-800">
-                          🎤 Ma'ruzachilar
+                          🎤 {t("cal.speakers")}
                         </h5>
                         <div className="space-y-1">
                           {selectedEvent.speakers.map((speaker, index) => (
@@ -540,7 +539,7 @@ function InstitutCalendar() {
                     {selectedEvent.requirements && (
                       <div className="bg-orange-50 rounded-xl p-3 border border-orange-200">
                         <p className="text-xs text-orange-800">
-                          <span className="font-bold">⚠️ Eslatma:</span> {selectedEvent.requirements}
+                          <span className="font-bold">⚠️ {t("cal.note")}</span> {selectedEvent.requirements}
                         </p>
                       </div>
                     )}
@@ -548,11 +547,11 @@ function InstitutCalendar() {
                     {selectedEvent.registrationRequired && (
                       <div className="bg-yellow-50 rounded-xl p-3 border border-yellow-300">
                         <p className="text-xs font-bold text-yellow-800">
-                          ✋ Ro'yxatdan o'tish talab etiladi
+                          ✋ {t("cal.registrationRequired")}
                         </p>
                         {selectedEvent.registrationDeadline && (
                           <p className="text-xs text-yellow-700 mt-1">
-                            Muddat: {new Date(selectedEvent.registrationDeadline).toLocaleDateString('uz-UZ')}
+                            {t("cal.deadline")} {new Date(selectedEvent.registrationDeadline).toLocaleDateString(locale)}
                           </p>
                         )}
                       </div>
@@ -561,11 +560,11 @@ function InstitutCalendar() {
                     {(selectedEvent.contact || selectedEvent.responsiblePerson) && (
                       <div className="bg-gray-50 rounded-xl p-4 border border-gray-200">
                         <h5 className="font-bold text-sm mb-2 text-gray-800">
-                          📞 Bog'lanish
+                          📞 {t("cal.contact")}
                         </h5>
                         {selectedEvent.responsiblePerson && (
                           <p className="text-xs text-gray-700 mb-1">
-                            <span className="font-semibold">Mas'ul shaxs:</span> {selectedEvent.responsiblePerson}
+                            <span className="font-semibold">{t("cal.responsible")}</span> {selectedEvent.responsiblePerson}
                           </p>
                         )}
                         {selectedEvent.contact && (
@@ -598,7 +597,7 @@ function InstitutCalendar() {
                     onClick={() => setSelectedEvent(null)}
                     className="btn bg-gradient-to-br from-[#194882] to-info text-white w-full hover:shadow-lg"
                   >
-                    Yopish
+                    {t("common.close")}
                   </button>
                 </div>
               </div>
@@ -610,7 +609,7 @@ function InstitutCalendar() {
 
       {/* Upcoming Events List */}
       <div className="mt-4">
-        <h4 className="text-sm font-semibold mb-2">Yaqin voqealar</h4>
+        <h4 className="text-sm font-semibold mb-2">{t("cal.nearest")}</h4>
         <div className="space-y-2">
           {events
             .filter(e => e.status === 'upcoming')
@@ -626,7 +625,7 @@ function InstitutCalendar() {
                   <div className="flex-1 min-w-0">
                     <p className="text-xs font-semibold truncate">{event.title}</p>
                     <p className="text-xs opacity-60">
-                      {new Date(event.date).toLocaleDateString('uz-UZ')} • {event.time}
+                      {new Date(event.date).toLocaleDateString(locale)} • {event.time}
                     </p>
                   </div>
                 </div>

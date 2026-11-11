@@ -12,8 +12,10 @@ import { FiPieChart } from "react-icons/fi";
 import { MdOutlineAddHomeWork, MdOutlineBedroomParent, MdOutlineMeetingRoom } from "react-icons/md";
 import { CgGym } from "react-icons/cg";
 import { IoBuildOutline } from "react-icons/io5";
+import { useTranslation } from "../../../i18n/LanguageContext";
 
 function AllDataCollage() {
+  const { t } = useTranslation();
   const { collageId, Id } = useParams();
   const { theme } = useGlobalContext();
   const {
@@ -37,7 +39,7 @@ function AllDataCollage() {
             <div className="flex items-center gap-2 md:gap-5 pr-2 md:pr-5 border-r-2">
               <FaMapLocation className="text-3xl md:text-5xl text-primary" />
               <p className="text-sm md:text-xl font-bold md:uppercase">
-                Manzil
+                {t("col.info.address")}
               </p>
             </div>
             <h3 className="text-center w-full text-sm md:text-xl font-bold">
@@ -55,7 +57,7 @@ function AllDataCollage() {
               </div>
               <div>
                 <p className="text-secondary font-bold text-sm md:text-lg">
-                  Foydalanishga topshirilgan yili:
+                  {t("col.info.year")}
                 </p>
                 <p className="font-bold text-primary text-md md:text-xl">
                   2019 - yil
@@ -71,7 +73,7 @@ function AllDataCollage() {
               </div>
               <div>
                 <p className="text-secondary font-bold text-sm md:text-lg">
-                  Quvvati:
+                  {t("col.info.capacity")}
                 </p>
                 <p className="font-bold text-primary text-md md:text-xl">
                   330 o‘rinli
@@ -87,7 +89,7 @@ function AllDataCollage() {
               </div>
               <div>
                 <p className="text-secondary font-bold text-sm md:text-lg">
-                  O‘quvchilar soni:
+                  {t("col.info.students")}
                 </p>
                 <p className="font-bold text-primary text-md md:text-xl">
                   633 ta
@@ -103,7 +105,7 @@ function AllDataCollage() {
               </div>
               <div>
                 <p className="text-secondary font-bold text-sm md:text-lg">
-                  Binolar soni:
+                  {t("col.info.buildings")}
                 </p>
                 <p className="font-bold text-primary text-md md:text-xl">
                    15 ta
@@ -119,7 +121,7 @@ function AllDataCollage() {
               </div>
               <div>
                 <p className="text-secondary font-bold text-sm md:text-lg">
-                 Yer maydoni:
+                 {t("col.info.land")}
                 </p>
                 <p className="font-bold text-primary text-md md:text-xl">
                   2.14 gektar
@@ -135,7 +137,7 @@ function AllDataCollage() {
               </div>
               <div>
                 <p className="text-secondary font-bold text-sm md:text-lg">
-                  O‘quv maydoni:
+                  {t("col.info.studyArea")}
                 </p>
                 <p className="font-bold text-primary text-md md:text-xl">
                   3061 M.KV
@@ -151,7 +153,7 @@ function AllDataCollage() {
               </div>
               <div>
                 <p className="text-secondary font-bold text-sm md:text-lg">
-                  O‘quv xonalari soni:
+                  {t("col.info.classrooms")}
                 </p>
                 <p className="font-bold text-primary text-md md:text-xl">
                   26 ta
@@ -167,10 +169,10 @@ function AllDataCollage() {
               </div>
               <div>
                 <p className="text-secondary font-bold text-sm md:text-lg">
-                  Yotoqxona:
+                  {t("col.info.dormitory")}
                 </p>
                 <p className="font-bold text-primary text-md md:text-xl">
-                  Mavjud emas
+                  {t("col.info.none")}
                 </p>
               </div>
             </div>
@@ -183,7 +185,7 @@ function AllDataCollage() {
               </div>
               <div>
                 <p className="text-secondary font-bold text-sm md:text-lg">
-                  Sport zal:
+                  {t("col.info.gym")}
                 </p>
                 <p className="font-bold text-primary text-md md:text-xl">
                   18x36 M (648 KV.M)
@@ -199,7 +201,7 @@ function AllDataCollage() {
               </div>
               <div>
                 <p className="text-secondary font-bold text-sm md:text-lg">
-                  Oshxona:
+                  {t("col.info.canteen")}
                 </p>
                 <p className="font-bold text-primary text-md md:text-xl">
                   60 o‘rinli
@@ -215,10 +217,10 @@ function AllDataCollage() {
               </div>
               <div>
                 <p className="text-secondary font-bold text-sm md:text-lg">
-                  Ishlab chiqarish ustaxonasi:
+                  {t("col.info.workshop")}
                 </p>
                 <p className="font-bold text-primary text-md md:text-xl">
-                  Mavjud emas
+                  {t("col.info.none")}
                 </p>
               </div>
             </div>
@@ -231,7 +233,7 @@ function AllDataCollage() {
               </div>
               <div>
                 <p className="text-secondary font-bold text-sm md:text-lg">
-                  So‘ngi tamirlangan yili:
+                  {t("col.info.renovated")}
                 </p>
                 <p className="font-bold text-primary text-md md:text-xl">
                   2023 - yil

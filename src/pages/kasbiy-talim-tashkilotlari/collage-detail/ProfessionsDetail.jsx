@@ -4,8 +4,10 @@ import useGetFetch from "../../../hooks/useGetFetch";
 import { MdReportGmailerrorred } from "react-icons/md";
 import { useGlobalContext } from "../../../hooks/useGlobalContext";
 import { FaDownload } from "react-icons/fa";
+import { useTranslation } from "../../../i18n/LanguageContext";
 
 function ProfessionsDetail() {
+  const { t } = useTranslation();
   const { theme } = useGlobalContext();
   const { kasbId } = useParams();
   const { data, isPending,
@@ -91,7 +93,7 @@ function ProfessionsDetail() {
         <div className="text-primary text-sm sm:text-2xl font-bold text-center w-full opacity-90 absolute left-0 top-40 sm:top-52 flex justify-center">
           <div className="flex items-center gap-3">
             <MdReportGmailerrorred className="text-2xl sm:text-5xl" />{" "}
-            <p>Malumot hozircha kiritilmagan</p>
+            <p>{t("col.noInfoYet")}</p>
           </div>
         </div>
       )}

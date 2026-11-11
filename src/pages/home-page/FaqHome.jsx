@@ -2,33 +2,35 @@ import { useState } from "react";
 import { FaPlus, FaTimes } from "react-icons/fa";
 import { MdArrowForward } from "react-icons/md";
 import { Link } from "react-router-dom";
+import { useTranslation } from "../../i18n/LanguageContext";
 
 function FaqHome() {
+  const { t } = useTranslation();
   const [activeIndex, setActiveIndex] = useState(null);
 
   const faqs = [
     {
-      question: "Kasbiy ta'limni rivojlantirish instituti nima qiladi?",
-      answer: "Institut kasbiy ta'lim tizimini rivojlantirish, o'qituvchilar malakasini oshirish, zamonaviy ta'lim dasturlari va metodikalarini ishlab chiqish bilan shug'ullanadi."
+      question: t("home.faq.q1"),
+      answer: t("home.faq.a1")
     },
     {
-      question: "Platformaga qanday ro'yxatdan o'tish mumkin?",
-      answer: "Saytning yuqori o'ng burchagidagi 'Kirish' tugmasini bosing va 'Ro'yxatdan o'tish' bo'limiga o'ting. Barcha zarur ma'lumotlarni to'ldiring va emailingizni tasdiqlang."
+      question: t("home.faq.q2"),
+      answer: t("home.faq.a2")
     },
     {
-      question: "O'quv me'yoriy hujjatlar nima?",
-      answer: "O'quv me'yoriy hujjatlar - bu davlat ta'lim standartlari, o'quv dasturlari, o'quv rejalar va boshqa rasmiy hujjatlar to'plami. Bu hujjatlar kasbiy ta'lim jarayonini tartibga soladi va o'qitish sifatini ta'minlaydi."
+      question: t("home.faq.q3"),
+      answer: t("home.faq.a3")
     },
     {
-      question: "Metodik mahsulotlar bo'limida nima bor?",
-      answer: "Metodik mahsulotlar bo'limida o'qituvchilar uchun turli metodik qo'llanmalar, o'quv-uslubiy majmualar, taqdimotlar, multimedia materiallari va amaliy mashg'ulotlar uchun materiallar mavjud."
+      question: t("home.faq.q4"),
+      answer: t("home.faq.a4")
     },
     {
-      question: "RTR (Raqamli ta'lim resurslari) nima?",
-      answer: "RTR - bu video darslar, taqdimotlar, ma'ruza matnlari va boshqa raqamli o'quv materiallarining keng kutubxonasi. Barcha o'qituvchilar va o'quvchilar uchun bepul mavjud."
+      question: t("home.faq.q5"),
+      answer: t("home.faq.a5")
     },
     {
-      question: "Institut bilan qanday bog'lanish mumkin?",
+      question: t("home.faq.q6"),
       answer: null,
       isJSX: true
     }
@@ -43,13 +45,13 @@ function FaqHome() {
       {/* Header with title and button */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-8">
         <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-serif text-[#0d4ea3]">
-          Tezkor savollarga javoblar
+          {t("home.faq.title")}
         </h2>
         <Link
           to="/faq"
           className="btn bg-gradient-to-br from-[#194882] to-info btn-md lg:btn-lg gap-2 text-white rounded-full"
         >
-          Barcha savollar
+          {t("home.faq.all")}
           <MdArrowForward className="text-xl" />
         </Link>
       </div>
@@ -96,7 +98,7 @@ function FaqHome() {
               <div className="px-4 sm:px-6 pb-4 sm:pb-6">
                 {faq.isJSX ? (
                   <p className="text-base sm:text-lg lg:text-xl opacity-80 leading-relaxed">
-                    Biz bilan <Link to="/contact" className="link link-primary font-semibold">Bog'lanish</Link> bo'limidan bog'lanishingiz yoki qo'ng'iroq qilishingiz mumkin.
+                    {t("home.faq.a6.before")} <Link to="/contact" className="link link-primary font-semibold">{t("home.faq.a6.link")}</Link> {t("home.faq.a6.after")}
                   </p>
                 ) : (
                   <p className="text-sm sm:text-lg lg:text-xl opacity-80 leading-relaxed">

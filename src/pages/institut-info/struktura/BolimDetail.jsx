@@ -2,8 +2,10 @@ import React from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { FaHome, FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import useGetFetch from "../../../hooks/useGetFetch";
+import { useTranslation } from "../../../i18n/LanguageContext";
 
 function BolimDetail() {
+  const { t } = useTranslation();
   const { id } = useParams();
   const navigate = useNavigate();
   const { data, loading, error } = useGetFetch(
@@ -25,7 +27,7 @@ function BolimDetail() {
                 className="text-base-content/70 hover:text-blue-700 transition-colors"
               >
                 <FaHome className="w-4 h-4 mr-2" />
-                Bosh sahifa
+                {t("common.home")}
               </Link>
             </li>
             <li>
@@ -33,24 +35,24 @@ function BolimDetail() {
                 to="/structure"
                 className="text-base-content/70 hover:text-blue-700 transition-colors"
               >
-                Institut tuzilmasi
+                {t("institutLinks.structure")}
               </Link>
             </li>
           </ul>
         </div>
         <h1 className="text-xl text-center sm:text-start sm:text-3xl font-bold font-serif">
-          {data?.bolim_nomi || "Bo'lim nomi"}
+          {data?.bolim_nomi || t("inst.structure.departmentName")}
         </h1>
       </div>
 
       {loading ? (
         <div className="text-center py-12">
           <span className="loading loading-spinner loading-lg text-blue-700"></span>
-          <p className="text-base-content/70 mt-4">Ma'lumotlar yuklanmoqda...</p>
+          <p className="text-base-content/70 mt-4">{t("inst.structure.loadingData")}</p>
         </div>
       ) : error ? (
         <div className="text-center py-12">
-          <p className="text-red-500 text-lg">Xatolik yuz berdi!</p>
+          <p className="text-red-500 text-lg">{t("common.error")}</p>
         </div>
       ) : data?.results.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -96,7 +98,7 @@ function BolimDetail() {
                     onClick={() => handleXodimClick(xodim.id)}
                     className="text-white text-sm font-semibold transition-all duration-300 flex items-center gap-2 group cursor-pointer"
                   >
-                    Batafsil
+                    {t("common.more")}
                     <FaArrowRight className="transition-transform duration-300 group-hover:translate-x-2" />
                   </button>
                 </div>
@@ -107,7 +109,7 @@ function BolimDetail() {
       ) : (
         <div className="text-center py-12">
           <p className="text-base-content/70 text-sm sm:text-base">
-            Bu bo'limda hozircha xodimlar yo'q.
+            {t("inst.structure.noStaff")}
           </p>
         </div>
       )}

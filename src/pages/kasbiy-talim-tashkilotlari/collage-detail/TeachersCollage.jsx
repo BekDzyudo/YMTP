@@ -5,8 +5,10 @@ import useGetFetch from '../../../hooks/useGetFetch';
 import { MdReportGmailerrorred } from 'react-icons/md';
 import { FaUser } from 'react-icons/fa6';
 import { GiMaterialsScience } from 'react-icons/gi';
+import { useTranslation } from "../../../i18n/LanguageContext";
 
 function TeachersCollage() {
+  const { t } = useTranslation();
 
     const { Id } = useParams();
   const { theme } = useGlobalContext();
@@ -29,7 +31,7 @@ function TeachersCollage() {
             theme == "night" ? "bg-gray-700" : "bg-slate-300"
           }`}
         >
-          <h1 className='font-bold '>Pedagoglar <span className='text-primary font-bold rounded ml-2 px-3 py-0.5 bg-base-300'>{teachers.length}</span></h1>
+          <h1 className='font-bold '>{t("col.pedagogues")} <span className='text-primary font-bold rounded ml-2 px-3 py-0.5 bg-base-300'>{teachers.length}</span></h1>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 pt-5 gap-4 sm:gap-5 md:gap-10">
             {teachers?.map((item, index) => {
               return (
@@ -60,7 +62,7 @@ function TeachersCollage() {
                     />
                   </div>
                   <div className="mt-2">
-                    <h4 className='flex items-center gap-2 justify-end mb-2'>Reyting: <span className='bg-base-300 px-3 py-1 rounded'><span className='font-bold text-amber-600'>{item.rate}</span>/ <span className='text-primary font-bold'>50</span></span></h4>
+                    <h4 className='flex items-center gap-2 justify-end mb-2'>{t("col.rating")} <span className='bg-base-300 px-3 py-1 rounded'><span className='font-bold text-amber-600'>{item.rate}</span>/ <span className='text-primary font-bold'>50</span></span></h4>
                     <h3 className="font-semibold flex items-center gap-2 md:gap-3 mb-2">
                      <FaUser className='text-md md:text-xl'/> {item.last_name + " " + item.first_name}
                     </h3>
@@ -77,7 +79,7 @@ function TeachersCollage() {
         <div className="text-primary text-sm sm:text-2xl font-bold text-center w-full opacity-90 absolute left-0 top-40 sm:top-52 flex justify-center">
           <div className="flex items-center gap-3">
             <MdReportGmailerrorred className="text-2xl sm:text-5xl" />{" "}
-            <p>Malumot kiritilmagan</p>
+            <p>{t("col.noInfo")}</p>
           </div>
         </div>
       )}

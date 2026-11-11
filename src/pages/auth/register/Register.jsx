@@ -1,9 +1,12 @@
 import React, { useRef } from "react";
+import LanguageSwitcher from "../../../components/LanguageSwitcher";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useGlobalContext } from "../../../hooks/useGlobalContext";
+import { useTranslation } from "../../../i18n/LanguageContext";
 
 function Register() {
+  const { t } = useTranslation();
   const { theme } = useGlobalContext();
   const regStudentForm = useRef();
   const firstName = useRef();
@@ -53,7 +56,7 @@ function Register() {
       formData.append("user_roles", "ordinary_user");
 
       if (dataObj.password !== dataObj.password2) {
-        toast.error("Parolni qayta tekshiring");
+        toast.error(t("auth.checkPassword"));
       } else {
         fetch(`${import.meta.env.VITE_BASE_URL}/register/ordinary/`, {
           method: "POST",
@@ -66,7 +69,7 @@ function Register() {
           })
           .then(() => {
             regStudentForm.current.reset();
-            toast.success("Muvaffaqiyatli");
+            toast.success(t("auth.success"));
             navigate("/login");
           })
           .catch((err) => {
@@ -82,7 +85,8 @@ function Register() {
   }
 
   return (
-    <section className="min-h-screen flex">
+    <section className="min-h-screen flex relative">
+      <LanguageSwitcher className="absolute top-4 right-4 z-20" />
       {/* Left Side - Branding */}
       <div className="hidden lg:flex lg:w-1/2 bg-[#0B2B4E] relative overflow-hidden items-center justify-center p-12">
         <div className="absolute inset-0 opacity-20">
@@ -103,8 +107,8 @@ function Register() {
           <div className="w-40 h-40 mx-auto mb-8">
             <img src="/new_logo_white_2026.png" alt="Logo" className="w-full h-full object-contain" />
           </div>
-          <h1 className="text-white text-3xl font-bold mb-2">Kasbiy Ta'limni</h1>
-          <h2 className="text-[#D4A017] text-3xl font-bold">Rivojlantirish Instituti</h2>
+          <h1 className="text-white text-3xl font-bold mb-2">{t("auth.brand1")}</h1>
+          <h2 className="text-[#D4A017] text-3xl font-bold">{t("auth.brand2")}</h2>
         </div>
       </div>
 
@@ -112,8 +116,8 @@ function Register() {
       <div className="w-full lg:w-1/2 flex items-center justify-center p-6 bg-gray-50">
         <div className="w-full max-w-2xl">
           <div className="mb-6">
-            <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-2">Ro'yxatdan o'tish</h2>
-            <p className="text-sm sm:text-base text-gray-500">Tizimga kirish uchun ro'yxatdan o'ting.</p>
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-2">{t("auth.register")}</h2>
+            <p className="text-sm sm:text-base text-gray-500">{t("auth.registerHint")}</p>
           </div>
 
           <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6">
@@ -121,7 +125,7 @@ function Register() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label htmlFor="first_name" className="block text-sm font-medium text-gray-700 mb-1.5">
-                    Ism
+                    {t("auth.firstName")}
                   </label>
                   <input
                     ref={firstName}
@@ -129,13 +133,13 @@ function Register() {
                     name="first_name"
                     type="text"
                     className="w-full px-4 py-2.5 sm:py-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all text-sm sm:text-base"
-                    placeholder="Ismingiz"
+                    placeholder={t("auth.firstNamePh")}
                   />
                 </div>
 
                 <div>
                   <label htmlFor="last_name" className="block text-sm font-medium text-gray-700 mb-1.5">
-                    Familya
+                    {t("auth.lastName")}
                   </label>
                   <input
                     ref={lastName}
@@ -143,13 +147,13 @@ function Register() {
                     name="last_name"
                     type="text"
                     className="w-full px-4 py-2.5 sm:py-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all text-sm sm:text-base"
-                    placeholder="Familyangiz"
+                    placeholder={t("auth.lastNamePh")}
                   />
                 </div>
 
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1.5">
-                    Elektron pochta
+                    {t("auth.emailLabel")}
                   </label>
                   <div className="relative">
                     <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
@@ -170,7 +174,7 @@ function Register() {
 
                 <div>
                   <label htmlFor="image" className="block text-sm font-medium text-gray-700 mb-1.5">
-                    Rasm joylash
+                    {t("auth.uploadPhoto")}
                   </label>
                   <input
                     ref={image}
@@ -184,7 +188,7 @@ function Register() {
 
                 <div>
                   <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1.5">
-                    Parol
+                    {t("auth.password")}
                   </label>
                   <input
                     ref={password}
@@ -198,7 +202,7 @@ function Register() {
 
                 <div>
                   <label htmlFor="password2" className="block text-sm font-medium text-gray-700 mb-1.5">
-                    Parolni takrorlang
+                    {t("auth.confirmPassword")}
                   </label>
                   <input
                     ref={confirmPassword}
@@ -216,13 +220,13 @@ function Register() {
                   type="submit"
                   className="w-full py-2.5 sm:py-3 bg-[#0B2B4E] hover:bg-[#0a2442] text-white font-semibold rounded-lg transition-all duration-200 cursor-pointer text-sm sm:text-base"
                 >
-                  Ro'yxatdan o'tish
+                  {t("auth.register")}
                 </button>
 
                 <div className="text-center text-sm text-gray-500 mt-4">
-                  Avval ro'yxatdan o'tganmisiz?{" "}
+                  {t("auth.haveAccount")}{" "}
                   <Link to="/login" className="text-blue-600 hover:underline font-semibold">
-                    Kirish
+                    {t("auth.login")}
                   </Link>
                 </div>
               </div>
@@ -230,8 +234,8 @@ function Register() {
           </div>
 
           <div className="mt-6 text-center text-xs text-gray-400">
-            © 2026 Kasbiy Ta'limni Rivojlantirish Instituti.<br />
-            Texnik yordam: <span className="text-gray-600">+998 94 616-33-66</span>
+            © {new Date().getFullYear()} {t("site.name")}.<br />
+            {t("auth.techSupport")} <span className="text-gray-600">+998 94 616-33-66</span>
           </div>
         </div>
       </div>

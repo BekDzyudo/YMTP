@@ -18,8 +18,10 @@ import { RiShareForwardFill } from "react-icons/ri";
 import { useHero } from "../../context/HeroContext";
 import { useGlobalContext } from "../../hooks/useGlobalContext";
 import SEO from "../../components/SEO";
+import { useTranslation } from "../../i18n/LanguageContext";
 
 function RTRDetail() {
+  const { t } = useTranslation();
   const [themeNumber, setThemeNumber] = React.useState(0);
   const [isImageFullscreen, setIsImageFullscreen] = React.useState(false);
   const [isPdfFullscreen, setIsPdfFullscreen] = React.useState(false);
@@ -133,7 +135,7 @@ function RTRDetail() {
       {data && (
         <SEO 
           title={data.title || "RTR Material"}
-          description={`${data.title} - Raqamli ta'lim resurslari platformasidan video darslik va o'quv materiallari`}
+          description={t("rtr.detailSeoDesc", { title: data.title })}
           keywords={`rtr, ${data.title}, video darslik, o'quv materiali, kasbiy ta'lim`}
         />
       )}
@@ -151,7 +153,7 @@ function RTRDetail() {
         />
         <h1 className="relative z-10 text-white/90 mt-15 text-4xl md:text-5xl font-bold text-start w-1/2 leading-16 drop-shadow-lg px-4 font-serif">
           {(data?.themes?.length > 0 && data?.title) ||
-            "Hech narsa topilmadi !"}
+            t("rtr.nothingFoundExcl")}
         </h1>
       </div>
       {data?.themes?.length > 0 && (
@@ -160,11 +162,11 @@ function RTRDetail() {
             <div className="breadcrumbs text-sm md:text-[16px] hidden md:block">
               <ul>
                 <li>
-                  <Link to="/">Bosh sahifa</Link>
+                  <Link to="/">{t("common.home")}</Link>
                 </li>
                 <li>
                   <Link to="/digital-educational-resources">
-                    Raqamli ta'lim resurslari{" "}
+                    {t("nav.digitalResources")}{" "}
                   </Link>
                 </li>
               </ul>
@@ -208,7 +210,7 @@ function RTRDetail() {
                 <FaBook className="transition-transform duration-500 group-hover:scale-110" />
               </span>
               <div className="w-full text-sm sm:text-xs md:text-sm font-bold text-center">
-                Ma'ruza matni
+                {t("rtr.lecture")}
               </div>
             </div> 
             }
@@ -237,7 +239,7 @@ function RTRDetail() {
                 <FaVideo className="transition-transform duration-500 group-hover:scale-110" />
               </span>
               <div className="w-full text-sm sm:text-xs md:text-sm font-bold text-center">
-                Media materiallar
+                {t("res.media")}
               </div>
             </div>
             }
@@ -268,7 +270,7 @@ function RTRDetail() {
                 <FaImage className="transition-transform duration-500 group-hover:scale-110" />
               </span>
               <div className="w-full text-sm sm:text-xs md:text-sm font-bold text-center">
-                Ko‘rgazma materiallari
+                {t("rtr.visual")}
               </div>
             </div>
             }
@@ -298,7 +300,7 @@ function RTRDetail() {
                 <RiNewsLine className="transition-transform duration-500 group-hover:scale-110" />
               </span>
               <div className="w-full text-sm sm:text-xs md:text-sm font-bold text-center flex items-center justify-center gap-1">
-                Taqdimotlar
+                {t("rtr.presentations")}
               </div>
             </div>
             }
@@ -329,7 +331,7 @@ function RTRDetail() {
                 <LuFileSliders className="transition-transform duration-500 group-hover:scale-110" />
               </span>
               <div className="w-full text-sm sm:text-xs md:text-sm font-bold text-center">
-                Nazariy-amaliy topshiriqlar
+                {t("rtr.assignments")}
               </div>
             </div>
             }
@@ -360,7 +362,7 @@ function RTRDetail() {
                 <FaSlidersH className="transition-transform duration-500 group-hover:scale-110" />
               </span>
               <div className="w-full text-sm sm:text-xs md:text-sm font-bold text-center flex items-center gap-1">
-                Ta'lim texnologiyalari
+                {t("rtr.technologies")}
               </div>
             </div>
             }
@@ -370,7 +372,7 @@ function RTRDetail() {
             {/* Sidebar: Mundarija */}
             <aside className="w-full h-min md:w-1/4 lg:w-1/5 flex flex-col gap-4 bg-white rounded-xl shadow-lg p-4 border border-blue-100">
               <div className="text-lg font-bold mb-3 text-blue-700 uppercase text-center">
-                Mundarija
+                {t("rtr.contents")}
               </div>
               {data?.themes?.map((topic, idx) => (
                 <button
@@ -391,19 +393,19 @@ function RTRDetail() {
             <div className="flex-1">
               <div className="bg-white rounded-xl shadow-lg pb-6">
                 <div className="text-xl font-bold text-gray-800 font-serif text-center mb-5 rounded-t-xl py-6 px-6 bg-blue-100">
-                  {data?.themes[themeNumber]?.title || "Mavzu topilmadi"}
+                  {data?.themes[themeNumber]?.title || t("rtr.noTopic")}
                 </div>
                 {/* Main text content */}
                 <div className="px-6">
                   {themeDetailPending && (
                     <div className="text-center text-gray-500 py-16 font-medium">
-                      Yuklanmoqda...
+                      {t("common.loading")}
                     </div>
                   )}
                   {!themeDetailPending &&
                     getAvailableCards(themeDetail).length === 0 && (
                       <div className="text-center text-gray-500 py-16 font-medium">
-                        Ushbu mavzu uchun material hozircha mavjud emas.
+                        {t("rtr.noMaterial")}
                       </div>
                     )}
                   {/* maruza */}
@@ -462,7 +464,7 @@ function RTRDetail() {
                         return "";
                       })()}
                       title={
-                        data?.themes[themeNumber]?.title || "Media material"
+                        data?.themes[themeNumber]?.title || t("rtr.mediaMaterial")
                       }
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                       allowFullScreen
@@ -484,7 +486,7 @@ function RTRDetail() {
                           src={themeDetail?.show_material[0]?.content}
                           title={
                             data?.themes[themeNumber]?.title ||
-                            "Ko'rgazma materiali"
+                            t("rtr.visualMaterial")
                           }
                           className="w-full min-h-[400px] object-cover rounded-lg"
                         />
@@ -495,10 +497,10 @@ function RTRDetail() {
                         <button
                           onClick={() => setIsImageFullscreen(true)}
                           className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 flex items-center gap-2 group"
-                          title="Katta qilib ko'rish"
+                          title={t("res.enlarge")}
                         >
                           <FaExpand className="text-lg group-hover:rotate-90 transition-transform duration-300" />
-                          <span className="font-semibold">To'liq ekranda ko'rish</span>
+                          <span className="font-semibold">{t("res.fullscreen")}</span>
                         </button>
                       </div>
                     </div>
@@ -519,13 +521,13 @@ function RTRDetail() {
                           className="btn btn-error btn-sm flex items-center gap-2"
                         >
                           <FaTimes className="text-xl" />
-                          Yopish (ESC)
+                          {t("res.closeEsc")}
                         </button>
                       </div>
                       <div className="flex-1 overflow-auto p-4 flex items-start justify-center" onClick={(e) => e.stopPropagation()}>
                         <img
                           src={themeDetail?.show_material[0]?.content}
-                          alt={data?.themes[themeNumber]?.title || "Ko'rgazma materiali"}
+                          alt={data?.themes[themeNumber]?.title || t("rtr.visualMaterial")}
                           className="max-w-full h-auto object-contain rounded-lg"
                         />
                       </div>
@@ -539,7 +541,7 @@ function RTRDetail() {
                         {/* PDF iframe with native controls */}
                         <iframe
                           src={`${themeDetail?.presentation}#view=FitH&toolbar=1`}
-                          title="PDF Taqdimot"
+                          title={t("rtr.pdfPresentation")}
                           className="w-full h-[800px] border-0"
                           type="application/pdf"
                           style={{ minHeight: '700px' }}
@@ -551,10 +553,10 @@ function RTRDetail() {
                         <button
                           onClick={() => setIsPdfFullscreen(true)}
                           className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 flex items-center gap-2 group"
-                          title="Katta qilib ko'rish"
+                          title={t("res.enlarge")}
                         >
                           <FaExpand className="text-lg group-hover:rotate-90 transition-transform duration-300" />
-                          <span className="font-semibold">To'liq ekranda ko'rish</span>
+                          <span className="font-semibold">{t("res.fullscreen")}</span>
                         </button>
                       </div>
                     </div>
@@ -575,7 +577,7 @@ function RTRDetail() {
                           className="btn btn-error btn-sm flex items-center gap-2"
                         >
                           <FaTimes className="text-xl" />
-                          Yopish (ESC)
+                          {t("res.closeEsc")}
                         </button>
                       </div>
                       <div className="flex-1 bg-white rounded-lg overflow-hidden" onClick={(e) => e.stopPropagation()}>
@@ -611,7 +613,7 @@ function RTRDetail() {
                         {/* PDF iframe with native controls */}
                         <iframe
                           src={`${themeDetail?.educational_technologies}#view=FitH&toolbar=1`}
-                          title="Ta'lim texnologiyalari PDF"
+                          title={t("rtr.techPdf")}
                           className="w-full h-[800px] border-0"
                           type="application/pdf"
                           style={{ minHeight: '700px' }}
@@ -623,10 +625,10 @@ function RTRDetail() {
                         <button
                           onClick={() => setIsPdfFullscreen(true)}
                           className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 flex items-center gap-2 group"
-                          title="Katta qilib ko'rish"
+                          title={t("res.enlarge")}
                         >
                           <FaExpand className="text-lg group-hover:rotate-90 transition-transform duration-300" />
-                          <span className="font-semibold">To'liq ekranda ko'rish</span>
+                          <span className="font-semibold">{t("res.fullscreen")}</span>
                         </button>
                       </div>
                     </div>

@@ -15,6 +15,7 @@ import {
   FaUserTie,
 } from "react-icons/fa";
 import SEO from "../../components/SEO";
+import { useTranslation } from "../../i18n/LanguageContext";
 
 // TODO: Ushbu endpoint hali platforma backendida mavjud emas.
 // Backenddan tegishli POST API tayyor bo'lgach, shu manzilni almashtiring.
@@ -32,6 +33,7 @@ const initialForm = {
 };
 
 function AntiCorruption() {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState(initialForm);
   const [attachment, setAttachment] = useState(null);
   const [errors, setErrors] = useState({});
@@ -49,7 +51,7 @@ function AntiCorruption() {
     const file = e.target.files[0];
     if (file) {
       if (file.size > 5 * 1024 * 1024) {
-        toast.error("Fayl hajmi 5MB dan oshmasligi kerak!");
+        toast.error(t("anti.fileTooBig"));
         return;
       }
       setAttachment(file);
@@ -58,10 +60,10 @@ function AntiCorruption() {
 
   const validate = () => {
     const newErrors = {};
-    if (!formData.full_name.trim()) newErrors.full_name = "F.I.Sh to'ldirilishi shart";
-    if (!formData.email.trim()) newErrors.email = "Elektron pochta to'ldirilishi shart";
-    if (!formData.subject.trim()) newErrors.subject = "Savol mavzusi to'ldirilishi shart";
-    if (!formData.message.trim()) newErrors.message = "Savol matni to'ldirilishi shart";
+    if (!formData.full_name.trim()) newErrors.full_name = t("anti.err.fullName");
+    if (!formData.email.trim()) newErrors.email = t("anti.err.email");
+    if (!formData.subject.trim()) newErrors.subject = t("anti.err.subject");
+    if (!formData.message.trim()) newErrors.message = t("anti.err.message");
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -91,15 +93,15 @@ function AntiCorruption() {
             toast.error(`${field}: ${msg}`);
           }
         }
-        throw new Error("Murojaatni yuborishda xatolik yuz berdi");
+        throw new Error(t("anti.sendError"));
       }
 
-      toast.success("Murojaatingiz muvaffaqiyatli yuborildi!");
+      toast.success(t("anti.success"));
       setFormData(initialForm);
       setAttachment(null);
     } catch (error) {
       console.error("Anti-corruption form error:", error);
-      toast.error(error.message || "Murojaatni yuborishda xatolik yuz berdi. Qaytadan urinib ko'ring.");
+      toast.error(error.message || t("anti.sendErrorRetry"));
     } finally {
       setIsSubmitting(false);
     }
@@ -108,8 +110,8 @@ function AntiCorruption() {
   return (
     <>
       <SEO
-        title="Korrupsiyaga qarshi kurash"
-        description="Xodimlar xatti-harakatiga oid korrupsiyani oldini olish bo'yicha murojaat yuborish"
+        title={t("institutLinks.antiCorruption")}
+        description={t("anti.seoDesc")}
         keywords="korrupsiya, murojaat, shikoyat, xodimlar xatti-harakati, kasbiy ta'lim"
       />
 
@@ -120,7 +122,7 @@ function AntiCorruption() {
               <li>
                 <Link to="/" className="text-base-content/70 hover:text-blue-700 transition-colors">
                   <FaHome className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
-                  Bosh sahifa
+                  {t("common.home")}
                 </Link>
               </li>
               <li>
@@ -128,11 +130,11 @@ function AntiCorruption() {
                   Institut
                 </Link>
               </li>
-              <li className="text-blue-700 font-semibold">Korrupsiyaga qarshi kurash</li>
+              <li className="text-blue-700 font-semibold">{t("institutLinks.antiCorruption")}</li>
             </ul>
           </div>
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold font-serif">
-            Xodimlar xatti-harakatiga oid korrupsiyani oldini olish bo'yicha murojaat
+            {t("anti.title")}
           </h1>
         </div>
 
@@ -140,9 +142,7 @@ function AntiCorruption() {
           <FaShieldAlt className="text-base md:text-3xl shrink-0" />
           <div>
             <p className="text-sm">
-              Institut xodimlarining xatti-harakatida korrupsiyaga oid holatlarni
-              kuzatgan bo'lsangiz, quyidagi forma orqali murojaat qoldiring. Barcha
-              murojaatlar maxfiylik shartlariga rioya qilgan holda ko'rib chiqiladi.
+              {t("anti.intro")}
             </p>
           </div>
         </div>
@@ -151,7 +151,7 @@ function AntiCorruption() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div>
               <label className="block text-gray-700 font-semibold mb-2">
-                F.I.Sh <span className="text-red-500">*</span>
+                {t("anti.fullName")} <span className="text-red-500">*</span>
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -160,7 +160,7 @@ function AntiCorruption() {
                 <input
                   type="text"
                   name="full_name"
-                  placeholder="F.I.Sh"
+                  placeholder={t("anti.fullName")}
                   maxLength={150}
                   value={formData.full_name}
                   onChange={handleChange}
@@ -172,7 +172,7 @@ function AntiCorruption() {
 
             <div>
               <label className="block text-gray-700 font-semibold mb-2">
-                Elektron pochta <span className="text-red-500">*</span>
+                {t("anti.email")} <span className="text-red-500">*</span>
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -194,7 +194,7 @@ function AntiCorruption() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div>
-              <label className="block text-gray-700 font-semibold mb-2">Telefon</label>
+              <label className="block text-gray-700 font-semibold mb-2">{t("anti.phone")}</label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <FaPhone className="text-gray-400" />
@@ -212,7 +212,7 @@ function AntiCorruption() {
             </div>
 
             <div>
-              <label className="block text-gray-700 font-semibold mb-2">Manzil</label>
+              <label className="block text-gray-700 font-semibold mb-2">{t("anti.address")}</label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <FaMapMarkerAlt className="text-gray-400" />
@@ -220,7 +220,7 @@ function AntiCorruption() {
                 <input
                   type="text"
                   name="address"
-                  placeholder="Manzil"
+                  placeholder={t("anti.address")}
                   maxLength={255}
                   value={formData.address}
                   onChange={handleChange}
@@ -232,7 +232,7 @@ function AntiCorruption() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div>
-              <label className="block text-gray-700 font-semibold mb-2">Ish joyi</label>
+              <label className="block text-gray-700 font-semibold mb-2">{t("anti.workplace")}</label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <FaBriefcase className="text-gray-400" />
@@ -240,7 +240,7 @@ function AntiCorruption() {
                 <input
                   type="text"
                   name="workplace"
-                  placeholder="Ish joyi"
+                  placeholder={t("anti.workplace")}
                   maxLength={255}
                   value={formData.workplace}
                   onChange={handleChange}
@@ -250,7 +250,7 @@ function AntiCorruption() {
             </div>
 
             <div>
-              <label className="block text-gray-700 font-semibold mb-2">Lavozim</label>
+              <label className="block text-gray-700 font-semibold mb-2">{t("anti.position")}</label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <FaUserTie className="text-gray-400" />
@@ -258,7 +258,7 @@ function AntiCorruption() {
                 <input
                   type="text"
                   name="position"
-                  placeholder="Lavozim"
+                  placeholder={t("anti.position")}
                   maxLength={255}
                   value={formData.position}
                   onChange={handleChange}
@@ -270,12 +270,12 @@ function AntiCorruption() {
 
           <div>
             <label className="block text-gray-700 font-semibold mb-2">
-              Savol mavzusi <span className="text-red-500">*</span>
+              {t("anti.subject")} <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
               name="subject"
-              placeholder="Savol mavzusi"
+              placeholder={t("anti.subject")}
               maxLength={255}
               value={formData.subject}
               onChange={handleChange}
@@ -286,13 +286,13 @@ function AntiCorruption() {
 
           <div>
             <label className="block text-gray-700 font-semibold mb-2">
-              Savol matni <span className="text-red-500">*</span>
+              {t("anti.message")} <span className="text-red-500">*</span>
             </label>
             <textarea
               name="message"
               rows={6}
               maxLength={3000}
-              placeholder="Matn kiriting"
+              placeholder={t("anti.messagePlaceholder")}
               value={formData.message}
               onChange={handleChange}
               className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all resize-none ${errors.message ? "border-red-500" : "border-gray-300"}`}
@@ -308,12 +308,12 @@ function AntiCorruption() {
           </div>
 
           <div>
-            <label className="block text-gray-700 font-semibold mb-2">Fayl (ixtiyoriy)</label>
+            <label className="block text-gray-700 font-semibold mb-2">{t("anti.file")}</label>
             {!attachment ? (
               <label className="w-full border-2 border-dashed border-gray-300 rounded-lg p-4 hover:border-blue-500 hover:bg-blue-50/30 transition-all cursor-pointer flex items-center gap-3 text-gray-500">
                 <input type="file" className="hidden" onChange={handleFileChange} />
                 <FaPaperclip className="text-lg" />
-                <span className="text-sm">Faylni tanlash uchun bosing (Max: 5MB)</span>
+                <span className="text-sm">{t("anti.filePick")}</span>
               </label>
             ) : (
               <div className="w-full bg-green-50 border-2 border-green-300 rounded-lg p-3 flex items-center justify-between">
@@ -340,12 +340,12 @@ function AntiCorruption() {
             {isSubmitting ? (
               <>
                 <span className="loading loading-spinner"></span>
-                Yuborilmoqda...
+                {t("common.sending")}
               </>
             ) : (
               <>
                 <FaPaperPlane />
-                Yuborish
+                {t("common.send")}
               </>
             )}
           </button>

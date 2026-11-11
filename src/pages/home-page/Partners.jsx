@@ -1,21 +1,23 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import Divider from "../../components/Dvider";
 import { Navigation, Autoplay } from "swiper/modules";
+import { useTranslation } from "../../i18n/LanguageContext";
 
 function Partners() {
+  const { t } = useTranslation();
   const partners = [
-    { name: "UNICEF", image: "/unicef.png", description: "BMT Bolalar jamg'armasi" },
-    { name: "Askaniya", image: "/askaniya.png", description: "Askaniya ta'lim markazi" },
-    { name: "Avestos", image: "/avestos.png", description: "Avestos hamkorlik tashkiloti" },
-    { name: "BIBB", image: "/BIBB.png", description: "Federal kasb-hunar ta'limi instituti" },
-    { name: "Darya", image: "/Darya.png", description: "Darya ta'lim markazi" },
-    { name: "IRPO", image: "/irpo.png", description: "Rossiya kasb-hunar ta'limi instituti" },
-    { name: "Krivet", image: "/krivet.png", description: "Krivet o'quv markazi" },
-    { name: "RIPO", image: "/ripo.png", description: "Belarus kasb-hunar ta'limi instituti" },
-    { name: "RUDN", image: "/Rudn.png", description: "Rossiya do'stlik universiteti" },
-    { name: "Shvetsiya", image: "/shvesiya.png", description: "Shvetsiya ta'lim agentligi" },
-    { name: "UNESCO", image: "/unesco.png", description: "BMT ta'lim, fan va madaniyat tashkiloti" },
-    { name: "VET4UZ", image: "/vetuz.png", description: "Kasbiy ta'lim rivojlantirish loyihasi" },
+    { name: "UNICEF", image: "/unicef.png", description: t("home.partners.unicef") },
+    { name: "Askaniya", image: "/askaniya.png", description: t("home.partners.askaniya") },
+    { name: "Avestos", image: "/avestos.png", description: t("home.partners.avestos") },
+    { name: "BIBB", image: "/BIBB.png", description: t("home.partners.bibb") },
+    { name: "Darya", image: "/Darya.png", description: t("home.partners.darya") },
+    { name: "IRPO", image: "/irpo.png", description: t("home.partners.irpo") },
+    { name: "Krivet", image: "/krivet.png", description: t("home.partners.krivet") },
+    { name: "RIPO", image: "/ripo.png", description: t("home.partners.ripo") },
+    { name: "RUDN", image: "/Rudn.png", description: t("home.partners.rudn") },
+    { name: t("home.partners.swedenName"), image: "/shvesiya.png", description: t("home.partners.sweden") },
+    { name: "UNESCO", image: "/unesco.png", description: t("home.partners.unesco") },
+    { name: "VET4UZ", image: "/vetuz.png", description: t("home.partners.vet4uz") },
   ];
 
   return (
@@ -43,10 +45,10 @@ function Partners() {
         {/* Section Header */}
         <div className="text-center mb-8 sm:mb-12">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black mb-3 text-white font-serif">
-            Xalqaro hamkorlar
+            {t("home.partners.title")}
           </h2>
           <p className="text-white/90 text-base sm:text-lg max-w-2xl mx-auto">
-            Biz jahonning yetakchi ta'lim tashkilotlari bilan hamkorlik qilamiz
+            {t("home.partners.subtitle")}
           </p>
         </div>
 

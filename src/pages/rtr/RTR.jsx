@@ -14,8 +14,10 @@ import Pagination from "../../components/Pagination";
 import RTRHero from "./RTRHero";
 import useGetFetch from "../../hooks/useGetFetch";
 import SEO from "../../components/SEO";
+import { useTranslation } from "../../i18n/LanguageContext";
 
 function RTR() {
+  const { t, lang } = useTranslation();
   const [activeFilter, setActiveFilter] = useState(() => {
     const saved = sessionStorage.getItem('rtr_filter');
     return saved ? parseInt(saved) : 1;
@@ -27,22 +29,22 @@ function RTR() {
     {
       id: 1,
       icon: FaChalkboardTeacher,
-      title: "Boshlang‘ich kasbiy ta’lim",
+      title: t("level.primary"),
     },
     {
       id: 2,
       icon: FaGraduationCap,
-      title: "O'rta kasbiy ta'lim",
+      title: t("level.secondary"),
     },
     {
       id: 3,
       icon: FaStar,
-      title: "O‘rta maxsus kasbiy ta’lim",
+      title: t("level.secondarySpecial"),
     },
     {
       id: 4,
       icon: FaVideo,
-      title: "Media materiallar",
+      title: t("res.media"),
     },
   ];
 
@@ -62,7 +64,7 @@ function RTR() {
 
   useEffect(() => {
     fetchData(1);
-  }, [search, activeFilter]);
+  }, [search, activeFilter, lang]);
 
   useEffect(() => {
     sessionStorage.setItem('rtr_filter', activeFilter.toString());
@@ -75,8 +77,8 @@ function RTR() {
   return (
     <>
       <SEO 
-        title="Raqamli ta'lim resurslari (RTR)"
-        description="Kasbiy ta'lim o'qituvchilari uchun video darsliklar, metodikalar va o'quv materiallari platformasi. Boshlang'ich va o'rta kasbiy ta'lim resurslari"
+        title={t("rtr.seoTitle")}
+        description={t("rtr.seoDesc")}
         keywords="rtr, raqamli ta'lim, ta'lim resurslari, video darsliklar, metodika, o'quv materiallari, o'qituvchilar uchun"
       />
       
@@ -191,7 +193,7 @@ function RTR() {
               <span className="download-anim">
                 <FaDownload className="text-blue-500 group-hover:text-white"/>
               </span>
-              Mualliflar ro'yxati
+              {t("rtr.authors")}
             </Link>
             }
           </div>
@@ -200,7 +202,7 @@ function RTR() {
             <input
               onChange={(e) => setSearch(e.target.value)}
               type="text"
-              placeholder="Fan nomi bo'yicha qidirish..."
+              placeholder={t("rtr.searchSubject")}
               className="w-full h-full rounded-full border border-gray-200 py-1 sm:py-2 pl-4 pr-10 focus:outline-none focus:border-blue-400 transition text-sm sm:text-[16px] bg-white shadow-sm"
             />
             <svg
@@ -274,12 +276,12 @@ function RTR() {
                       <div className="flex items-center gap-3 mt-2">
                         <img
                           src={item.author_photo || '/default-avatar.png'}
-                          alt={item.author || 'Muallif'}
+                          alt={item.author || t("rtr.author")}
                           className="w-12 h-12 rounded-full object-cover shadow-md border-2 border-white bg-gray-200"
                         />
                         <div className="flex flex-col">
                           <span className="text-[15px] font-semibold text-gray-800 leading-tight">
-                            {item.author || 'Muallif'}
+                            {item.author || t("rtr.author")}
                           </span>
                         </div>
                       </div>
@@ -325,7 +327,7 @@ function RTR() {
                         {item.view_count} ko'rishlar
                       </span>
                       <span className="text-blue-600 font-bold text-sm flex items-center gap-1 uppercase group">
-                        Batafsil
+                        {t("common.more")}
                         <span className="inline-block transition-transform duration-300 group-hover:translate-x-2">
                           <GrFormNextLink className="text-lg font-bold" />
                         </span>
@@ -339,7 +341,7 @@ function RTR() {
             <div className="text-info text-sm sm:text-2xl font-bold text-center w-full opacity-90 absolute left-0 top-40 sm:top-70 flex justify-center">
               <div className="flex items-center gap-3">
                 <MdReportGmailerrorred className="text-2xl sm:text-5xl" />
-                <p>Hech narsa topilmadi</p>
+                <p>{t("res.nothingFound")}</p>
               </div>
             </div>
           )}

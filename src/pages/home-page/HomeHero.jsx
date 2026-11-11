@@ -6,8 +6,10 @@ import { useHero } from "../../context/HeroContext";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import { FaChalkboardTeacher, FaGraduationCap, FaStar, FaVideo } from "react-icons/fa";
+import { useTranslation } from "../../i18n/LanguageContext";
 
 function HomeHero() {
+  const { t } = useTranslation();
   const { theme } = useGlobalContext();
   const { auth } = useContext(AuthContext);
   const { setOnHero } = useHero();
@@ -70,7 +72,7 @@ function HomeHero() {
   ];
 
   // Sarlavha animatsiyasi
-  const headingText = "Kasbiy ta'limni rivojlantirish instituti yagona axborot-ta'lim portali";
+  const headingText = t("home.hero.heading");
   const [showHeading, setShowHeading] = useState(false);
   useEffect(() => {
     setShowHeading(false);
@@ -206,25 +208,25 @@ function HomeHero() {
             {[
               {
                 icon: <FaChalkboardTeacher size={22} />,
-                desc: "O'quv meyoriy hujjatlar",
+                desc: t("home.hero.card1"),
                 gradient: "from-info to-cyan-400",
                 glowColor: "rgba(6, 182, 212, 0.3)"
               },
               {
                 icon: <FaGraduationCap size={22} />,
-                desc: "Raqamli ta'lim resurslari",
+                desc: t("home.hero.card2"),
                 gradient: "from-info to-cyan-400",
                 glowColor: "rgba(6, 182, 212, 0.3)"
               },
               {
                 icon: <FaStar size={22} />,
-                desc: "O‘quv adabiyotlari",
+                desc: t("home.hero.card3"),
                 gradient: "from-info to-cyan-400",
                 glowColor: "rgba(6, 182, 212, 0.3)"
               },
               {
                 icon: <FaVideo size={22} />,
-                desc: "Foydalanuvchilar soni",
+                desc: t("home.hero.card4"),
                 gradient: "from-info to-cyan-400",
                 glowColor: "rgba(6, 182, 212, 0.3)"
               },
@@ -253,7 +255,7 @@ function HomeHero() {
                         {cardNumbers[idx]}
                       </span>
                       <span className="text-base sm:text-lg font-semibold text-white">
-                        ta
+                        {t("common.unit")}
                       </span>
                     </div>
 

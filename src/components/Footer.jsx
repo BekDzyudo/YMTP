@@ -10,17 +10,19 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import { institutLinks } from '../constants/institutLinks';
 import "swiper/css";
+import { useTranslation } from "../i18n/LanguageContext";
 
 function Footer() {
+  const { t } = useTranslation();
     const {theme} = useGlobalContext()
     const [swiperInstance, setSwiperInstance] = useState(null)
     
     const usefulLinks = [
-      { title: "O'zbekiston Respublikasi Prezidenti rasmiy veb-sayti", url: "https://president.uz/uz", logo: "/gerb.png", domen: "president.uz" },
-      { title: "Oliy ta'lim, fan va innovatsiyalar vazirligi", url: "https://gov.uz/oz/edu", logo: "/oliytalimvazirligi.png", domen: "gov.uz" },
-      { title: "Kasbiy ta'lim agentligi", url: "https://gov.uz/oz/kasbiytalim", logo: "/gerb.png", domen: "gov.uz" },
-      { title: "Yagona interaktiv davlat xizmatlari portali", url: "https://my.gov.uz/uz", logo: "/mygov.png", domen: "my.gov.uz" },
-      { title: "Qonunchilik ma'lumotlari milliy bazasi", url: "https://lex.uz/", logo: "/lex_uz.svg", domen: "lex.uz" },
+      { title: t("footer.links.president"), url: "https://president.uz/uz", logo: "/gerb.png", domen: "president.uz" },
+      { title: t("footer.links.ministry"), url: "https://gov.uz/oz/edu", logo: "/oliytalimvazirligi.png", domen: "gov.uz" },
+      { title: t("footer.links.agency"), url: "https://gov.uz/oz/kasbiytalim", logo: "/gerb.png", domen: "gov.uz" },
+      { title: t("footer.links.mygov"), url: "https://my.gov.uz/uz", logo: "/mygov.png", domen: "my.gov.uz" },
+      { title: t("footer.links.lex"), url: "https://lex.uz/", logo: "/lex_uz.svg", domen: "lex.uz" },
     ];
     
   return (
@@ -97,40 +99,40 @@ function Footer() {
               className="w-16 sm:w-20"
             />
             <h4 className="font-bold text-base sm:text-lg text-white">
-              Kasbiy ta'limni <br />
-              rivojlantirish <br />
-              instituti
+              {t("site.nameLine1")} <br />
+              {t("site.nameLine2")} <br />
+              {t("site.nameLine3")}
             </h4>
           </div>
           <p className="text-sm text-white/80 leading-relaxed">
-            Kasbiy ta'lim sohasida sifatli ta'lim xizmatlarini taqdim etish va mutaxassislar malakasini oshirish.
+            {t("footer.about")}
           </p>
         </div>
 
         {/* Tez havolalar */}
         <div className="flex flex-col gap-4">
-          <h4 className="font-bold text-lg text-cyan-400 mb-2">Havolalar</h4>
+          <h4 className="font-bold text-lg text-cyan-400 mb-2">{t("footer.links")}</h4>
           <ul className="flex flex-col gap-2">
             {institutLinks.map((link) => (
               <li key={link.to}>
                 <Link to={link.to} className="text-sm text-white/80 hover:text-cyan-300 hover:translate-x-1 transition-all inline-block">
-                  {link.label}
+                  {t(link.labelKey)}
                 </Link>
               </li>
             ))}
             <li>
               <Link to="/news" className="text-sm text-white/80 hover:text-cyan-300 hover:translate-x-1 transition-all inline-block">
-                Yangiliklar
+                {t("nav.news")}
               </Link>
             </li>
             <li>
               <Link to="/digital-educational-resources" className="text-sm text-white/80 hover:text-cyan-300 hover:translate-x-1 transition-all inline-block">
-                Raqamli ta'lim resurslari
+                {t("nav.digitalResources")}
               </Link>
             </li>
             <li>
               <Link to="/methodological-support" className="text-sm text-white/80 hover:text-cyan-300 hover:translate-x-1 transition-all inline-block">
-                Metodik ta'minot
+                {t("nav.methodicalSupport")}
               </Link>
             </li>
           </ul>
@@ -138,12 +140,12 @@ function Footer() {
 
         {/* Aloqa ma'lumotlari */}
         <div className="flex flex-col gap-4">
-          <h4 className="font-bold text-lg text-cyan-400 mb-2">Aloqa</h4>
+          <h4 className="font-bold text-lg text-cyan-400 mb-2">{t("footer.contact")}</h4>
           <div className="flex flex-col gap-3">
             <div className="flex items-start gap-3">
               <FaPhone className="text-cyan-400 text-lg mt-1 shrink-0" />
               <div>
-                <p className="text-xs text-white/60">Telefon</p>
+                <p className="text-xs text-white/60">{t("footer.phone")}</p>
                 <a href="tel:+998712469037" className="text-sm text-white hover:text-cyan-300 transition-colors">
 +998 71 246 08 73
                 </a>
@@ -152,7 +154,7 @@ function Footer() {
             <div className="flex items-start gap-3">
               <IoMailUnreadOutline className="text-cyan-400 text-lg mt-1 shrink-0" />
               <div>
-                <p className="text-xs text-white/60">Email</p>
+                <p className="text-xs text-white/60">{t("footer.email")}</p>
                 <a href="mailto:kasbiytalim@edu.uz" className="text-sm text-white hover:text-cyan-300 transition-colors">
                   kasbiytalim@edu.uz
                 </a>
@@ -161,9 +163,9 @@ function Footer() {
             <div className="flex items-start gap-3">
               <FaMapMarkerAlt className="text-cyan-400 text-lg mt-1 shrink-0" />
               <div>
-                <p className="text-xs text-white/60">Manzil</p>
+                <p className="text-xs text-white/60">{t("footer.address")}</p>
                 <Link to="https://yandex.uz/maps/org/81589415292/?ll=69.211024%2C41.353626&z=16" target='_blank' className="text-sm text-white/80">
-                  Toshkent shahar, Olmazor tumani, Talabalar ko'chasi, 96-uy
+                  {t("footer.addressValue")}
                 </Link>
               </div>
             </div>
@@ -172,7 +174,7 @@ function Footer() {
 
         {/* Ijtimoiy tarmoqlar va havolalar */}
         <div className="flex flex-col gap-4">
-          <h4 className="font-bold text-lg text-cyan-400 mb-2">Ijtimoiy tarmoqlar</h4>
+          <h4 className="font-bold text-lg text-cyan-400 mb-2">{t("footer.social")}</h4>
           <div className="flex gap-3 mb-4">
             <Link 
               to="https://t.me/ipi_uz" 
@@ -206,7 +208,7 @@ function Footer() {
           <div className="flex flex-col gap-2">
             <div className="flex items-center gap-2">
               <GrLanguage className="text-cyan-400 text-lg" />
-              <p className="text-xs text-white/60">Rasmiy web-sayt</p>
+              <p className="text-xs text-white/60">{t("footer.officialSite")}</p>
             </div>
             <Link 
               to="https://ipitvet.uz/uz/" 
@@ -223,10 +225,10 @@ function Footer() {
       {/* Copyright */}
       <div className="border-t border-white/20 pt-4 px-3.5 sm:px-5 mx-auto w-full xl:w-full 2xl:w-11/12">
         <p className="text-center text-xs sm:text-sm text-white/70">
-          © {new Date().getFullYear()} Kasbiy ta'limni rivojlantirish instituti. Barcha huquqlar himoyalangan.
+          © {new Date().getFullYear()} {t("site.name")}. {t("footer.rights")}
         </p>
         <p className="text-center text-xs text-white/60 mt-2">
-          Saytdan olingan barcha ma'lumotlar chop etilganda veb-saytga havola qilish majburiy
+          {t("footer.citation")}
         </p>
       </div>
     </div>

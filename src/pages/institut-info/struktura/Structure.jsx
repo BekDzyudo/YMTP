@@ -4,8 +4,10 @@ import { FaHome } from "react-icons/fa";
 import useGetFetch from "../../../hooks/useGetFetch";
 import SEO from "../../../components/SEO";
 import "./structure.css";
+import { useTranslation } from "../../../i18n/LanguageContext";
 
 function Structure() {
+  const { t } = useTranslation();
   const { data } = useGetFetch(
     `${import.meta.env.VITE_BASE_URL}/shared_app/tuzilma/`,
   );
@@ -44,8 +46,8 @@ function Structure() {
   return (
     <>
       <SEO 
-        title="Institut tuzilmasi"
-        description="Kasb-hunar ta'limi markazi tashkiliy tuzilmasi, bo'limlar, boshqarmalar va xodimlar haqida to'liq ma'lumot"
+        title={t("institutLinks.structure")}
+        description={t("inst.structure.seoDesc")}
         keywords="tuzilma, struktura, boshqarmalar, bo'limlar, xodimlar, orgstruktura"
       />
       
@@ -59,19 +61,19 @@ function Structure() {
                 className="text-base-content/70 hover:text-blue-700 transition-colors"
               >
                 <FaHome className="w-4 h-4 mr-2" />
-                Bosh sahifa
+                {t("common.home")}
               </Link>
             </li>
             <li>
               <Link className="text-base-content/70 hover:text-blue-700 transition-colors">
-                Institut
+                {t("nav.institute")}
               </Link>
             </li>
-            <li className="text-blue-700 font-semibold">Institut tuzilmasi</li>
+            <li className="text-blue-700 font-semibold">{t("institutLinks.structure")}</li>
           </ul>
         </div>
         <h1 className="text-xl text-center sm:text-start sm:text-3xl font-bold font-serif">
-          Institut tuzilmasi
+          {t("institutLinks.structure")}
         </h1>
       </div>
 
@@ -102,10 +104,10 @@ function Structure() {
               <div className="flex flex-col gap-1">
                 <h3 className="text-lg font-semibold text-white">
                   {data?.results[0]?.xodimlar[0]?.FISH ||
-                    "Direktor ismi topilmadi"}
+                    t("inst.structure.noDirectorName")}
                 </h3>
                 <h1 className="font-bold text-base text-gray-300">
-                  {data?.results[0]?.nomi || "Direktor lavozimi topilmadi"}
+                  {data?.results[0]?.nomi || t("inst.structure.noDirectorPos")}
                 </h1>
               </div>
             </li>
@@ -150,10 +152,10 @@ function Structure() {
                 <div className="flex flex-col gap-1 mt-10">
                   <h3 className="text-lg font-bold text-black">
                     {data?.results[1]?.xodimlar[0]?.FISH ||
-                      "O'rinbosar nomi topilmadi"}
+                      t("inst.structure.noDeputyName")}
                   </h3>
                   <h4 className="font-bold text-sm text-black/60">
-                    {data?.results[1]?.nomi || "O'rinbosar lavozimi topilmadi"}
+                    {data?.results[1]?.nomi || t("inst.structure.noDeputyPos")}
                   </h4>
                 </div>
               </div>
@@ -170,7 +172,7 @@ function Structure() {
                         </span>
                         <h3 className="text-base font-semibold">
                           {child.nomi ||
-                            `${index + 1} - Boshqarma nomi topilmadi`}
+                            `${index + 1} - ${t("inst.structure.noDivision")}`}
                         </h3>
                       </div>
                       {child.children?.length > 0 && (
@@ -188,7 +190,7 @@ function Structure() {
                                 </span>
                                 <h3 className="text-base font-semibold">
                                   {subChild.nomi ||
-                                    ` ${subIndex + 1} - Bo‘lim nomi topilmadi`}
+                                    ` ${subIndex + 1} - ${t("inst.structure.noDepartment")}`}
                                 </h3>
                               </div>
                             </li>
@@ -215,10 +217,10 @@ function Structure() {
                 <div className="flex flex-col gap-1 mt-10">
                   <h3 className="text-lg font-bold text-black">
                     {data?.results[2]?.xodimlar[0]?.FISH ||
-                      "O'rinbosar nomi topilmadi"}
+                      t("inst.structure.noDeputyName")}
                   </h3>
                   <h4 className="font-bold text-sm text-black/60">
-                    {data?.results[2]?.nomi || "O'rinbosar lavozimi topilmadi"}
+                    {data?.results[2]?.nomi || t("inst.structure.noDeputyPos")}
                   </h4>
                 </div>
               </div>
@@ -237,7 +239,7 @@ function Structure() {
                         </span>
                         <h3 className="text-base font-semibold">
                           {child.nomi ||
-                            `${index + 1} - Boshqarma nomi topilmadi`}
+                            `${index + 1} - ${t("inst.structure.noDivision")}`}
                         </h3>
                       </div>
                       {child.children?.length > 0 && (
@@ -255,7 +257,7 @@ function Structure() {
                                 </span>
                                 <h3 className="text-base font-semibold">
                                   {subChild.nomi ||
-                                    ` ${subIndex + 1} - Bo‘lim nomi topilmadi`}
+                                    ` ${subIndex + 1} - ${t("inst.structure.noDepartment")}`}
                                 </h3>
                               </div>
                             </li>
@@ -282,10 +284,10 @@ function Structure() {
                 <div className="flex flex-col gap-1 mt-10">
                   <h3 className="text-lg font-bold text-black">
                     {data?.results[3]?.xodimlar[0]?.FISH ||
-                      "O'rinbosar nomi topilmadi"}
+                      t("inst.structure.noDeputyName")}
                   </h3>
                   <h4 className="font-bold text-sm text-black/60">
-                    {data?.results[3]?.nomi || "O'rinbosar lavozimi topilmadi"}
+                    {data?.results[3]?.nomi || t("inst.structure.noDeputyPos")}
                   </h4>
                 </div>
               </div>
@@ -304,7 +306,7 @@ function Structure() {
                         </span>
                         <h3 className="text-base font-semibold">
                           {child.nomi ||
-                            `${index + 1} - Boshqarma nomi topilmadi`}
+                            `${index + 1} - ${t("inst.structure.noDivision")}`}
                         </h3>
                       </div>
                       {child.children?.length > 0 && (
@@ -322,7 +324,7 @@ function Structure() {
                                 </span>
                                 <h3 className="text-base font-semibold">
                                   {subChild.nomi ||
-                                    ` ${subIndex + 1} - Bo‘lim nomi topilmadi`}
+                                    ` ${subIndex + 1} - ${t("inst.structure.noDepartment")}`}
                                 </h3>
                               </div>
                             </li>
@@ -339,7 +341,7 @@ function Structure() {
       ) : (
         <div className="text-center py-12">
           <p className="text-base-content/70 text-sm sm:text-base">
-            Ma'lumot yuklanmoqda yoki ma'lumot topilmadi.
+            {t("inst.structure.loadingOrEmpty")}
           </p>
         </div>
       )}

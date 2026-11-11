@@ -8,6 +8,7 @@ import { useGlobalContext } from '../../../hooks/useGlobalContext';
 import "@react-pdf-viewer/core/lib/styles/index.css"
 import "@react-pdf-viewer/default-layout/lib/styles/index.css"
 import { GlobalWorkerOptions } from 'pdfjs-dist';
+import { useTranslation } from "../../../i18n/LanguageContext";
 
 GlobalWorkerOptions.workerSrc = new URL(
   'pdfjs-dist/build/pdf.worker.min.js',
@@ -15,6 +16,7 @@ GlobalWorkerOptions.workerSrc = new URL(
 ).toString();
 
 function Strategy() {
+  const { t } = useTranslation();
      const {Id} = useParams()
      const { theme } = useGlobalContext();
     const {
@@ -46,7 +48,7 @@ function Strategy() {
             <div className="text-primary text-sm sm:text-2xl font-bold text-center w-full opacity-90 absolute left-0 top-40 sm:top-52 flex justify-center">
               <div className="flex items-center gap-3">
                 <MdReportGmailerrorred className="text-2xl sm:text-5xl" />{" "}
-                <p>Hozircha fayl yuklanmagan</p>
+                <p>{t("col.noFile")}</p>
               </div>
             </div>
           )}

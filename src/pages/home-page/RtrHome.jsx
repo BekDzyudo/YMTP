@@ -1,59 +1,61 @@
 import React from 'react'
 import { FaFileAlt, FaFilePowerpoint, FaVideo, FaImage, FaCogs, FaDownload, FaSearch, FaArrowRight, FaBookOpen } from 'react-icons/fa'
 import { Link } from 'react-router-dom';
+import { useTranslation } from "../../i18n/LanguageContext";
 
 function RtrHome() {
+  const { t } = useTranslation();
 
   const resources = [
     {
       icon: <FaFileAlt size={28} />,
-      title: "Ma'ruza Matnlari",
-      description: "Kasbiy fanlar bo'yicha ma'ruza konspektlari va dars ishlanmalari",
+      title: t("home.rtr.r1.title"),
+      description: t("home.rtr.r1.desc"),
       color: "from-blue-500 to-blue-600",
       bgImage: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?q=80&w=1200&auto=format&fit=crop"
     },
     {
       icon: <FaFilePowerpoint size={28} />,
-      title: "Taqdimotlar",
-      description: "Interaktiv PowerPoint taqdimotlari va slaydlar to'plami",
+      title: t("home.rtr.r2.title"),
+      description: t("home.rtr.r2.desc"),
       color: "from-green-500 to-green-600",
       bgImage: "https://images.unsplash.com/photo-1557804506-669a67965ba0?q=80&w=1200&auto=format&fit=crop"
     },
     {
       icon: <FaVideo size={28} />,
-      title: "Media materiallar",
-      description: "Video darsliklar, audio va multimedia kontentlar",
+      title: t("home.rtr.r3.title"),
+      description: t("home.rtr.r3.desc"),
       color: "from-red-500 to-red-600",
       bgImage: "https://images.unsplash.com/photo-1492619375914-88005aa9e8fb?q=80&w=1200&auto=format&fit=crop"
     },
     {
       icon: <FaImage size={28} />,
-      title: "Ko'rgazmali materiallar",
-      description: "Plakatlar, chizmalar va vizual infografikalar",
+      title: t("home.rtr.r4.title"),
+      description: t("home.rtr.r4.desc"),
       color: "from-purple-500 to-purple-600",
       bgImage: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=1200&auto=format&fit=crop"
     },
     {
       icon: <FaCogs size={28} />,
-      title: "Ta'lim texnologiyalari",
-      description: "Zamonaviy o'qitish metodikasi va raqamli texnologiyalar",
+      title: t("home.rtr.r5.title"),
+      description: t("home.rtr.r5.desc"),
       color: "from-orange-500 to-orange-600",
       bgImage: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1200&auto=format&fit=crop"
     },
     {
       icon: <FaBookOpen size={28} />,
-      title: "Nazariy-amaliy topshiriqlar",
-      description: "Test savollari, mashqlar va amaliy topshiriqlar banki",
+      title: t("home.rtr.r6.title"),
+      description: t("home.rtr.r6.desc"),
       color: "from-cyan-500 to-cyan-600",
       bgImage: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=1200&auto=format&fit=crop"
     }
   ];
 
   const stats = [
-    { value: "1,500+", label: "Ta'lim resurslari" },
-    { value: "50+", label: "Fanlar" },
-    { value: "10K+", label: "Yuklab olishlar" },
-    { value: "24/7", label: "Onlayn kirish" }
+    { value: "1,500+", label: t("home.rtr.stat1") },
+    { value: "50+", label: t("home.rtr.stat2") },
+    { value: "10K+", label: t("home.rtr.stat3") },
+    { value: "24/7", label: t("home.rtr.stat4") }
   ];
 
   return (
@@ -73,13 +75,12 @@ function RtrHome() {
             <div className="flex-1">
               <h1 className="text-2xl sm:text-4xl text-center sm:text-start md:text-5xl lg:text-5xl xl:text-6xl font-serif font-black mb-4 sm:mb-6 leading-tight">
                 <span className="text-[#0d4ea3] bg-clip-text">
-                  Raqamli ta'lim resurslari
+                  {t("home.rtr.title")}
                 </span>
               </h1>
               
               <p className="text-gray-600 text-xs text-center sm:text-start sm:text-lg md:text-xl max-w-2xl leading-relaxed">
-                Kasbiy fanlar bo'yicha ma'ruza matnlari, taqdimotlar, video darslar, plakatlar 
-                va zamonaviy o'qitish texnologiyalari to'plami
+                {t("home.rtr.desc")}
               </p>
             </div>
 
@@ -91,7 +92,7 @@ function RtrHome() {
                 className="rounded-full group inline-flex px-4 py-2 sm:px-8 sm:py-4 bg-gradient-to-br from-[#194882] to-info text-white font-bold shadow-xl sm:hover:shadow-2xl transition-all duration-300 sm:hover:scale-105"
               >
                 <div className="flex items-center gap-2 sm:gap-3">
-                  <span className="text-xs sm:text-lg">Batafsil ma'lumot</span>
+                  <span className="text-xs sm:text-lg">{t("common.moreInfo")}</span>
                   <FaArrowRight className="group-hover:translate-x-2 transition-transform duration-300 text-sm sm:text-base" />
                 </div>
               </Link>

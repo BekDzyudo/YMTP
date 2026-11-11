@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import useGetFetchProfile from "../../../hooks/useGetFetchProfile";
 import { TbMessageOff } from "react-icons/tb";
+import { useTranslation } from "../../../i18n/LanguageContext";
 
 function ExpertChat({ userData, muhokama, materialId, materialDetail }) {
+  const { t } = useTranslation();
     const enterInput = useRef();
     const chatEndRef = useRef(null);
     const [inputText, setInputText] = useState("");
@@ -46,7 +48,7 @@ console.log(muhokama);
   return (
     <div className="h-[400px] md:h-[600px] bg-base-100 w-full px-3 py-5 rounded-2xl flex flex-col justify-between">
       <h1 className="border-b text-xs sm:text-md text-center uppercase font-semibold mb-4 pb-1">
-        Material bo‘yicha muhokama
+        {t("chat.title")}
       </h1>
       <div className="w-full h-full overflow-y-scroll">
         {muhokama && muhokama.length > 1 ?
@@ -90,7 +92,7 @@ console.log(muhokama);
         <div className="w-full h-full flex justify-center items-center font-semibold">
             <div className="flex flex-col items-center">
                 <TbMessageOff className="text-3xl sm:text-4xl"/>
-            <h1 className="text-center">Suhbatlar mavjud <br /> emas</h1>
+            <h1 className="text-center">{t("chat.empty1")} <br /> {t("chat.empty2")}</h1>
             </div>
         </div>
         }
@@ -106,13 +108,13 @@ console.log(muhokama);
             onChange={(e) => setInputText(e.target.value)}
             type="text"
             className="input input-sm sm:input-md join-item w-full outline-0"
-            placeholder="Xabar yozing..."
+            placeholder={t("chat.placeholder")}
           />
           <button
             type="submit"
             className="btn btn-neutral btn-sm sm:btn-md join-item"
           >
-            Yuborish
+            {t("common.send")}
           </button>
         </form>
       </div>

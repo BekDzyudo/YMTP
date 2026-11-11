@@ -3,8 +3,10 @@ import { Link, useParams } from 'react-router-dom';
 import { useGlobalContext } from '../../../hooks/useGlobalContext';
 import useGetFetch from '../../../hooks/useGetFetch';
 import { MdReportGmailerrorred } from 'react-icons/md';
+import { useTranslation } from "../../../i18n/LanguageContext";
 
 function DualEducation() {
+  const { t } = useTranslation();
 
   const { theme } = useGlobalContext();
   const {
@@ -25,7 +27,7 @@ function DualEducation() {
             theme == "night" ? "bg-gray-700" : "bg-slate-300"
           }`}
         >
-            <h1 className='font-bold '>Dual ta'lim sohalari <span className='text-primary font-bold rounded ml-2 px-3 py-0.5 bg-base-300'>{Duals.length}</span></h1>
+            <h1 className='font-bold '>{t("col.dualFields")} <span className='text-primary font-bold rounded ml-2 px-3 py-0.5 bg-base-300'>{Duals.length}</span></h1>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 pt-5 gap-4 sm:gap-5 md:gap-10 xl:gap-5">
             {Duals?.map((dual) => {
               return (
@@ -70,7 +72,7 @@ function DualEducation() {
         <div className="text-primary text-sm sm:text-2xl font-bold text-center w-full opacity-90 absolute left-0 top-40 sm:top-52 flex justify-center">
           <div className="flex items-center gap-3">
             <MdReportGmailerrorred className="text-2xl sm:text-5xl" />{" "}
-            <p>Malumot kiritilmagan</p>
+            <p>{t("col.noInfo")}</p>
           </div>
         </div>
       )}

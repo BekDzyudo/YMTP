@@ -11,13 +11,15 @@ import Teachers from "./Teachers";
 import FaqHome from "./FaqHome";
 import SEO from "../../components/SEO";
 import { OrganizationSchema, WebSiteSchema } from "../../components/StructuredData";
+import { useTranslation } from "../../i18n/LanguageContext";
 
 function Home() {
+  const { t } = useTranslation();
   return (
     <>
       <SEO 
-        title="Bosh sahifa"
-        description="O'zbekiston Respublikasi Kasbiy ta'limni rivojlantirish instituti - kasbiy ta'lim, treninglar, sertifikatlashtirish, pedagoglar malakasini oshirish va zamonaviy o'quv dasturlari"
+        title={t("home.seo.title")}
+        description={t("home.seo.description")}
         keywords="kasb-hunar, kasbiy ta'lim, o'qitish, treninglar, sertifikat, pedagoglar, malaka oshirish, o'zbekiston, ta'lim markazi"
         type="website"
       />

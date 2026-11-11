@@ -4,8 +4,10 @@ import useGetFetch from "../../hooks/useGetFetch";
 import { FaHome, FaChevronDown, FaChevronUp } from "react-icons/fa";
 import DOMPurify from "dompurify";
 import SEO from "../../components/SEO";
+import { useTranslation } from "../../i18n/LanguageContext";
 
 function Management() {
+  const { t } = useTranslation();
   const { data, isPending, error } = useGetFetch(
     `${import.meta.env.VITE_BASE_URL}/shared_app/rahbariyat/`
   );
@@ -28,8 +30,8 @@ function Management() {
   return (
     <>
       <SEO 
-        title="Rahbariyat"
-        description="Kasbiy ta'limni rivojlantirish instituti rahbariyati: direktor, o'rinbosarlar va mas'ul xodimlar haqida ma'lumot"
+        title={t("institutLinks.leadership")}
+        description={t("inst.management.seoDesc")}
         keywords="rahbariyat, direktor, o'rinbosarlar, institut rahbariyati, xodimlar"
       />
       
@@ -43,18 +45,18 @@ function Management() {
                 className="text-base-content/70 hover:text-blue-700 transition-colors"
               >
                 <FaHome className="w-4 h-4 mr-2" />
-                Bosh sahifa
+                {t("common.home")}
               </Link>
             </li>
             <li>
               <Link className="text-base-content/70 hover:text-blue-700 transition-colors">
-                Institut
+                {t("nav.institute")}
               </Link>
             </li>
-            <li className="text-blue-700 font-semibold">Rahbariyat</li>
+            <li className="text-blue-700 font-semibold">{t("institutLinks.leadership")}</li>
           </ul>
         </div>
-        <h1 className="text-center sm:text-start text-xl sm:text-3xl font-bold font-serif">Rahbariyat</h1>
+        <h1 className="text-center sm:text-start text-xl sm:text-3xl font-bold font-serif">{t("institutLinks.leadership")}</h1>
       </div>
 
       {isPending ? (
@@ -63,7 +65,7 @@ function Management() {
         </div>
       ) : error ? (
         <div className="alert alert-error">
-          <span>Ma'lumotlarni yuklashda xatolik yuz berdi</span>
+          <span>{t("inst.loadError")}</span>
         </div>
       ) : data?.length > 0 ? (
         <div className="space-y-6">
@@ -144,7 +146,7 @@ function Management() {
                           onClick={() => toggleDropdown(person.id, 'vazifa')}
                           className="flex items-center gap-2 px-4 py-2 bg-blue-700 text-white rounded-lg hover:bg-blue-800 transition-colors shadow-md text-sm md:text-base font-medium cursor-pointer"
                         >
-                          Vazifalari
+                          {t("inst.management.duties")}
                           {openDropdowns[`${person.id}-vazifa`] ? (
                             <FaChevronUp className="w-3 h-3" />
                           ) : (
@@ -158,7 +160,7 @@ function Management() {
                           onClick={() => toggleDropdown(person.id, 'faoliyat')}
                           className="flex items-center gap-2 px-4 py-2 bg-blue-700 text-white rounded-lg hover:bg-blue-800 transition-colors shadow-md text-sm md:text-base font-medium cursor-pointer"
                         >
-                          Faoliyati
+                          {t("inst.management.activity")}
                           {openDropdowns[`${person.id}-faoliyat`] ? (
                             <FaChevronUp className="w-3 h-3" />
                           ) : (
@@ -189,7 +191,7 @@ function Management() {
                 {/* Faoliyati Content */}
                 {person.mehnat_faoliyati && openDropdowns[`${person.id}-faoliyat`] && (
                   <div className="bg-slate-50 rounded-xl border border-slate-200 p-4 transition-all duration-300 mb-6">
-                    <h3 className="text-[16px] sm:text-lg font-bold text-blue-800 mb-3">Mehnat faoliyati</h3>
+                    <h3 className="text-[16px] sm:text-lg font-bold text-blue-800 mb-3">{t("inst.management.career")}</h3>
                     <div
                       className="prose prose-sm sm:prose-base max-w-none text-gray-600 text-justify text-sm sm:text-base"
                       dangerouslySetInnerHTML={{
@@ -204,7 +206,7 @@ function Management() {
         </div>
       ) : (
         <p className="text-base-content/70 text-sm sm:text-base">
-          Bu bo'lim uchun kontent topilmadi.
+          {t("inst.noContent")}
         </p>
       )}
     </section>

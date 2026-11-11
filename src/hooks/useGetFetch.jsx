@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "../i18n/LanguageContext";
+import { langHeaders } from "../i18n/i18n";
 
 function useGetFetch(url) {
   const [data, setData] = useState(null);
   const [isPending, setIsPending] = useState(false);
   const [error, setError] = useState(null);
+  // Til o'zgarganda ma'lumot qayta yuklanadi
+  const { lang } = useTranslation();
 
   useEffect(() => {
     let cancelled = false;
@@ -23,7 +27,10 @@ function useGetFetch(url) {
       setIsPending(true);
       setError(null);
       try {
-        const req = await fetch(url, { signal: controller.signal });
+        const req = await fetch(url, {
+          signal: controller.signal,
+          headers: langHeaders(lang),
+        });
         if (!req.ok) {
           throw new Error(req.statusText || `Request failed: ${req.status}`);
         }
@@ -46,7 +53,7 @@ function useGetFetch(url) {
       cancelled = true;
       controller.abort();
     };
-  }, [url]);
+  }, [url, lang]);
 
   return { data, isPending, error };
 }

@@ -4,8 +4,10 @@ import Divider from "../../components/Dvider";
 import { FaSearch } from "react-icons/fa";
 import { GrClearOption } from "react-icons/gr";
 import SEO from "../../components/SEO";
+import { useTranslation } from "../../i18n/LanguageContext";
 
 function Rating() {
+  const { t } = useTranslation();
 
   // get filter data
   const [bilim, setBilim] = useState("");
@@ -98,8 +100,8 @@ function Rating() {
   return (
     <>
       <SEO 
-        title="O'qituvchilar reytingi"
-        description="Kasbiy ta'lim o'qituvchilar reytingi. Fanlar, kasblar va ixtisosliklar bo'yicha o'qituvchilarning faoliyati, natijalari va yutuqlari reytingi"
+        title={t("rating.seoTitle")}
+        description={t("rating.seoDesc")}
         keywords="reyting, o'qituvchilar reytingi, fan o'qituvchilari, kasb o'qituvchilari, baholash, natijalar"
       />
       
@@ -111,7 +113,7 @@ function Rating() {
       {reyting?.results && (
         <>
           <h2 className="text-center text-2xl sm:text-3xl lg:text-4xl font-bold mb-10">
-            Fan o‘qituvchilari reytingi
+            {t("rating.title")}
           </h2>
           <div className="flex gap-5 md:hidden mb-6">
             <div className="drawer">
@@ -143,7 +145,7 @@ function Rating() {
             onChange={(e) => setBilim(e.target.value)}
             >
               <option value="" disabled={true}>
-                Bilim sohasi
+                {t("mat.knowledge")}
               </option>
               {bilim_soha &&
                     bilim_soha.map((item) => {
@@ -165,7 +167,7 @@ function Rating() {
             onChange={(e) => setTalim(e.target.value)}
             >
               <option value="" disabled={true}>
-                Ta'lim sohasi
+                {t("mat.education")}
               </option>
                {talim_soha &&
                     talim_soha.map((item) => {
@@ -186,7 +188,7 @@ function Rating() {
             className="select outline-0"
             onChange={(e) => setYunalish(e.target.value)}>
               <option value="" disabled={true}>
-                Ta'lim yo'nalish
+                {t("mat.direction")}
               </option>
                   {talim_yunalish &&
                     talim_yunalish.map((item) => {
@@ -207,7 +209,7 @@ function Rating() {
             className="select outline-0"
             onChange={(e) => setKasb(e.target.value)}>
               <option value="" disabled={true}>
-                Kasb va mutaxasisliklar
+                {t("mat.profession")}
               </option>
               {kasb_mutaxassislik &&
                     kasb_mutaxassislik.map((item) => {
@@ -229,7 +231,7 @@ function Rating() {
             onChange={(e) => setFan(e.target.value)}
             >
               <option value="" disabled={true}>
-                Fanlar
+                {t("mat.subjects")}
               </option>
                {fanlar &&
                     fanlar.map((item) => {
@@ -258,7 +260,7 @@ function Rating() {
             onChange={(e) => setBilim(e.target.value)}
             >
               <option value="" disabled={true}>
-                Bilim sohasi
+                {t("mat.knowledge")}
               </option>
               {bilim_soha &&
                     bilim_soha.map((item) => {
@@ -278,7 +280,7 @@ function Rating() {
             onChange={(e) => setTalim(e.target.value)}
             >
               <option value="" disabled={true}>
-                Ta'lim sohasi
+                {t("mat.education")}
               </option>
                {talim_soha &&
                     talim_soha.map((item) => {
@@ -297,7 +299,7 @@ function Rating() {
             className="select outline-0"
             onChange={(e) => setYunalish(e.target.value)}>
               <option value="" disabled={true}>
-                Ta'lim yo'nalish
+                {t("mat.direction")}
               </option>
                   {talim_yunalish &&
                     talim_yunalish.map((item) => {
@@ -316,7 +318,7 @@ function Rating() {
             className="select outline-0"
             onChange={(e) => setKasb(e.target.value)}>
               <option value="" disabled={true}>
-                Kasb va mutaxasisliklar
+                {t("mat.profession")}
               </option>
               {kasb_mutaxassislik &&
                     kasb_mutaxassislik.map((item) => {
@@ -336,7 +338,7 @@ function Rating() {
             onChange={(e) => setFan(e.target.value)}
             >
               <option value="" disabled={true}>
-                Fanlar
+                {t("mat.subjects")}
               </option>
                {fanlar &&
                     fanlar.map((item) => {
@@ -350,7 +352,7 @@ function Rating() {
                       );
                     })}
             </select>
-            <button className="btn btn-primary" onClick={clearFilters}>Filterni tozalash</button>
+            <button className="btn btn-primary" onClick={clearFilters}>{t("mat.clearFilter")}</button>
           </div>
           <div className="hidden md:block">
             <Divider color="blue" />
@@ -361,11 +363,11 @@ function Rating() {
               <thead className="bg-base-300">
                 <tr className="uppercase font-bold md:text-[14px] lg:text-[16px]">
                   <th>F.I.O</th>
-                  <th>Viloyat</th>
-                  <th>Tuman</th>
-                  <th>Ta'lim tashkiloti</th>
-                  <th>Fan</th>
-                  <th>Reyting</th>
+                  <th>{t("rating.region")}</th>
+                  <th>{t("rating.district")}</th>
+                  <th>{t("rating.institution")}</th>
+                  <th>{t("rating.subject")}</th>
+                  <th>{t("rating.rating")}</th>
                 </tr>
               </thead>
               <tbody>

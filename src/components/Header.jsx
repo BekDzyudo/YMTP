@@ -8,8 +8,17 @@ import { FiLogIn } from "react-icons/fi";
 import { AuthContext } from "../context/AuthContext";
 import useGetFetchProfile from "../hooks/useGetFetchProfile";
 import { institutLinks } from "../constants/institutLinks";
+import { useTranslation } from "../i18n/LanguageContext";
 
 function Header() {
+  const { t, lang, setLang, languages } = useTranslation();
+  const currentLanguage = languages.find((l) => l.code === lang);
+
+  // Tilni tanlagach dropdownni yopish
+  const handleLanguageChange = (code) => {
+    setLang(code);
+    document.activeElement?.blur();
+  };
   const { onHero } = useHero();
   const { pathname } = useLocation();
   
@@ -26,6 +35,13 @@ function Header() {
   // Barcha komponentlar uchun yagona stil o'zgaruvchilari
   const logoSrc = "/new_logo_white_2026.png"; // Doim oq logo
   const textColor = "text-white"; // Doim oq matn
+  // Menyu sig'masa, nomlar so'zlar bo'yicha ikki qatorga o'tadi (barcha tillarda).
+  // Ruscha/inglizcha nomlar uzunroq, shuning uchun ularda shrift biroz ixchamroq.
+  const compactNav = lang !== "uz";
+  const navLinkClass = `${textColor} text-center leading-tight whitespace-normal`;
+  const navSizeClass = compactNav
+    ? "lg:[&>li>*]:px-1.5 xl:[&>li>*]:px-3 lg:text-[11px] xl:text-[14px] 2xl:text-[15px] 2xl:gap-1"
+    : "lg:[&>li>*]:px-2 xl:[&>li>*]:px-3 lg:text-[12px] xl:text-[16px] 2xl:gap-3";
   const borderColor = useHeroStyle ? "border-white/30" : "border-white/20";
   
   // Background style - hero ustida transparent, boshqa sahifalarda gradient
@@ -41,7 +57,7 @@ function Header() {
       style={bgStyle}
     >
       <div className="navbar gap-2 px-3.5 sm:px-5 mx-auto w-full xl:w-full 2xl:w-11/12 items-center">
-        <div className="navbar-start">
+        <div className="navbar-start lg:w-auto lg:shrink-0">
           <Link to="/" className="flex gap-2 sm:gap-3 items-center">
            <img
                 src={logoSrc}
@@ -52,15 +68,16 @@ function Header() {
             <h4
               className={`font-semibold xl:text-[16px] lg:text-[14px] sm:text-[12px] text-[10px] ${textColor}`}
             >
-              Kasbiy ta'limni <br />
-              rivojlantirish <br />
-              instituti
+              {t("site.nameLine1")} <br />
+              {t("site.nameLine2")} <br />
+              {t("site.nameLine3")}
             </h4>
           </Link>
         </div>
-        <div className="navbar-center hidden lg:flex">
+        {/* Menyu qolgan joyni egallaydi; uzun nomlar (ru/en) ikki qatorga bo'linadi */}
+        <div className="navbar-center hidden lg:flex flex-1 min-w-0 justify-center">
           <ul
-            className={`menu lg:menu-horizontal 2xl:gap-3 lg:text-[12px] border rounded-xl xl:text-[16px] ${borderColor}`}
+            className={`menu lg:menu-horizontal flex-nowrap items-center max-w-full [&>li]:shrink border rounded-xl ${navSizeClass} ${borderColor}`}
           >
             <li className="relative">
               <div className="dropdown dropdown-hover group">
@@ -69,7 +86,7 @@ function Header() {
                   role="button"
                   className={`${textColor} gap-2 items-center flex w-auto`}
                 >
-                  Institut
+                  {t("nav.institute")}
                 </div>
                 <ul
                   tabIndex="-1"
@@ -87,14 +104,14 @@ function Header() {
                           <span className="absolute left-0 top-1/2 -translate-y-1/2 opacity-0 group-hover/item:opacity-100 transition-opacity duration-300 text-primary">
                             <FaAngleRight size={13} />
                           </span>
-                          {link.label}
+                          {t(link.labelKey)}
                         </a>
                       ) : (
                         <Link to={link.to} className="relative block py-2.5 text-[15px] font-medium transition-all duration-300 rounded-lg hover:translate-x-1 pl-0 group-hover/item:pl-4">
                           <span className="absolute left-0 top-1/2 -translate-y-1/2 opacity-0 group-hover/item:opacity-100 transition-opacity duration-300 text-primary">
                             <FaAngleRight size={13} />
                           </span>
-                          {link.label}
+                          {t(link.labelKey)}
                         </Link>
                       )}
                     </li>
@@ -105,7 +122,7 @@ function Header() {
              {/* <li>
               <Link
                 to="/region"
-                className={textColor}
+                className={navLinkClass}
               >
                 Texnikumlar
               </Link>
@@ -113,48 +130,48 @@ function Header() {
             <li>
               <Link
                 to="/digital-educational-resources"
-                className={textColor}
+                className={navLinkClass}
               >
-                Raqamli ta'lim resurslari
+                {t("nav.digitalResources")}
               </Link>
             </li>
             <li>
               <Link
                 to="/methodological-support"
-                className={textColor}
+                className={navLinkClass}
               >
-                Metodik ta'minot
+                {t("nav.methodicalSupport")}
               </Link>
             </li>
             <li>
               <Link
                 to="https://my.moqt.uz/"
                 target="_blank"
-                className={textColor}
+                className={navLinkClass}
               >
-                Malaka oshirish
+                {t("nav.training")}
               </Link>
             </li>
             <li>
               <Link
                 to="/science"
-                className={textColor}
+                className={navLinkClass}
               >
-                Ilmiy faoliyat
+                {t("nav.science")}
               </Link>
             </li>
             <li>
               <Link
                 to="/news"
-                className={textColor}
+                className={navLinkClass}
               >
-                Yangiliklar
+                {t("nav.news")}
               </Link>
             </li>
             {/* <li>
               <Link
                 to="/literature"
-                className={textColor}
+                className={navLinkClass}
               >
                 Adabiyotlar
               </Link>
@@ -162,9 +179,9 @@ function Header() {
             <li>
               <Link
                 to="/contact"
-                className={textColor}
+                className={navLinkClass}
               >
-                Bog‘lanish
+                {t("nav.contact")}
               </Link>
             </li>
             {/* <li className="relative">
@@ -365,16 +382,17 @@ function Header() {
             </li> */}
           </ul>
         </div>
-        <div className="navbar-end 2xl:gap-4 xl:gap-2 gap-2">
+        <div className="navbar-end lg:w-auto lg:shrink-0 2xl:gap-4 xl:gap-2 gap-2">
           {auth.refreshToken ? (
             <></>
           ) : (
             <Link
               to="/login"
+              title={t("nav.login")}
               className={`hidden sm:flex px-2 py-2.5 xl:py-3 sm:border rounded-lg gap-1 items-center text-sm xl:text-[16px] ${textColor} ${borderColor}`}
             >
               {" "}
-              Kirish <FiLogIn className="text-sm xl:text-lg" />
+              <span className={compactNav ? "lg:hidden 2xl:inline" : "lg:hidden xl:inline"}>{t("nav.login")}</span> <FiLogIn className="text-sm xl:text-lg" />
             </Link>
           )}
 {/* sun and moon */}
@@ -432,55 +450,42 @@ function Header() {
 
           {/* Language Selector */}
           <div className="dropdown dropdown-end">
-            <button 
+            <button
               tabIndex={0}
+              aria-label={t("nav.language")}
+              title={t("nav.language")}
               className={`px-3 py-2 xl:py-2.5 border rounded-lg flex items-center gap-2 ${textColor} ${borderColor} hover:bg-white/10 transition-colors`}
             >
-              <img 
-                src="https://flagcdn.com/w20/uz.png" 
-                srcSet="https://flagcdn.com/w40/uz.png 2x"
-                alt="Uzbekistan"
+              <img
+                src={`https://flagcdn.com/w20/${currentLanguage.flag}.png`}
+                srcSet={`https://flagcdn.com/w40/${currentLanguage.flag}.png 2x`}
+                alt={currentLanguage.name}
                 className="w-5 h-3 sm:w-6 sm:h-4"
               />
-              <span className="hidden sm:inline text-sm xl:text-base font-medium">O'z</span>
+              <span className="hidden sm:inline text-sm xl:text-base font-medium">{currentLanguage.label}</span>
             </button>
             <ul tabIndex={0} className="dropdown-content menu bg-base-300 rounded-lg z-40 w-min p-2 shadow-lg border border-gray-700 mt-2">
-              <li>
-                <button className="flex items-center gap-3 hover:bg-base-100 rounded-lg py-2 pr-8">
-                  <img 
-                    src="https://flagcdn.com/w20/uz.png" 
-                    srcSet="https://flagcdn.com/w40/uz.png 2x"
-                    alt="Uzbekistan"
-                    className="w-6 h-auto"
-                  />
-                  <span className="font-medium">O'z</span>
-                </button>
-              </li>
-              <li>
-                <button className="flex items-center gap-3 hover:bg-base-100 rounded-lg py-2 pr-8">
-                  <img 
-                    src="https://flagcdn.com/w20/ru.png" 
-                    srcSet="https://flagcdn.com/w40/ru.png 2x"
-                    alt="Russia"
-                    className="w-6 h-auto"
-                  />
-                  <span className="font-medium">Ру</span>
-                </button>
-              </li>
-              <li>
-                <button className="flex items-center gap-3 hover:bg-base-100 rounded-lg py-2 pr-8">
-                  <img 
-                    src="https://flagcdn.com/w20/gb.png" 
-                    srcSet="https://flagcdn.com/w40/gb.png 2x"
-                    alt="United Kingdom"
-                    className="w-6 h-auto"
-                  />
-                  <span className="font-medium">En</span>
-                </button>
-              </li>
+              {languages.map((language) => (
+                <li key={language.code}>
+                  <button
+                    type="button"
+                    onClick={() => handleLanguageChange(language.code)}
+                    className={`flex items-center gap-3 hover:bg-base-100 rounded-lg py-2 pr-8 ${language.code === lang ? "bg-base-100 font-semibold" : ""}`}
+                    aria-current={language.code === lang ? "true" : undefined}
+                  >
+                    <img
+                      src={`https://flagcdn.com/w20/${language.flag}.png`}
+                      srcSet={`https://flagcdn.com/w40/${language.flag}.png 2x`}
+                      alt={language.name}
+                      className="w-6 h-auto"
+                    />
+                    <span className="font-medium">{language.label}</span>
+                  </button>
+                </li>
+              ))}
             </ul>
           </div>
-          
+
           <div className="dropdown dropdown-end">
             <div
               tabIndex={0}
@@ -510,8 +515,7 @@ function Header() {
               ) : (
                 <li>
                   <Link to="/login" className={`text-[12px] sm:text-sm`}>
-                    {" "}
-                    Kirish
+                    {t("nav.login")}
                   </Link>
                 </li>
               )}
@@ -523,7 +527,7 @@ function Header() {
                     className="justify-between text-[12px] sm:text-sm"
                     to="/expert-profile"
                   >
-                    Profil
+                    {t("nav.profile")}
                   </Link>
                 )}
                 { userData?.user_roles == "teacher" && (
@@ -531,7 +535,7 @@ function Header() {
                     className="justify-between text-[12px] sm:text-sm"
                     to="/profile"
                   >
-                    Profil
+                    {t("nav.profile")}
                   </Link>
                 )}
               </li>
@@ -544,7 +548,7 @@ function Header() {
                     onClick={logout}
                     className=" text-[12px] sm:text-sm"
                   >
-                    Chiqish
+                    {t("nav.logout")}
                   </Link>
                 </li>
               ) : (
@@ -557,33 +561,33 @@ function Header() {
               </div>
               <div className="lg:hidden">
                 <li>
-                  <Link to="/">Bosh sahifa</Link>
+                  <Link to="/">{t("nav.home")}</Link>
                 </li>
                 {institutLinks.map((link) => (
                   <li key={link.to}>
                     {link.external ? (
                       <a href={link.to} target="_blank" rel="noopener noreferrer">
-                        {link.label}
+                        {t(link.labelKey)}
                       </a>
                     ) : (
-                      <Link to={link.to}>{link.label}</Link>
+                      <Link to={link.to}>{t(link.labelKey)}</Link>
                     )}
                   </li>
                 ))}
                 <li>
-                  <Link to="/digital-educational-resources">Raqamli ta'lim resurslari</Link>
+                  <Link to="/digital-educational-resources">{t("nav.digitalResources")}</Link>
                 </li>
                 <li>
-                  <Link to="/methodological-support">Metodik ta'minot</Link>
+                  <Link to="/methodological-support">{t("nav.methodicalSupport")}</Link>
                 </li>
                 <li>
-                  <Link to="/science">Ilmiy faoliyat</Link>
+                  <Link to="/science">{t("nav.science")}</Link>
                 </li>
                 <li>
-                  <Link to="/news">Yangiliklar</Link>
+                  <Link to="/news">{t("nav.news")}</Link>
                 </li>
                 <li>
-                  <Link to="/contact">Bog'lanish</Link>
+                  <Link to="/contact">{t("nav.contact")}</Link>
                 </li>
               </div>
             </ul>

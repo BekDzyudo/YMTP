@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useCalendar } from '../context/CalendarContext';
 import { useNavigate } from 'react-router-dom';
 import { FaHeadset, FaImage, FaTimes, FaPaperPlane } from 'react-icons/fa';
+import { useTranslation } from "../i18n/LanguageContext";
 
 function FloatingActionButton() {
+  const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const { openCalendar } = useCalendar();
   const navigate = useNavigate();
@@ -105,7 +107,7 @@ function FloatingActionButton() {
 
       setQuickSubmitMessage({
         type: "success",
-        text: "Xabaringiz muvaffaqiyatli yuborildi! Tez orada siz bilan bog'lanamiz.",
+        text: t("contact.success"),
       });
       setIsQuickSubmitting(false);
       setQuickFormData({
@@ -125,7 +127,7 @@ function FloatingActionButton() {
       console.error("Xatolik:", error);
       setQuickSubmitMessage({
         type: "error",
-        text: "Xabar yuborishda xatolik yuz berdi. Iltimos, qaytadan urinib ko'ring.",
+        text: t("contact.sendError"),
       });
       setIsQuickSubmitting(false);
       setTimeout(() => setQuickSubmitMessage(null), 5000);
@@ -151,7 +153,7 @@ function FloatingActionButton() {
                 <div className="bg-white/20 p-3 rounded-full">
                   <FaHeadset className="text-2xl text-white" />
                 </div>
-                <h2 className="text-2xl font-bold text-white">Tezkor aloqa</h2>
+                <h2 className="text-2xl font-bold text-white">{t("fab.quickContact")}</h2>
               </div>
               <button
                 onClick={() => setIsQuickModalOpen(false)}
@@ -187,7 +189,7 @@ function FloatingActionButton() {
                       onChange={handleQuickFormChange}
                       required
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
-                      placeholder="Ismingiz"
+                      placeholder={t("fab.namePh")}
                     />
                   </div>
 
@@ -234,7 +236,7 @@ function FloatingActionButton() {
                       onChange={handleQuickFormChange}
                       required
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
-                      placeholder="Mavzu"
+                      placeholder={t("fab.subjectPh")}
                     />
                   </div>
                 </div>
@@ -250,13 +252,13 @@ function FloatingActionButton() {
                     required
                     rows="4"
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none resize-none"
-                    placeholder="Xabaringizni yozing..."
+                    placeholder={t("fab.messagePh")}
                   ></textarea>
                 </div>
 
                 <div>
                   <label className="block text-gray-700 font-semibold mb-2">
-                    Rasm yuklash (ixtiyoriy)
+                    {t("fab.uploadImage")}
                   </label>
                   <div className="relative">
                     <input
@@ -275,7 +277,7 @@ function FloatingActionButton() {
                       <span className="text-gray-600">
                         {quickFormData.image
                           ? quickFormData.image.name
-                          : "Rasm tanlang"}
+                          : t("fab.chooseImage")}
                       </span>
                     </label>
                   </div>
@@ -289,12 +291,12 @@ function FloatingActionButton() {
                   {isQuickSubmitting ? (
                     <>
                       <span className="loading loading-spinner"></span>
-                      Yuborilmoqda...
+                      {t("common.sending")}
                     </>
                   ) : (
                     <>
                       <FaPaperPlane />
-                      Yuborish
+                      {t("common.send")}
                     </>
                   )}
                 </button>
@@ -314,23 +316,23 @@ function FloatingActionButton() {
               </div>
               <div className="flex-1">
                 <h3 className="text-lg font-bold text-gray-800 mb-2">
-                  Sizga yordam kerakmi?
+                  {t("fab.needHelp")}
                 </h3>
                 <p className="text-gray-600 text-sm mb-4">
-                  Savol yoki takliflaringiz bo'lsa, biz bilan bog'laning. Operatorlarimiz sizga yordam berishga tayyor!
+                  {t("fab.helpText")}
                 </p>
                 <div className="flex gap-2">
                   <button
                     onClick={handleAutoPopupYes}
                     className="flex-1 px-4 py-2 bg-linear-to-br from-[#194882] to-info text-white font-semibold rounded-lg hover:shadow-lg transition-all duration-300"
                   >
-                    Ha, kerak
+                    {t("fab.yes")}
                   </button>
                   <button
                     onClick={handleCloseAutoPopup}
                     className="px-4 py-2 bg-gray-200 text-gray-700 font-semibold rounded-lg hover:bg-gray-300 transition-colors"
                   >
-                    Yo'q
+                    {t("fab.no")}
                   </button>
                 </div>
               </div>
@@ -354,11 +356,11 @@ function FloatingActionButton() {
             <button
               onClick={handleQuickContactClick}
               className="group flex items-center gap-3 transition-all duration-200 hover:scale-105"
-              title="Tezkor aloqa"
+              title={t("fab.quickContact")}
             >
               {/* Label */}
               <span className="bg-white px-3 py-1.5 rounded-lg shadow-lg text-xs font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
-                Tezkor aloqa
+                {t("fab.quickContact")}
               </span>
               
               {/* Icon Button */}
@@ -371,11 +373,11 @@ function FloatingActionButton() {
             <button
               onClick={handleCalendarClick}
               className="group flex items-center gap-3 transition-all duration-200 hover:scale-105"
-              title="Voqealar kalendari"
+              title={t("fab.calendar")}
             >
               {/* Label */}
               <span className="bg-white px-3 py-1.5 rounded-lg shadow-lg text-xs font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
-                Voqealar kalendari
+                {t("fab.calendar")}
               </span>
               
               {/* Icon Button */}
@@ -400,10 +402,10 @@ function FloatingActionButton() {
             {/* Messages Button */}
             {/* <button
               className="group flex items-center gap-3 transition-all duration-200 hover:scale-105"
-              title="Xabarlar"
+              title={t("fab.messages")}
             >
               <span className="bg-white px-3 py-1.5 rounded-lg shadow-lg text-xs font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
-                Xabarlar
+                {t("fab.messages")}
               </span>
               
               <div className="bg-gradient-to-br from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white p-3 rounded-full shadow-lg transition-all duration-200">
@@ -428,10 +430,10 @@ function FloatingActionButton() {
             <button
               onClick={() => {/* TODO: Add functionality */}}
               className="group flex items-center gap-3 transition-all duration-200 hover:scale-105"
-              title="Bildirishnomalar"
+              title={t("fab.notifications")}
             >
               <span className="bg-white px-3 py-1.5 rounded-lg shadow-lg text-xs font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
-                Bildirishnomalar
+                {t("fab.notifications")}
               </span>
               
               <div className="bg-gradient-to-br from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white p-3 rounded-full shadow-lg transition-all duration-200 relative">
@@ -458,10 +460,10 @@ function FloatingActionButton() {
             <button
               onClick={()=>navigate('/contact')}
               className="group flex items-center gap-3 transition-all duration-200 hover:scale-105"
-              title="Yordam"
+              title={t("fab.help")}
             >
               <span className="bg-white px-3 py-1.5 rounded-lg shadow-lg text-xs font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
-                Yordam
+                {t("fab.help")}
               </span>
               
               <div className="bg-gradient-to-br from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white p-3 rounded-full shadow-lg transition-all duration-200">
@@ -490,7 +492,7 @@ function FloatingActionButton() {
           className={`bg-gradient-to-br from-[#194882] to-info hover:from-[#15396b] hover:to-blue-600 text-white p-4 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 active:scale-95 ${
             isOpen ? 'rotate-45' : 'rotate-0'
           }`}
-          title={isOpen ? 'Yopish' : 'Ochish'}
+          title={isOpen ? t("fab.close") : t("fab.open")}
         >
           <svg 
             xmlns="http://www.w3.org/2000/svg" 

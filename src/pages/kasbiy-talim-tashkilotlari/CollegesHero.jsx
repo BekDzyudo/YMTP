@@ -5,8 +5,10 @@ import {
   FaBuilding, 
   FaGraduationCap, 
 } from "react-icons/fa";
+import { useTranslation } from "../../i18n/LanguageContext";
 
 function CollegesHero({ colleges, regions }) {
+  const { t } = useTranslation();
   const [showHeading, setShowHeading] = useState(false);
   const [showDesc, setShowDesc] = useState(false);
   const { setOnHero } = useHero();
@@ -69,7 +71,7 @@ function CollegesHero({ colleges, regions }) {
       <div className="absolute inset-0 w-full h-full">
         <img
           src="/College.jpg"
-          alt="Kasbiy ta'lim texnikumlari"
+          alt={t("col.hero.alt")}
           className="absolute inset-0 w-full h-full object-cover"
         />
       </div>
@@ -91,7 +93,7 @@ function CollegesHero({ colleges, regions }) {
                 transition: "opacity 0.5s, transform 0.5s",
               }}
             >
-              Kasbiy ta'lim tashkilotlari
+              {t("col.hero.title")}
             </h2>
             <p
               className="text-xs sm:text-sm md:text-[16px] lg:text-xl text-center w-full sm:max-w-[80%] mx-auto italic text-gray-200 font-medium"
@@ -102,26 +104,26 @@ function CollegesHero({ colleges, regions }) {
                 transition: "opacity 0.5s, transform 0.5s",
               }}
             >
-              O'zbekiston Respublikasi kasbiy ta'lim tashkilotlari haqida ma'lumotlar, statistikalar va yangiliklar bilan tanishing.
+              {t("col.hero.desc")}
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-5 mt-8 sm:mt-10 z-20 max-w-5xl mx-auto w-full sm:px-4">
             {[
               {
                 icon: <FaBuilding size={22} />,
-                desc: "Jami texnikumlar",
+                desc: t("col.hero.total"),
                 gradient: "from-blue-600 to-cyan-600",
                 glowColor: "rgba(37, 99, 235, 0.35)"
               },
               {
                 icon: <FaGraduationCap size={22} />,
-                desc: "Jami o'quvchilar",
+                desc: t("col.hero.students"),
                 gradient: "from-green-600 to-emerald-600",
                 glowColor: "rgba(21, 128, 61, 0.35)"
               },
               {
                 icon: <FaMapMarkerAlt size={22} />,
-                desc: "Hududlar soni",
+                desc: t("col.hero.regions"),
                 gradient: "from-purple-600 to-pink-600",
                 glowColor: "rgba(147, 51, 234, 0.35)"
               },

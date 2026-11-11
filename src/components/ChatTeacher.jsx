@@ -1,8 +1,10 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import useGetFetchProfile from "../hooks/useGetFetchProfile";
+import { useTranslation } from "../i18n/LanguageContext";
 
 function Chat({ materialId }) {
+  const { t } = useTranslation();
   const { userData, auth } = useContext(AuthContext);
   const [Material, setMaterial] = useState(null);
   const [inputText, setInputText] = useState("");
@@ -158,10 +160,10 @@ function Chat({ materialId }) {
             onChange={(e) => setInputText(e.target.value)}
             type="text"
             className="input input-sm sm:input-md join-item w-full outline-0"
-            placeholder="Xabar yozing..."
+            placeholder={t("chat.placeholder")}
           />
           <button type="submit" className="btn btn-sm sm:btn-md join-item">
-            Yuborish
+            {t("common.send")}
           </button>
         </form>
       </div>

@@ -1,7 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "../../i18n/LanguageContext";
 
 function NotFound() {
+  const { t } = useTranslation();
   return (
     <section className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 px-4">
       <div className="max-w-2xl w-full text-center">
@@ -32,13 +34,13 @@ function NotFound() {
         {/* Error Message */}
         <div className="mb-8">
           <h2 className="text-2xl sm:text-4xl font-bold text-gray-800 mb-4">
-            Sahifa topilmadi
+            {t("notFound.title")}
           </h2>
           <p className="text-base sm:text-lg text-gray-600 mb-2">
-            Kechirasiz, siz qidirayotgan sahifa mavjud emas yoki o'chirilgan.
+            {t("notFound.text")}
           </p>
           <p className="text-sm sm:text-base text-gray-500">
-            URL manzilni tekshiring yoki bosh sahifaga qayting.
+            {t("notFound.hint")}
           </p>
         </div>
 
@@ -61,7 +63,7 @@ function NotFound() {
                 d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" 
               />
             </svg>
-            Bosh sahifa
+            {t("common.home")}
           </Link>
           
           <button
@@ -81,7 +83,7 @@ function NotFound() {
                 d="M10 19l-7-7m0 0l7-7m-7 7h18" 
               />
             </svg>
-            Orqaga qaytish
+            {t("notFound.goBack")}
           </button>
         </div>
 

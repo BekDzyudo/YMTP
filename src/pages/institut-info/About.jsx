@@ -4,8 +4,10 @@ import useGetFetch from "../../hooks/useGetFetch";
 import { FaHome, FaCircle, FaBuilding } from "react-icons/fa";
 import DOMPurify from "dompurify";
 import SEO from "../../components/SEO";
+import { useTranslation } from "../../i18n/LanguageContext";
 
 function About() {
+  const { t } = useTranslation();
   const { data, isPending, error } = useGetFetch(
     `${import.meta.env.VITE_BASE_URL}/shared_app/institut/`,
   );
@@ -13,8 +15,8 @@ function About() {
   return (
     <>
       <SEO 
-        title="Institut haqida"
-        description="O'zbekiston Respublikasi Kasbiy ta'limni rivojlantirish instituti tarixi, maqsad va vazifalari, faoliyat yo'nalishlari haqida to'liq ma'lumot"
+        title={t("institutLinks.about")}
+        description={t("inst.about.seoDesc")}
         keywords="institut haqida, ymtp, kasb-hunar markazi, tarixi, faoliyat, maqsad, vazifalar"
       />
       
@@ -28,19 +30,19 @@ function About() {
                 className="text-base-content/70 hover:text-blue-700 transition-colors"
               >
                 <FaHome className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
-                Bosh sahifa
+                {t("common.home")}
               </Link>
             </li>
             <li>
               <Link className="text-base-content/70 hover:text-blue-700 transition-colors">
-                Institut
+                {t("nav.institute")}
               </Link>
             </li>
-            <li className="text-blue-700 font-semibold">Institut haqida</li>
+            <li className="text-blue-700 font-semibold">{t("institutLinks.about")}</li>
           </ul>
         </div>
         <h1 className="text-xl sm:text-2xl md:text-3xl font-bold font-serif">
-          Institut haqida
+          {t("institutLinks.about")}
         </h1>
       </div>
 
@@ -50,7 +52,7 @@ function About() {
         </div>
       ) : error ? (
         <div className="alert alert-error">
-          <span>Ma'lumotlarni yuklashda xatolik yuz berdi</span>
+          <span>{t("inst.loadError")}</span>
         </div>
       ) : data?.length ? (
         <div className="relative">
@@ -85,7 +87,7 @@ function About() {
         </div>
       ) : (
         <p className="text-base-content/70 text-sm sm:text-base">
-          Bu bo'lim uchun kontent topilmadi.
+          {t("inst.noContent")}
         </p>
       )}
     </section>

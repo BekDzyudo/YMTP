@@ -6,8 +6,10 @@ import { LuUsers } from "react-icons/lu";
 import { MdOutlinePlayLesson, MdReportGmailerrorred } from "react-icons/md";
 import { BsCommand } from "react-icons/bs";
 import { IoArrowBack } from "react-icons/io5";
+import { useTranslation } from "../../i18n/LanguageContext";
 
 function CollageLayout() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
   let { collageId, districtId, Id } = useParams();
@@ -34,13 +36,13 @@ function CollageLayout() {
           <div className="breadcrumbs text-sm md:text-[16px] hidden md:block">
             <ul>
               <li>
-                <Link to="/region">Viloyatlar</Link>
+                <Link to="/region">{t("col.regions")}</Link>
               </li>
               <li>
-                <Link to={`/region/districts/${districtId}`}>Tumanlar</Link>
+                <Link to={`/region/districts/${districtId}`}>{t("col.districts")}</Link>
               </li>
               <li>
-                <Link to={`/region/districts/${districtId}/collages/${collageId}`}>Texnikumlar</Link>
+                <Link to={`/region/districts/${districtId}/collages/${collageId}`}>{t("col.colleges")}</Link>
               </li>
               <li>{collage.name}</li>
             </ul>
@@ -112,7 +114,7 @@ function CollageLayout() {
                         <path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                       </svg>
                       <span className="is-drawer-close:hidden md:text-[16px]">
-                        Umumiy ma'lumotlar
+                        {t("col.general")}
                       </span>
                     </Link>
                   </li>
@@ -127,7 +129,7 @@ function CollageLayout() {
                       {/* Settings icon */}
                       <RiProfileLine className="size-5" />
                       <span className="is-drawer-close:hidden md:text-[16px]">
-                        Tayyorlanadigan kasb va mutaxassisliklar
+                        {t("col.professions")}
                       </span>
                     </Link>
                   </li>
@@ -140,7 +142,7 @@ function CollageLayout() {
                       {/* Settings icon */}
                       <LuUsers className="size-5" />
                       <span className="is-drawer-close:hidden md:text-[16px]">
-                        Pedagoglar tarkibi
+                        {t("col.teachers")}
                       </span>
                     </Link>
                   </li>
@@ -167,7 +169,7 @@ function CollageLayout() {
                         <circle cx="7" cy="7" r="3"></circle>
                       </svg>
                       <span className="is-drawer-close:hidden md:text-[16px]">
-                        Rivojlanish strategiyasi
+                        {t("col.strategy")}
                       </span>
                     </Link>
                   </li>
@@ -180,7 +182,7 @@ function CollageLayout() {
                       {/* Settings icon */}
                       <MdOutlinePlayLesson className="size-5" />
                       <span className="is-drawer-close:hidden md:text-[16px]">
-                        Qisqa muddatli kurslar
+                        {t("col.shortCourses")}
                       </span>
                     </Link>
                   </li>
@@ -193,7 +195,7 @@ function CollageLayout() {
                       {/* Settings icon */}
                       <BsCommand className="size-5" />
                       <span className="is-drawer-close:hidden md:text-[16px]">
-                        Dual ta'lim
+                        {t("col.dual")}
                       </span>
                     </Link>
                   </li>
@@ -206,7 +208,7 @@ function CollageLayout() {
         <div className="text-primary text-sm sm:text-2xl font-bold text-center w-full opacity-90 absolute top-40 left-0 sm:top-52 flex justify-center">
           <div className="flex items-center gap-3">
             <MdReportGmailerrorred className="text-2xl sm:text-5xl" />{" "}
-            <p>Malumotlar kiritilmagan</p>
+            <p>{t("col.noData")}</p>
           </div>
         </div>
       )}

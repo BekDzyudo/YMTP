@@ -11,8 +11,10 @@ import {
   FaSearch,
   FaFilter,
 } from "react-icons/fa";
+import { useTranslation } from "../../i18n/LanguageContext";
 
 function Region() {
+  const { t } = useTranslation();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedRegion, setSelectedRegion] = useState("all");
 
@@ -202,7 +204,7 @@ function Region() {
                 <span className="font-bold text-blue-600">
                   • {filteredColleges.length}
                 </span>{" "}
-                ta texnikum topildi
+                {t("col.found")}
               </span>
             </div>
             {/* Region Filter */}
@@ -213,7 +215,7 @@ function Region() {
                 onChange={(e) => setSelectedRegion(e.target.value)}
                 className="w-full pl-12 pr-4 py-3 rounded-xl border-2 border-gray-200 focus:border-blue-500 focus:outline-none transition-colors appearance-none bg-white cursor-pointer"
               >
-                <option value="all">Barcha hududlar</option>
+                <option value="all">{t("col.allRegions")}</option>
                 {regions.map((region) => (
                   <option key={region} value={region}>
                     {region}
@@ -229,7 +231,7 @@ function Region() {
               <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
               <input
                 type="text"
-                placeholder="Texnikum nomini qidiring..."
+                placeholder={t("col.searchPh")}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-12 pr-4 py-3 rounded-xl border-2 border-gray-200 focus:border-blue-500 focus:outline-none transition-colors"
@@ -276,11 +278,11 @@ function Region() {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2 text-gray-600">
                       <FaGraduationCap className="text-green-500" />
-                      <span className="text-sm font-medium">O'quvchilar</span>
+                      <span className="text-sm font-medium">{t("col.students")}</span>
                     </div>
                     <span className="text-base font-bold text-gray-800">
                       {college.students.toLocaleString()}{" "}
-                      <span className="font-light text-sm">nafar</span>
+                      <span className="font-light text-sm">{t("col.persons")}</span>
                     </span>
                   </div>
 
@@ -288,7 +290,7 @@ function Region() {
                     <FaMapMarkerAlt className="text-red-500 mt-1 shrink-0" />
                     <div className="flex-1">
                       <p className="text-xs font-medium text-gray-500 mb-0.5">
-                        Manzil:
+                        {t("col.address")}
                       </p>
                       <p className="text-sm text-gray-700 line-clamp-2">
                         {college.address}
@@ -299,7 +301,7 @@ function Region() {
 
                 {/* Action Button */}
                 <button className="w-full mt-4 px-4 py-2.5 bg-gray-100 hover:bg-blue-500 text-gray-700 hover:text-white rounded-xl font-semibold transition-all duration-300 flex items-center justify-center gap-2 group-hover:gap-3">
-                  <span>Batafsil</span>
+                  <span>{t("common.more")}</span>
                   <FaArrowRight className="text-sm" />
                 </button>
               </div>
@@ -315,10 +317,10 @@ function Region() {
           <div className="text-center py-16">
             <FaBuilding className="text-6xl text-gray-300 mx-auto mb-4" />
             <h3 className="text-xl font-semibold text-gray-600 mb-2">
-              Texnikum topilmadi
+              {t("col.notFound")}
             </h3>
             <p className="text-gray-500">
-              Qidiruv natijasiga mos texnikum mavjud emas
+              {t("col.notFoundHint")}
             </p>
           </div>
         )}

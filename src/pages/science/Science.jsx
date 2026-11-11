@@ -12,10 +12,12 @@ import { Link } from "react-router-dom";
 import Pagination from "../../components/Pagination";
 import SEO from "../../components/SEO";
 import { scienceCategories, scienceData } from "../../data/scienceProfEdu";
+import { useTranslation } from "../../i18n/LanguageContext";
 
 const PAGE_SIZE = 10;
 
 function Science() {
+  const { t } = useTranslation();
   const [activeCategory, setActiveCategory] = useState(scienceCategories[0].id);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -49,8 +51,8 @@ function Science() {
   return (
     <>
       <SEO
-        title="Ilmiy faoliyat"
-        description="Institut ilmiy faoliyati: me'yoriy-huquqiy hujjatlar, avtoreferatlar, nashr ishlar va ilmiy jurnallar"
+        title={t("nav.science")}
+        description={t("sci.seoDesc")}
         keywords="ilmiy faoliyat, doktorantura, avtoreferat, nashr ishlar, ilmiy jurnal, kasbiy ta'lim"
       />
 
@@ -64,14 +66,14 @@ function Science() {
                   className="text-base-content/70 hover:text-blue-700 transition-colors"
                 >
                   <FaHome className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
-                  Bosh sahifa
+                  {t("common.home")}
                 </Link>
               </li>
-              <li className="text-blue-700 font-semibold">Ilmiy faoliyat</li>
+              <li className="text-blue-700 font-semibold">{t("nav.science")}</li>
             </ul>
           </div>
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold font-serif">
-            Ilmiy faoliyat
+            {t("nav.science")}
           </h1>
         </div>
 
@@ -85,7 +87,7 @@ function Science() {
             >
               {scienceCategories.map((cat) => (
                 <option key={cat.id} value={cat.id}>
-                  {cat.label}
+                  {t(`sci.cat.${cat.id}`)}
                 </option>
               ))}
             </select>
@@ -102,7 +104,7 @@ function Science() {
                     : "btn-outline"
                 }`}
               >
-                {cat.label}
+                {t(`sci.cat.${cat.id}`)}
               </button>
             ))}
           </div>
@@ -113,7 +115,7 @@ function Science() {
           <div className="relative flex-1">
             <input
               type="text"
-              placeholder="Qidirish..."
+              placeholder={t("sci.searchPh")}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="input input-bordered w-full pl-12 rounded-full outline-0"
@@ -127,7 +129,7 @@ function Science() {
             className="btn btn-outline btn-sm sm:btn-md rounded-full whitespace-nowrap"
           >
             <FaExternalLinkAlt className="text-xs" />
-            Manba: ipitvet.uz
+            {t("sci.source")}
           </a>
         </div>
 
@@ -138,8 +140,8 @@ function Science() {
               <FaFileAlt className="mx-auto text-6xl opacity-30 mb-4" />
               <p className="text-lg opacity-70">
                 {allItems.length === 0
-                  ? "Bu bo'lim bo'yicha institut sayti hozircha alohida ma'lumot joylamagan. To'liq ma'lumot uchun manba sahifasiga o'ting."
-                  : "Hech narsa topilmadi"}
+                  ? t("sci.noItems")
+                  : t("res.nothingFound")}
               </p>
               {allItems.length === 0 && (
                 <a
@@ -149,7 +151,7 @@ function Science() {
                   className="btn bg-gradient-to-br from-[#194882] to-info text-white btn-sm rounded-lg mt-4"
                 >
                   <FaExternalLinkAlt className="text-xs" />
-                  Sahifaga o'tish
+                  {t("sci.goToPage")}
                 </a>
               )}
             </div>
@@ -185,7 +187,7 @@ function Science() {
                     className="btn bg-gradient-to-br from-[#194882] to-info text-white btn-sm sm:btn-md rounded-lg"
                   >
                     <FaDownload />
-                    Yuklab olish
+                    {t("common.download")}
                   </a>
                 </div>
               </div>
@@ -204,12 +206,9 @@ function Science() {
         <div className="alert bg-gradient-to-br from-[#194882] to-info text-white mt-8">
           <FaFileAlt className="text-base md:text-4xl" />
           <div>
-            <h4 className="font-semibold">Eslatma</h4>
+            <h4 className="font-semibold">{t("inst.note")}</h4>
             <p className="text-sm">
-              Ushbu bo'limdagi ma'lumotlar va fayllar Kasbiy ta'limni
-              rivojlantirish institutining rasmiy veb-sayti (ipitvet.uz)
-              "Science.profedu" bo'limidan olingan. Fayllar asl manba
-              serverida saqlanadi.
+              {t("sci.noteText")}
             </p>
           </div>
         </div>

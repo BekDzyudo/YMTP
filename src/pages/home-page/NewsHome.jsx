@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react'
 import { FaCalendar, FaArrowRight, FaNewspaper, FaTrophy, FaUsers, FaGraduationCap, FaHandshake, FaChalkboardTeacher, FaLightbulb, FaBalanceScale } from 'react-icons/fa'
 import useGetFetch from '../../hooks/useGetFetch';
 import { Link } from 'react-router-dom';
+import { useTranslation } from "../../i18n/LanguageContext";
 
 function News() {
+  const { t } = useTranslation();
 
   const {data, isPending, error} = useGetFetch(`${import.meta.env.VITE_BASE_URL}/shared_app/yangiliklar/latest/`)
   
@@ -56,10 +58,7 @@ function News() {
   // Sanani formatlash
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    const months = [
-      "Yanvar", "Fevral", "Mart", "Aprel", "May", "Iyun",
-      "Iyul", "Avgust", "Sentabr", "Oktabr", "Noyabr", "Dekabr"
-    ];
+    const months = t("common.months");
     return `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
   };
 
@@ -119,7 +118,7 @@ function News() {
       <section className='relative h-screen w-full bg-gradient-to-b from-base-100 via-base-200 to-base-100 py-12 overflow-hidden flex items-center justify-center'>
         <div className="text-center">
           <div className="loading loading-spinner loading-lg text-primary"></div>
-          <p className="mt-4 text-base-content/70">Yangiliklar yuklanmoqda...</p>
+          <p className="mt-4 text-base-content/70">{t("home.news.loading")}</p>
         </div>
       </section>
     );
@@ -129,7 +128,7 @@ function News() {
     return (
       <section className='relative h-screen w-full bg-gradient-to-b from-base-100 via-base-200 to-base-100 py-12 overflow-hidden flex items-center justify-center'>
         <div className="text-center">
-          <p className="text-error">Xatolik yuz berdi: {error.message}</p>
+          <p className="text-error">{t("home.news.error")} {error.message || error}</p>
         </div>
       </section>
     );
@@ -144,11 +143,11 @@ function News() {
           <div className="flex items-center justify-between mb-4">
             <div className="flex flex-col items-center sm:items-start gap-1 sm:gap-2 md:gap-4">
               <h2 className="text-xl sm:text-3xl lg:text-4xl font-black text-[#0d4ea3] font-serif">
-                Yangiliklar
+                {t("home.news.title")}
               </h2>
             </div>
             <Link to="/news" className="hidden hover:scale-105 text-sm md:text-[16px] sm:flex items-center gap-2 px-6 py-3 cursor-pointer rounded-full text-white font-semibold group/btn transition-all duration-300 bg-gradient-to-br from-[#194882] to-info">
-              <span>Barcha yangiliklar</span>
+              <span>{t("home.news.all")}</span>
               <FaArrowRight className="transition-transform duration-300 group-hover/btn:translate-x-2" size={14} />
             </Link>
           </div>
@@ -211,7 +210,7 @@ function News() {
                     
                     <div className="flex items-center justify-between">
                       <button className="flex items-center gap-2 px-6 py-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white rounded-full font-semibold group/btn transition-all duration-300 border border-white/20 hover:border-white/40 cursor-pointer">
-                        <Link to={`/news/${newsData[0].id}`}>Batafsil</Link>
+                        <Link to={`/news/${newsData[0].id}`}>{t("common.more")}</Link>
                         <FaArrowRight className="transition-transform duration-300 group-hover/btn:translate-x-2" size={14} />
                       </button>
                       
@@ -281,7 +280,7 @@ function News() {
                       
                       <div className="flex justify-end">
                         <button className="flex items-center gap-1 text-primary font-semibold text-xs group/btn flex-shrink-0 cursor-pointer">
-                          <Link to={`/news/${news.id}`}>Batafsil</Link>
+                          <Link to={`/news/${news.id}`}>{t("common.more")}</Link>
                           <FaArrowRight className="transition-transform duration-300 group-hover/btn:translate-x-1" size={10} />
                         </button>
                       </div>
@@ -382,7 +381,7 @@ function News() {
                     
                     <div className="flex justify-end">
                       <button className="flex items-center gap-2 text-primary font-semibold text-sm group/btn transition-all duration-300 flex-shrink-0 cursor-pointer">
-                        <Link to={`/news/${news.id}`}>Batafsil</Link>
+                        <Link to={`/news/${news.id}`}>{t("common.more")}</Link>
                         <FaArrowRight className="transition-transform duration-300 group-hover/btn:translate-x-2" size={14} />
                       </button>
                     </div>
@@ -482,7 +481,7 @@ function News() {
                     
                     <div className="flex justify-end">
                       <button className="flex items-center gap-1 text-primary font-semibold text-xs group/btn flex-shrink-0 cursor-pointer">
-                        <Link to={`/news/${news.id}`}>Batafsil</Link>
+                        <Link to={`/news/${news.id}`}>{t("common.more")}</Link>
                         <FaArrowRight className="transition-transform duration-300 group-hover/btn:translate-x-1" size={12} />
                       </button>
                     </div>
@@ -582,7 +581,7 @@ function News() {
                     
                     <div className="flex justify-end">
                       <button className="flex items-center gap-1 text-primary font-semibold text-xs group/btn flex-shrink-0 cursor-pointer">
-                        <Link to={`/news/${news.id}`}>Batafsil</Link>
+                        <Link to={`/news/${news.id}`}>{t("common.more")}</Link>
                         <FaArrowRight className="transition-transform duration-300 group-hover/btn:translate-x-1" size={12} />
                       </button>
                     </div>
@@ -594,7 +593,7 @@ function News() {
             </>
           ) : (
             <div className="flex items-center justify-center h-full">
-              <p className="text-base-content/70 text-lg">Hozircha yangiliklar yo'q</p>
+              <p className="text-base-content/70 text-lg">{t("home.news.empty")}</p>
             </div>
           )}
         </div>

@@ -8,8 +8,10 @@ import {
   FaVideo,
 } from "react-icons/fa";
 import useGetFetch from "../../hooks/useGetFetch";
+import { useTranslation } from "../../i18n/LanguageContext";
 
 function RTRHero() {
+  const { t } = useTranslation();
 
   const {data: statistika} = useGetFetch(`${import.meta.env.VITE_BASE_URL_RTR}/v1/rtr_base_app/statistika/`)  
 
@@ -32,7 +34,7 @@ function RTRHero() {
     const { theme } = useGlobalContext();
       const { setOnHero } = useHero();
       // Animated heading and description state
-      const headingText = "Raqamli ta'lim resurslari";
+      const headingText = t("rtr.heading");
       const [showHeading, setShowHeading] = useState(false);
       const [showDesc, setShowDesc] = useState(false);
       useEffect(() => {
@@ -115,34 +117,32 @@ function RTRHero() {
                     transition: "opacity 0.5s, transform 0.5s",
                   }}
                 >
-                  Raqamli ta'lim resurslari (RTR) — ma'ruza matnlari, taqdimot,
-                  vizual-ko‘rgazmali materiallar, multimediya materiallar, ta'lim
-                  texnologiyalari, glossariylar to‘plami
+                  {t("rtr.heroDesc")}
                 </p>
               </div>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 lg:gap-5 mt-8 sm:mt-10 z-20 max-w-6xl mx-auto w-full sm:px-4">
                 {[
                   {
                     icon: <FaChalkboardTeacher size={22} />,
-                    desc: "Boshlang‘ich kasbiy ta'lim",
+                    desc: t("level.primary"),
                     gradient: "from-green-700 to-emerald-700",
                     glowColor: "rgba(21, 128, 61, 0.35)"
                   },
                   {
                     icon: <FaGraduationCap size={22} />,
-                    desc: "O‘rta kasbiy ta'lim",
+                    desc: t("level.secondary"),
                     gradient: "from-green-700 to-emerald-700",
                     glowColor: "rgba(21, 128, 61, 0.35)"
                   },
                   {
                     icon: <FaStar size={22} />,
-                    desc: "O‘rta maxsus kasbiy ta'lim",
+                    desc: t("level.secondarySpecial"),
                     gradient: "from-green-700 to-emerald-700",
                     glowColor: "rgba(21, 128, 61, 0.35)"
                   },
                   {
                     icon: <FaVideo size={22} />,
-                    desc: "Media materiallar",
+                    desc: t("res.media"),
                     gradient: "from-green-700 to-emerald-700",
                     glowColor: "rgba(21, 128, 61, 0.35)"
                   },
@@ -177,7 +177,7 @@ function RTRHero() {
                             {cardNumbers[idx]}
                           </span>
                           <span className="text-base sm:text-lg font-semibold text-gray-200">
-                            ta
+                            {t("common.unit")}
                           </span>
                         </div>
                         

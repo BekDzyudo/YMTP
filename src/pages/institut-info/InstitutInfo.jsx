@@ -3,8 +3,10 @@ import { NavLink, Outlet, useLocation, Link } from "react-router-dom";
 import { institutLinks } from "../../constants/institutLinks";
 import { useHero } from "../../context/HeroContext";
 import { FaUsers, FaChalkboardTeacher, FaBuilding, FaChartLine, FaExternalLinkAlt } from "react-icons/fa";
+import { useTranslation } from "../../i18n/LanguageContext";
 
 function InstitutInfo() {
+  const { t } = useTranslation();
   const location = useLocation();
   const currentLink = institutLinks.find((link) =>
     location.pathname.startsWith(link.to)
@@ -35,7 +37,7 @@ function InstitutInfo() {
             <div className="sticky top-24 space-y-5 mb-25 sm:mb-35">
               {/* Navigation Card */}
               <div className="bg-base-100 rounded-2xl border border-base-300 p-3 sm:p-4">
-                <h3 className="text-xl font-bold mb-3">Institut</h3>
+                <h3 className="text-xl font-bold mb-3">{t("nav.institute")}</h3>
                 <ul className="menu w-full p-0 gap-1">
                   {institutLinks.map((link) => (
                     <li key={link.to} className="border-t border-base-300 py-1">
@@ -46,7 +48,7 @@ function InstitutInfo() {
                           rel="noopener noreferrer"
                           className="rounded-lg px-3 py-3 text-[16px] transition-all duration-200 hover:bg-base-200 flex items-center gap-2"
                         >
-                          {link.label}
+                          {t(link.labelKey)}
                           <FaExternalLinkAlt className="text-xs opacity-60" />
                         </a>
                       ) : (
@@ -60,7 +62,7 @@ function InstitutInfo() {
                             }`
                           }
                         >
-                          {link.label}
+                          {t(link.labelKey)}
                         </NavLink>
                       )}
                     </li>
@@ -72,7 +74,7 @@ function InstitutInfo() {
               <div className="bg-base-100 rounded-2xl border border-base-100 p-4 shadow-sm overflow-hidden">
                 <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
                   <FaChartLine className="text-blue-600" />
-                  Institut statistikasi
+                  {t("inst.sidebar.stats")}
                 </h3>
                 
                 <div className="space-y-3">
@@ -84,14 +86,14 @@ function InstitutInfo() {
                           <FaUsers className="text-blue-600 text-xl" />
                         </div>
                         <div className="flex-1">
-                          <p className="text-xs text-gray-600 font-medium">Xodimlar</p>
+                          <p className="text-xs text-gray-600 font-medium">{t("inst.sidebar.staff")}</p>
                           <p className="text-2xl font-bold text-blue-700">150+</p>
                         </div>
                       </div>
                       {/* Progress bar */}
                       <div className="space-y-1">
                         <div className="flex justify-between text-xs text-gray-600">
-                          <span>Ilmiy darajaga ega</span>
+                          <span>{t("inst.sidebar.degree")}</span>
                           <span>42%</span>
                         </div>
                         <div className="h-1.5 bg-blue-200 rounded-full overflow-hidden">
@@ -109,14 +111,14 @@ function InstitutInfo() {
                           <FaChalkboardTeacher className="text-green-600 text-xl" />
                         </div>
                         <div className="flex-1">
-                          <p className="text-xs text-gray-600 font-medium">O'qituvchilar</p>
+                          <p className="text-xs text-gray-600 font-medium">{t("inst.sidebar.teachers")}</p>
                           <p className="text-2xl font-bold text-green-700">80+</p>
                         </div>
                       </div>
                       {/* Progress bar */}
                       <div className="space-y-1">
                         <div className="flex justify-between text-xs text-gray-600">
-                          <span>Professor-o'qituvchilar</span>
+                          <span>{t("inst.sidebar.professors")}</span>
                           <span>85%</span>
                         </div>
                         <div className="h-1.5 bg-green-200 rounded-full overflow-hidden">
@@ -134,10 +136,10 @@ function InstitutInfo() {
                           <FaBuilding className="text-purple-600 text-xl" />
                         </div>
                         <div className="flex-1">
-                          <p className="text-xs text-gray-600 font-medium">Bo'limlar</p>
+                          <p className="text-xs text-gray-600 font-medium">{t("inst.sidebar.departments")}</p>
                           <p className="text-2xl font-bold text-purple-700">12</p>
                           <p className="text-xs text-purple-600 mt-1">
-                            Strukturaviy bo'linmalar
+                            {t("inst.sidebar.units")}
                           </p>
                         </div>
                       </div>
@@ -148,7 +150,7 @@ function InstitutInfo() {
                 {/* Bottom decoration */}
                 <div className="mt-4 pt-4 border-t border-base-300">
                   <p className="text-xs text-center text-gray-500 italic">
-                    Ma'lumotlar 2026 yil oktabr holatiga
+                    {t("inst.sidebar.asOf")}
                   </p>
                 </div>
               </div>

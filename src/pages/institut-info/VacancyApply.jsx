@@ -8,8 +8,10 @@ import {
   FaFileUpload, FaCheck, FaArrowLeft, FaArrowRight, FaCloudUploadAlt,
   FaTimes
 } from "react-icons/fa";
+import { useTranslation } from "../../i18n/LanguageContext";
 
 function VacancyApply() {
+  const { t } = useTranslation();
   const { id } = useParams();
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
@@ -59,10 +61,10 @@ function VacancyApply() {
   );
 
   const steps = [
-    { id: 1, name: "Shaxsiy ma'lumotlar", icon: FaUser },
-    { id: 2, name: "Ta'lim ma'lumoti", icon: FaGraduationCap },
-    { id: 3, name: "Mehnat faoliyati", icon: FaBriefcase },
-    { id: 4, name: "Hujjatlar", icon: FaFileUpload }
+    { id: 1, name: t("apply.step.personal"), icon: FaUser },
+    { id: 2, name: t("apply.step.education"), icon: FaGraduationCap },
+    { id: 3, name: t("apply.step.work"), icon: FaBriefcase },
+    { id: 4, name: t("apply.step.docs"), icon: FaFileUpload }
   ];
 
   const handleFileChange = (fieldName, file) => {
@@ -86,27 +88,27 @@ function VacancyApply() {
     
     if (currentStep === 1) {
       // Personal Info validation
-      if (!personalInfo.firstName.trim()) newErrors.firstName = "Ism to'ldirilishi shart";
-      if (!personalInfo.lastName.trim()) newErrors.lastName = "Familiya to'ldirilishi shart";
-      if (!personalInfo.birthDate) newErrors.birthDate = "Tug'ilgan sana to'ldirilishi shart";
-      if (!personalInfo.phone.trim()) newErrors.phone = "Telefon raqami to'ldirilishi shart";
-      if (!personalInfo.email.trim()) newErrors.email = "Email to'ldirilishi shart";
-      if (!personalInfo.address.trim()) newErrors.address = "Manzil to'ldirilishi shart";
-      if (!personalInfo.passportSeries.trim()) newErrors.passportSeries = "Passport seriyasi to'ldirilishi shart";
-      if (!personalInfo.passportNumber.trim()) newErrors.passportNumber = "Passport raqami to'ldirilishi shart";
+      if (!personalInfo.firstName.trim()) newErrors.firstName = t("apply.err.firstName");
+      if (!personalInfo.lastName.trim()) newErrors.lastName = t("apply.err.lastName");
+      if (!personalInfo.birthDate) newErrors.birthDate = t("apply.err.birthDate");
+      if (!personalInfo.phone.trim()) newErrors.phone = t("apply.err.phone");
+      if (!personalInfo.email.trim()) newErrors.email = t("apply.err.email");
+      if (!personalInfo.address.trim()) newErrors.address = t("apply.err.address");
+      if (!personalInfo.passportSeries.trim()) newErrors.passportSeries = t("apply.err.passportSeries");
+      if (!personalInfo.passportNumber.trim()) newErrors.passportNumber = t("apply.err.passportNumber");
     } else if (currentStep === 2) {
       // Education Info validation
-      if (!educationInfo.degree) newErrors.degree = "Ta'lim darajasi to'ldirilishi shart";
-      if (!educationInfo.institution.trim()) newErrors.institution = "Ta'lim muassasasi to'ldirilishi shart";
-      if (!educationInfo.specialty.trim()) newErrors.specialty = "Mutaxassislik to'ldirilishi shart";
-      if (!educationInfo.graduationYear) newErrors.graduationYear = "Tugatgan yili to'ldirilishi shart";
+      if (!educationInfo.degree) newErrors.degree = t("apply.err.degree");
+      if (!educationInfo.institution.trim()) newErrors.institution = t("apply.err.institution");
+      if (!educationInfo.specialty.trim()) newErrors.specialty = t("apply.err.specialty");
+      if (!educationInfo.graduationYear) newErrors.graduationYear = t("apply.err.graduationYear");
     } else if (currentStep === 3) {
       // Work Experience validation - no required fields based on user requirements
     } else if (currentStep === 4) {
       // Documents validation
-      if (!documents.resume) newErrors.resume = "Resume (CV) yuklash shart";
-      if (!documents.diploma) newErrors.diploma = "Diplom yuklash shart";
-      if (!documents.passport) newErrors.passport = "Passport nusxasi yuklash shart";
+      if (!documents.resume) newErrors.resume = t("apply.err.resume");
+      if (!documents.diploma) newErrors.diploma = t("apply.err.diploma");
+      if (!documents.passport) newErrors.passport = t("apply.err.passport");
     }
     
     setErrors(newErrors);
@@ -202,21 +204,21 @@ function VacancyApply() {
             const errorMsg = Array.isArray(messages) ? messages.join(', ') : messages;
             toast.error(`${field}: ${errorMsg}`);
           }
-          throw new Error('Ma\'lumotlarni tekshiring');
+          throw new Error(t("apply.checkData"));
         }
         
-        throw new Error(errorData.message || 'Arizani yuborishda xatolik yuz berdi');
+        throw new Error(errorData.message || t("apply.sendError"));
       }
       
       const data = await response.json();
       
-      toast.success("Ariza muvaffaqiyatli yuborildi! Tez orada siz bilan bog'lanamiz.");
+      toast.success(t("apply.success"));
       navigate(`/vacancy/${id}`);
       
     } catch (error) {
       console.error('Error submitting application:', error);
-      if (error.message !== 'Ma\'lumotlarni tekshiring') {
-        toast.error(error.message || "Arizani yuborishda xatolik yuz berdi. Iltimos, qaytadan urinib ko'ring.");
+      if (error.message !== t("apply.checkData")) {
+        toast.error(error.message || t("apply.sendErrorRetry"));
       }
     } finally {
       setIsSubmitting(false);
@@ -235,10 +237,10 @@ function VacancyApply() {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-error mb-2">Xatolik yuz berdi</h2>
-          <p className="text-base-content/70">Vakansiya ma'lumotlari topilmadi</p>
+          <h2 className="text-2xl font-bold text-error mb-2">{t("common.error")}</h2>
+          <p className="text-base-content/70">{t("apply.notFound")}</p>
           <Link to="/vacancy" className="btn btn-primary mt-4">
-            Vakansiyalar ro'yxatiga qaytish
+            {t("vac.backToList")}
           </Link>
         </div>
       </div>
@@ -257,27 +259,27 @@ function VacancyApply() {
         {/* Breadcrumb */}
         <div className="hidden md:flex items-center gap-2 text-sm mb-6">
           <Link to="/" className="text-blue-600 hover:text-blue-700 flex items-center gap-1">
-            <FaHome /> Bosh sahifa
+            <FaHome /> {t("common.home")}
           </Link>
           <FaChevronRight className="w-3 h-3 text-base-content/50" />
           <Link to="/about" className="text-blue-600 hover:text-blue-700">
-            Institut haqida
+            {t("institutLinks.about")}
           </Link>
           <FaChevronRight className="w-3 h-3 text-base-content/50" />
           <Link to="/vacancy" className="text-blue-600 hover:text-blue-700">
-            Vakansiyalar
+            {t("apply.vacancies")}
           </Link>
           <FaChevronRight className="w-3 h-3 text-base-content/50" />
           <Link to={`/vacancy/${id}`} className="text-blue-600 hover:text-blue-700">
             {vacancy?.title}
           </Link>
           <FaChevronRight className="w-3 h-3 text-base-content/50" />
-          <span className="text-base-content/70">Ariza yuborish</span>
+          <span className="text-base-content/70">{t("vac.apply")}</span>
         </div>
 
         {/* Header */}
         <div className="bg-gradient-to-br from-[#194882] to-info text-white rounded-2xl p-6 mb-8">
-          <h1 className="text-2xl sm:text-3xl font-bold mb-2">Ariza yuborish</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold mb-2">{t("vac.apply")}</h1>
           <p className="text-lg opacity-90">{vacancy?.title}</p>
           <p className="text-sm opacity-75 mt-1">{vacancy?.department}</p>
         </div>
@@ -338,17 +340,17 @@ function VacancyApply() {
               <div className="space-y-6">
                 <h2 className="text-2xl font-bold text-blue-800 mb-6 flex items-center gap-2">
                   <FaUser className="w-6 h-6" />
-                  Shaxsiy ma'lumotlar
+                  {t("apply.step.personal")}
                 </h2>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   <div className="form-control w-full">
                     <label className="label">
-                      <span className="label-text font-medium">Ism *</span>
+                      <span className="label-text font-medium">{t("apply.firstName")}</span>
                     </label>
                     <input
                       type="text"
-                      placeholder="Ismingizni kiriting"
+                      placeholder={t("apply.firstNamePh")}
                       className={`input input-bordered w-full ${errors.firstName ? 'border-red-500 border-2' : ''}`}
                       value={personalInfo.firstName}
                       onChange={(e) => setPersonalInfo({...personalInfo, firstName: e.target.value})}
@@ -358,11 +360,11 @@ function VacancyApply() {
 
                   <div className="form-control w-full">
                     <label className="label">
-                      <span className="label-text font-medium">Familiya *</span>
+                      <span className="label-text font-medium">{t("apply.lastName")}</span>
                     </label>
                     <input
                       type="text"
-                      placeholder="Familiyangizni kiriting"
+                      placeholder={t("apply.lastNamePh")}
                       className={`input input-bordered w-full ${errors.lastName ? 'border-red-500 border-2' : ''}`}
                       value={personalInfo.lastName}
                       onChange={(e) => setPersonalInfo({...personalInfo, lastName: e.target.value})}
@@ -372,11 +374,11 @@ function VacancyApply() {
 
                   <div className="form-control w-full">
                     <label className="label">
-                      <span className="label-text font-medium">Otasining ismi</span>
+                      <span className="label-text font-medium">{t("apply.middleName")}</span>
                     </label>
                     <input
                       type="text"
-                      placeholder="Otangizning ismi"
+                      placeholder={t("apply.middleNamePh")}
                       className="input input-bordered w-full"
                       value={personalInfo.middleName}
                       onChange={(e) => setPersonalInfo({...personalInfo, middleName: e.target.value})}
@@ -387,7 +389,7 @@ function VacancyApply() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="form-control w-full">
                     <label className="label">
-                      <span className="label-text font-medium">Tug'ilgan sana *</span>
+                      <span className="label-text font-medium">{t("apply.birthDate")}</span>
                     </label>
                     <input
                       type="date"
@@ -400,7 +402,7 @@ function VacancyApply() {
 
                   <div className="form-control w-full">
                     <label className="label">
-                      <span className="label-text font-medium">Telefon raqami *</span>
+                      <span className="label-text font-medium">{t("apply.phone")}</span>
                     </label>
                     <input
                       type="tel"
@@ -415,7 +417,7 @@ function VacancyApply() {
 
                 <div className="form-control w-full">
                   <label className="label">
-                    <span className="label-text font-medium">Email *</span>
+                    <span className="label-text font-medium">{t("apply.email")}</span>
                   </label>
                   <input
                     type="email"
@@ -429,11 +431,11 @@ function VacancyApply() {
 
                 <div className="form-control w-full">
                   <label className="label">
-                    <span className="label-text font-medium">Yashash manzili *</span>
+                    <span className="label-text font-medium">{t("apply.address")}</span>
                   </label>
                   <textarea
                     className={`textarea textarea-bordered w-full ${errors.address ? 'border-red-500 border-2' : ''}`}
-                    placeholder="To'liq yashash manzilingizni kiriting"
+                    placeholder={t("apply.addressPh")}
                     rows="2"
                     value={personalInfo.address}
                     onChange={(e) => setPersonalInfo({...personalInfo, address: e.target.value})}
@@ -444,7 +446,7 @@ function VacancyApply() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="form-control w-full">
                     <label className="label">
-                      <span className="label-text font-medium">Passport seriyasi *</span>
+                      <span className="label-text font-medium">{t("apply.passportSeries")}</span>
                     </label>
                     <input
                       type="text"
@@ -459,7 +461,7 @@ function VacancyApply() {
 
                   <div className="form-control w-full">
                     <label className="label">
-                      <span className="label-text font-medium">Passport raqami *</span>
+                      <span className="label-text font-medium">{t("apply.passportNumber")}</span>
                     </label>
                     <input
                       type="text"
@@ -480,33 +482,33 @@ function VacancyApply() {
               <div className="space-y-6">
                 <h2 className="text-2xl font-bold text-green-800 mb-6 flex items-center gap-2">
                   <FaGraduationCap className="w-6 h-6" />
-                  Ta'lim ma'lumoti
+                  {t("apply.step.education")}
                 </h2>
 
                 <div className="form-control w-full">
                   <label className="label">
-                    <span className="label-text font-medium">Ta'lim darajasi *</span>
+                    <span className="label-text font-medium">{t("apply.degree")}</span>
                   </label>
                   <select
                     className={`select select-bordered w-full ${errors.degree ? 'border-red-500 border-2' : ''}`}
                     value={educationInfo.degree}
                     onChange={(e) => setEducationInfo({...educationInfo, degree: e.target.value})}
                   >
-                    <option value="">Tanlang</option>
-                    <option value="bakalavr">Bakalavr</option>
-                    <option value="magistr">Magistr</option>
-                    <option value="phd">PhD / Doktorantura</option>
+                    <option value="">{t("apply.choose")}</option>
+                    <option value="bakalavr">{t("apply.bachelor")}</option>
+                    <option value="magistr">{t("apply.master")}</option>
+                    <option value="phd">{t("apply.phd")}</option>
                   </select>
                   {errors.degree && <p className="text-red-500 text-sm mt-1">{errors.degree}</p>}
                 </div>
 
                 <div className="form-control w-full">
                   <label className="label">
-                    <span className="label-text font-medium">Ta'lim muassasasi *</span>
+                    <span className="label-text font-medium">{t("apply.institution")}</span>
                   </label>
                   <input
                     type="text"
-                    placeholder="Universitet yoki institut nomi"
+                    placeholder={t("apply.institutionPh")}
                     className={`input input-bordered w-full ${errors.institution ? 'border-red-500 border-2' : ''}`}
                     value={educationInfo.institution}
                     onChange={(e) => setEducationInfo({...educationInfo, institution: e.target.value})}
@@ -517,11 +519,11 @@ function VacancyApply() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="form-control w-full">
                     <label className="label">
-                      <span className="label-text font-medium">Mutaxassislik *</span>
+                      <span className="label-text font-medium">{t("apply.specialty")}</span>
                     </label>
                     <input
                       type="text"
-                      placeholder="O'qigan mutaxassislik"
+                      placeholder={t("apply.specialtyPh")}
                       className={`input input-bordered w-full ${errors.specialty ? 'border-red-500 border-2' : ''}`}
                       value={educationInfo.specialty}
                       onChange={(e) => setEducationInfo({...educationInfo, specialty: e.target.value})}
@@ -531,7 +533,7 @@ function VacancyApply() {
 
                   <div className="form-control w-full">
                     <label className="label">
-                      <span className="label-text font-medium">Tugatgan yili *</span>
+                      <span className="label-text font-medium">{t("apply.graduationYear")}</span>
                     </label>
                     <input
                       type="number"
@@ -548,11 +550,11 @@ function VacancyApply() {
 
                 <div className="form-control w-full">
                   <label className="label">
-                    <span className="label-text font-medium">Qo'shimcha ta'lim</span>
+                    <span className="label-text font-medium">{t("apply.additionalEdu")}</span>
                   </label>
                   <textarea
                     className="textarea textarea-bordered w-full"
-                    placeholder="Kurslar, treninglar, sertifikatlar haqida ma'lumot"
+                    placeholder={t("apply.additionalEduPh")}
                     rows="4"
                     value={educationInfo.additionalEducation}
                     onChange={(e) => setEducationInfo({...educationInfo, additionalEducation: e.target.value})}
@@ -566,17 +568,17 @@ function VacancyApply() {
               <div className="space-y-6">
                 <h2 className="text-2xl font-bold text-purple-800 mb-6 flex items-center gap-2">
                   <FaBriefcase className="w-6 h-6" />
-                  Mehnat faoliyati
+                  {t("apply.step.work")}
                 </h2>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="form-control w-full">
                     <label className="label">
-                      <span className="label-text font-medium">Hozirgi lavozim</span>
+                      <span className="label-text font-medium">{t("apply.currentPosition")}</span>
                     </label>
                     <input
                       type="text"
-                      placeholder="Lavozimingiz"
+                      placeholder={t("apply.currentPositionPh")}
                       className="input input-bordered w-full"
                       value={workExperience.currentPosition}
                       onChange={(e) => setWorkExperience({...workExperience, currentPosition: e.target.value})}
@@ -585,11 +587,11 @@ function VacancyApply() {
 
                   <div className="form-control w-full">
                     <label className="label">
-                      <span className="label-text font-medium">Hozirgi ish joyi</span>
+                      <span className="label-text font-medium">{t("apply.currentWorkplace")}</span>
                     </label>
                     <input
                       type="text"
-                      placeholder="Tashkilot nomi"
+                      placeholder={t("apply.currentWorkplacePh")}
                       className="input input-bordered w-full"
                       value={workExperience.currentOrganization}
                       onChange={(e) => setWorkExperience({...workExperience, currentOrganization: e.target.value})}
@@ -599,29 +601,29 @@ function VacancyApply() {
 
                 <div className="form-control w-full">
                   <label className="label">
-                    <span className="label-text font-medium">Umumiy ish tajribasi</span>
+                    <span className="label-text font-medium">{t("apply.totalExperience")}</span>
                   </label>
                   <select
                     className="select select-bordered w-full"
                     value={workExperience.experienceYears}
                     onChange={(e) => setWorkExperience({...workExperience, experienceYears: e.target.value})}
                   >
-                    <option value="">Tanlang</option>
-                    <option value="0">1 yilgacha</option>
-                    <option value="2">1-3 yil</option>
-                    <option value="4">3-5 yil</option>
-                    <option value="7">5-10 yil</option>
-                    <option value="10">10 yildan ko'p</option>
+                    <option value="">{t("apply.choose")}</option>
+                    <option value="0">{t("apply.exp0")}</option>
+                    <option value="2">{t("apply.exp2")}</option>
+                    <option value="4">{t("apply.exp4")}</option>
+                    <option value="7">{t("apply.exp7")}</option>
+                    <option value="10">{t("apply.exp10")}</option>
                   </select>
                 </div>
 
                 <div className="form-control w-full">
                   <label className="label">
-                    <span className="label-text font-medium">Asosiy yutuqlar va tajriba</span>
+                    <span className="label-text font-medium">{t("apply.achievements")}</span>
                   </label>
                   <textarea
                     className="textarea textarea-bordered w-full"
-                    placeholder="Ish jarayonidagi yutuqlaringiz, amalga oshirgan loyihalar"
+                    placeholder={t("apply.achievementsPh")}
                     rows="4"
                     value={workExperience.achievements}
                     onChange={(e) => setWorkExperience({...workExperience, achievements: e.target.value})}
@@ -630,11 +632,11 @@ function VacancyApply() {
 
                 <div className="form-control w-full">
                   <label className="label">
-                    <span className="label-text font-medium">Qo'shimcha ko'nikmalar</span>
+                    <span className="label-text font-medium">{t("apply.skills")}</span>
                   </label>
                   <textarea
                     className="textarea textarea-bordered w-full"
-                    placeholder="Kompyuter dasturlari, tillar va boshqa ko'nikmalar"
+                    placeholder={t("apply.skillsPh")}
                     rows="3"
                     value={workExperience.additionalSkills}
                     onChange={(e) => setWorkExperience({...workExperience, additionalSkills: e.target.value})}
@@ -648,17 +650,17 @@ function VacancyApply() {
               <div className="space-y-6">
                 <h2 className="text-2xl font-bold text-orange-800 mb-6 flex items-center gap-2">
                   <FaFileUpload className="w-6 h-6" />
-                  Hujjatlar va sertifikatlar
+                  {t("apply.docsTitle")}
                 </h2>
 
                 <div className="alert alert-info">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="stroke-current shrink-0 w-6 h-6"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                  <span className="text-sm">Hujjatlarni PDF, JPG yoki PNG formatida yuklang. Maksimal hajm: 5MB</span>
+                  <span className="text-sm">{t("apply.docsHint")}</span>
                 </div>
 
                 {/* IELTS/TOEFL/DTM */}
                 <FileUploadField
-                  label="IELTS / TOEFL / DTM sertifikati"
+                  label={t("apply.doc.language")}
                   fieldName="languageCert"
                   file={documents.languageCert}
                   onChange={handleFileChange}
@@ -668,7 +670,7 @@ function VacancyApply() {
 
                 {/* Obyektivka */}
                 <FileUploadField
-                  label="Obyektivka (Resume / CV)"
+                  label={t("apply.doc.resume")}
                   fieldName="resume"
                   file={documents.resume}
                   onChange={handleFileChange}
@@ -679,7 +681,7 @@ function VacancyApply() {
 
                 {/* Malaka toifa sertifikati */}
                 <FileUploadField
-                  label="Malaka toifa sertifikati"
+                  label={t("apply.doc.category")}
                   fieldName="qualificationCert"
                   file={documents.qualificationCert}
                   onChange={handleFileChange}
@@ -689,7 +691,7 @@ function VacancyApply() {
 
                 {/* Diplom */}
                 <FileUploadField
-                  label="Oliy ma'lumot diplomi"
+                  label={t("apply.doc.diploma")}
                   fieldName="diploma"
                   file={documents.diploma}
                   onChange={handleFileChange}
@@ -700,7 +702,7 @@ function VacancyApply() {
 
                 {/* Passport */}
                 <FileUploadField
-                  label="Passport nusxasi"
+                  label={t("apply.doc.passport")}
                   fieldName="passport"
                   file={documents.passport}
                   onChange={handleFileChange}
@@ -711,7 +713,7 @@ function VacancyApply() {
 
                 {/* Qayta tayyorlov */}
                 <FileUploadField
-                  label="Qayta tayyorlovdan o'tganlik hujjati"
+                  label={t("apply.doc.retraining")}
                   fieldName="retrainingCert"
                   file={documents.retrainingCert}
                   onChange={handleFileChange}
@@ -730,7 +732,7 @@ function VacancyApply() {
                 className="btn btn-outline gap-2"
               >
                 <FaArrowLeft />
-                Orqaga
+                {t("apply.back")}
               </button>
 
               <div className="text-sm text-base-content/60">
@@ -743,7 +745,7 @@ function VacancyApply() {
                   onClick={handleNext}
                   className="btn btn-primary gap-2"
                 >
-                  Keyingisi
+                  {t("apply.next")}
                   <FaArrowRight />
                 </button>
               ) : (
@@ -755,12 +757,12 @@ function VacancyApply() {
                   {isSubmitting ? (
                     <>
                       <span className="loading loading-spinner loading-sm"></span>
-                      Yuborilmoqda...
+                      {t("common.sending")}
                     </>
                   ) : (
                     <>
                       <FaCheck />
-                      Yuborish
+                      {t("common.send")}
                     </>
                   )}
                 </button>
@@ -775,12 +777,13 @@ function VacancyApply() {
 
 // File Upload Component
 function FileUploadField({ label, fieldName, file, onChange, onRemove, required = false, error = null }) {
+  const { t } = useTranslation();
   const handleChange = (e) => {
     const selectedFile = e.target.files[0];
     if (selectedFile) {
       // Check file size (5MB)
       if (selectedFile.size > 5 * 1024 * 1024) {
-        toast.error("Fayl hajmi 5MB dan oshmasligi kerak!");
+        toast.error(t("anti.fileTooBig"));
         return;
       }
       onChange(fieldName, selectedFile);
@@ -805,8 +808,8 @@ function FileUploadField({ label, fieldName, file, onChange, onRemove, required 
           />
           <div className="flex flex-col items-center gap-2 text-base-content/60">
             <FaCloudUploadAlt className="w-12 h-12" />
-            <p className="text-sm font-medium">Faylni tanlash uchun bosing</p>
-            <p className="text-xs">PDF, JPG, PNG (Max: 5MB)</p>
+            <p className="text-sm font-medium">{t("apply.pickFile")}</p>
+            <p className="text-xs">{t("apply.fileTypes")}</p>
           </div>
         </label>
       ) : (

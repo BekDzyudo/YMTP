@@ -4,8 +4,10 @@ import { Link, useParams } from "react-router-dom";
 import useGetFetchProfile from "../../hooks/useGetFetchProfile";
 import { AuthContext } from "../../context/AuthContext";
 import SEO from "../../components/SEO";
+import { useTranslation } from "../../i18n/LanguageContext";
 
 function MaterialDetail() {
+  const { t } = useTranslation();
   const materialDetailId = useParams("materialDetailId");
   const { auth, userData } = useContext(AuthContext);
 
@@ -70,8 +72,8 @@ function MaterialDetail() {
     <>
       {data && (
         <SEO 
-          title={data.title || "Material"}
-          description={`${data.title || 'Material'} - O'qituvchi materiallari, o'quv resursi`}
+          title={data.title || t("mat.material")}
+          description={`${data.title || t("mat.material")} - ${t("mat.seoTitle")}`}
           keywords={`material, ${data.title}, o'quv resursi, darslik`}
         />
       )}
@@ -81,10 +83,10 @@ function MaterialDetail() {
         <div className="breadcrumbs text-sm md:text-[16px] hidden md:block">
           <ul>
             <li>
-              <Link to="/teachers">O‘qituvchilar</Link>
+              <Link to="/teachers">{t("mat.teachers")}</Link>
             </li>
             <li>
-              <Link to={`/teachers`}>Materiallar</Link>
+              <Link to={`/teachers`}>{t("mat.materials")}</Link>
             </li>
           </ul>
         </div>

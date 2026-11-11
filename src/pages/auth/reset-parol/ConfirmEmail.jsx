@@ -1,9 +1,12 @@
 import React, { useRef } from "react";
 import { useGlobalContext } from "../../../hooks/useGlobalContext";
+import LanguageSwitcher from "../../../components/LanguageSwitcher";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useTranslation } from "../../../i18n/LanguageContext";
 
 function ConfirmEmail() {
+  const { t } = useTranslation();
   const { theme } = useGlobalContext();
   const email = useRef();
   const parolTiklashForm = useRef();
@@ -55,7 +58,8 @@ function ConfirmEmail() {
   }
 
   return (
-    <section className="min-h-screen flex">
+    <section className="min-h-screen flex relative">
+      <LanguageSwitcher className="absolute top-4 right-4 z-20" />
       {/* Left Side - Branding */}
       <div className="hidden lg:flex lg:w-1/2 bg-[#0B2B4E] relative overflow-hidden items-center justify-center p-12">
         <div className="absolute inset-0 opacity-20">
@@ -76,8 +80,8 @@ function ConfirmEmail() {
           <div className="w-40 h-40 mx-auto mb-8">
             <img src="/new_logo_white_2026.png" alt="Logo" className="w-full h-full object-contain" />
           </div>
-          <h1 className="text-white text-3xl font-bold mb-2">Kasbiy Ta'limni</h1>
-          <h2 className="text-[#D4A017] text-3xl font-bold">Rivojlantirish Instituti</h2>
+          <h1 className="text-white text-3xl font-bold mb-2">{t("auth.brand1")}</h1>
+          <h2 className="text-[#D4A017] text-3xl font-bold">{t("auth.brand2")}</h2>
         </div>
       </div>
 
@@ -85,14 +89,14 @@ function ConfirmEmail() {
       <div className="w-full lg:w-1/2 flex items-center justify-center p-6 bg-gray-50">
         <div className="w-full max-w-md">
           <div className="mb-6 sm:mb-8">
-            <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-2">Parolni tiklash</h2>
-            <p className="text-sm sm:text-base text-gray-500">Parolni tiklash uchun elektron pochtangizni kiriting</p>
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-2">{t("auth.resetTitle")}</h2>
+            <p className="text-sm sm:text-base text-gray-500">{t("auth.resetHint")}</p>
           </div>
 
           <form ref={parolTiklashForm} onSubmit={addData} className="space-y-4">
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1.5">
-                Elektron pochta
+                {t("auth.emailLabel")}
               </label>
               <div className="relative">
                 <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
@@ -115,19 +119,19 @@ function ConfirmEmail() {
               type="submit"
               className="w-full py-2.5 sm:py-3 bg-[#0B2B4E] hover:bg-[#0a2442] text-white font-semibold rounded-lg transition-all duration-200 cursor-pointer text-sm sm:text-base"
             >
-              Tasdiqlash
+              {t("auth.confirm")}
             </button>
 
             <div className="text-center text-sm text-gray-500 mt-4">
               <Link to="/login" className="text-blue-600 hover:underline font-semibold">
-                Kirish sahifasiga o'tish
+                {t("auth.toLogin")}
               </Link>
             </div>
           </form>
 
           <div className="mt-6 sm:mt-8 text-center text-xs text-gray-400">
-            © 2026 Kasbiy Ta'limni Rivojlantirish Instituti.<br />
-            Texnik yordam: <span className="text-gray-600">+998 94 616-33-66</span>
+            © {new Date().getFullYear()} {t("site.name")}.<br />
+            {t("auth.techSupport")} <span className="text-gray-600">+998 94 616-33-66</span>
           </div>
         </div>
       </div>

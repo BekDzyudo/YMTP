@@ -16,8 +16,10 @@ import { LuBookMarked } from "react-icons/lu";
 import { MdOutlineQuiz } from "react-icons/md";
 import { MdOutlinePhotoLibrary } from "react-icons/md";
 import { FaReply } from "react-icons/fa";
+import { useTranslation } from "../../i18n/LanguageContext";
 
 function AllMaterials() {
+  const { t, lang } = useTranslation();
   const { theme } = useGlobalContext();
   const { teacherMaterialId } = useParams("teacherMaterialId");
   const navigate = useNavigate();
@@ -54,14 +56,14 @@ function AllMaterials() {
       .then((res) => res.json())
       .then((data) => setTeacherMaterialList(data))
       .catch((err) => console.error(err));
-  }, [materialTypestate]);
+  }, [materialTypestate, lang]);
   console.log(teacherMaterialList);
 
   return (
     <>
       <SEO 
-        title="O'qituvchilar materiallari"
-        description="O'qituvchilar tomonidan yuklangan o'quv materiallari, darsliklar, metodikalar va taqdimotlar. Kasbiy ta'lim resurslari"
+        title={t("mat.seoTitle")}
+        description={t("mat.seoDesc")}
         keywords="o'qituvchilar materiallari, o'quv materiallari, darsliklar, metodika, taqdimot, resurslar"
       />
       
@@ -69,7 +71,7 @@ function AllMaterials() {
       {!teacherMaterialList?.materiallar ? (
         <div className="w-full flex items-center justify-center md:mt-20">
           <div className="flex flex-col items-center gap-3 text-primary text-sm sm:text-2xl font-bold text-center opacity-90">
-          <h1>Siz ro‘yxatdan o‘tmagansiz</h1>
+          <h1>{t("mat.notRegistered")}</h1>
           <Link to="/login" className="btn btn-primary mt-4 max-w-min">
             <FaReply /> Kirish
           </Link>
@@ -82,11 +84,11 @@ function AllMaterials() {
               <div className="breadcrumbs text-sm md:text-[16px] hidden md:block">
                 <ul>
                   <li>
-                    <Link to="/teachers">O‘qituvchilar</Link>
+                    <Link to="/teachers">{t("mat.teachers")}</Link>
                   </li>
                   <li>
                     <Link to={`/teachers/${teacherMaterialId}`}>
-                      Materiallar
+                      {t("mat.materials")}
                     </Link>
                   </li>
                 </ul>
@@ -145,7 +147,7 @@ function AllMaterials() {
                             <div className="flex flex-col gap-2 text-sm">
                               <div className="flex items-center justify-between">
                                 <span className="text-base">
-                                  Ko'rilgan:
+                                  {t("mat.viewed")}
                                 </span>
                                 <span className="font-semibold">
                                   {material.view_count}
@@ -153,14 +155,14 @@ function AllMaterials() {
                               </div>
                               <div className="flex items-center justify-between">
                                 <span className="text-base">
-                                  Yuklab olingan:
+                                  {t("mat.downloaded")}
                                 </span>
                                 <span className="font-semibold">
                                   {material.dowloand_count}
                                 </span>
                               </div>
                               <div className="flex items-center justify-between">
-                                <span className="text-base">Reyting:</span>
+                                <span className="text-base">{t("mat.rating")}</span>
                                 <span className="font-semibold text-yellow-500 flex items-center gap-1">
                                   {"⭐ " + material.rate_material?.toFixed(1)}
                                 </span>
@@ -204,7 +206,7 @@ function AllMaterials() {
                             <path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                           </svg>
                           <span className="is-drawer-close:hidden md:text-[14px]">
-                            Barchasi
+                            {t("common.all")}
                           </span>
                         </button>
                       </li>
@@ -235,7 +237,7 @@ function AllMaterials() {
             <div className="text-primary text-sm sm:text-2xl font-bold text-center w-full opacity-90 absolute left-0 top-40 sm:top-52 flex justify-center">
               <div className="flex items-center gap-3">
                 <MdReportGmailerrorred className="text-2xl sm:text-5xl" />
-                <p>Hech narsa topilmadi</p>
+                <p>{t("res.nothingFound")}</p>
               </div>
             </div>
           )}

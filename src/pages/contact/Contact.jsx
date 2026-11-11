@@ -15,8 +15,10 @@ import {
 import { Link } from "react-router-dom";
 import { useHero } from "../../context/HeroContext";
 import SEO from "../../components/SEO";
+import { useTranslation } from "../../i18n/LanguageContext";
 
 function Contact() {
+  const { t } = useTranslation();
   const { setOnHero } = useHero();
   
   const [formData, setFormData] = useState({
@@ -48,29 +50,8 @@ function Contact() {
 
   // Sana va vaqt formatlash
   const formatDate = (date) => {
-    const days = [
-      "Yakshanba",
-      "Dushanba",
-      "Seshanba",
-      "Chorshanba",
-      "Payshanba",
-      "Juma",
-      "Shanba",
-    ];
-    const months = [
-      "Yanvar",
-      "Fevral",
-      "Mart",
-      "Aprel",
-      "May",
-      "Iyun",
-      "Iyul",
-      "Avgust",
-      "Sentabr",
-      "Oktabr",
-      "Noyabr",
-      "Dekabr",
-    ];
+    const days = t("common.weekdays");
+    const months = t("common.months");
 
     return {
       day: days[date.getDay()],
@@ -107,7 +88,7 @@ function Contact() {
     if (!formData.name.trim()) {
       setSubmitMessage({
         type: "error",
-        text: "Iltimos, ism va familiyangizni kiriting!",
+        text: t("contact.err.name"),
       });
       return false;
     }
@@ -115,7 +96,7 @@ function Contact() {
     if (!formData.email.trim()) {
       setSubmitMessage({
         type: "error",
-        text: "Iltimos, email manzilingizni kiriting!",
+        text: t("contact.err.email"),
       });
       return false;
     }
@@ -123,7 +104,7 @@ function Contact() {
     if (!formData.subject.trim()) {
       setSubmitMessage({
         type: "error",
-        text: "Iltimos, xabar mavzusini kiriting!",
+        text: t("contact.err.subject"),
       });
       return false;
     }
@@ -131,7 +112,7 @@ function Contact() {
     if (!formData.message.trim()) {
       setSubmitMessage({
         type: "error",
-        text: "Iltimos, xabar matnini kiriting!",
+        text: t("contact.err.message"),
       });
       return false;
     }
@@ -140,7 +121,7 @@ function Contact() {
     if (!formData.phone || !formData.phone.trim()) {
       setSubmitMessage({
         type: "error",
-        text: "Iltimos, telefon raqamingizni kiriting!",
+        text: t("contact.err.phone"),
       });
       return false;
     }
@@ -148,7 +129,7 @@ function Contact() {
     if (!validatePhone(formData.phone)) {
       setSubmitMessage({
         type: "error",
-        text: "Telefon raqami noto'g'ri formatda! Masalan: +998901234567",
+        text: t("contact.err.phoneFormat"),
       });
       return false;
     }
@@ -188,14 +169,14 @@ function Contact() {
       );
 
       if (!response.ok) {
-        throw new Error(`Server xatosi: ${response.status}`);
+        throw new Error(t("contact.serverError", { status: response.status }));
       }
 
       const result = await response.json();
 
       setSubmitMessage({
         type: "success",
-        text: "Xabaringiz muvaffaqiyatli yuborildi! Tez orada siz bilan bog'lanamiz.",
+        text: t("contact.success"),
       });
       setIsSubmitting(false);
       setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
@@ -206,7 +187,7 @@ function Contact() {
       console.error("Xatolik:", error);
       setSubmitMessage({
         type: "error",
-        text: "Xabar yuborishda xatolik yuz berdi. Iltimos, qaytadan urinib ko'ring.",
+        text: t("contact.sendError"),
       });
       setIsSubmitting(false);
 
@@ -218,8 +199,8 @@ function Contact() {
   return (
     <>
       <SEO 
-        title="Aloqa"
-        description="Kasb-hunar ta'limi markazi bilan bog'lanish: telefon, email, manzil va ijtimoiy tarmoqlar. Onlayn xabar yuborish formasi mavjud"
+        title={t("contact.seoTitle")}
+        description={t("contact.seoDesc")}
         keywords="aloqa, kontakt, telefon, email, manzil, murojaat, xabar yuborish"
       />
       
@@ -235,11 +216,10 @@ function Contact() {
           <div className="px-4 sm:px-6">
             <div className="text-center">
               <h1 className="text-2xl font-serif sm:text-4xl lg:text-5xl font-bold mb-4 font-serif">
-                Biz bilan bog‘laning
+                {t("contact.title")}
               </h1>
               <p className="text-base sm:text-xl text-blue-100 max-w-2xl mx-auto">
-                Sizning fikr va takliflaringiz biz uchun muhim. Biz bilan
-                bog'lanishning turli usullaridan foydalaning.
+                {t("contact.subtitle")}
               </p>
             </div>
           </div>
@@ -260,10 +240,10 @@ function Contact() {
                     </div>
                     <div className="flex-1">
                       <h3 className="text-lg font-bold text-gray-800 mb-2">
-                        Manzil
+                        {t("contact.address")}
                       </h3>
                       <p className="text-gray-600 leading-relaxed">
-                       Toshkent shahar, Olmazor tumani, Talabalar ko‘chasi, 96-uy
+                       {t("contact.addressValue")}
                       </p>
                     </div>
                   </div>
@@ -277,7 +257,7 @@ function Contact() {
                     </div>
                     <div className="flex-1">
                       <h3 className="text-lg font-bold text-gray-800 mb-2">
-                        Telefon
+                        {t("contact.phone")}
                       </h3>
                       <a
                         href="tel:+998712024515"
@@ -303,7 +283,7 @@ function Contact() {
                     </div>
                     <div className="flex-1">
                       <h3 className="text-lg font-bold text-gray-800 mb-2">
-                        Email
+                        {t("contact.email")}
                       </h3>
                       <a
                         href="mailto:info@profedu.uz"
@@ -329,19 +309,19 @@ function Contact() {
                     </div>
                     <div className="flex-1">
                       <h3 className="text-lg font-bold text-gray-800 mb-2">
-                        Ish vaqti
+                        {t("contact.workHours")}
                       </h3>
                       <p className="text-gray-600">
-                        <span className="font-semibold">Dushanba - Juma:</span>
+                        <span className="font-semibold">{t("contact.weekdays")}</span>
                         <br />
                         09:00 - 18:00
                       </p>
                       <p className="text-gray-600 mt-2">
                         <span className="font-semibold">
-                          Shanba - Yakshanba:
+                          {t("contact.weekend")}
                         </span>
                         <br />
-                        Dam olish kuni
+                        {t("contact.dayOff")}
                       </p>
                     </div>
                   </div>
@@ -352,11 +332,10 @@ function Contact() {
               <div className="bg-white rounded-2xl shadow-xl p-4 sm:p-8 border-t-4 border-blue-700">
                 <div className="mb-6">
                   <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-2 font-serif">
-                    Xabar yuborish
+                    {t("contact.sendMessage")}
                   </h2>
                   <p className="text-gray-600">
-                    Quyidagi formani to'ldiring va biz tez orada siz bilan
-                    bog'lanamiz
+                    {t("contact.formHint")}
                   </p>
                 </div>
 
@@ -377,7 +356,7 @@ function Contact() {
                     {/* Name */}
                     <div>
                       <label className="block text-gray-700 font-semibold mb-2">
-                        Ism va Familiya <span className="text-red-500">*</span>
+                        {t("contact.fullName")} <span className="text-red-500">*</span>
                       </label>
                       <div className="relative">
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -390,7 +369,7 @@ function Contact() {
                           onChange={handleChange}
                           required
                           className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
-                          placeholder="Ismingizni kiriting"
+                          placeholder={t("contact.fullNamePh")}
                         />
                       </div>
                     </div>
@@ -398,7 +377,7 @@ function Contact() {
                     {/* Email */}
                     <div>
                       <label className="block text-gray-700 font-semibold mb-2">
-                        Email <span className="text-red-500">*</span>
+                        {t("contact.email")} <span className="text-red-500">*</span>
                       </label>
                       <div className="relative">
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -421,7 +400,7 @@ function Contact() {
                     {/* Phone */}
                     <div>
                       <label className="block text-gray-700 font-semibold mb-2">
-                        Telefon raqami <span className="text-red-500">*</span>
+                        {t("contact.phoneNumber")} <span className="text-red-500">*</span>
                       </label>
                       <div className="relative">
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -442,7 +421,7 @@ function Contact() {
                     {/* Subject */}
                     <div>
                       <label className="block text-gray-700 font-semibold mb-2">
-                        Mavzu <span className="text-red-500">*</span>
+                        {t("contact.subject")} <span className="text-red-500">*</span>
                       </label>
                       <input
                         type="text"
@@ -451,7 +430,7 @@ function Contact() {
                         onChange={handleChange}
                         required
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
-                        placeholder="Xabar mavzusi"
+                        placeholder={t("contact.subjectPh")}
                       />
                     </div>
                   </div>
@@ -459,7 +438,7 @@ function Contact() {
                   {/* Message */}
                   <div>
                     <label className="block text-gray-700 font-semibold mb-2">
-                      Xabar matni <span className="text-red-500">*</span>
+                      {t("contact.message")} <span className="text-red-500">*</span>
                     </label>
                     <textarea
                       name="message"
@@ -468,7 +447,7 @@ function Contact() {
                       required
                       rows="6"
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all resize-none"
-                      placeholder="Xabaringizni bu yerga yozing..."
+                      placeholder={t("contact.messagePh")}
                     ></textarea>
                   </div>
 
@@ -481,12 +460,12 @@ function Contact() {
                     {isSubmitting ? (
                       <>
                         <span className="loading loading-spinner"></span>
-                        Yuborilmoqda...
+                        {t("common.sending")}
                       </>
                     ) : (
                       <>
                         <FaPaperPlane />
-                        Xabar yuborish
+                        {t("contact.sendMessage")}
                       </>
                     )}
                   </button>
@@ -503,7 +482,7 @@ function Contact() {
                 //   background: 'linear-gradient(to bottom right, #002d6d, #003d7d)'
                 // }}
               >
-                <h3 className="text-lg font-bold mb-4">Ijtimoiy tarmoqlar</h3>
+                <h3 className="text-lg font-bold mb-4">{t("contact.social")}</h3>
                 <div className="flex flex-wrap gap-3">
                   <a
                     href="https://facebook.com"
@@ -550,7 +529,7 @@ function Contact() {
                 >
                   <div className="flex items-center justify-center gap-2 mb-4">
                     <FaCalendarAlt className="text-yellow-400 text-2xl" />
-                    <h3 className="text-white font-bold text-xl">Kalendar</h3>
+                    <h3 className="text-white font-bold text-xl">{t("contact.calendar")}</h3>
                   </div>
 
                   {/* Vaqt - katta raqamlar */}
@@ -567,7 +546,7 @@ function Contact() {
                       </span>
                     </div>
                     <div className="text-blue-200 text-xl font-medium mt-2 tabular-nums">
-                      {dateTime.seconds} soniya
+                      {dateTime.seconds} {t("contact.seconds")}
                     </div>
                   </div>
 
@@ -601,10 +580,10 @@ function Contact() {
           <div className="w-full">
             <div className="p-4 sm:p-6 bg-gradient-to-r from-blue-50 to-slate-50">
               <h3 className="text-xl font-bold text-gray-800 mb-2 font-serif">
-                Bizning joylashuv
+                {t("contact.location")}
               </h3>
               <p className="text-gray-600">
-                Toshkent shahar, Olmazor tumani, Talabalar ko‘chasi, 96-uy
+                {t("contact.addressValue")}
               </p>
             </div>
           </div>
@@ -616,7 +595,7 @@ function Contact() {
               style={{ border: 0 }}
               allowFullScreen=""
               loading="lazy"
-              title="Institut joylashuvi"
+              title={t("contact.mapTitle")}
             ></iframe>
           </div>
         </div>

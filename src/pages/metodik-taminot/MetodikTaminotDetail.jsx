@@ -12,8 +12,10 @@ import useGetFetch from "../../hooks/useGetFetch";
 import { useHero } from "../../context/HeroContext";
 import { AuthContext } from "../../context/AuthContext";
 import { toast } from "react-toastify";
+import { useTranslation } from "../../i18n/LanguageContext";
 
 function MetodikTaminotDetail() {
+  const { t, locale, lang } = useTranslation();
   const { eduId } = useParams();
   const { setOnHero } = useHero();
   const { auth } = useContext(AuthContext);
@@ -45,7 +47,7 @@ function MetodikTaminotDetail() {
     };
 
     fetchData();
-  }, [eduId]);
+  }, [eduId, lang]);
 
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
@@ -75,13 +77,13 @@ function MetodikTaminotDetail() {
         if (response.ok) {
           setComment("");
           // Muvaffaqiyatli yuborilgandan keyin xabar ko'rsatish
-          toast.success("Izoh muvaffaqiyatli yuborildi!");
+          toast.success(t("met.commentSent"));
         } else {
-          toast.error("Izoh yuborishda xatolik yuz berdi!");
+          toast.error(t("met.commentError"));
         }
       } catch (error) {
         console.error("Izoh yuborishda xatolik:", error);
-        toast.error("Izoh yuborishda xatolik yuz berdi!");
+        toast.error(t("met.commentError"));
       }
     }
   };
@@ -99,13 +101,13 @@ function MetodikTaminotDetail() {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <h2 className="text-2xl font-bold text-gray-700 mb-4">
-            Ma'lumot topilmadi
+            {t("met.notFound")}
           </h2>
           <Link
             to="/metodik-taminot"
             className="text-blue-600 hover:text-blue-700 font-semibold"
           >
-            Orqaga qaytish
+            {t("met.goBack")}
           </Link>
         </div>
       </div>
@@ -123,7 +125,7 @@ function MetodikTaminotDetail() {
               className="hidden sm:inline-flex items-center gap-2 mb-3 sm:mb-6 transition-colors link"
             >
               <FaArrowLeft />
-              <span className="font-medium text-sm md:text-base">Orqaga qaytish</span>
+              <span className="font-medium text-sm md:text-base">{t("met.goBack")}</span>
             </Link>
 
             <div className="space-y-4">
@@ -137,7 +139,7 @@ function MetodikTaminotDetail() {
                   <div className="flex items-center gap-2 bg-slate-300 backdrop-blur-sm rounded-full px-4 py-2">
                     <FaCalendar className="text-blue-600" />
                     <span>
-                      {new Date(globalData?.date).toLocaleDateString("ru-RU", {
+                      {new Date(globalData?.date).toLocaleDateString(locale, {
                         day: "2-digit",
                         month: "2-digit",
                         year: "numeric"
@@ -180,7 +182,7 @@ function MetodikTaminotDetail() {
               <div className="bg-white rounded-2xl shadow-lg p-4 sm:p-8 border border-gray-100">
                 <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
                   <div className="w-1 h-6 bg-gradient-to-b from-blue-300 to-blue-700 rounded-full"></div>
-                  Hujjatlar
+                  {t("met.documents")}
                 </h2>
 
                 <div className="grid gap-4">
@@ -203,14 +205,7 @@ function MetodikTaminotDetail() {
                             </h3>
                             <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-500 mt-1">
                               <MdDateRange className="flex-shrink-0" />
-                              <span>So'ngi o'zgartirilgan sana: {(() => {
-                                const months = ["yanvar", "fevral", "mart", "aprel", "may", "iyun", "iyul", "avgust", "sentabr", "oktabr", "noyabr", "dekabr"];
-                                const date = new Date(file.date);
-                                const day = date.getDate();
-                                const month = months[date.getMonth()];
-                                const year = date.getFullYear();
-                                return `${day}-${month} ${year}-yil`;
-                              })()}</span>
+                              <span>{t("met.lastModified")} {new Date(file.date).toLocaleDateString(locale, { day: "numeric", month: "long", year: "numeric" })}</span>
                             </div>
                           </div>
                         </div>
@@ -222,8 +217,8 @@ function MetodikTaminotDetail() {
                           className="flex items-center gap-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-3 sm:px-6 py-1 sm:py-3 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg font-medium text-xs sm:text-base flex-shrink-0"
                         >
                           <FaDownload />
-                          <span className="hidden sm:inline">Yuklab olish</span>
-                          <span className="sm:hidden">Yuklash</span>
+                          <span className="hidden sm:inline">{t("common.download")}</span>
+                          <span className="sm:hidden">{t("met.downloadShort")}</span>
                         </Link>
                       </div>
                     </div>
@@ -238,7 +233,7 @@ function MetodikTaminotDetail() {
               <div className="bg-white rounded-2xl shadow-lg py-6 px-3 sm:px-5 sm:py-8 border border-gray-100">
                 <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
                   <div className="w-1 h-6 bg-gradient-to-b from-blue-300 to-blue-700 rounded-full"></div>
-                  Izohlar
+                  {t("met.comments")}
                 </h2>
 
                 {/* Comment Form */}
@@ -246,7 +241,7 @@ function MetodikTaminotDetail() {
                   <textarea
                     value={comment}
                     onChange={(e) => setComment(e.target.value)}
-                    placeholder="Izoh yozing..."
+                    placeholder={t("met.commentPh")}
                     rows="4"
                     className="w-full border border-gray-300 rounded-md p-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none text-sm sm:text-base"
                   />
@@ -254,7 +249,7 @@ function MetodikTaminotDetail() {
                     type="submit"
                     className="cursor-pointer mt-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white sm:px-6 px-3 py-2 sm:py-2.5 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg font-semibold text-sm sm:text-base"
                   >
-                    Izoh yuborish
+                    {t("met.sendComment")}
                   </button>
                 </form>
               </div>

@@ -1,3 +1,5 @@
+import { langHeaders } from "../i18n/i18n";
+
 export const getFetchData = async (url) => {
     const result = {
       data: [],
@@ -5,7 +7,7 @@ export const getFetchData = async (url) => {
     };
   
     try {
-      const response = await fetch(url);
+      const response = await fetch(url, { headers: langHeaders() });
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }

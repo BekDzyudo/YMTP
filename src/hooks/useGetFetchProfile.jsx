@@ -1,5 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
+import { useTranslation } from "../i18n/LanguageContext";
+import { langHeaders } from "../i18n/i18n";
 
 function useGetFetchProfile(url, lookAtLogout) {
   const [data, setData] = useState(null);
@@ -7,6 +9,7 @@ function useGetFetchProfile(url, lookAtLogout) {
   const [error, setError] = useState(null);
 
   const { auth, refresh, isTokenExpired } = useContext(AuthContext);
+  const { lang } = useTranslation();
 
   useEffect(() => {
     const refreshToken = localStorage.getItem("refreshToken");
@@ -20,6 +23,7 @@ function useGetFetchProfile(url, lookAtLogout) {
             headers: {
               "Content-Type": "application/json",
               Authorization: "Bearer " + auth.accessToken,
+              ...langHeaders(lang),
             },
           });
         }
@@ -30,6 +34,7 @@ function useGetFetchProfile(url, lookAtLogout) {
             headers: {
               "Content-Type": "application/json",
               Authorization: "Bearer " + auth.accessToken, // Yangi token bilan
+              ...langHeaders(lang),
             },
           });
 
@@ -54,7 +59,7 @@ function useGetFetchProfile(url, lookAtLogout) {
       }
     };
     fetchData();
-  }, [url, auth.accessToken, lookAtLogout]);
+  }, [url, auth.accessToken, lookAtLogout, lang]);
 
   return { data, isPending, error };
 }

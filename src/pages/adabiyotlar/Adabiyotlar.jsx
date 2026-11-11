@@ -3,8 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { useHero } from '../../context/HeroContext';
 import useGetFetch from '../../hooks/useGetFetch';
 import SEO from '../../components/SEO';
+import { useTranslation } from "../../i18n/LanguageContext";
 
 function Adabiyotlar() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { setOnHero } = useHero();
   const [activeTab, setActiveTab] = useState('all');
@@ -85,15 +87,15 @@ function Adabiyotlar() {
   }, [setOnHero]);
 
   const tabs = [
-    { id: 'all', name: 'Barchasi' },
-    { id: 'general', name: 'Umumta\'lim fanlar' },
-    { id: 'vocational', name: 'Umumkasbiy fanlar' },
-    { id: 'special', name: 'Maxsus fanlar' },
-    { id: 'practice', name: 'O\'quv amaliyoti' },
-    { id: 'professional', name: 'Professional modul' },
-    { id: 'natural', name: 'Tabiiy modul' },
-    { id: 'maxsus', name: 'Maxsus modul' },
-    { id: 'humanities', name: 'Tabiiy gumanitar modul' }
+    { id: 'all', name: t("common.all") },
+    { id: 'general', name: t("lit.tab.general") },
+    { id: 'vocational', name: t("lit.tab.vocational") },
+    { id: 'special', name: t("lit.tab.special") },
+    { id: 'practice', name: t("lit.tab.practice") },
+    { id: 'professional', name: t("lit.tab.professional") },
+    { id: 'natural', name: t("lit.tab.natural") },
+    { id: 'maxsus', name: t("lit.tab.maxsus") },
+    { id: 'humanities', name: t("lit.tab.humanities") }
   ];
 
   const handleRowClick = (id) => {
@@ -158,8 +160,8 @@ function Adabiyotlar() {
   return (
     <>
       <SEO 
-        title="Adabiyotlar"
-        description="Kasbiy ta'lim tizimida qo'llaniladigan darsliklar, qo'llanmalar va o'quv adabiyotlari katalogi. Barcha kasblar va yo'nalishlar uchun"
+        title={t("nav.literature")}
+        description={t("lit.seoDesc")}
         keywords="adabiyotlar, darsliklar, qo'llanma, o'quv adabiyotlari, kasb darsliklari, katalog"
       />
       
@@ -168,7 +170,7 @@ function Adabiyotlar() {
       {/* Header */}
       <div className="bg-white border-b border-gray-200 px-4 sm:px-6 lg:px-8 py-6 rounded-t-2xl">
         <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
-          Kasbiy ta'lim tizimida o'qitiladigan adabiyotlar
+          {t("lit.title")}
 
         </h1>
       </div>
@@ -176,7 +178,7 @@ function Adabiyotlar() {
       {/* Filters */}
       <div className="bg-white border-b border-gray-200 px-4 sm:px-6 lg:px-8 py-4">
         <div className="mb-4">
-          <h3 className="text-sm font-semibold text-gray-700 mb-3">Ta'lim sohasini tanlash</h3>
+          <h3 className="text-sm font-semibold text-gray-700 mb-3">{t("lit.chooseField")}</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-3">
                 <select
                   onChange={(e) => setYil(e.target.value)}
@@ -184,7 +186,7 @@ function Adabiyotlar() {
                   className="select !bg-white text-black !select-neutral"
                 >
                   <option value="" disabled={true}>
-                    O‘quv yili
+                    {t("lit.year")}
                   </option>
                   {uquv_yili &&
                     uquv_yili.map((item) => {
@@ -205,7 +207,7 @@ function Adabiyotlar() {
                   onChange={(e) => setDaraja(e.target.value)}
                 >
                   <option disabled={true} value="">
-                    Ta'lim darajasi
+                    {t("lit.degree")}
                   </option>
                   {darajalar &&
                     darajalar.map((item) => {
@@ -226,7 +228,7 @@ function Adabiyotlar() {
                   onChange={(e) => setBilim(e.target.value)}
                 >
                   <option value="" disabled={true}>
-                    Bilim sohasi
+                    {t("lit.knowledge")}
                   </option>
                   {bilim_soha &&
                     bilim_soha.map((item) => {
@@ -247,7 +249,7 @@ function Adabiyotlar() {
                   onChange={(e) => setTalim(e.target.value)}
                 >
                   <option value="" disabled={true}>
-                    Ta'lim sohasi
+                    {t("lit.education")}
                   </option>
                   {talim_soha &&
                     talim_soha.map((item) => {
@@ -268,7 +270,7 @@ function Adabiyotlar() {
                   onChange={(e) => setYunalish(e.target.value)}
                 >
                   <option value="" disabled={true}>
-                    Ta'lim yo'nalish
+                    {t("lit.direction")}
                   </option>
                   {talim_yunalish &&
                     talim_yunalish.map((item) => {
@@ -289,7 +291,7 @@ function Adabiyotlar() {
                   onChange={(e) => setKasb(e.target.value)}
                 >
                   <option value="" disabled={true}>
-                    Kasb va mutaxasislik
+                    {t("lit.profession")}
                   </option>
                   {kasb_mutaxassislik &&
                     kasb_mutaxassislik.map((item) => {
@@ -310,7 +312,7 @@ function Adabiyotlar() {
                   onChange={(e) => setMasullar(e.target.value)}
                 >
                   <option value="" disabled={true}>
-                    Mas’ullar
+                    {t("lit.responsible")}
                   </option>
                   {masullar &&
                     masullar.map((item) => {
@@ -344,13 +346,13 @@ function Adabiyotlar() {
                   }}
             className="w-full sm:w-auto px-6 py-2 bg-green-700 hover:bg-green-800 text-white font-medium rounded-lg transition-colors cursor-pointer text-sm"
           >
-            Filterlarni tozalash
+            {t("lit.clearFilters")}
           </button>
           <div className="flex flex-col sm:flex-row gap-3 items-center w-full sm:w-auto">
             <div className="relative w-full sm:w-64">
               <input
                 type="text"
-                placeholder="Izlash..."
+                placeholder={t("res.search")}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full px-4 py-2 pr-10 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
@@ -360,7 +362,7 @@ function Adabiyotlar() {
               </svg>
             </div>
             <div className="flex items-center gap-2 bg-[#194882] text-white px-4 py-2 rounded-lg text-sm font-medium">
-              <span>Jami fanlar soni</span>
+              <span>{t("lit.totalSubjects")}</span>
               <span className="bg-white text-[#194882] px-2 py-0.5 rounded font-bold">{totalCount}</span>
             </div>
           </div>
@@ -374,7 +376,7 @@ function Adabiyotlar() {
           <div className="lg:w-64 shrink-0">
             <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
               <div className="bg-blue-800 text-white px-4 py-3 font-semibold text-center">
-                Barchasi
+                {t("common.all")}
               </div>
               <div className="divide-y divide-gray-200">
                 {tabs.slice(1).map((tab) => (
@@ -402,22 +404,22 @@ function Adabiyotlar() {
                       №
                     </th>
                     <th className="px-4 py-3 text-left text-xs font-semibold text-white uppercase tracking-wider">
-                      Fanning nomi
+                      {t("lit.col.name")}
                     </th>
                     <th className="px-4 py-3 text-left text-xs font-semibold text-white uppercase tracking-wider">
-                      Kodi darajalar kesimida
+                      {t("lit.col.code")}
                     </th>
                     <th className="px-4 py-3 text-left text-xs font-semibold text-white uppercase tracking-wider">
-                      Soati darajalar kesimida
+                      {t("lit.col.hours")}
                     </th>
                     <th className="px-4 py-3 text-left text-xs font-semibold text-white uppercase tracking-wider">
-                      O'quv adabiyotlari
+                      {t("lit.col.literature")}
                     </th>
                     <th className="px-4 py-3 text-left text-xs font-semibold text-white uppercase tracking-wider">
-                      Institutdan mas'ulning F.I.O.
+                      {t("lit.col.responsible")}
                     </th>
                     <th className="px-4 py-3 text-left text-xs font-semibold text-white uppercase tracking-wider">
-                      Ishchi guruh a'zolari
+                      {t("lit.col.group")}
                     </th>
                     <th className="px-4 py-3 text-center text-xs font-semibold text-white uppercase tracking-wider w-16">
                       
@@ -483,7 +485,7 @@ function Adabiyotlar() {
             {/* Pagination placeholder */}
             <div className="mt-4 flex justify-center">
               <div className="text-sm text-gray-600">
-                1-6 dan 2485 ta natija
+                {t("lit.results")}
               </div>
             </div>
           </div>

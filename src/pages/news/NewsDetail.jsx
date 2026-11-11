@@ -17,8 +17,10 @@ import {
 import { useHero } from "../../context/HeroContext";
 import SEO from "../../components/SEO";
 import { ArticleSchema } from "../../components/StructuredData";
+import { useTranslation } from "../../i18n/LanguageContext";
 
 function NewsDetail() {
+  const { t, lang } = useTranslation();
   const { id } = useParams();
   const { setOnHero } = useHero();
   const [newsDetail, setNewsDetail] = useState(null);
@@ -63,7 +65,7 @@ console.log(newsDetail);
     if (id) {
       fetchNewsDetail();
     }
-  }, [id]);
+  }, [id, lang]);
 
   // Auto-play slider
   useEffect(() => {
@@ -130,20 +132,7 @@ console.log(newsDetail);
   // Sanani formatlash
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    const months = [
-      "Yanvar",
-      "Fevral",
-      "Mart",
-      "Aprel",
-      "May",
-      "Iyun",
-      "Iyul",
-      "Avgust",
-      "Sentabr",
-      "Oktabr",
-      "Noyabr",
-      "Dekabr",
-    ];
+    const months = t("common.months");
     return `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
   };
 
@@ -161,7 +150,7 @@ console.log(newsDetail);
         <div className="text-center">
           <div className="loading loading-spinner loading-lg text-primary"></div>
           <p className="mt-4 text-base-content/70">
-            Yangilik yuklanmoqda...
+            {t("news.detailLoading")}
           </p>
         </div>
       </section>
@@ -172,12 +161,12 @@ console.log(newsDetail);
     return (
       <section className="relative min-h-screen w-full bg-linear-to-b from-base-100 via-base-200 to-base-100 py-24 flex items-center justify-center">
         <div className="text-center">
-          <p className="text-error">Yangilik topilmadi</p>
+          <p className="text-error">{t("news.detailNotFound")}</p>
           <Link
             to="/news"
             className="btn btn-primary mt-4"
           >
-            Yangiliklarga qaytish
+            {t("news.backToNews")}
           </Link>
         </div>
       </section>
@@ -234,7 +223,7 @@ console.log(newsDetail);
                 className="text-base-content/70 hover:text-blue-700 transition-colors"
               >
                 <FaHome className="w-4 h-4 mr-2" />
-                Bosh sahifa
+                {t("common.home")}
               </Link>
             </li>
             <li>
@@ -242,7 +231,7 @@ console.log(newsDetail);
                 to="/news"
                 className="text-base-content/70 hover:text-blue-700 transition-colors"
               >
-                Yangiliklar
+                {t("nav.news")}
               </Link>
             </li>
             <li className="text-blue-700 font-semibold">
@@ -337,7 +326,7 @@ console.log(newsDetail);
                       <a href={newsDetail.file} target="_blank" className="flex items-center gap-3 px-4 py-2 bg-base-300 rounded-full">
                     <FaDownload size={16} className="text-[#0d4ea3]" />
                     <span className="sm:text-base font-semibold text-base-content text-sm">
-                      yuklab olish
+                      {t("news.downloadFile")}
                     </span>
                   </a>
                     )
@@ -372,7 +361,7 @@ console.log(newsDetail);
           <div className="hidden xl:block lg:col-span-1">
             <div className="sticky top-24">
               <h2 className="text-xl sm:text-2xl font-serif font-bold mb-6 text-[#0d4ea3]">
-                O'xshash yangiliklar
+                {t("news.related")}
               </h2>
 
               <div className="space-y-4">
@@ -434,7 +423,7 @@ console.log(newsDetail);
                 ) : (
                   <div className="text-center py-8 text-base-content/60">
                     <FaNewspaper className="text-4xl mx-auto mb-2 opacity-30" />
-                    <p className="text-sm">O'xshash yangiliklar topilmadi</p>
+                    <p className="text-sm">{t("news.noRelated")}</p>
                   </div>
                 )}
               </div>

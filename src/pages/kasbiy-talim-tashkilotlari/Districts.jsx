@@ -3,8 +3,10 @@ import useGetFetch from "../../hooks/useGetFetch";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { MdReportGmailerrorred } from "react-icons/md";
 import { IoArrowBack } from "react-icons/io5";
+import { useTranslation } from "../../i18n/LanguageContext";
 
 function Districts() {
+  const { t } = useTranslation();
   const { districtId } = useParams();
   const navigate = useNavigate();
 
@@ -23,9 +25,9 @@ function Districts() {
           <div className="breadcrumbs text-sm md:text-[16px] hidden md:block">
             <ul>
               <li>
-                <Link to="/region">Viloyatlar</Link>
+                <Link to="/region">{t("col.regions")}</Link>
               </li>
-              <li>Tumanlar</li>
+              <li>{t("col.districts")}</li>
             </ul>
           </div>
           <h2 className="text-center text-2xl sm:text-4xl font-bold mb-10">
@@ -52,7 +54,7 @@ function Districts() {
               <div className="text-primary text-sm sm:text-2xl font-bold text-center w-full opacity-90 absolute top-40 sm:top-52 flex justify-center">
                 <div className="flex items-center gap-3">
                   <MdReportGmailerrorred className="text-2xl sm:text-5xl" />{" "}
-                  <p>Tumanlar kiritilmagan</p>
+                  <p>{t("col.noDistricts")}</p>
                 </div>
               </div>
             )}

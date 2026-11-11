@@ -3,97 +3,99 @@ import { FaQuestionCircle, FaSearch, FaEnvelope, FaPhone, FaPlus, FaTimes } from
 import { useGlobalContext } from "../../hooks/useGlobalContext";
 import { Link } from "react-router-dom";
 import SEO from "../../components/SEO";
+import { useTranslation } from "../../i18n/LanguageContext";
 
 function Faq() {
+  const { t } = useTranslation();
   const { theme } = useGlobalContext();
   const [activeIndex, setActiveIndex] = useState(null);
   const [activeCategory, setActiveCategory] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
 
   const categories = [
-    { id: "all", name: "Barchasi" },
-    { id: "general", name: "Umumiy" },
-    { id: "registration", name: "Ro'yxatdan o'tish" },
-    { id: "materials", name: "Materiallar" },
-    { id: "rating", name: "Reyting" },
-    { id: "technical", name: "Texnik" }
+    { id: "all", name: t("common.all") },
+    { id: "general", name: t("faq.cat.general") },
+    { id: "registration", name: t("faq.cat.registration") },
+    { id: "materials", name: t("faq.cat.materials") },
+    { id: "rating", name: t("faq.cat.rating") },
+    { id: "technical", name: t("faq.cat.technical") }
   ];
 
   const faqs = [
     {
       category: "general",
-      question: "Kasbiy ta'limni rivojlantirish instituti nima qiladi?",
-      answer: "Institut kasbiy ta'lim tizimini rivojlantirish, o'qituvchilar malakasini oshirish, zamonaviy ta'lim dasturlari va metodikalarini ishlab chiqish bilan shug'ullanadi. Shuningdek, institut kasbiy ta'lim muassasalariga metodik yordam ko'rsatadi va o'qituvchilar uchun onlayn resurslar platformasini boshqaradi."
+      question: t("faq.q1"),
+      answer: t("faq.a1")
     },
     {
       category: "registration",
-      question: "Platformaga qanday ro'yxatdan o'tish mumkin?",
-      answer: "Saytning yuqori o'ng burchagidagi 'Kirish' tugmasini bosing va 'Ro'yxatdan o'tish' bo'limiga o'ting. Ism-familiya, email, parol va ishingiz joyi haqida ma'lumotlarni to'ldiring. Email manzilingizga tasdiqlash havolasi yuboriladi. Havolani bosing va hisobingiz faollashadi."
+      question: t("faq.q2"),
+      answer: t("faq.a2")
     },
     {
       category: "registration",
-      question: "Ro'yxatdan o'tish bepulmi?",
-      answer: "Ha, platformaga ro'yxatdan o'tish va barcha xizmatlardan foydalanish mutlaqo bepul. Bu O'zbekiston Respublikasi Kasbiy ta'limni rivojlantirish instituti tomonidan ta'minlanadi."
+      question: t("faq.q3"),
+      answer: t("faq.a3")
     },
     {
       category: "materials",
-      question: "O'qituvchilar qanday material yuklashlari mumkin?",
-      answer: "Ro'yxatdan o'tganingizdan so'ng, shaxsiy kabinetingizga kiring. 'Material yuklash' bo'limida material turini (darslik, taqdimot, test va h.k.) tanlang, fanni ko'rsating va faylni yuklang. Barcha materiallar ekspertlar tomonidan ko'rib chiqiladi va tasdiqlangandan keyin platformada e'lon qilinadi."
+      question: t("faq.q4"),
+      answer: t("faq.a4")
     },
     {
       category: "materials",
-      question: "Qanday formatdagi fayllarni yuklash mumkin?",
-      answer: "PDF, DOCX, PPTX, MP4 va ZIP formatlaridagi fayllarni yuklashingiz mumkin. Maksimal fayl hajmi 50 MB. Agar faylingiz kattaroq bo'lsa, uni siqishtirishni yoki bo'lib yuklashni tavsiya etamiz."
+      question: t("faq.q5"),
+      answer: t("faq.a5")
     },
     {
       category: "materials",
-      question: "Material ko'rib chiqilishi qancha vaqt oladi?",
-      answer: "Odatda materiallar 3-5 ish kuni ichida ko'rib chiqiladi. Agar material talablarga javob bermasa, expert izoh bilan qaytaradi. Siz tuzatishlar kiritib, qaytadan yuklashingiz mumkin."
+      question: t("faq.q6"),
+      answer: t("faq.a6")
     },
     {
       category: "rating",
-      question: "Reyting tizimi qanday ishlaydi?",
-      answer: "Reyting tizimida o'qituvchilarning yuklagan materiallari soni, materiallarga beriladigan baholar, platformadagi faolligi va ekspertlar bahosi asosida ball to'planadi. Har bir tasdiqlangan material uchun ball beriladi. Eng yuqori ball to'plagan o'qituvchilar reytingda birinchi o'rinlarda turadi."
+      question: t("faq.q7"),
+      answer: t("faq.a7")
     },
     {
       category: "rating",
-      question: "Reytingda yuqori o'rinlarni egallash nima beradi?",
-      answer: "Reytingda yuqori o'rinlarni egallagan o'qituvchilar diplom va sertifikatlar bilan taqdirlanadi. Shuningdek, ular institut tomonidan o'tkaziladigan maxsus tadbirlarda ishtirok etish imkoniyatiga ega bo'ladilar va professional rivojlanish uchun qo'shimcha imkoniyatlar oladilar."
+      question: t("faq.q8"),
+      answer: t("faq.a8")
     },
     {
       category: "general",
-      question: "RTR (Raqamli ta'lim resurslari) nima?",
-      answer: "RTR - bu video darslar, taqdimotlar, ma'ruza matnlari, testlar va boshqa raqamli o'quv materiallarining keng kutubxonasi. Barcha o'qituvchilar va o'quvchilar uchun bepul mavjud. RTR bo'limida fanlar va mavzular bo'yicha qidirish imkoniyati mavjud."
+      question: t("faq.q9"),
+      answer: t("faq.a9")
     },
     {
       category: "technical",
-      question: "Parolimni unutib qo'ydim, nima qilish kerak?",
-      answer: "Kirish sahifasida 'Parolni unutdingizmi?' tugmasini bosing. Email manzilingizni kiriting va sizga parolni tiklash havolasi yuboriladi. Havolani bosib yangi parol o'rnating."
+      question: t("faq.q10"),
+      answer: t("faq.a10")
     },
     {
       category: "technical",
-      question: "Profilimni qanday tahrirlashim mumkin?",
-      answer: "Shaxsiy kabinetingizga kiring va 'Profil sozlamalari' bo'limini tanlang. Bu yerda ism-familiya, telefon raqami, rasm va boshqa ma'lumotlarni o'zgartirishingiz mumkin."
+      question: t("faq.q11"),
+      answer: t("faq.a11")
     },
     {
       category: "technical",
-      question: "Mobil qurilmada ishlash mumkinmi?",
-      answer: "Ha, sayt barcha qurilmalarda - kompyuter, planshet va smartfonlarda qulay ishlaydi. Mobil qurilmalarda ham to'liq funksionallik mavjud."
+      question: t("faq.q12"),
+      answer: t("faq.a12")
     },
     {
       category: "general",
-      question: "Institut bilan qanday bog'lanish mumkin?",
-      answer: "Biz bilan 'Aloqa' bo'limidan hamda quyidagi usullar orqali bog'lanishingiz mumkin: Telefon: +998 71 123 45 67, Email: info@ktri.uz. Shuningdek, saytda onlayn chat mavjud (ish vaqti: Dush-Juma 9:00-18:00)."
+      question: t("faq.q13"),
+      answer: t("faq.a13")
     },
     {
       category: "materials",
-      question: "Boshqa o'qituvchilarning materiallarini yuklab olish mumkinmi?",
-      answer: "Ha, tasdiqlangan barcha materiallarni ko'rish va yuklab olish mumkin. Materiallar sahifasida qidiruv va filtrlash imkoniyatlari mavjud. Ammo mualliflik huquqlarini hurmat qilish zarur."
+      question: t("faq.q14"),
+      answer: t("faq.a14")
     },
     {
       category: "general",
-      question: "Xalqaro hamkorlar bilan qanday loyihalar amalga oshirilmoqda?",
-      answer: "Institut UNICEF, UNESCO, BIBB, RIPO va boshqa xalqaro tashkilotlar bilan hamkorlikda kasbiy ta'limni rivojlantirish bo'yicha turli loyihalar amalga oshirmoqda. Batafsil ma'lumot 'Xalqaro hamkorlik' bo'limida."
+      question: t("faq.q15"),
+      answer: t("faq.a15")
     }
   ];
 
@@ -111,8 +113,8 @@ function Faq() {
   return (
     <>
       <SEO 
-        title="Ko'p beriladigan savollar (FAQ)"
-        description="Kasbiy ta'limni rivojlantirish instituti platformasi haqida eng ko'p so'raladigan savollar va javoblar. Ro'yxat, materiallar, reyting va texnik masalalar bo'yicha"
+        title={t("faq.seoTitle")}
+        description={t("faq.seoDesc")}
         keywords="faq, savollar, javoblar, yordam, qo'llanma, platformadan foydalanish"
       />
       
@@ -120,10 +122,10 @@ function Faq() {
       {/* Title */}
       <div className="mb-8">
         <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-serif text-[#0d4ea3]">
-          Ko'p so'raladigan savollar
+          {t("faq.title")}
         </h1>
         <p className="text-base sm:text-lg opacity-70 mt-2">
-          Platformamiz haqida eng ko'p beriladigan savollarga javoblar
+          {t("faq.subtitle")}
         </p>
       </div>
 
@@ -132,12 +134,12 @@ function Faq() {
         <div className={`p-5 rounded-lg shadow-md ${theme === "night" ? "bg-gray-700" : "bg-base-200"}`}>
           <h3 className="text-lg font-semibold mb-3 text-[#194882] flex items-center gap-2">
             <FaSearch className="text-[#194882]" />
-            Qidirish
+            {t("common.search")}
           </h3>
           <div className="relative">
             <input
               type="text"
-              placeholder="Savollarni qidirish..."
+              placeholder={t("faq.search")}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="input input-bordered outline-0 w-full"
@@ -153,7 +155,7 @@ function Faq() {
           {filteredFaqs.length === 0 ? (
             <div className="text-center py-12">
               <FaQuestionCircle className="mx-auto text-6xl opacity-30 mb-4" />
-              <p className="text-lg opacity-70">Savollar topilmadi</p>
+              <p className="text-lg opacity-70">{t("faq.noResults")}</p>
             </div>
           ) : (
             <div className="grid gap-4">
@@ -213,12 +215,12 @@ function Faq() {
             <div className={`hidden lg:block p-5 rounded-lg shadow-md ${theme === "night" ? "bg-gray-700" : "bg-base-200"}`}>
               <h3 className="text-lg font-semibold mb-3 text-[#194882] flex items-center gap-2">
                 <FaSearch className="text-[#194882]" />
-                Qidirish
+                {t("common.search")}
               </h3>
               <div className="relative">
                 <input
                   type="text"
-                  placeholder="Savollarni qidirish..."
+                  placeholder={t("faq.search")}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="input input-bordered outline-0 w-full rounded-lg"
@@ -230,7 +232,7 @@ function Faq() {
             <div className={`p-5 rounded-lg shadow-md ${theme === "night" ? "bg-gray-700" : "bg-base-200"}`}>
               <h3 className="text-lg font-semibold mb-3 flex items-center gap-2 text-[#194882]">
                 <FaQuestionCircle className="text-[#194882]" />
-                Kategoriyalar
+                {t("faq.categories")}
               </h3>
               <div className="flex flex-col gap-2">
                 {categories.map(cat => (
@@ -251,15 +253,15 @@ function Faq() {
             <div className={`p-5 rounded-lg shadow-md ${theme === "night" ? "bg-gray-700" : "bg-base-200"}`}>
               <h3 className="text-lg font-semibold mb-3 flex items-center gap-2 text-[#194882]">
                 <FaQuestionCircle className="text-[#194882]" />
-                Yordam kerakmi?
+                {t("faq.needHelp")}
               </h3>
               <p className="text-sm opacity-80 mb-4">
-                Savolingizga javob topmadingizmi? Biz bilan bog'laning!
+                {t("faq.notFoundAnswer")}
               </p>
               <div className="flex flex-col gap-2">
                 <Link to="/contact" className="btn bg-gradient-to-br from-[#194882] to-info text-white btn-sm md:btn-md rounded-lg">
                   <FaEnvelope />
-                  Xabar yuborish
+                  {t("contact.sendMessage")}
                 </Link>
                 <a href="tel:+998711234567" className="btn btn-outline btn-sm md:btn-md rounded-lg">
                   <FaPhone />

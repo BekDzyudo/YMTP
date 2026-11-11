@@ -6,8 +6,10 @@ import { GrFormNextLink } from "react-icons/gr";
 import { Link } from "react-router-dom";
 import ChatTeacher from "../../../components/ChatTeacher";
 import useGetFetchProfile from "../../../hooks/useGetFetchProfile";
+import { useTranslation } from "../../../i18n/LanguageContext";
 
 function TeacherProfil() {
+  const { t } = useTranslation();
   const { theme } = useGlobalContext();
   const { userData, auth } = useContext(AuthContext);
   const [Materiallar, setMateriallar] = useState(null);
@@ -140,21 +142,21 @@ function TeacherProfil() {
       >
         <div className="flex flex-col sm:flex-row justify-between mb-5 sm:mb-6 md:mb-10">
           <h2 className="text-lg mb-1 text-center sm:text-start sm:mb-0 md:text-2xl font-bold">
-            Materiallar
+            {t("teacher.materials")}
           </h2>
           <div className="flex gap-2 md:gap-5">
             <select
               defaultValue="Pick a text editor"
               className="select select-sm md:select-md bg-none outline-0"
             >
-              <option disabled={true}>Material turi</option>
-              <option>O‘qitish materiallari to‘plami</option>
-              <option>Maruzalar to‘plami</option>
-              <option>Yo‘riqli texnologik xarita</option>
-              <option>Taqdimot materiallari</option>
-              <option>Testlar to‘plami</option>
-              <option>Didaktik ko‘rgazmali materiallar to‘plami</option>
-              <option>Glossary</option>
+              <option disabled={true}>{t("prof.materialType")}</option>
+              <option>{t("teacher.type.collection")}</option>
+              <option>{t("teacher.type.lectures")}</option>
+              <option>{t("teacher.type.techMap")}</option>
+              <option>{t("teacher.type.presentations")}</option>
+              <option>{t("teacher.type.tests")}</option>
+              <option>{t("teacher.type.didactic")}</option>
+              <option>{t("teacher.type.glossary")}</option>
             </select>
 
             <button
@@ -169,7 +171,7 @@ function TeacherProfil() {
               <div className="modal-box">
                 <form method="dialog" className="mb-10">
                   <h2 className="absolute left-3 top-3 text-sm sm:text-lg text-primary font-semibold">
-                    Material qo‘shish
+                    {t("teacher.addMaterial")}
                   </h2>
                   {/* if there is a button in form, it will close the modal */}
                   <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
@@ -183,7 +185,7 @@ function TeacherProfil() {
                 >
                   <div className="flex flex-col">
                     <label className="label text-sm" htmlFor="datatype">
-                      Material turi*
+                      {t("teacher.materialTypeReq")}
                     </label>
                     <select
                       className="select outline-0 w-full border"
@@ -193,7 +195,7 @@ function TeacherProfil() {
                       ref={hujjatTuri}
                     >
                       <option value="" disabled={true}>
-                        Material turini tanlang
+                        {t("teacher.chooseType")}
                       </option>
                       {hujjatlar &&
                         hujjatlar.map((hujjat) => {
@@ -207,7 +209,7 @@ function TeacherProfil() {
                   </div>
                   <div className="flex flex-col">
                     <label className="label text-sm" htmlFor="fanNomi">
-                      Fan nomi*
+                      {t("teacher.subjectReq")}
                     </label>
                     <select
                     ref={fanNomi}
@@ -217,7 +219,7 @@ function TeacherProfil() {
                       defaultValue=""
                     >
                       <option value="" disabled={true}>
-                        Fan nomini tanlang
+                        {t("teacher.chooseSubject")}
                       </option>
                       {fanlar &&
                         fanlar.map((fan) => {
@@ -231,13 +233,13 @@ function TeacherProfil() {
                   </div>
                   <div>
                     <fieldset className="fieldset">
-                      <legend className="label text-sm">Fayl biriktirish <span style={{ color: "red" }}>(.pdf)</span></legend>
+                      <legend className="label text-sm">{t("teacher.attachFile")} <span style={{ color: "red" }}>(.pdf)</span></legend>
                       <input type="file" id="addFile" className="file-input w-full outline-0 border" accept=".pdf" ref={addFile}/>
-                      <label className="label">Max size 2MB</label>
+                      <label className="label">{t("teacher.maxSize")}</label>
                     </fieldset>
                   </div>
                   <div>
-                    <textarea ref={komment} id="komment" className="textarea w-full border" placeholder="Izoh kiriting..."></textarea>
+                    <textarea ref={komment} id="komment" className="textarea w-full border" placeholder={t("teacher.commentPh")}></textarea>
                   </div>
                   <div className="flex justify-center">
                   <button
@@ -246,7 +248,7 @@ function TeacherProfil() {
                     ref={saveBtn}
                     onClick={AddSaveTeacherFile}
                   >
-                    Saqlash
+                    {t("common.save")}
                   </button>
                 </div>
                 </form>
@@ -260,11 +262,11 @@ function TeacherProfil() {
             <thead className="bg-base-300">
               <tr className="uppercase font-bold text-[12px] md:text-[14px] lg:text-[16px]">
                 <th>№</th>
-                <th>Fan nomi</th>
-                <th>Material turi</th>
-                <th>Holati</th>
-                <th>Muhokama</th>
-                <th>ko'rish</th>
+                <th>{t("prof.subject")}</th>
+                <th>{t("prof.materialType")}</th>
+                <th>{t("prof.status")}</th>
+                <th>{t("prof.discussion")}</th>
+                <th>{t("prof.view")}</th>
               </tr>
             </thead>
             <tbody>
@@ -278,21 +280,21 @@ function TeacherProfil() {
                       {item.holat == "yangi" && (
                         <div className="flex justify-center">
                           <span className="badge bg-blue-500 border-0 badge-md min-w-22 sm:min-w-24 text-black">
-                            Yangi
+                            {t("status.new")}
                           </span>
                         </div>
                       )}
                       {item.holat == "rad_etildi" && (
                         <div className="flex justify-center">
                           <span className="badge bg-red-500 border-0 badge-md min-w-22 sm:min-w-24 text-black">
-                            Rad etildi
+                            {t("status.rejected")}
                           </span>
                         </div>
                       )}
                       {item.holat == "tasdiqlandi" && (
                         <div className="flex justify-center">
                           <span className="badge bg-green-600 badge-md border-0 min-w-22 sm:min-w-24 text-black">
-                            Tasdiqlandi
+                            {t("status.approved")}
                           </span>
                         </div>
                       )}

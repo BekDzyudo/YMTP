@@ -12,8 +12,10 @@ import { useGlobalContext } from "../../hooks/useGlobalContext";
 import { Link } from "react-router-dom";
 import useGetFetch from "../../hooks/useGetFetch";
 import Pagination from "../../components/Pagination";
+import { useTranslation } from "../../i18n/LanguageContext";
 
 function NormativDocuments() {
+  const { t } = useTranslation();
   const { theme } = useGlobalContext();
   const [activeCategory, setActiveCategory] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
@@ -37,12 +39,12 @@ function NormativDocuments() {
   const { data, isPending, error } = useGetFetch(buildUrl());
 
   const categories = [
-    { id: "all", name: "Barchasi" },
-    { id: "qonun", name: "Qonunlar" },
-    { id: "qaror", name: "Qarorlar" },
-    { id: "farmon", name: "Farmonlar" },
-    { id: "buyruq", name: "Buyruqlar" },
-    { id: "yuriqnoma", name: "Yo'riqnomalar" },
+    { id: "all", name: t("common.all") },
+    { id: "qonun", name: t("inst.docs.cat.qonun") },
+    { id: "qaror", name: t("inst.docs.cat.qaror") },
+    { id: "farmon", name: t("inst.docs.cat.farmon") },
+    { id: "buyruq", name: t("inst.docs.cat.buyruq") },
+    { id: "yuriqnoma", name: t("inst.docs.cat.yuriqnoma") },
   ];
 
   // Kategoriya yoki qidiruv o'zgarganda sahifani 1ga qaytarish
@@ -64,10 +66,7 @@ function NormativDocuments() {
   // Sanani formatlash funksiyasi
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    const months = [
-      "Yanvar", "Fevral", "Mart", "Aprel", "May", "Iyun",
-      "Iyul", "Avgust", "Sentyabr", "Oktyabr", "Noyabr", "Dekabr"
-    ];
+    const months = t("common.months");
     const day = date.getDate();
     const month = months[date.getMonth()];
     const year = date.getFullYear();
@@ -89,19 +88,19 @@ function NormativDocuments() {
                 className="text-base-content/70 hover:text-blue-700 transition-colors"
               >
                 <FaHome className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" /> 
-                Bosh sahifa
+                {t("common.home")}
               </Link>
             </li>
             <li>
               <Link className="text-base-content/70 hover:text-blue-700 transition-colors">
-                Institut
+                {t("nav.institute")}
               </Link>
             </li>
-            <li className="text-blue-700 font-semibold">Me'yoriy hujjatlar</li>
+            <li className="text-blue-700 font-semibold">{t("institutLinks.normativ")}</li>
           </ul>
         </div>
         <h1 className="text-xl sm:text-2xl md:text-3xl font-bold font-serif">
-          Me'yoriy hujjatlar
+          {t("institutLinks.normativ")}
         </h1>
       </div>
 
@@ -111,7 +110,7 @@ function NormativDocuments() {
         <div className="mb-6 relative">
           <input
             type="text"
-            placeholder="Hujjatlarni qidirish..."
+            placeholder={t("inst.docs.search")}
             value={searchQuery}
             onChange={(e) => handleSearchChange(e.target.value)}
             className="input input-bordered w-full pl-12 rounded-full outline-0"
@@ -157,7 +156,7 @@ function NormativDocuments() {
         {isPending && (
           <div className="text-center py-12">
             <span className="loading loading-spinner loading-lg text-blue-600"></span>
-            <p className="text-lg opacity-70 mt-4">Yuklanmoqda...</p>
+            <p className="text-lg opacity-70 mt-4">{t("common.loading")}</p>
           </div>
         )}
 
@@ -166,7 +165,7 @@ function NormativDocuments() {
           <div className="text-center py-12">
             <div className="alert alert-error">
               <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-              <span>Xatolik yuz berdi: {error}</span>
+              <span>{t("inst.docs.error")} {error}</span>
             </div>
           </div>
         )}
@@ -175,7 +174,7 @@ function NormativDocuments() {
         {!isPending && !error && documents.length === 0 && (
           <div className="text-center py-12">
             <FaFileAlt className="mx-auto text-6xl opacity-30 mb-4" />
-            <p className="text-lg opacity-70">Hujjatlar topilmadi</p>
+            <p className="text-lg opacity-70">{t("inst.docs.notFound")}</p>
           </div>
         )}
 
@@ -218,7 +217,7 @@ function NormativDocuments() {
                       className="btn bg-gradient-to-br from-[#194882] to-info text-white btn-sm sm:btn-md rounded-lg"
                     >
                       <FaDownload />
-                      Yuklab olish
+                      {t("common.download")}
                     </a>
                   </div>
                 </div>
@@ -241,11 +240,9 @@ function NormativDocuments() {
       <div className="alert bg-gradient-to-br from-[#194882] to-info text-white mt-8">
         <FaFileAlt className="text-base md:text-4xl"/>
         <div>
-          <h4 className="font-semibold">Eslatma</h4>
+          <h4 className="font-semibold">{t("inst.note")}</h4>
           <p className="text-sm">
-            Barcha hujjatlar rasmiy manbalarda e'lon qilingan va qonuniy kuchga
-            ega. Hujjatlarning asl nusxasi tegishli davlat organlarining rasmiy
-            veb-saytlarida mavjud.
+            {t("inst.docs.noteText")}
           </p>
         </div>
       </div>

@@ -5,8 +5,10 @@ import { TiMessages } from 'react-icons/ti';
 import { Link } from 'react-router-dom';
 import { useGlobalContext } from '../../../hooks/useGlobalContext';
 import { FiLogIn } from "react-icons/fi";
+import { useTranslation } from "../../../i18n/LanguageContext";
 
 function ExpertProfil() {
+  const { t } = useTranslation();
 
     const {userData} = useContext(AuthContext)
     const { theme } = useGlobalContext();
@@ -32,10 +34,10 @@ function ExpertProfil() {
                 <thead className="bg-base-300">
                   <tr className="uppercase font-bold text-[12px] md:text-[14px] lg:text-[16px]">
                     <th>№</th>
-                    <th>Fan nomi</th>
-                    <th>Material turi</th>
-                    <th>Holati</th>
-                    <th>ko'rish</th>
+                    <th>{t("prof.subject")}</th>
+                    <th>{t("prof.materialType")}</th>
+                    <th>{t("prof.status")}</th>
+                    <th>{t("prof.view")}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -49,21 +51,21 @@ function ExpertProfil() {
                           {item.holat == "yangi" && (
                             <div className="flex justify-center">
                               <span className="badge bg-blue-500 border-0 badge-md min-w-22 sm:min-w-24 text-black">
-                                Yangi
+                                {t("status.new")}
                               </span>
                             </div>
                           )}
                           {item.holat == "rad_etildi" && (
                             <div className="flex justify-center">
                               <span className="badge bg-red-500 border-0 badge-md min-w-22 sm:min-w-24 text-black">
-                                Rad etildi
+                                {t("status.rejected")}
                               </span>
                             </div>
                           )}
                           {item.holat == "tasdiqlandi" && (
                             <div className="flex justify-center">
                               <span className="badge bg-green-600 badge-md border-0 min-w-22 sm:min-w-24 text-black">
-                                Tasdiqlandi
+                                {t("status.approved")}
                               </span>
                             </div>
                           )}

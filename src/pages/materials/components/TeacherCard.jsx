@@ -4,6 +4,7 @@ import { FaDownload, FaUser } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import { GiMaterialsScience } from "react-icons/gi";
 import { Link } from "react-router-dom";
+import { useTranslation } from "../../../i18n/LanguageContext";
 
 const getThemeClasses = (theme) =>
   theme === "night"
@@ -14,10 +15,11 @@ const getStarColor = (theme) =>
   theme === "night" ? "bg-amber-500" : "bg-indigo-700";
 
 const TeacherCard = React.memo(function TeacherCard({ item, theme }) {
+  const { t } = useTranslation();
   const avgRate = useMemo(() => Math.round(item?.avg_rate || 0), [item?.avg_rate]);
   const teacher = item?.uqutuvchi || {};
-  const subject = item?.fan?.name || "Fan nomi yo'q";
-  const region = teacher?.region?.name || "Viloyat aniqlanmadi";
+  const subject = item?.fan?.name || t("mat.noSubject");
+  const region = teacher?.region?.name || t("mat.noRegion");
   const teacherName = `${teacher?.last_name || ""} ${teacher?.first_name || ""}`.trim();
 
   return (
@@ -32,7 +34,7 @@ const TeacherCard = React.memo(function TeacherCard({ item, theme }) {
           src={teacher?.image || "/default-teacher.png"}
           loading="eager"
           decoding="async"
-          alt={teacherName || "O'qituvchi rasmi"}
+          alt={teacherName || t("mat.teacherPhoto")}
           className="rounded-t-lg h-full w-full object-cover transition-transform duration-150 ease-out group-hover:scale-105"
           width={320}
           height={176}
@@ -71,7 +73,7 @@ const TeacherCard = React.memo(function TeacherCard({ item, theme }) {
             </div>
           </div>
           <h4 className="flex items-center gap-2 justify-end font-semibold text-xs sm:text-base p-0">
-            <span className="hidden sm:block">Yuklanishlar:</span>
+            <span className="hidden sm:block">{t("mat.downloads")}</span>
             <span className="bg-base-100 px-2 sm:px-3 py-0 sm:py-1 rounded">
               <span className="font-bold text-amber-600 text-xs gap-1 sm:text-base flex items-center">
                 <span className="sm:hidden block">

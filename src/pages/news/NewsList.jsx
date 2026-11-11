@@ -14,8 +14,10 @@ import { Link } from "react-router-dom";
 import { useHero } from "../../context/HeroContext";
 import Pagination from "../../components/Pagination";
 import SEO from "../../components/SEO";
+import { useTranslation } from "../../i18n/LanguageContext";
 
 function NewsList() {
+  const { t, lang } = useTranslation();
   const [selectedCategory, setSelectedCategory] = useState("Barchasi");
   const [currentPage, setCurrentPage] = useState(1);
   const { setOnHero } = useHero();
@@ -58,7 +60,7 @@ function NewsList() {
     };
 
     fetchAll();
-  }, []);
+  }, [lang]);
 
   useEffect(() => {
     setOnHero(false);
@@ -131,20 +133,7 @@ function NewsList() {
   // Sanani formatlash
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    const months = [
-      "Yanvar",
-      "Fevral",
-      "Mart",
-      "Aprel",
-      "May",
-      "Iyun",
-      "Iyul",
-      "Avgust",
-      "Sentabr",
-      "Oktabr",
-      "Noyabr",
-      "Dekabr",
-    ];
+    const months = t("common.months");
     return `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
   };
 
@@ -219,7 +208,7 @@ function NewsList() {
         <div className="text-center">
           <div className="loading loading-spinner loading-lg text-primary"></div>
           <p className="mt-4 text-base-content/70">
-            Yangiliklar yuklanmoqda...
+            {t("news.loading")}
           </p>
         </div>
       </section>
@@ -230,7 +219,7 @@ function NewsList() {
     return (
       <section className="relative min-h-screen w-full bg-linear-to-b from-base-100 via-base-200 to-base-100 py-24 flex items-center justify-center">
         <div className="text-center">
-          <p className="text-error">Ma'lumot topilmadi</p>
+          <p className="text-error">{t("news.notFound")}</p>
         </div>
       </section>
     );
@@ -239,8 +228,8 @@ function NewsList() {
   return (
     <>
       <SEO 
-        title="Yangiliklar"
-        description="Kasbiy ta'limni rivojlantirish instituti yangiliklari, tadbirlar, yutuqlar, hamkorlik va elon konseptlari. Eng so'nggi yangiliklardan xabardor bo'ling"
+        title={t("nav.news")}
+        description={t("news.seoDesc")}
         keywords="yangiliklar, tadbirlar, elon, hamkorlik, yutuqlar, kasbiy ta'lim yangiliklari"
       />
       
@@ -254,17 +243,17 @@ function NewsList() {
               <li>
                 <Link to="/" className="text-base-content/70 hover:text-blue-700 transition-colors">
                   <FaHome className="w-4 h-4 mr-1" />
-                  Bosh sahifa
+                  {t("common.home")}
                 </Link>
               </li>
-              <li className="text-blue-700 font-semibold">Yangiliklar</li>
+              <li className="text-blue-700 font-semibold">{t("nav.news")}</li>
             </ul>
           </div>
 
           <div className="flex flex-col items-center lg:flex-row lg:items-end lg:justify-between gap-4 mb-10">
             <div>
               <h1 className="text-2xl sm:text-4xl font-serif lg:text-5xl font-black text-[#0d4ea3]">
-                Barcha yangiliklar
+                {t("news.all")}
               </h1>
             </div>
 
@@ -278,7 +267,7 @@ function NewsList() {
               >
                 {categories.map((category) => (
                   <option key={category} value={category}>
-                    {category}
+                    {category === "Barchasi" ? t("common.all") : category}
                   </option>
                 ))}
               </select>
@@ -296,7 +285,7 @@ function NewsList() {
                       : "bg-base-100 text-base-content hover:bg-base-200 border border-base-300"
                   }`}
                 >
-                  {category}
+                  {category === "Barchasi" ? t("common.all") : category}
                 </button>
               ))}
             </div>
@@ -357,7 +346,7 @@ function NewsList() {
 
                       {/* Read More Link */}
                       <div className="inline-flex items-center gap-2 text-primary font-semibold text-sm group-hover:gap-3 transition-all duration-300 cursor-pointer">
-                        <span>Batafsil o'qish</span>
+                        <span>{t("news.readMore")}</span>
                         <svg
                           className="w-4 h-4"
                           fill="none"
@@ -391,7 +380,7 @@ function NewsList() {
           <div className="flex flex-col items-center justify-center py-16">
             <FaNewspaper className="text-6xl text-base-content/20 mb-4" />
             <p className="text-base-content/70 text-lg">
-              Hech qanday yangilik topilmadi
+              {t("news.empty")}
             </p>
           </div>
         )}

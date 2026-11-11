@@ -24,8 +24,10 @@ import { BiCertification } from "react-icons/bi";
 import { PiCertificate, PiCertificateBold, PiCertificateDuotone } from "react-icons/pi";
 import { TbCertificate } from "react-icons/tb";
 import { MdFullscreenExit } from "react-icons/md";
+import { useTranslation } from "../../i18n/LanguageContext";
 
 function MetodikTaminot() {
+  const { t, lang } = useTranslation();
   const [activeFilter, setActiveFilter] = useState(() => {
     const saved = sessionStorage.getItem("metodik_filter");
     return saved ? parseInt(saved) : 1;
@@ -61,27 +63,27 @@ function MetodikTaminot() {
     {
       id: 1,
       icon: FaFileAlt,
-      title: "O‘quv me'yoriy hujjatlar",
+      title: t("met.cat.docs"),
     },
     {
       id: 2,
       icon: FaBook,
-      title: "O‘quv adabiyotlar",
+      title: t("met.cat.literature"),
     },
     {
       id: 3,
       icon: FaFolderOpen,
-      title: "O‘qitish materiallari to‘plami",
+      title: t("met.cat.materials"),
     },
     {
       id: 4,
       icon: FaTools,
-      title: "Metodik mahsulotlar",
+      title: t("met.cat.products"),
     },
       {
       id: 5,
       icon: TbCertificate,
-      title: "Malaka oshirish kurslari",
+      title: t("met.cat.courses"),
     },
   ];
 
@@ -136,7 +138,7 @@ function MetodikTaminot() {
 
   useEffect(() => {
     fetchData(1);
-  }, [search, activeFilter, yearId, bilimSoxasiId]);
+  }, [search, activeFilter, yearId, bilimSoxasiId, lang]);
 
   useEffect(() => {
     sessionStorage.setItem("metodik_filter", activeFilter.toString());
@@ -166,29 +168,29 @@ function MetodikTaminot() {
     switch (firstChar) {
       case "3":
         return {
-          text: "Boshlang'ich kasbiy ta'lim",
+          text: t("level.primary"),
           color: "from-emerald-400 to-teal-500",
         };
       case "4":
         return {
-          text: "O'rta kasbiy ta'lim",
+          text: t("level.secondary"),
           color: "from-purple-600 to-fuchsia-700",
         };
       case "5":
         return {
-          text: "O'rta maxsus kasbiy ta'lim",
+          text: t("level.secondarySpecial"),
           color: "from-blue-400 to-indigo-500",
         };
       default:
-        return { text: "Kasbiy ta'lim", color: "from-gray-400 to-gray-500" };
+        return { text: t("level.vocational"), color: "from-gray-400 to-gray-500" };
     }
   };
 
   return (
     <>
       <SEO 
-        title="Metodik ta'minot"
-        description="Kasbiy ta'lim uchun o'quv dasturlari, ishchi o'quv dasturlari, kalendar-tematik rejalar va metodik ko'rsatma hujjatlari"
+        title={t("nav.methodicalSupport")}
+        description={t("met.seoDesc")}
         keywords="metodik ta'minot, o'quv rejalar, o'quv dasturlari, ishchi dastur, kalendar reja, metodik ko'rsatma, darslik"
       />
       
@@ -223,7 +225,7 @@ function MetodikTaminot() {
             </button>
             <img
               src={selectedImage}
-              alt="Katta rasm"
+              alt={t("met.bigImage")}
               className="w-full h-full object-contain rounded-lg"
               onClick={(e) => e.stopPropagation()}
             />
@@ -269,10 +271,10 @@ function MetodikTaminot() {
           <aside className="hidden xl:block xl:w-80 shrink-0">
             <div className="bg-base-100 rounded-2xl border border-base-300 p-4 sticky top-24">
               <h3 className="text-lg font-bold mb-4 text-[#194882]">
-                {activeFilter === 1 ? "Bilim sohalari" : 
-                 activeFilter === 2 ? "Modullar" : 
-                 activeFilter === 3 ? "Ta'lim sohalari" : 
-                 activeFilter === 4 ? "Sohalar" : ""}
+                {activeFilter === 1 ? t("met.filter.knowledge") : 
+                 activeFilter === 2 ? t("met.filter.modules") : 
+                 activeFilter === 3 ? t("met.filter.education") : 
+                 activeFilter === 4 ? t("met.filter.areas") : ""}
               </h3>
               <div className="space-y-2 max-h-[700px] overflow-y-auto">
                 <button
@@ -283,7 +285,7 @@ function MetodikTaminot() {
                       : "hover:bg-base-200"
                   }`}
                 >
-                  Barchasi
+                  {t("common.all")}
                 </button>
                 {bilimSoxasi?.map((bilim) => (
                   <button
@@ -371,7 +373,7 @@ function MetodikTaminot() {
                         value={yearId === "" ? "" : String(yearId)}
                         onChange={(e) => setYearId(e.target.value)}
                       >
-                        <option value="">Barchasi</option>
+                        <option value="">{t("common.all")}</option>
                         {(activeFilter === 1 ? years : activeFilter === 3 ? yearsOMT : yearCertificate)?.map((year) => (
                           <option key={year.id} value={String(year.id)}>
                             {year.year}
@@ -389,10 +391,10 @@ function MetodikTaminot() {
                       onChange={(e) => setBilimSoxasiId(e.target.value)}
                     >
                       <option value="">
-                        {activeFilter === 1 ? "Barcha bilim sohalari" : 
-                         activeFilter === 2 ? "Barcha modullar" : 
-                         activeFilter === 3 ? "Barcha ta'lim sohalari" : 
-                         activeFilter === 4 ? "Barcha sohalar" : ""}
+                        {activeFilter === 1 ? t("met.filter.allKnowledge") : 
+                         activeFilter === 2 ? t("met.filter.allModules") : 
+                         activeFilter === 3 ? t("met.filter.allEducation") : 
+                         activeFilter === 4 ? t("met.filter.allAreas") : ""}
                       </option>
                       {bilimSoxasi?.map((bilim) => (
                         <option key={bilim.id} value={bilim.id}>
@@ -408,7 +410,7 @@ function MetodikTaminot() {
                   <input
                     onChange={(e) => setSearch(e.target.value)}
                     type="text"
-                    placeholder="Izlash..."
+                    placeholder={t("res.search")}
                     className="w-full h-full min-h-0 rounded-full border border-gray-200 py-0 pl-4 pr-10 focus:outline-none focus:border-blue-400 transition text-sm sm:text-[16px] bg-white shadow-sm"
                   />
                   <svg
@@ -476,7 +478,7 @@ function MetodikTaminot() {
                           {item.view} ko'rishlar
                         </span>
                         <div className="text-blue-600 font-bold text-xs sm:text-sm flex items-center gap-1 uppercase group">
-                          Batafsil
+                          {t("common.more")}
                           <span className="inline-block transition-transform duration-300 group-hover:translate-x-2">
                             <GrFormNextLink className="text-lg font-bold" />
                           </span>
@@ -517,7 +519,7 @@ function MetodikTaminot() {
                           <span className="inline-block">
                             <FaDownload className="text-md font-bold" />
                           </span>
-                          Yuklab olish
+                          {t("common.download")}
                         </Link>
                       </div>
                     </div>
@@ -543,9 +545,9 @@ function MetodikTaminot() {
                         </div>
                         <div className="mb-2">
                           <div className="text-xs sm:text-sm text-gray-700 font-medium">
-                            <span className="font-semibold">Muallif:</span>{" "}
+                            <span className="font-semibold">{t("met.author")}</span>{" "}
                             <p className="italic">
-                              {item.guv_muall || "Noma'lum"}
+                              {item.guv_muall || t("met.unknown")}
                             </p>
                           </div>
                         </div>
@@ -557,7 +559,7 @@ function MetodikTaminot() {
                               className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-gray-400 to-gray-500 hover:from-blue-400 hover:to-indigo-500 shadow-md`}
                             >
                               <span className="text-white text-xs font-semibold flex items-center gap-1">
-                                Guvohnoma
+                                {t("met.certificate")}
                                 <span className="inline-block">
                                   <GrFormNextLink className="text-lg font-bold" />
                                 </span>
@@ -579,7 +581,7 @@ function MetodikTaminot() {
                           <span className="inline-block">
                             <FaDownload className="text-md font-bold" />
                           </span>
-                          Yuklab olish
+                          {t("common.download")}
                         </Link>
                       </div>
                     </div>
@@ -623,7 +625,7 @@ function MetodikTaminot() {
                             <span className="inline-block">
                               <FaPlay className="text-md font-bold" />
                             </span>
-                            Videoni ko'rish
+                            {t("met.watchVideo")}
                           </Link>
                         ) : (
                           item.pdf && (
@@ -635,7 +637,7 @@ function MetodikTaminot() {
                               <span className="inline-block">
                                 <FaDownload className="text-md font-bold" />
                               </span>
-                              Yuklab olish
+                              {t("common.download")}
                             </Link>
                           )
                         )}
@@ -698,7 +700,7 @@ function MetodikTaminot() {
                           <span className="inline-block">
                             <FaDownload className="text-md font-bold" />
                           </span>
-                          Yuklab olish
+                          {t("common.download")}
                         </Link>
                       </div>
                     </div>
@@ -722,7 +724,7 @@ function MetodikTaminot() {
             <div className="text-info text-sm sm:text-2xl font-bold text-center w-full opacity-90 flex justify-center items-center col-span-full py-20">
               <div className="flex items-center gap-3">
                 <MdReportGmailerrorred className="text-2xl sm:text-5xl" />
-                <p>Hech narsa topilmadi</p>
+                <p>{t("res.nothingFound")}</p>
               </div>
             </div>
           )}

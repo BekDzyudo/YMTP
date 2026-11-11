@@ -12,8 +12,10 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
+import { useTranslation } from "../../i18n/LanguageContext";
 
 function MetodikTaminotHero() {
+  const { t } = useTranslation();
 
     const {data: statistika} = useGetFetch(`${import.meta.env.VITE_BASE_URL_EDU}/statistics/`)  
 
@@ -36,7 +38,7 @@ function MetodikTaminotHero() {
     const { theme } = useGlobalContext();
       const { setOnHero } = useHero();
       // Animated heading and description state
-      const headingText = "Kasbiy ta'lim uchun metodik ta'minot";
+      const headingText = t("met.heading");
       const [showHeading, setShowHeading] = useState(false);
       const [showDesc, setShowDesc] = useState(false);
       useEffect(() => {
@@ -139,42 +141,42 @@ function MetodikTaminotHero() {
                   <SwiperSlide>
                     <img
                       src="/edu_bg1.png"
-                      alt="Metodik ta'minot 1"
+                      alt={`${t("met.imageAlt")} 1`}
                       className="absolute inset-0 w-full h-full object-cover object-center"
                     />
                   </SwiperSlide>
                   <SwiperSlide>
                     <img
                       src="/edu_bg2.png"
-                      alt="Metodik ta'minot 2"
+                      alt={`${t("met.imageAlt")} 2`}
                       className="absolute inset-0 w-full h-full object-cover object-center"
                     />
                   </SwiperSlide>
                   <SwiperSlide>
                     <img
                       src="/edu_bg3.png"
-                      alt="Metodik ta'minot 3"
+                      alt={`${t("met.imageAlt")} 3`}
                       className="absolute inset-0 w-full h-full object-cover object-center"
                     />
                   </SwiperSlide>
                   <SwiperSlide>
                     <img
                       src="/edu_bg5.png"
-                      alt="Metodik ta'minot 3"
+                      alt={`${t("met.imageAlt")} 3`}
                       className="absolute inset-0 w-full h-full object-cover object-center"
                     />
                   </SwiperSlide>
                   <SwiperSlide>
                     <img
                       src="/edu_bg6.png"
-                      alt="Metodik ta'minot 3"
+                      alt={`${t("met.imageAlt")} 3`}
                       className="absolute inset-0 w-full h-full object-cover object-center"
                     />
                   </SwiperSlide>
                   <SwiperSlide>
                     <img
                       src="/edu_bg7.png"
-                      alt="Metodik ta'minot 3"
+                      alt={`${t("met.imageAlt")} 3`}
                       className="absolute inset-0 w-full h-full object-cover object-center"
                     />
                   </SwiperSlide>
@@ -207,33 +209,32 @@ function MetodikTaminotHero() {
                         transition: "opacity 0.5s, transform 0.5s",
                       }}
                     >
-                      Kasbiy ta'lim tashkilotlari uchun metodik ta'minot - bu o‘quv jarayonini qo'llab-quvvatlash va rivojlantirishga qaratilgan resurslar bo‘lib, u
-                      kasbiy ta'lim tashkilotlari uchun metodik ta'minotni amalga oshiradi
+                      {t("met.heroDesc")}
                     </p>
                   </div>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 lg:gap-5 mt-8 sm:mt-10 z-20 max-w-6xl mx-auto w-full sm:px-4">
                     {[
                       {
                         icon: <FaFileAlt size={22} />,
-                        desc: "O'quv me'yoriy hujjatlar",
+                        desc: t("met.cat.docs"),
                         gradient: "from-[#32b9c1] to-[#14a1a8]",
                         glowColor: "rgba(20, 161, 168, 0.35)"
                       },
                       {
                         icon: <FaBook size={22} />,
-                        desc: "O‘quv adabiyotlar",
+                        desc: t("met.cat.literature"),
                         gradient: "from-[#32b9c1] to-[#14a1a8]",
                         glowColor: "rgba(20, 161, 168, 0.35)"
                       },
                       {
                         icon: <FaFolderOpen size={22} />,
-                        desc: "O‘qitish materiallari to'plami",
+                        desc: t("met.cat.materials"),
                         gradient: "from-[#32b9c1] to-[#14a1a8]",
                         glowColor: "rgba(20, 161, 168, 0.35)"
                       },
                       {
                         icon: <FaTools size={22} />,
-                        desc: "Metodik mahsulotlar",
+                        desc: t("met.cat.products"),
                         gradient: "from-[#32b9c1] to-[#14a1a8]",
                         glowColor: "rgba(20, 161, 168, 0.35)"
                       },
@@ -268,7 +269,7 @@ function MetodikTaminotHero() {
                                 {cardNumbers[idx]}
                               </span>
                               <span className="text-base sm:text-lg font-semibold text-gray-200">
-                                ta
+                                {t("common.unit")}
                               </span>
                             </div>
                             

@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import useGetFetch from "../../hooks/useGetFetch";
 import Pagination from "../../components/Pagination";
+import { useTranslation } from "../../i18n/LanguageContext";
+import { tr, getCurrentLocale } from "../../i18n/i18n";
 import SEO from "../../components/SEO";
 import { JobPostingSchema } from "../../components/StructuredData";
 import { FaHome, FaMapMarkerAlt, FaCalendarAlt, FaEye, FaUsers, FaBriefcase, FaMoneyBillWave, FaClock, FaLanguage } from "react-icons/fa";
@@ -9,17 +11,17 @@ import { MdWork } from "react-icons/md";
 
 // Yordamchi funksiyalar
 const formatCurrency = (amount) => {
-  return amount?.toLocaleString('uz-UZ');
+  return amount?.toLocaleString(getCurrentLocale());
 };
 
 const formatSalaryRange = (min, max) => {
-  return `${formatCurrency(min)} - ${formatCurrency(max)} so'm`;
+  return tr("vac.salaryRange", { min: formatCurrency(min), max: formatCurrency(max) });
 };
 
 const formatDate = (dateString) => {
   if (!dateString) return '';
   const date = new Date(dateString);
-  return date.toLocaleDateString('uz-UZ', { 
+  return date.toLocaleDateString(getCurrentLocale(), { 
     year: 'numeric', 
     month: '2-digit', 
     day: '2-digit' 
@@ -27,14 +29,15 @@ const formatDate = (dateString) => {
 };
 
 const formatRate = (rate) => {
-  return `${rate} stavka`;
+  return tr("vac.rate", { rate });
 };
 
 const formatExperience = (years) => {
-  return `kamida ${years} yillik`;
+  return tr("vac.experience", { years });
 };
 
 function Vacancy() {
+  const { t } = useTranslation();
   const [currentPage, setCurrentPage] = useState(1);
 
   const { data, isPending, error } = useGetFetch(
@@ -52,8 +55,8 @@ function Vacancy() {
   return (
     <>
       <SEO 
-        title="Bo'sh ish o'rinlari"
-        description="Kasbiy ta'limni rivojlantirish institutida bo'sh ish o'rinlari. HR, IT, ta'lim va boshqa lavozimlar uchun vakansiyalar. Ariza yuboring!"
+        title={t("institutLinks.vacancy")}
+        description={t("vac.seoDesc")}
         keywords="bo'sh ish o'rinlari, vakansiya, ish, kadrlar, hr, dasturchi, o'qituvchi, lavozim, o'zbekiston"
         type="website"
       />
@@ -68,18 +71,18 @@ function Vacancy() {
                 className="text-base-content/70 hover:text-blue-700 transition-colors"
               >
                 <FaHome className="w-4 h-4 mr-2" />
-                Bosh sahifa
+                {t("common.home")}
               </Link>
             </li>
             <li>
               <Link className="text-base-content/70 hover:text-blue-700 transition-colors">
-                Institut
+                {t("nav.institute")}
               </Link>
             </li>
-            <li className="text-blue-700 font-semibold">Bo'sh ish o'rinlari</li>
+            <li className="text-blue-700 font-semibold">{t("institutLinks.vacancy")}</li>
           </ul>
         </div>
-        <h1 className="text-2xl sm:text-3xl font-bold font-serif">Bo'sh ish o'rinlari</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold font-serif">{t("institutLinks.vacancy")}</h1>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -89,12 +92,12 @@ function Vacancy() {
           </div>
         ) : error ? (
           <div className="col-span-full alert alert-error">
-            <span>Ma'lumotlarni yuklashda xatolik yuz berdi</span>
+            <span>{t("inst.loadError")}</span>
           </div>
         ) : vacancyData.length === 0 ? (
           <div className="col-span-full text-center py-12">
             <p className="text-base-content/70 text-lg">
-              Hozirda bo'sh ish o'rinlari mavjud emas
+              {t("vac.empty")}
             </p>
           </div>
         ) : (
@@ -129,7 +132,7 @@ function Vacancy() {
                   <div className="flex items-center gap-3 bg-blue-50 p-3 rounded-lg">
                     <FaBriefcase className="w-5 h-5 text-blue-600 flex-shrink-0" />
                     <div>
-                      <p className="text-xs text-base-content/60 mb-1">Lavozim</p>
+                      <p className="text-xs text-base-content/60 mb-1">{t("vac.position")}</p>
                       <p className="font-semibold text-base-content">
                         {vacancy.title}
                       </p>
@@ -140,7 +143,7 @@ function Vacancy() {
                     <div className="flex items-center gap-2">
                       <FaMoneyBillWave className="w-4 h-4 text-green-600" />
                       <div>
-                        <p className="text-xs text-base-content/60">Ish haqi</p>
+                        <p className="text-xs text-base-content/60">{t("vac.salary")}</p>
                         <p className="font-medium text-sm">
                           {formatSalaryRange(vacancy.salary_min, vacancy.salary_max)}
                         </p>
@@ -150,7 +153,7 @@ function Vacancy() {
                     <div className="flex items-center gap-2">
                       <FaClock className="w-4 h-4 text-orange-600" />
                       <div>
-                        <p className="text-xs text-base-content/60">Stavka</p>
+                        <p className="text-xs text-base-content/60">{t("vac.rateLabel")}</p>
                         <p className="font-medium text-sm">{formatRate(vacancy.rate)}</p>
                       </div>
                     </div>
@@ -160,7 +163,7 @@ function Vacancy() {
                     <div className="flex items-center gap-2">
                       <FaBriefcase className="w-4 h-4 text-purple-600" />
                       <div>
-                        <p className="text-xs text-base-content/60">Ish staji</p>
+                        <p className="text-xs text-base-content/60">{t("vac.experienceLabel")}</p>
                         <p className="font-medium text-sm">
                           {formatExperience(vacancy.experience_years)}
                         </p>
@@ -170,7 +173,7 @@ function Vacancy() {
                     <div className="flex items-center gap-2">
                       <FaCalendarAlt className="w-4 h-4 text-blue-600" />
                       <div>
-                        <p className="text-xs text-base-content/60">Ish kunlari</p>
+                        <p className="text-xs text-base-content/60">{t("vac.workDays")}</p>
                         <p className="font-medium text-sm">{vacancy.work_days}</p>
                       </div>
                     </div>
@@ -179,7 +182,7 @@ function Vacancy() {
                   <div className="flex items-center gap-2">
                     <FaLanguage className="w-4 h-4 text-indigo-600" />
                     <div>
-                      <p className="text-xs text-base-content/60">Tillar</p>
+                      <p className="text-xs text-base-content/60">{t("vac.languages")}</p>
                       <p className="font-medium text-sm">{vacancy.languages}</p>
                     </div>
                   </div>
@@ -187,7 +190,7 @@ function Vacancy() {
                   <div className="flex items-center gap-2">
                     <FaMapMarkerAlt className="w-4 h-4 text-red-600" />
                     <div>
-                      <p className="text-xs text-base-content/60">Joylashuv</p>
+                      <p className="text-xs text-base-content/60">{t("vac.location")}</p>
                       <p className="font-medium text-sm">{vacancy.location}</p>
                     </div>
                   </div>
@@ -197,11 +200,11 @@ function Vacancy() {
                 <div className="border-t border-base-300 pt-4 mt-4">
                   <div className="grid grid-cols-2 gap-4 mb-4">
                     <div>
-                      <p className="text-xs text-base-content/60 mb-1">E'lon sanasi</p>
+                      <p className="text-xs text-base-content/60 mb-1">{t("vac.published")}</p>
                       <p className="text-sm font-medium">{formatDate(vacancy.created_at)}</p>
                     </div>
                     <div>
-                      <p className="text-xs text-base-content/60 mb-1">Tugash sanasi</p>
+                      <p className="text-xs text-base-content/60 mb-1">{t("vac.deadline")}</p>
                       <div className="flex flex-col">
                         <p className="text-sm font-medium text-red-600">
                           {formatDate(vacancy.deadline)}
@@ -231,7 +234,7 @@ function Vacancy() {
                       to={`${vacancy.id}`}
                       className="btn btn-primary btn-sm"
                     >
-                      Batafsil ko'rish
+                      {t("vac.viewDetails")}
                     </Link>
                   </div>
                 </div>

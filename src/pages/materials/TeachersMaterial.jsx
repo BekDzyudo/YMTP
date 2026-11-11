@@ -6,6 +6,7 @@ import Divider from "../../components/Dvider";
 import { useGlobalContext } from "../../hooks/useGlobalContext";
 import { MdReportGmailerrorred } from "react-icons/md";
 import TeacherCard from "./components/TeacherCard";
+import { useTranslation } from "../../i18n/LanguageContext";
 
 
 // Filter UI extracted for reusability and memoization
@@ -21,6 +22,7 @@ const FilterSelect = React.memo(function FilterSelect({ value, onChange, options
 });
 
 function TeachersMaterial() {
+  const { t } = useTranslation();
   const { theme } = useGlobalContext();
   const [bilim, setBilim] = useState("");
   const [talim, setTalim] = useState("");
@@ -77,7 +79,7 @@ console.log(materialList);
       ) : materialList.length ? (
         <>
           <h2 className="text-center text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 sm:mb-8 md:mb-10">
-            Fan o‘qituvchilari
+            {t("mat.subjectTeachers")}
           </h2>
           {/* Mobile Filter Drawer */}
           <div className="flex gap-5 md:hidden sm:mb-6">
@@ -91,11 +93,11 @@ console.log(materialList);
               <div className="drawer-side mt-20 sm:mt-25 lg:m-0">
                 <label htmlFor="my-drawer-1" aria-label="close sidebar" className="drawer-overlay"></label>
                 <ul className="menu bg-base-200 min-h-full w-80 p-4 gap-2 text-sm">
-                  <li><FilterSelect value={bilim} onChange={e => setBilim(e.target.value)} options={bilim_soha} placeholder="Bilim sohasi" /></li>
-                  <li><FilterSelect value={talim} onChange={e => setTalim(e.target.value)} options={talim_soha} placeholder="Ta'lim sohasi" /></li>
-                  <li><FilterSelect value={yunalish} onChange={e => setYunalish(e.target.value)} options={talim_yunalish} placeholder="Ta'lim yo'nalish" /></li>
-                  <li><FilterSelect value={kasb} onChange={e => setKasb(e.target.value)} options={kasb_mutaxassislik} placeholder="Kasb va mutaxasisliklar" /></li>
-                  <li><FilterSelect value={fan} onChange={e => setFan(e.target.value)} options={fanlar} placeholder="Fanlar" /></li>
+                  <li><FilterSelect value={bilim} onChange={e => setBilim(e.target.value)} options={bilim_soha} placeholder={t("mat.knowledge")} /></li>
+                  <li><FilterSelect value={talim} onChange={e => setTalim(e.target.value)} options={talim_soha} placeholder={t("mat.education")} /></li>
+                  <li><FilterSelect value={yunalish} onChange={e => setYunalish(e.target.value)} options={talim_yunalish} placeholder={t("mat.direction")} /></li>
+                  <li><FilterSelect value={kasb} onChange={e => setKasb(e.target.value)} options={kasb_mutaxassislik} placeholder={t("mat.profession")} /></li>
+                  <li><FilterSelect value={fan} onChange={e => setFan(e.target.value)} options={fanlar} placeholder={t("mat.subjects")} /></li>
                 </ul>
               </div>
             </div>
@@ -105,13 +107,13 @@ console.log(materialList);
           </div>
           {/* Desktop Filter Bar */}
           <div className="hidden gap-4 mb-10 border px-2 py-3 rounded-lg md:flex">
-            <FilterSelect value={bilim} onChange={e => setBilim(e.target.value)} options={bilim_soha} placeholder="Bilim sohasi" />
-            <FilterSelect value={talim} onChange={e => setTalim(e.target.value)} options={talim_soha} placeholder="Ta'lim sohasi" />
-            <FilterSelect value={yunalish} onChange={e => setYunalish(e.target.value)} options={talim_yunalish} placeholder="Ta'lim yo'nalish" />
-            <FilterSelect value={kasb} onChange={e => setKasb(e.target.value)} options={kasb_mutaxassislik} placeholder="Kasb va mutaxasisliklar" />
-            <FilterSelect value={fan} onChange={e => setFan(e.target.value)} options={fanlar} placeholder="Fanlar" />
+            <FilterSelect value={bilim} onChange={e => setBilim(e.target.value)} options={bilim_soha} placeholder={t("mat.knowledge")} />
+            <FilterSelect value={talim} onChange={e => setTalim(e.target.value)} options={talim_soha} placeholder={t("mat.education")} />
+            <FilterSelect value={yunalish} onChange={e => setYunalish(e.target.value)} options={talim_yunalish} placeholder={t("mat.direction")} />
+            <FilterSelect value={kasb} onChange={e => setKasb(e.target.value)} options={kasb_mutaxassislik} placeholder={t("mat.profession")} />
+            <FilterSelect value={fan} onChange={e => setFan(e.target.value)} options={fanlar} placeholder={t("mat.subjects")} />
             <button className="btn btn-primary" onClick={clearFilters}>
-              Filterni tozalash
+              {t("mat.clearFilter")}
             </button>
           </div>
           <div className="hidden md:block">
@@ -125,7 +127,7 @@ console.log(materialList);
         <div className="text-primary text-sm sm:text-2xl font-bold text-center w-full opacity-90 absolute left-0 top-40 sm:top-52 flex justify-center">
           <div className="flex items-center gap-3">
             <MdReportGmailerrorred className="text-2xl sm:text-5xl" />
-            <p>Hech narsa topilmadi</p>
+            <p>{t("res.nothingFound")}</p>
           </div>
         </div>
       )}
