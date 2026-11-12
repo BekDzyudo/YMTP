@@ -27,7 +27,7 @@ import { MdFullscreenExit } from "react-icons/md";
 import { useTranslation } from "../../i18n/LanguageContext";
 
 function MetodikTaminot() {
-  const { t, lang, tx } = useTranslation();
+  const { t, lang } = useTranslation();
   const [activeFilter, setActiveFilter] = useState(() => {
     const saved = sessionStorage.getItem("metodik_filter");
     return saved ? parseInt(saved) : 1;
@@ -475,7 +475,7 @@ function MetodikTaminot() {
                           >
                             <path d="M10 4.5c-5 0-8 5-8 5s3 5 8 5 8-5 8-5-3-5-8-5Zm0 8.33A3.33 3.33 0 1 1 13.33 9.5 3.33 3.33 0 0 1 10 12.83Zm0-5.33A2 2 0 1 0 12 9.5 2 2 0 0 0 10 7.5Z" />
                           </svg>
-                          {item.view} {tx("ko'rishlar")}
+                          {item.view} {t("common.views")}
                         </span>
                         <div className="text-blue-600 font-bold text-xs sm:text-sm flex items-center gap-1 uppercase group">
                           {t("common.more")}

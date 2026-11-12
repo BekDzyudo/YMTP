@@ -1,4 +1,5 @@
 const news = {
+  "news.views": { uz: "körilganlar", ru: "просмотров", en: "views" },
   "news.seoDesc": { uz: "Kasbiy ta'limni rivojlantiriş instituti yangiliklari, tadbirlar, yutuqlar, hamkorlik va e'lonlar. Eng sönggi yangiliklardan xabardor böling", ru: "Новости Института развития профессионального образования: мероприятия, достижения, сотрудничество и объявления. Будьте в курсе последних новостей", en: "News from the Institute for the Development of Vocational Education: events, achievements, partnerships and announcements. Stay up to date with the latest news" },
   "news.loading": { uz: "Yangiliklar yuklanmoqda...", ru: "Загрузка новостей...", en: "Loading news..." },
   "news.notFound": { uz: "Ma'lumot topilmadi", ru: "Данные не найдены", en: "No data found" },

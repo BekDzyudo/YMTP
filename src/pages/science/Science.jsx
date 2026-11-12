@@ -12,12 +12,38 @@ import { Link } from "react-router-dom";
 import Pagination from "../../components/Pagination";
 import SEO from "../../components/SEO";
 import { scienceCategories, scienceData } from "../../data/scienceProfEdu";
+import { scienceTitleTranslations, formatIssueTitle } from "../../data/scienceProfEduTranslations";
 import { useTranslation } from "../../i18n/LanguageContext";
 
 const PAGE_SIZE = 10;
 
+// Manbadan kelgan matnlardagi HTML entity'lar (&ndash;, &bdquo; ...) ni oddiy belgiga aylantirish
+const decodeEntities = (str) => {
+  if (!str || !str.includes("&")) return str;
+  const el = document.createElement("textarea");
+  el.innerHTML = str;
+  return el.value;
+};
+
 function Science() {
-  const { t, txData } = useTranslation();
+  const { t, lang, txData } = useTranslation();
+
+  // Sarlavhani joriy tilga moslash: tarjima bo'lsa — tarjima, aks holda asl matn
+  // (ismlar va inglizcha/nemischa maqola nomlari o'zgarmaydi). O'zbek tilida yangi alifbo qo'llanadi.
+  const localizeItems = (items) => {
+    const decoded = items.map((item) => ({
+      ...item,
+      title: decodeEntities(item.title),
+      author: decodeEntities(item.author),
+    }));
+    if (lang === "uz") return txData(decoded);
+    return decoded.map((item) => {
+      const title = scienceTitleTranslations[item.id]?.[lang] || formatIssueTitle(item.title, lang);
+      return title ? { ...item, title } : item;
+    });
+  };
+  // Manba sahifasi havolasi ham joriy tilda ochiladi
+  const localizeSourceUrl = (url) => url?.replace("ipitvet.uz/uz/", `ipitvet.uz/${lang}/`);
   const [activeCategory, setActiveCategory] = useState(scienceCategories[0].id);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -27,7 +53,7 @@ function Science() {
   }, [activeCategory, searchQuery]);
 
   const category = scienceCategories.find((c) => c.id === activeCategory);
-  const allItems = txData(scienceData[activeCategory] || []);
+  const allItems = localizeItems(scienceData[activeCategory] || []);
 
   const filteredItems = searchQuery.trim()
     ? allItems.filter((item) =>
@@ -123,7 +149,7 @@ function Science() {
             <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
           </div>
           <a
-            href={category?.sourceUrl}
+            href={localizeSourceUrl(category?.sourceUrl)}
             target="_blank"
             rel="noopener noreferrer"
             className="btn btn-outline btn-sm sm:btn-md rounded-full whitespace-nowrap"
@@ -145,7 +171,7 @@ function Science() {
               </p>
               {allItems.length === 0 && (
                 <a
-                  href={category?.sourceUrl}
+                  href={localizeSourceUrl(category?.sourceUrl)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn bg-gradient-to-br from-[#194882] to-info text-white btn-sm rounded-lg mt-4"

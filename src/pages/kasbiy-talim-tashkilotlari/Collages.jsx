@@ -6,7 +6,7 @@ import { IoArrowBack } from "react-icons/io5";
 import { useTranslation } from "../../i18n/LanguageContext";
 
 function Collages() {
-  const { t, tx } = useTranslation();
+  const { t } = useTranslation();
   const { collageId, districtId } = useParams();
   const navigate = useNavigate();
 
@@ -60,7 +60,7 @@ function Collages() {
                       {collage.name}
                     </h4>
                     <p className="stat-desc text-center xl:text-start">
-                      {tx("Ko'rilganlar")}{" "}
+                      {t("mat.viewed")}{" "}
                       <span className="text-amber-600 font-bold text-md">
                         {collage.views_count}
                       </span>

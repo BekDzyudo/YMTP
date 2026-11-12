@@ -53,6 +53,7 @@ const common = {
   "footer.citation": { uz: "Saytdan olingan barça ma'lumotlar çop etilganda veb-saytga havola qiliş majburiy", ru: "При публикации материалов сайта ссылка на веб-сайт обязательна", en: "A link to this website is required when publishing any material taken from it" },
 
   // Umumiy
+  "common.views": { uz: "körişlar", ru: "просмотров", en: "views" },
   "common.loading": { uz: "Yuklanmoqda...", ru: "Загрузка...", en: "Loading..." },
   "common.error": { uz: "Xatolik yuz berdi", ru: "Произошла ошибка", en: "An error occurred" },
   "common.retry": { uz: "Qayta uriniş", ru: "Повторить", en: "Try again" },

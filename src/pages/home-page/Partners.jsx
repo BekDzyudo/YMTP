@@ -9,7 +9,7 @@ function Partners() {
     { name: "UNICEF", image: "/unicef.png", description: t("home.partners.unicef") },
     { name: "Askaniya", image: "/askaniya.png", description: t("home.partners.askaniya") },
     { name: "Avestos", image: "/avestos.png", description: t("home.partners.avestos") },
-    { name: "BIBB", image: "/BIBB.png", description: t("home.partners.bibb") },
+    { name: "BIBB", image: "/bibb.png", description: t("home.partners.bibb") },
     { name: "Darya", image: "/Darya.png", description: t("home.partners.darya") },
     { name: "IRPO", image: "/irpo.png", description: t("home.partners.irpo") },
     { name: "Krivet", image: "/krivet.png", description: t("home.partners.krivet") },
