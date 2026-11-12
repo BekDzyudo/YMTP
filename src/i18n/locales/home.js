@@ -1,4 +1,15 @@
 const home = {
+  // Interaktiv xizmatlar
+  "home.services.title": { uz: "Interaktiv xizmatlar", ru: "Интерактивные услуги", en: "Interactive Services" },
+  "home.services.documents": { uz: "Hujjat topşiriş", ru: "Подача документов", en: "Document Submission" },
+  "home.services.documentsDesc": { uz: "Qat'iy tartibdagi hujjatlarni topşiriş", ru: "Подача документов строгой отчётности", en: "Submission of strictly regulated documents" },
+  "home.services.doctorate": { uz: "Doktorantura", ru: "Докторантура", en: "Doctoral Studies" },
+  "home.services.doctorateDesc": { uz: "Doktoranturaga hujjat topşiriş", ru: "Подача документов в докторантуру", en: "Applying for doctoral studies" },
+  "home.services.retraining": { uz: "Qayta tayyorlaş", ru: "Переподготовка", en: "Retraining" },
+  "home.services.retrainingDesc": { uz: "Qayta tayyorlaş kurslari", ru: "Курсы переподготовки", en: "Retraining courses" },
+  "home.services.training": { uz: "Malaka oşiriş", ru: "Повышение квалификации", en: "Professional Development" },
+  "home.services.trainingDesc": { uz: "Malaka oşiriş kurslari", ru: "Курсы повышения квалификации", en: "Professional development courses" },
+
   // SEO
   "home.seo.title": { uz: "Boş sahifa", ru: "Главная", en: "Home" },
   "home.seo.description": {

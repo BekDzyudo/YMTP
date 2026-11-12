@@ -4,12 +4,12 @@ import { Link } from 'react-router-dom'
 import { useTranslation } from '../../i18n/LanguageContext'
 
 function InteractiveServices() {
-  const { tx, txData } = useTranslation()
-  const services = txData([
+  const { t } = useTranslation()
+  const services = [
     {
       id: 1,
-      title: "Hujjat topshirish",
-      description: "Qat'iy tartibdagi hujjatlarni topshirish",
+      title: t("home.services.documents"),
+      description: t("home.services.documentsDesc"),
       icon: <FaFileAlt className="text-4xl" />,
       tel: "+998 97 707 06 80",
       email: "kasbiytalim@edu.uz",
@@ -17,8 +17,8 @@ function InteractiveServices() {
     },
     {
       id: 2,
-      title: "Doktorantura",
-      description: "Doktoranturaga hujjat topshirish",
+      title: t("home.services.doctorate"),
+      description: t("home.services.doctorateDesc"),
       icon: <FaUserGraduate className="text-4xl" />,
       tel: "+998 99 864 49 88",
       email: "kasbiytalim@edu.uz",
@@ -26,8 +26,8 @@ function InteractiveServices() {
     },
     {
       id: 3,
-      title: "Qayta tayyorlash",
-      description: "Qayta tayyorlash kurslari",
+      title: t("home.services.retraining"),
+      description: t("home.services.retrainingDesc"),
       icon: <FaRedo className="text-4xl" />,
       tel: "+998 99 920 93 95",
       email: "kasbiytalim@edu.uz",
@@ -35,14 +35,14 @@ function InteractiveServices() {
     },
     {
       id: 4,
-      title: "Malaka oshirish",
-      description: "Malaka oshirish kurslari",
+      title: t("home.services.training"),
+      description: t("home.services.trainingDesc"),
       icon: <FaChartLine className="text-4xl" />,
       tel: "+998 99 920 93 95",
       email: "kasbiytalim@edu.uz",
       link: "#",
     },
-  ]);
+  ];
 
   return (
     <section className="relative w-full bg-gradient-to-br from-[#194882] to-info py-12 md:py-16 overflow-hidden ">
@@ -60,7 +60,7 @@ function InteractiveServices() {
         {/* Section Header */}
         <div className="mb-8">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white font-serif text-center">
-            {tx("Interaktiv xizmatlar")}
+            {t("home.services.title")}
           </h2>
         </div>
 
