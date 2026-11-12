@@ -1,11 +1,13 @@
 import Divider from "../../components/Dvider";
 import { GrFormNextLink } from "react-icons/gr";
 import { Link } from "react-router-dom";
+import { useTranslation } from "../../i18n/LanguageContext";
 import "swiper/css";
 import "swiper/css/pagination";
 
 function Teachers() {
-  const teachers = [
+  const { tx, txData } = useTranslation();
+  const teachers = txData([
     {
       name: "Alijonov Valijon",
       hudud: "Buxoro viloyati, Olot tumani, Qurulish kasb hunar maktabi",
@@ -54,7 +56,7 @@ function Teachers() {
       badge: 17,
       img: "/teacher6.jpg",
     },
-  ];
+  ]);
   return (
     <section className="relative px-4 sm:px-6 mx-auto w-full 2xl:w-11/12 bg-base-100 py-10">
       <Divider color="orange" />
@@ -63,7 +65,7 @@ function Teachers() {
         <h2 className="text-center text-2xl sm:text-4xl font-bold mb-10">
         Reytingi yuqori o‘qituvchilar
       </h2>
-      <Link to="/rating" className="btn btn-primary btn-sm">Barchasi <GrFormNextLink className="text-xl"/></Link>
+      <Link to="/rating" className="btn btn-primary btn-sm">{tx("Barchasi")} <GrFormNextLink className="text-xl"/></Link>
       </div>
       <div className="grid gap-5 grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
           {teachers.map((t, i) => (

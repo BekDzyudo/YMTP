@@ -15,7 +15,7 @@ import { IoBuildOutline } from "react-icons/io5";
 import { useTranslation } from "../../../i18n/LanguageContext";
 
 function AllDataCollage() {
-  const { t } = useTranslation();
+  const { t, tx } = useTranslation();
   const { collageId, Id } = useParams();
   const { theme } = useGlobalContext();
   const {
@@ -43,8 +43,7 @@ function AllDataCollage() {
               </p>
             </div>
             <h3 className="text-center w-full text-sm md:text-xl font-bold">
-              Toshkent shahar, Olmazor tumani, Yangi beltepa MFY, Beltepa
-              ko‘chasi, 10-uy
+              {tx("Toshkent shahar, Olmazor tumani, Yangi beltepa MFY, Beltepa ko‘chasi, 10-uy")}
             </h3>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 pt-5 gap-4 sm:gap-5 md:gap-10">
@@ -76,7 +75,7 @@ function AllDataCollage() {
                   {t("col.info.capacity")}
                 </p>
                 <p className="font-bold text-primary text-md md:text-xl">
-                  330 o‘rinli
+                  {tx("330 o‘rinli")}
                 </p>
               </div>
             </div>
@@ -204,7 +203,7 @@ function AllDataCollage() {
                   {t("col.info.canteen")}
                 </p>
                 <p className="font-bold text-primary text-md md:text-xl">
-                  60 o‘rinli
+                  {tx("60 o‘rinli")}
                 </p>
               </div>
             </div>

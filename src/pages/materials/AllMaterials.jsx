@@ -19,7 +19,7 @@ import { FaReply } from "react-icons/fa";
 import { useTranslation } from "../../i18n/LanguageContext";
 
 function AllMaterials() {
-  const { t, lang } = useTranslation();
+  const { t, lang, tx } = useTranslation();
   const { theme } = useGlobalContext();
   const { teacherMaterialId } = useParams("teacherMaterialId");
   const navigate = useNavigate();
@@ -188,7 +188,7 @@ function AllMaterials() {
                       <li>
                         <button
                           className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                          data-tip="Barchasi"
+                          data-tip={tx("Barchasi")}
                           onClick={() => setMaterialTypestate("")}
                         >
                           {/* Home icon */}

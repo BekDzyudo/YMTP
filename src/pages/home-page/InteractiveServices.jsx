@@ -1,9 +1,11 @@
 import React from 'react'
 import { FaFileAlt, FaPhone, FaEnvelope, FaUserGraduate, FaRedo, FaChartLine } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
+import { useTranslation } from '../../i18n/LanguageContext'
 
 function InteractiveServices() {
-  const services = [
+  const { tx, txData } = useTranslation()
+  const services = txData([
     {
       id: 1,
       title: "Hujjat topshirish",
@@ -40,7 +42,7 @@ function InteractiveServices() {
       email: "kasbiytalim@edu.uz",
       link: "#",
     },
-  ];
+  ]);
 
   return (
     <section className="relative w-full bg-gradient-to-br from-[#194882] to-info py-12 md:py-16 overflow-hidden ">
@@ -58,7 +60,7 @@ function InteractiveServices() {
         {/* Section Header */}
         <div className="mb-8">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white font-serif text-center">
-            Interaktiv xizmatlar
+            {tx("Interaktiv xizmatlar")}
           </h2>
         </div>
 

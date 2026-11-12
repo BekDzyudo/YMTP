@@ -4,6 +4,7 @@ import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import Divider from "../../components/Dvider";
+import { useTranslation } from "../../i18n/LanguageContext";
 
 const leaders = [
   {
@@ -69,11 +70,12 @@ const leaders = [
 ];
 
 function LidersExpert() {
+  const { tx, txData } = useTranslation();
   return (
     <section className="relative px-3.5 sm:px-5 mx-auto w-full 2xl:w-11/12 bg-base-100">
       <Divider color="blue" />
       <h2 className="text-center text-2xl sm:text-4xl font-bold mb-10">
-        Bizning mutaxassislar
+        {tx("Bizning mutaxassislar")}
       </h2>
       <Swiper
         modules={[Navigation, Autoplay]}
@@ -98,7 +100,7 @@ function LidersExpert() {
         }}
         className="w-full leaders-swiper"
       >
-        {leaders.map((item) => (
+        {txData(leaders).map((item) => (
           <SwiperSlide key={item.id}>
             {({ isActive }) => (
               <div

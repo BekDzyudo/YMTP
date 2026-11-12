@@ -6,6 +6,8 @@ import {
   readSavedLang,
   setCurrentLang,
   translate,
+  txFor,
+  txDataFor,
 } from "./i18n";
 
 const LanguageContext = createContext(null);
@@ -29,10 +31,14 @@ export function LanguageProvider({ children }) {
     return {
       lang,
       setLang,
-      languages: LANGUAGES,
+      // "O'z" / "O'zbekcha" o'zbek tilida yangi alifboda ko'rsatiladi
+      languages: LANGUAGES.map((l) => ({ ...l, label: txFor(lang, l.label), name: txFor(lang, l.name) })),
       locale: info.locale,
       ogLocale: info.ogLocale,
       t: (key, vars) => translate(lang, key, vars),
+      // Qattiq yozilgan o'zbekcha matn/ma'lumot: faqat til "uz" bo'lsa yangi alifboga o'tadi
+      tx: (str) => txFor(lang, str),
+      txData: (data) => txDataFor(lang, data),
     };
   }, [lang, setLang]);
 

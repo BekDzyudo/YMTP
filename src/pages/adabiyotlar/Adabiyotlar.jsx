@@ -6,7 +6,7 @@ import SEO from '../../components/SEO';
 import { useTranslation } from "../../i18n/LanguageContext";
 
 function Adabiyotlar() {
-  const { t } = useTranslation();
+  const { t, txData } = useTranslation();
   const navigate = useNavigate();
   const { setOnHero } = useHero();
   const [activeTab, setActiveTab] = useState('all');
@@ -22,7 +22,7 @@ function Adabiyotlar() {
   });
 
   // Namunali ma'lumotlar
-  const literatureData = [
+  const literatureData = txData([
     {
       id: 1,
       name: '"B" toifadagi avtotransport vositalarining tuzilishi va ularga servis xizmat ko\'rsatish',
@@ -77,7 +77,7 @@ function Adabiyotlar() {
       responsible: '',
       group: 'Ko\'rish'
     }
-  ];
+  ]);
 
   const totalCount = 2485;
 

@@ -7,7 +7,7 @@ import SEO from "../../components/SEO";
 import { useTranslation } from "../../i18n/LanguageContext";
 
 function Rating() {
-  const { t } = useTranslation();
+  const { t, tx } = useTranslation();
 
   // get filter data
   const [bilim, setBilim] = useState("");
@@ -250,7 +250,7 @@ function Rating() {
               </div>
             </div>
             <button className="btn btn-success btn-sm" onClick={clearFilters}>
-              Filtrni tozalash <GrClearOption />
+              {tx("Filtrni tozalash")} <GrClearOption />
             </button>
           </div>
           <div className="hidden gap-4 mb-10 border px-2 py-3 rounded-lg md:flex">

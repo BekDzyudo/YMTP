@@ -4,8 +4,10 @@ import { institutLinks } from "../../constants/institutLinks";
 import useGetFetch from "../../hooks/useGetFetch";
 import { FaHome } from "react-icons/fa";
 import DOMPurify from "dompurify";
+import { useTranslation } from "../../i18n/LanguageContext";
 
 function InstitutSection() {
+  const { tx } = useTranslation();
   const { pathname } = useLocation();
 
   const current =
@@ -29,7 +31,7 @@ function InstitutSection() {
                 className="text-base-content/70 hover:text-blue-700 transition-colors"
               >
                 <FaHome className="w-4 h-4 mr-2" />
-                Bosh sahifa
+                {tx("Bosh sahifa")}
               </Link>
             </li>
             <li>
@@ -53,7 +55,7 @@ function InstitutSection() {
         </div>
       ) : error ? (
         <div className="alert alert-error">
-          <span>Ma'lumotlarni yuklashda xatolik yuz berdi</span>
+          <span>{tx("Ma'lumotlarni yuklashda xatolik yuz berdi")}</span>
         </div>
       ) : data?.length && data[0]?.description ? (
         <div 
@@ -62,7 +64,7 @@ function InstitutSection() {
         />
       ) : (
         <p className="text-base-content/70 text-sm sm:text-base">
-          Bu bo'lim uchun kontent topilmadi.
+          {tx("Bu bo'lim uchun kontent topilmadi.")}
         </p>
       )}
     </section>

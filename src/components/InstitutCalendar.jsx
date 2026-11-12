@@ -5,12 +5,12 @@ import { FaCalendarAlt, FaChevronLeft, FaChevronRight, FaClock, FaMapMarkerAlt, 
 import { useTranslation } from "../i18n/LanguageContext";
 
 function InstitutCalendar() {
-  const { t, locale } = useTranslation();
+  const { t, locale, tx, txData } = useTranslation();
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedEvent, setSelectedEvent] = useState(null);
 
   // Demo voqealar - backend dan keladi
-  const events = [
+  const events = txData([
     {
       id: 1,
       title: "O'qituvchilar seminari",
@@ -232,7 +232,7 @@ function InstitutCalendar() {
       registrationDeadline: "2026-04-26",
       responsiblePerson: "Sifat nazorati bo'limi"
     }
-  ];
+  ]);
 
   const monthNames = t("common.monthsNominative");
 
@@ -488,7 +488,7 @@ function InstitutCalendar() {
 
                     {selectedEvent.organizer && (
                       <div className="text-xs text-gray-600 italic">
-                        Tashkilotchi: {selectedEvent.organizer}
+                        {tx("Tashkilotchi:")} {selectedEvent.organizer}
                       </div>
                     )}
 

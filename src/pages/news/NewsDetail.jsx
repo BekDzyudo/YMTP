@@ -20,7 +20,7 @@ import { ArticleSchema } from "../../components/StructuredData";
 import { useTranslation } from "../../i18n/LanguageContext";
 
 function NewsDetail() {
-  const { t, lang } = useTranslation();
+  const { t, lang, tx } = useTranslation();
   const { id } = useParams();
   const { setOnHero } = useHero();
   const [newsDetail, setNewsDetail] = useState(null);
@@ -317,7 +317,7 @@ console.log(newsDetail);
                     <div className="flex items-center gap-3 px-4 py-2 bg-base-200 rounded-full">
                       <FaEye size={16} className="text-blue-600" />
                       <span className="text-base font-semibold text-base-content">
-                        {newsDetail.visit_count} ko'rilganlar
+                        {newsDetail.visit_count} {tx("ko'rilganlar")}
                       </span>
                     </div>
                   )}

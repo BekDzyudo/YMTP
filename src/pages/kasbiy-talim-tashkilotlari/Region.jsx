@@ -14,12 +14,12 @@ import {
 import { useTranslation } from "../../i18n/LanguageContext";
 
 function Region() {
-  const { t } = useTranslation();
+  const { t, txData } = useTranslation();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedRegion, setSelectedRegion] = useState("all");
 
   // Statik texnikumlar ma'lumotlari
-  const colleges = [
+  const colleges = txData([
     {
       id: 1,
       name: "Toshkent kimyo-texnologiya texnikumi",
@@ -164,7 +164,7 @@ function Region() {
       students: 870,
       address: "Kogon shahri, Mustaqillik ko'chasi 12",
     },
-  ];
+  ]);
 
   const navigate = useNavigate();
 

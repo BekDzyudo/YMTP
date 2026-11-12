@@ -9,7 +9,7 @@ import { IoArrowBack } from "react-icons/io5";
 import { useTranslation } from "../../i18n/LanguageContext";
 
 function CollageLayout() {
-  const { t } = useTranslation();
+  const { t, tx } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
   let { collageId, districtId, Id } = useParams();
@@ -150,7 +150,7 @@ function CollageLayout() {
                     <Link
                       to="strategy"
                       className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                      data-tip="Rivojlanish strategiyasi"
+                      data-tip={tx("Rivojlanish strategiyasi")}
                     >
                       {/* Settings icon */}
                       <svg

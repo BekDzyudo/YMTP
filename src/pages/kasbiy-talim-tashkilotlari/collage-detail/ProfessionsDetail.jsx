@@ -7,7 +7,7 @@ import { FaDownload } from "react-icons/fa";
 import { useTranslation } from "../../../i18n/LanguageContext";
 
 function ProfessionsDetail() {
-  const { t } = useTranslation();
+  const { t, tx } = useTranslation();
   const { theme } = useGlobalContext();
   const { kasbId } = useParams();
   const { data, isPending,
@@ -67,7 +67,7 @@ function ProfessionsDetail() {
                         {item.name}
                       </p>
                       <span className="text-sm md:text-md">
-                        So'ngi o'zgartirilgan sana:{" "}
+                        {tx("So'ngi o'zgartirilgan sana:")}{" "}
                         {new Date(item.created_at).getDate() < 10
                           ? "0" + new Date(item.created_at).getDate()
                           : new Date(item.created_at).getDate()}

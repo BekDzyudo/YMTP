@@ -3,8 +3,10 @@ import { IoDocumentsOutline } from "react-icons/io5";
 import { HiOutlineClipboardDocumentList } from "react-icons/hi2";
 import { LuBookCopy } from "react-icons/lu";
 import { PiUsersThree } from "react-icons/pi";
+import { useTranslation } from "../../i18n/LanguageContext";
 
 function Statistics() {
+  const { tx } = useTranslation();
   return (
     <section className="px-3.5 sm:px-5 mx-auto w-full 2xl:w-10/12 sm:mt-36 mt-18 flex justify-center">
       <div className="stats shadow-md bg-base-200 border-base-300 border">
@@ -13,21 +15,21 @@ function Statistics() {
             <IoDocumentsOutline className="h-8 w-8"/>
           </div>
           <div className="stat-value text-3xl mb-2">450</div>
-          <div className="stat-desc text-lg">O'quv meyoriy hujjatlar</div>
+          <div className="stat-desc text-lg">{tx("O'quv meyoriy hujjatlar")}</div>
         </div>
         <div className="stat">
           <div className="stat-figure text-primary">
             <LuBookCopy className="h-8 w-8"/>
           </div>
           <div className="stat-value text-3xl mb-2">4,200</div>
-          <div className="stat-desc text-lg">O'quv adabiyotlari</div>
+          <div className="stat-desc text-lg">{tx("O'quv adabiyotlari")}</div>
         </div>
         <div className="stat">
           <div className="stat-figure text-primary">
             <HiOutlineClipboardDocumentList className="h-8 w-8"/>
           </div>
           <div className="stat-value text-3xl mb-2">1,200</div>
-          <div className="stat-desc text-lg">O'qitish materiallari to'plami</div>
+          <div className="stat-desc text-lg">{tx("O'qitish materiallari to'plami")}</div>
         </div>
           <div className="stat">
           <div className="stat-figure text-primary">
@@ -53,7 +55,7 @@ function Statistics() {
             <PiUsersThree className="w-8 h-8"/>
           </div>
           <div className="stat-value text-3xl mb-2">5,602</div>
-          <div className="stat-desc text-lg">Foydalanuvchilar soni</div>
+          <div className="stat-desc text-lg">{tx("Foydalanuvchilar soni")}</div>
         </div>
       </div>
     </section>

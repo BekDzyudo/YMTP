@@ -21,7 +21,7 @@ import SEO from "../../components/SEO";
 import { useTranslation } from "../../i18n/LanguageContext";
 
 function RTRDetail() {
-  const { t } = useTranslation();
+  const { t, tx } = useTranslation();
   const [themeNumber, setThemeNumber] = React.useState(0);
   const [isImageFullscreen, setIsImageFullscreen] = React.useState(false);
   const [isPdfFullscreen, setIsPdfFullscreen] = React.useState(false);
@@ -583,7 +583,7 @@ function RTRDetail() {
                       <div className="flex-1 bg-white rounded-lg overflow-hidden" onClick={(e) => e.stopPropagation()}>
                         <iframe
                           src={`${activeCard === 4 ? themeDetail?.presentation : themeDetail?.educational_technologies}#view=FitH&toolbar=1`}
-                          title={activeCard === 4 ? "PDF Taqdimot - To'liq ekran" : "Ta'lim texnologiyalari - To'liq ekran"}
+                          title={tx(activeCard === 4 ? "PDF Taqdimot - To'liq ekran" : "Ta'lim texnologiyalari - To'liq ekran")}
                           className="w-full h-full border-0"
                           type="application/pdf"
                           style={{ minHeight: '100%' }}

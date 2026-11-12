@@ -17,7 +17,7 @@ import { useTranslation } from "../../i18n/LanguageContext";
 const PAGE_SIZE = 10;
 
 function Science() {
-  const { t } = useTranslation();
+  const { t, txData } = useTranslation();
   const [activeCategory, setActiveCategory] = useState(scienceCategories[0].id);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -27,7 +27,7 @@ function Science() {
   }, [activeCategory, searchQuery]);
 
   const category = scienceCategories.find((c) => c.id === activeCategory);
-  const allItems = scienceData[activeCategory] || [];
+  const allItems = txData(scienceData[activeCategory] || []);
 
   const filteredItems = searchQuery.trim()
     ? allItems.filter((item) =>

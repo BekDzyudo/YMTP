@@ -3,8 +3,10 @@ import { Link } from "react-router-dom";
 import useGetFetch from "../../hooks/useGetFetch";
 import { FaHome } from "react-icons/fa";
 import DOMPurify from "dompurify";
+import { useTranslation } from "../../i18n/LanguageContext";
 
 function Contact() {
+  const { tx } = useTranslation();
   const { data, isPending, error } = useGetFetch(
     `${import.meta.env.VITE_BASE_URL}/shared_app/institut/contact/`
   );
@@ -20,7 +22,7 @@ function Contact() {
                 className="text-base-content/70 hover:text-blue-700 transition-colors"
               >
                 <FaHome className="w-4 h-4 mr-2" />
-                Bosh sahifa
+                {tx("Bosh sahifa")}
               </Link>
             </li>
             <li>
@@ -40,7 +42,7 @@ function Contact() {
         </div>
       ) : error ? (
         <div className="alert alert-error">
-          <span>Ma'lumotlarni yuklashda xatolik yuz berdi</span>
+          <span>{tx("Ma'lumotlarni yuklashda xatolik yuz berdi")}</span>
         </div>
       ) : data?.description ? (
         <div
@@ -49,7 +51,7 @@ function Contact() {
         />
       ) : (
         <p className="text-base-content/70 text-sm sm:text-base">
-          Bu bo'lim uchun kontent topilmadi.
+          {tx("Bu bo'lim uchun kontent topilmadi.")}
         </p>
       )}
     </section>
