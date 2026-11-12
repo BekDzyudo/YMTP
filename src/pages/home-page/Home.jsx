@@ -35,7 +35,7 @@ function Home() {
       {/* <Teachers/> */}
       <Partners/>
       <FaqHome/>
-      
+      <InteractiveServices/>
       <RtrHome/>
     </>
   );
