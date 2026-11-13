@@ -22,10 +22,9 @@ function LanguageSwitcher({ className = "" }) {
           }`}
         >
           <img
-            src={`https://flagcdn.com/w20/${language.flag}.png`}
-            srcSet={`https://flagcdn.com/w40/${language.flag}.png 2x`}
+            src={`/flags/${language.flag}.svg`}
             alt=""
-            className="w-5 h-auto rounded-sm"
+            className="w-5 h-3.5 object-cover rounded-sm"
           />
           {language.label}
         </button>

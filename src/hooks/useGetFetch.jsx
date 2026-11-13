@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "../i18n/LanguageContext";
-import { langHeaders } from "../i18n/i18n";
+import { langHeaders, txDataFor } from "../i18n/i18n";
 
 function useGetFetch(url) {
   const [data, setData] = useState(null);
@@ -35,7 +35,8 @@ function useGetFetch(url) {
           throw new Error(req.statusText || `Request failed: ${req.status}`);
         }
         const json = await req.json();
-        if (!cancelled) setData(json);
+        // O'zbekcha kontent yangi alifboda ko'rsatiladi (o' => ö, g' => ğ, sh => ş, ch => ç)
+        if (!cancelled) setData(txDataFor(lang, json));
       } catch (err) {
         if (err.name === "AbortError") return;
         if (!cancelled) {

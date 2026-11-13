@@ -69,7 +69,8 @@ export const tr = (key, vars) => translate(currentLang, key, vars);
 // Yangi o'zbek alifbosi: o' => ö, g' => ğ, ch => ç, sh => ş.
 // {o'zgaruvchi}, havola va HTML entity'lar o'zgartirilmaydi.
 const APOS = "['‘’ʻʼ`]";
-const PROTECTED = /(\{\w+\}|https?:\/\/\S+|&[a-zA-Z]+;)/;
+// HTML teglar (<img src="..."> va h.k.), havolalar, email va entity'lar tegilmaydi
+const PROTECTED = /(<[^>]*>|\{\w+\}|https?:\/\/[^\s"'<>]+|[\w.+-]+@[\w-]+\.[\w.-]+|&[a-zA-Z]+;|&#\d+;)/;
 export const toNewAlphabet = (str) =>
   typeof str !== "string"
     ? str
@@ -95,13 +96,14 @@ export const txFor = (lang, str) => (lang === "uz" ? toNewAlphabet(str) : str);
 
 // Ma'lumot obyektlari/massivlari uchun: matnli maydonlarni aylantiradi.
 // Texnik maydonlar (id, havola, rasm yo'li va h.k.) va o'zbekcha bo'lmagan (inglizcha/nemischa) matnlar tegilmaydi.
-const TECH_KEYS = new Set(["id", "slug", "status", "type", "category", "url", "sourceUrl", "link", "href", "to", "path", "src", "image", "img", "icon", "color", "date", "time", "file"]);
+const TECH_KEYS = new Set(["id", "slug", "status", "type", "category", "url", "sourceUrl", "link", "href", "to", "path", "src", "image", "img", "icon", "color", "date", "time", "file", "photo", "avatar", "logo", "email", "phone", "lang", "code", "username", "password", "token"]);
+const TECH_KEY_RE = /(_url|_id|_link|_file|_image|_photo|_email|_phone|_date|_at)$|^(image|photo|file|url)_/i;
 const NON_UZ = /\b(the|of|and|for|with|der|die|und|bei|von)\b|Kh|kh[aeiou]/i;
 const looksTechnical = (s) => !/\s/.test(s) && /[/.#@_]/.test(s);
 export const txDataFor = (lang, data) => {
   if (lang !== "uz") return data;
   const walk = (v, key) => {
-    if (typeof v === "string") return TECH_KEYS.has(key) || looksTechnical(v) || NON_UZ.test(v) ? v : toNewAlphabet(v);
+    if (typeof v === "string") return TECH_KEYS.has(key) || (key && TECH_KEY_RE.test(key)) || looksTechnical(v) || NON_UZ.test(v) ? v : toNewAlphabet(v);
     if (Array.isArray(v)) return v.map((x) => walk(x, key));
     if (v && typeof v === "object" && !v.$$typeof && Object.getPrototypeOf(v) === Object.prototype)
       return Object.fromEntries(Object.entries(v).map(([k, x]) => [k, walk(x, k)]));

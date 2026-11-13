@@ -7,12 +7,13 @@ import { useHero } from "../context/HeroContext";
 import { FiLogIn } from "react-icons/fi";
 import { AuthContext } from "../context/AuthContext";
 import useGetFetchProfile from "../hooks/useGetFetchProfile";
-import { institutLinks } from "../constants/institutLinks";
+import { getGroupedInstitutLinks } from "../constants/institutLinks";
 import { useTranslation } from "../i18n/LanguageContext";
 
 function Header() {
   const { t, lang, setLang, languages } = useTranslation();
   const currentLanguage = languages.find((l) => l.code === lang);
+  const institutLinkGroups = getGroupedInstitutLinks();
 
   // Tilni tanlagach dropdownni yopish
   const handleLanguageChange = (code) => {
@@ -88,35 +89,49 @@ function Header() {
                 >
                   {t("nav.institute")}
                 </div>
-                <ul
+                <div
                   tabIndex="-1"
-                  className="dropdown-content menu bg-base-300 rounded-lg z-40 w-56 p-2 shadow-xl left-0 top-full -mt-0 opacity-0 translate-y-[50px] group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 ease-out"
+                  className="dropdown-content bg-base-300 rounded-lg z-40 w-[min(90vw,780px)] p-4 sm:p-5 shadow-xl left-0 top-full -mt-0 opacity-0 translate-y-[50px] group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 ease-out pointer-events-none group-hover:pointer-events-auto"
                 >
-                  {institutLinks.map((link) => (
-                    <li key={link.to} className="group/item">
-                      {link.external ? (
-                        <a
-                          href={link.to}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="relative block py-2.5 text-[15px] font-medium transition-all duration-300 rounded-lg hover:translate-x-1 pl-0 group-hover/item:pl-4"
-                        >
-                          <span className="absolute left-0 top-1/2 -translate-y-1/2 opacity-0 group-hover/item:opacity-100 transition-opacity duration-300 text-primary">
-                            <FaAngleRight size={13} />
-                          </span>
-                          {t(link.labelKey)}
-                        </a>
-                      ) : (
-                        <Link to={link.to} className="relative block py-2.5 text-[15px] font-medium transition-all duration-300 rounded-lg hover:translate-x-1 pl-0 group-hover/item:pl-4">
-                          <span className="absolute left-0 top-1/2 -translate-y-1/2 opacity-0 group-hover/item:opacity-100 transition-opacity duration-300 text-primary">
-                            <FaAngleRight size={13} />
-                          </span>
-                          {t(link.labelKey)}
-                        </Link>
-                      )}
-                    </li>
-                  ))}
-                </ul>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-x-6 gap-y-4">
+                    {institutLinkGroups.map((grp) => (
+                      <div key={grp.group}>
+                        <h4 className="text-xs font-bold uppercase tracking-wide text-primary/80 mb-2 pb-1.5 border-b border-base-content/10">
+                          {t(grp.labelKey)}
+                        </h4>
+                        <ul className="menu p-0 gap-0.5">
+                          {grp.links.map((link) => (
+                            <li key={link.to} className="group/item">
+                              {link.external ? (
+                                <a
+                                  href={link.to}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="relative block py-1.5 px-0 text-sm font-medium transition-all duration-300 rounded-lg hover:translate-x-1 group-hover/item:pl-3"
+                                >
+                                  <span className="absolute left-0 top-1/2 -translate-y-1/2 opacity-0 group-hover/item:opacity-100 transition-opacity duration-300 text-primary">
+                                    <FaAngleRight size={11} />
+                                  </span>
+                                  {t(link.labelKey)}
+                                </a>
+                              ) : (
+                                <Link
+                                  to={link.to}
+                                  className="relative block py-1.5 px-0 text-sm font-medium transition-all duration-300 rounded-lg hover:translate-x-1 group-hover/item:pl-3"
+                                >
+                                  <span className="absolute left-0 top-1/2 -translate-y-1/2 opacity-0 group-hover/item:opacity-100 transition-opacity duration-300 text-primary">
+                                    <FaAngleRight size={11} />
+                                  </span>
+                                  {t(link.labelKey)}
+                                </Link>
+                              )}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
             </li>
              {/* <li>
@@ -457,10 +472,9 @@ function Header() {
               className={`px-3 py-2 xl:py-2.5 border rounded-lg flex items-center gap-2 ${textColor} ${borderColor} hover:bg-white/10 transition-colors`}
             >
               <img
-                src={`https://flagcdn.com/w20/${currentLanguage.flag}.png`}
-                srcSet={`https://flagcdn.com/w40/${currentLanguage.flag}.png 2x`}
+                src={`/flags/${currentLanguage.flag}.svg`}
                 alt={currentLanguage.name}
-                className="w-5 h-3 sm:w-6 sm:h-4"
+                className="w-5 h-3 sm:w-6 sm:h-4 object-cover rounded-sm"
               />
               <span className="hidden sm:inline text-sm xl:text-base font-medium">{currentLanguage.label}</span>
             </button>
@@ -474,10 +488,9 @@ function Header() {
                     aria-current={language.code === lang ? "true" : undefined}
                   >
                     <img
-                      src={`https://flagcdn.com/w20/${language.flag}.png`}
-                      srcSet={`https://flagcdn.com/w40/${language.flag}.png 2x`}
+                      src={`/flags/${language.flag}.svg`}
                       alt={language.name}
-                      className="w-6 h-auto"
+                      className="w-6 h-4 object-cover rounded-sm"
                     />
                     <span className="font-medium">{language.label}</span>
                   </button>
@@ -563,16 +576,23 @@ function Header() {
                 <li>
                   <Link to="/">{t("nav.home")}</Link>
                 </li>
-                {institutLinks.map((link) => (
-                  <li key={link.to}>
-                    {link.external ? (
-                      <a href={link.to} target="_blank" rel="noopener noreferrer">
-                        {t(link.labelKey)}
-                      </a>
-                    ) : (
-                      <Link to={link.to}>{t(link.labelKey)}</Link>
-                    )}
-                  </li>
+                {institutLinkGroups.map((grp) => (
+                  <React.Fragment key={grp.group}>
+                    <li className="menu-title pt-2">
+                      <span>{t(grp.labelKey)}</span>
+                    </li>
+                    {grp.links.map((link) => (
+                      <li key={link.to}>
+                        {link.external ? (
+                          <a href={link.to} target="_blank" rel="noopener noreferrer">
+                            {t(link.labelKey)}
+                          </a>
+                        ) : (
+                          <Link to={link.to}>{t(link.labelKey)}</Link>
+                        )}
+                      </li>
+                    ))}
+                  </React.Fragment>
                 ))}
                 <li>
                   <Link to="/digital-educational-resources">{t("nav.digitalResources")}</Link>

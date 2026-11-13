@@ -1,4 +1,4 @@
-import { langHeaders } from "../i18n/i18n";
+import { getCurrentLang, langHeaders, txDataFor } from "../i18n/i18n";
 
 export const getFetchData = async (url) => {
     const result = {
@@ -11,7 +11,7 @@ export const getFetchData = async (url) => {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      result.data = await response.json();
+      result.data = txDataFor(getCurrentLang(), await response.json());
     } catch (err) {
       result.error = err.message;
       
