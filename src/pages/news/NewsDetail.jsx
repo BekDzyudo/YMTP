@@ -86,6 +86,11 @@ console.log(newsDetail);
 
   // Kategoriyaga mos icon va gradient
   const getCategoryStyle = (kategoriya) => {
+    // Backend tilga bog'liq bo'lmagan kategoriya_slug qaytaradi
+    const slugToKey = {
+      uchrashuv: "Uchrashuv", talim: "Ta'lim", yutuqlar: "Yutuqlar", tadbir: "Tadbir",
+      texnologiya: "Texnologiya", hamkorlik: "Hamkorlik", elon: "Elon", korrupsiya: "Korrupsiya",
+    };
     const styles = {
       "Uchrashuv": {
         icon: <FaHandshake size={18} />,
@@ -122,7 +127,7 @@ console.log(newsDetail);
     };
 
     return (
-      styles[kategoriya] || {
+      styles[slugToKey[kategoriya] || kategoriya] || {
         icon: <FaNewspaper size={18} />,
         gradient: "from-blue-500 to-cyan-500",
       }
@@ -173,7 +178,7 @@ console.log(newsDetail);
     );
   }
 
-  const categoryStyle = getCategoryStyle(newsDetail.kategoriya);
+  const categoryStyle = getCategoryStyle(newsDetail.kategoriya_slug || newsDetail.kategoriya);
   
 
   // Yangilik uchun rasmlar - slider uchun
@@ -367,7 +372,7 @@ console.log(newsDetail);
               <div className="space-y-4">
                 {relatedNews.length > 0 ? (
                   relatedNews.map((news) => {
-                    const newsStyle = getCategoryStyle(news.kategoriya);
+                    const newsStyle = getCategoryStyle(news.kategoriya_slug || news.kategoriya);
                     return (
                       <Link
                         key={news.id}

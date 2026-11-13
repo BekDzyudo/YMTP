@@ -69,6 +69,11 @@ function NewsList() {
 
   // Kategoriyaga mos icon va gradient
   const getCategoryStyle = (kategoriya) => {
+    // Backend tilga bog'liq bo'lmagan kategoriya_slug qaytaradi
+    const slugToKey = {
+      uchrashuv: "Uchrashuv", talim: "Ta'lim", yutuqlar: "Yutuqlar", tadbir: "Tadbir",
+      texnologiya: "Texnologiya", hamkorlik: "Hamkorlik", elon: "Elon", korrupsiya: "Korrupsiya",
+    };
     const styles = {
       "Uchrashuv": {
         icon: <FaHandshake size={18} />,
@@ -121,7 +126,7 @@ function NewsList() {
     };
 
     return (
-      styles[kategoriya] || {
+      styles[slugToKey[kategoriya] || kategoriya] || {
         icon: <FaNewspaper size={18} />,
         gradient: "from-blue-500 to-cyan-500",
         bgLight: "bg-blue-50",
@@ -169,7 +174,7 @@ function NewsList() {
         date: formatDate(item.sana),
         image: item.image,
         category: item.kategoriya,
-        ...getCategoryStyle(item.kategoriya),
+        ...getCategoryStyle(item.kategoriya_slug || item.kategoriya),
       })),
     [allNews]
   );
