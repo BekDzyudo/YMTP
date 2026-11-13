@@ -54,6 +54,10 @@ import NotFound from "./pages/not-found/NotFound";
 import Science from "./pages/science/Science";
 import AntiCorruption from "./pages/institut-info/AntiCorruption";
 import KorikTanlov from "./pages/institut-info/KorikTanlov";
+import SahifaPage from "./pages/institut-info/SahifaPage";
+import MaterialListPage from "./pages/institut-info/MaterialListPage";
+import InternationalCooperation from "./pages/institut-info/InternationalCooperation";
+import EduMethodicalUnions from "./pages/institut-info/EduMethodicalUnions";
 
 function App() {
 
@@ -206,6 +210,85 @@ function App() {
             {
               path: "korik-tanlov",
               element: <KorikTanlov />,
+            },
+            {
+              path: "hududiy-filiallar",
+              element: (
+                <SahifaPage
+                  slug="hududiy-fakultetlar"
+                  titleKey="institutLinks.hududiy"
+                  seoDescKey="inst.hududiy.seoDesc"
+                />
+              ),
+            },
+            {
+              path: "raqamlashtirish-laboratoriyasi",
+              element: (
+                <SahifaPage
+                  slug="raqamlashtirish-laboratoriyasi"
+                  titleKey="institutLinks.laboratoriya"
+                  seoDescKey="inst.laboratoriya.seoDesc"
+                />
+              ),
+            },
+            {
+              path: "xalqaro-hamkorlik",
+              element: <InternationalCooperation />,
+            },
+            {
+              path: "oquv-metodik-birlashmalar",
+              element: <EduMethodicalUnions />,
+            },
+            {
+              path: "karyera-rivojlantirish",
+              element: (
+                <MaterialListPage
+                  bolim="karyera"
+                  titleKey="institutLinks.karyera"
+                  seoDescKey="inst.karyera.seoDesc"
+                />
+              ),
+            },
+            {
+              path: "ijtimoiy-emotsional-konikma",
+              element: (
+                <MaterialListPage
+                  bolim="ijtimoiy-emotsional"
+                  titleKey="institutLinks.ijtimoiyEmotsional"
+                  seoDescKey="inst.ijtimoiyEmotsional.seoDesc"
+                />
+              ),
+            },
+            {
+              path: "doktorantlar",
+              element: (
+                <MaterialListPage
+                  bolim="doktorantlar"
+                  titleKey="institutLinks.doktorantlar"
+                  seoDescKey="inst.doktorantlar.seoDesc"
+                />
+              ),
+            },
+            {
+              path: "ilmiy-qarorlar",
+              element: (
+                <MaterialListPage
+                  bolim="ilmiy-qarorlar"
+                  titleKey="institutLinks.ilmiyQarorlar"
+                  seoDescKey="inst.ilmiyQarorlar.seoDesc"
+                />
+              ),
+            },
+            {
+              path: "dars-jadvali",
+              element: (
+                <MaterialListPage
+                  bolim="dars-jadvali"
+                  titleKey="institutLinks.darsJadvali"
+                  seoDescKey="inst.darsJadvali.seoDesc"
+                  showImage
+                />
+              ),
             },
           ],
         },

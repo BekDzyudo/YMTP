@@ -11,6 +11,10 @@ function About() {
   const { data, isPending, error } = useGetFetch(
     `${import.meta.env.VITE_BASE_URL}/shared_app/institut/`,
   );
+  // Institutning maqsadi va faoliyat yo'nalishlari (eski ipitvet.uz saytidan)
+  const { data: vazifalar } = useGetFetch(
+    `${import.meta.env.VITE_BASE_URL}/institut/sahifalar/vazifalar/`,
+  );
 
   return (
     <>
@@ -89,6 +93,18 @@ function About() {
         <p className="text-base-content/70 text-sm sm:text-base">
           {t("inst.noContent")}
         </p>
+      )}
+
+      {vazifalar?.matn && (
+        <div className="mt-8 sm:mt-10 pt-6 sm:pt-8 border-t border-base-300">
+          <h2 className="text-lg sm:text-xl md:text-2xl font-bold font-serif mb-4 text-blue-700">
+            {vazifalar.sarlavha || t("inst.about.vazifalarTitle")}
+          </h2>
+          <div
+            className="text-sm sm:text-base md:text-lg prose prose-sm sm:prose-base md:prose-lg max-w-none text-base-content/90 text-justify prose-headings:text-blue-700 prose-p:leading-relaxed prose-ul:list-disc prose-ol:list-decimal"
+            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(vazifalar.matn) }}
+          />
+        </div>
       )}
     </section>
     </>

@@ -203,6 +203,42 @@ const institut = {
   "apply.next": { uz: "Keyingisi", ru: "Далее", en: "Next" },
   "apply.pickFile": { uz: "Faylni tanlaş uçun bosing", ru: "Нажмите, чтобы выбрать файл", en: "Click to choose a file" },
   "apply.fileTypes": { uz: "PDF, JPG, PNG (Max: 5MB)", ru: "PDF, JPG, PNG (макс. 5 МБ)", en: "PDF, JPG, PNG (max 5MB)" },
+
+  // Institut haqida: Vazifalar (About sahifasiga qo'shilgan)
+  "inst.about.vazifalarTitle": { uz: "Maqsad va faoliyat yönalişlari", ru: "Цель и направления деятельности", en: "Goals and areas of activity" },
+
+  // Hududiy filiallar
+  "inst.hududiy.seoDesc": { uz: "Institutning hududiy fakultetlari: maqsadi va vazifalari haqida ma'lumot", ru: "Информация о региональных факультетах института: цели и задачи", en: "Information about the institute's regional faculties: goals and objectives" },
+
+  // Raqamlashtirish laboratoriyasi
+  "inst.laboratoriya.seoDesc": { uz: "Kasbiy ta'limni raqamlaştiriş laboratoriyasi haqida ma'lumot", ru: "Информация о лаборатории цифровизации профессионального образования", en: "Information about the vocational education digitalization laboratory" },
+
+  // Xalqaro hamkorlik
+  "inst.xalqaro.seoDesc": { uz: "Institutning xalqaro tashkilotlar bilan hamkorligi, memorandumlar va qöşma loyihalar haqida ma'lumot", ru: "Информация о международном сотрудничестве института, меморандумах и совместных проектах", en: "Information about the institute's international cooperation, memorandums and joint projects" },
+  "inst.xalqaro.hamkorlarTitle": { uz: "Xalqaro hamkorlar", ru: "Международные партнёры", en: "International partners" },
+  "inst.xalqaro.materiallarTitle": { uz: "Loyiha materiallari", ru: "Материалы проектов", en: "Project materials" },
+  "inst.xalqaro.memorandum": { uz: "Memorandum", ru: "Меморандум", en: "Memorandum" },
+
+  // O'quv-metodik birlashmalar
+  "inst.omb.seoDesc": { uz: "Institut qoşidagi kasbiy ta'lim sohalari böyiça öquv-metodik birlaşmalar royxati", ru: "Список учебно-методических объединений по направлениям профессионального образования при институте", en: "List of educational-methodical associations by vocational education fields at the institute" },
+  "inst.omb.intro": { uz: "Institut qoşida kasbiy ta'lim sohalari böyiça quyidagi öquv-metodik birlaşmalar faoliyati taşkil etilgan:", ru: "При институте организована деятельность следующих учебно-методических объединений по направлениям профессионального образования:", en: "The following educational-methodical associations operate under the institute by vocational education field:" },
+  "inst.omb.rais": { uz: "Raisi", ru: "Председатель", en: "Chairperson" },
+  "inst.omb.noteText": { uz: "Royxat 2026-yil holatiga keltirilgan. Sohalar böyiça yangilanişlar bölim rahbariyati tomonidan kiritiladi.", ru: "Список приведён по состоянию на 2026 год. Обновления по направлениям вносятся руководством отдела.", en: "The list is current as of 2026. Updates by field are entered by the department management." },
+
+  // Karyera rivojlantirish
+  "inst.karyera.seoDesc": { uz: "Karyerani rivojlantiriş böyiça öquv dastur, işçi varaqalar va qöllanmalar", ru: "Учебная программа, рабочие листы и пособия по развитию карьеры", en: "Career development curriculum, worksheets and guides" },
+
+  // Ijtimoiy-emotsional ko'nikma
+  "inst.ijtimoiyEmotsional.seoDesc": { uz: "Taʼlim muassasalarida yoşlar örtasida ijtimoiy-emotsional könikmalarni rivojlantiriş böyiça materiallar", ru: "Материалы по развитию социально-эмоциональных навыков среди молодёжи в образовательных учреждениях", en: "Materials on developing social-emotional skills among youth in educational institutions" },
+
+  // Doktorantlar
+  "inst.doktorantlar.seoDesc": { uz: "Doktorantlar va tayançh doktorantlar faoliyatiga oid hujjatlar", ru: "Документы, связанные с деятельностью докторантов и базовых докторантов", en: "Documents related to doctoral and basic doctoral students" },
+
+  // Ilmiy qarorlar
+  "inst.ilmiyQarorlar.seoDesc": { uz: "Professional ta'lim tizimiga oid qonun, qaror va farmoyişlar royxati", ru: "Список законов, постановлений и указов, относящихся к системе профессионального образования", en: "List of laws, decisions and decrees related to the vocational education system" },
+
+  // Dars jadvali
+  "inst.darsJadvali.seoDesc": { uz: "Tinglovçilar uçun dars jadvallari", ru: "Расписание занятий для слушателей", en: "Class schedules for trainees" },
 };
 
 export default institut;
