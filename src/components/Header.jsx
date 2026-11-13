@@ -205,20 +205,20 @@ function Header() {
                     <div className="relative overflow-hidden rounded-2xl bg-base-100 text-base-content border border-base-content/10 shadow-[0_24px_60px_-12px_rgba(0,30,80,0.45)]">
                       <div className="h-1 bg-gradient-to-r from-[#002d6d] via-[#1e64c8] to-sky-400" />
 
-                      <div className="grid grid-cols-1 md:grid-cols-3 md:divide-x divide-base-content/10">
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-2 p-3 xl:p-4">
                         {institutLinkGroups.map((grp) => {
                           const style = groupStyles[grp.group] || groupStyles.institut;
                           const GroupIcon = style.icon;
                           return (
-                            <div key={grp.group} className="p-4 xl:p-5">
-                              <div className="flex items-center gap-2.5 mb-3">
-                                <span className={`grid place-items-center w-8 h-8 rounded-lg text-white shadow-sm ${style.badge}`}>
+                            <div key={grp.group} className="p-1 xl:p-1.5">
+                              <div className={`flex items-center gap-2.5 mb-3 rounded-xl p-2.5 xl:p-3 ${style.soft}`}>
+                                <span className={`grid place-items-center w-8 h-8 rounded-lg text-white shadow-sm shrink-0 ${style.badge}`}>
                                   <GroupIcon size={14} />
                                 </span>
-                                <h4 className="flex-1 text-[11px] xl:text-xs font-bold uppercase tracking-wider text-base-content/70 leading-snug">
+                                <h4 className="flex-1 text-[11px] xl:text-xs font-bold uppercase tracking-wider leading-snug">
                                   {t(grp.labelKey)}
                                 </h4>
-                                <span className="text-[10px] font-semibold text-base-content/50 bg-base-200 rounded-full px-2 py-0.5">
+                                <span className="shrink-0 grid place-items-center w-5 h-5 text-[11px] font-bold rounded-full bg-white/70">
                                   {grp.links.length}
                                 </span>
                               </div>
