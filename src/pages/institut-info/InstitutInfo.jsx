@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { NavLink, Outlet, useLocation, Link } from "react-router-dom";
-import { institutLinks } from "../../constants/institutLinks";
+import { institutLinks, getGroupedInstitutLinks } from "../../constants/institutLinks";
 import { useHero } from "../../context/HeroContext";
 import { FaUsers, FaChalkboardTeacher, FaBuilding, FaChartLine, FaExternalLinkAlt } from "react-icons/fa";
 import { useTranslation } from "../../i18n/LanguageContext";
@@ -12,6 +12,7 @@ function InstitutInfo() {
     location.pathname.startsWith(link.to)
   );
   const { setOnHero } = useHero();
+  const institutLinkGroups = getGroupedInstitutLinks();
 
   useEffect(() => {
     setOnHero(false);
@@ -38,36 +39,45 @@ function InstitutInfo() {
               {/* Navigation Card */}
               <div className="bg-base-100 rounded-2xl border border-base-300 p-3 sm:p-4">
                 <h3 className="text-xl font-bold mb-3">{t("nav.institute")}</h3>
-                <ul className="menu w-full p-0 gap-1">
-                  {institutLinks.map((link) => (
-                    <li key={link.to} className="border-t border-base-300 py-1">
-                      {link.external ? (
-                        <a
-                          href={link.to}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="rounded-lg px-3 py-3 text-[16px] transition-all duration-200 hover:bg-base-200 flex items-center gap-2"
-                        >
-                          {t(link.labelKey)}
-                          <FaExternalLinkAlt className="text-xs opacity-60" />
-                        </a>
-                      ) : (
-                        <NavLink
-                          to={link.to}
-                          className={({ isActive }) =>
-                            `rounded-lg px-3 py-3 text-[16px] transition-all duration-200 ${
-                              isActive
-                                ? "bg-[#eaeef5] text-blue-600 font-semibold"
-                                : "hover:bg-base-200"
-                            }`
-                          }
-                        >
-                          {t(link.labelKey)}
-                        </NavLink>
-                      )}
-                    </li>
+                <div className="space-y-3">
+                  {institutLinkGroups.map((grp) => (
+                    <div key={grp.group}>
+                      <p className="px-3 text-xs font-bold uppercase tracking-wide text-base-content/50 mb-1">
+                        {t(grp.labelKey)}
+                      </p>
+                      <ul className="menu w-full p-0 gap-0.5">
+                        {grp.links.map((link) => (
+                          <li key={link.to}>
+                            {link.external ? (
+                              <a
+                                href={link.to}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="rounded-lg px-3 py-2.5 text-[15px] transition-all duration-200 hover:bg-base-200 flex items-center gap-2"
+                              >
+                                {t(link.labelKey)}
+                                <FaExternalLinkAlt className="text-xs opacity-60" />
+                              </a>
+                            ) : (
+                              <NavLink
+                                to={link.to}
+                                className={({ isActive }) =>
+                                  `rounded-lg px-3 py-2.5 text-[15px] transition-all duration-200 ${
+                                    isActive
+                                      ? "bg-[#eaeef5] text-blue-600 font-semibold"
+                                      : "hover:bg-base-200"
+                                  }`
+                                }
+                              >
+                                {t(link.labelKey)}
+                              </NavLink>
+                            )}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   ))}
-                </ul>
+                </div>
               </div>
 
               {/* Institut Statistics Card */}

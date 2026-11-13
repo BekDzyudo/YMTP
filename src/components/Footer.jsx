@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import { useGlobalContext } from '../hooks/useGlobalContext';
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
-import { institutLinks } from '../constants/institutLinks';
+import { getGroupedInstitutLinks } from '../constants/institutLinks';
 import "swiper/css";
 import { useTranslation } from "../i18n/LanguageContext";
 
@@ -16,6 +16,7 @@ function Footer() {
   const { t } = useTranslation();
     const {theme} = useGlobalContext()
     const [swiperInstance, setSwiperInstance] = useState(null)
+    const institutLinkGroups = getGroupedInstitutLinks();
     
     const usefulLinks = [
       { title: t("footer.links.president"), url: "https://president.uz/uz", logo: "/gerb.png", domen: "president.uz" },
@@ -109,33 +110,56 @@ function Footer() {
           </p>
         </div>
 
-        {/* Tez havolalar */}
+        {/* Tez havolalar (guruhlangan) */}
         <div className="flex flex-col gap-4">
           <h4 className="font-bold text-lg text-cyan-400 mb-2">{t("footer.links")}</h4>
-          <ul className="flex flex-col gap-2">
-            {institutLinks.map((link) => (
-              <li key={link.to}>
-                <Link to={link.to} className="text-sm text-white/80 hover:text-cyan-300 hover:translate-x-1 transition-all inline-block">
-                  {t(link.labelKey)}
-                </Link>
-              </li>
+          <div className="flex flex-col gap-4">
+            {institutLinkGroups.map((grp) => (
+              <div key={grp.group}>
+                <h5 className="text-xs font-semibold uppercase tracking-wide text-white/50 mb-1.5">
+                  {t(grp.labelKey)}
+                </h5>
+                <ul className="grid grid-cols-2 gap-x-3 gap-y-1.5">
+                  {grp.links.map((link) => (
+                    <li key={link.to}>
+                      {link.external ? (
+                        <a href={link.to} target="_blank" rel="noopener noreferrer" className="text-sm text-white/80 hover:text-cyan-300 hover:translate-x-1 transition-all inline-block">
+                          {t(link.labelKey)}
+                        </a>
+                      ) : (
+                        <Link to={link.to} className="text-sm text-white/80 hover:text-cyan-300 hover:translate-x-1 transition-all inline-block">
+                          {t(link.labelKey)}
+                        </Link>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             ))}
-            <li>
-              <Link to="/news" className="text-sm text-white/80 hover:text-cyan-300 hover:translate-x-1 transition-all inline-block">
-                {t("nav.news")}
-              </Link>
-            </li>
-            <li>
-              <Link to="/digital-educational-resources" className="text-sm text-white/80 hover:text-cyan-300 hover:translate-x-1 transition-all inline-block">
-                {t("nav.digitalResources")}
-              </Link>
-            </li>
-            <li>
-              <Link to="/methodological-support" className="text-sm text-white/80 hover:text-cyan-300 hover:translate-x-1 transition-all inline-block">
-                {t("nav.methodicalSupport")}
-              </Link>
-            </li>
-          </ul>
+
+            <div>
+              <h5 className="text-xs font-semibold uppercase tracking-wide text-white/50 mb-1.5">
+                {t("footer.linksOther")}
+              </h5>
+              <ul className="grid grid-cols-2 gap-x-3 gap-y-1.5">
+                <li>
+                  <Link to="/news" className="text-sm text-white/80 hover:text-cyan-300 hover:translate-x-1 transition-all inline-block">
+                    {t("nav.news")}
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/digital-educational-resources" className="text-sm text-white/80 hover:text-cyan-300 hover:translate-x-1 transition-all inline-block">
+                    {t("nav.digitalResources")}
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/methodological-support" className="text-sm text-white/80 hover:text-cyan-300 hover:translate-x-1 transition-all inline-block">
+                    {t("nav.methodicalSupport")}
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
 
         {/* Aloqa ma'lumotlari */}
