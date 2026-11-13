@@ -1,5 +1,29 @@
-import React, { useContext, useEffect, useState } from "react";
-import { FaAngleDown, FaAngleRight } from "react-icons/fa";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import {
+  FaAngleDown,
+  FaAngleRight,
+  FaBalanceScale,
+  FaBookOpen,
+  FaBriefcase,
+  FaCalendarAlt,
+  FaChartLine,
+  FaExternalLinkAlt,
+  FaFlask,
+  FaFolderOpen,
+  FaGavel,
+  FaGlobeAmericas,
+  FaHandsHelping,
+  FaInfoCircle,
+  FaMapMarkedAlt,
+  FaPhoneAlt,
+  FaShieldAlt,
+  FaSitemap,
+  FaTrophy,
+  FaUniversity,
+  FaUserGraduate,
+  FaUserTie,
+  FaUsers,
+} from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
 import { IoMenu } from "react-icons/io5";
 import { useGlobalContext } from "../hooks/useGlobalContext";
@@ -9,6 +33,48 @@ import { AuthContext } from "../context/AuthContext";
 import useGetFetchProfile from "../hooks/useGetFetchProfile";
 import { getGroupedInstitutLinks } from "../constants/institutLinks";
 import { useTranslation } from "../i18n/LanguageContext";
+
+// Institut mega-menyusi: guruh ranglari va har bir havola ikonkasi (slug bo'yicha)
+const groupStyles = {
+  institut: {
+    icon: FaUniversity,
+    badge: "bg-[#1e64c8]",
+    soft: "bg-[#1e64c8]/10 text-[#1e64c8]",
+    softHover: "group-hover/item:bg-[#1e64c8] group-hover/item:text-white",
+  },
+  ochiq: {
+    icon: FaFolderOpen,
+    badge: "bg-emerald-600",
+    soft: "bg-emerald-600/10 text-emerald-600",
+    softHover: "group-hover/item:bg-emerald-600 group-hover/item:text-white",
+  },
+  tinglovchilarga: {
+    icon: FaUserGraduate,
+    badge: "bg-amber-500",
+    soft: "bg-amber-500/15 text-amber-600",
+    softHover: "group-hover/item:bg-amber-500 group-hover/item:text-white",
+  },
+};
+
+const linkIcons = {
+  about: FaInfoCircle,
+  leadership: FaUserTie,
+  structure: FaSitemap,
+  "hududiy-filiallar": FaMapMarkedAlt,
+  "raqamlashtirish-laboratoriyasi": FaFlask,
+  "oquv-metodik-birlashmalar": FaUsers,
+  "xalqaro-hamkorlik": FaGlobeAmericas,
+  "normativ-documents": FaBalanceScale,
+  vacancy: FaBriefcase,
+  "anti-corruption": FaShieldAlt,
+  "korik-tanlov": FaTrophy,
+  "karyera-rivojlantirish": FaChartLine,
+  "ijtimoiy-emotsional-konikma": FaHandsHelping,
+  doktorantlar: FaUserGraduate,
+  "ilmiy-qarorlar": FaGavel,
+  "dars-jadvali": FaCalendarAlt,
+  "ilmiy-jurnal": FaBookOpen,
+};
 
 function Header() {
   const { t, lang, setLang, languages } = useTranslation();
@@ -22,6 +88,19 @@ function Header() {
   };
   const { onHero } = useHero();
   const { pathname } = useLocation();
+
+  // Institut mega-menyusi holati
+  const [institutOpen, setInstitutOpen] = useState(false);
+  const closeTimer = useRef(null);
+  const openInstitutMenu = () => {
+    clearTimeout(closeTimer.current);
+    setInstitutOpen(true);
+  };
+  const closeInstitutMenuSoon = () => {
+    clearTimeout(closeTimer.current);
+    closeTimer.current = setTimeout(() => setInstitutOpen(false), 200);
+  };
+  useEffect(() => () => clearTimeout(closeTimer.current), []);
   
   const { userData, auth, logout } = useContext(AuthContext);
   const { theme, changeTheme } = useGlobalContext();
@@ -81,55 +160,129 @@ function Header() {
             className={`menu lg:menu-horizontal flex-nowrap items-center max-w-full [&>li]:shrink border rounded-xl ${navSizeClass} ${borderColor}`}
           >
             <li className="relative">
-              <div className="dropdown dropdown-hover group">
+              {/* Ochish/yopish state orqali: sichqoncha chiqib ketganda darhol emas, biroz kechikib yopiladi —
+                  shunda "Institut" yozuvidan panelga o'tishda menyu yopilib qolmaydi. Klaviatura uchun focus ham ochadi. */}
+              <div
+                className="relative"
+                onMouseEnter={openInstitutMenu}
+                onMouseLeave={closeInstitutMenuSoon}
+                onFocus={openInstitutMenu}
+                onBlur={(e) => {
+                  if (!e.currentTarget.contains(e.relatedTarget)) closeInstitutMenuSoon();
+                }}
+                onKeyDown={(e) => e.key === "Escape" && setInstitutOpen(false)}
+              >
                 <div
                   tabIndex={0}
                   role="button"
-                  className={`${textColor} gap-2 items-center flex w-auto`}
+                  aria-haspopup="true"
+                  aria-expanded={institutOpen}
+                  className={`${textColor} gap-1.5 items-center flex w-auto`}
                 >
                   {t("nav.institute")}
+                  <FaAngleDown
+                    size={12}
+                    className={`transition-transform duration-300 ${institutOpen ? "rotate-180" : ""}`}
+                  />
                 </div>
+                {/* Mega-menyu. Tashqi qatlam (pt-3) siljimaydi va tugmaga yopishib turadi — hover hududida bo'shliq qolmaydi;
+                    animatsiya faqat ichki kartochkada. Ichida ul/li ishlatilmaydi: daisyUI .menu ichma-ich ro'yxatlarga
+                    o'z padding/chiziqlarini qo'shadi. */}
                 <div
-                  tabIndex="-1"
-                  className="dropdown-content bg-base-300 rounded-lg z-40 w-[min(90vw,780px)] p-4 sm:p-5 shadow-xl left-0 top-full -mt-0 opacity-0 translate-y-[50px] group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 ease-out pointer-events-none group-hover:pointer-events-auto"
+                  className={`absolute z-40 left-0 top-full pt-3 w-[min(92vw,880px)] transition-[opacity,visibility] duration-200 ${
+                    institutOpen ? "visible opacity-100" : "invisible opacity-0 pointer-events-none"
+                  }`}
+                  onClick={(e) => e.target.closest("a") && setInstitutOpen(false)}
                 >
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-x-6 gap-y-4">
-                    {institutLinkGroups.map((grp) => (
-                      <div key={grp.group}>
-                        <h4 className="text-xs font-bold uppercase tracking-wide text-primary/80 mb-2 pb-1.5 border-b border-base-content/10">
-                          {t(grp.labelKey)}
-                        </h4>
-                        <ul className="menu p-0 gap-0.5">
-                          {grp.links.map((link) => (
-                            <li key={link.to} className="group/item">
-                              {link.external ? (
-                                <a
-                                  href={link.to}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="relative block py-1.5 px-0 text-sm font-medium transition-all duration-300 rounded-lg hover:translate-x-1 group-hover/item:pl-3"
-                                >
-                                  <span className="absolute left-0 top-1/2 -translate-y-1/2 opacity-0 group-hover/item:opacity-100 transition-opacity duration-300 text-primary">
-                                    <FaAngleRight size={11} />
-                                  </span>
-                                  {t(link.labelKey)}
-                                </a>
-                              ) : (
-                                <Link
-                                  to={link.to}
-                                  className="relative block py-1.5 px-0 text-sm font-medium transition-all duration-300 rounded-lg hover:translate-x-1 group-hover/item:pl-3"
-                                >
-                                  <span className="absolute left-0 top-1/2 -translate-y-1/2 opacity-0 group-hover/item:opacity-100 transition-opacity duration-300 text-primary">
-                                    <FaAngleRight size={11} />
-                                  </span>
-                                  {t(link.labelKey)}
-                                </Link>
-                              )}
-                            </li>
-                          ))}
-                        </ul>
+                  <div
+                    className={`relative transition-transform duration-300 ease-out ${
+                      institutOpen ? "translate-y-0" : "translate-y-3"
+                    }`}
+                  >
+                    {/* Tugmaga ishora qiluvchi uchburchak */}
+                    <span className="absolute -top-1.5 left-8 w-3 h-3 rotate-45 bg-base-100 border-l border-t border-base-content/10" />
+
+                    <div className="relative overflow-hidden rounded-2xl bg-base-100 text-base-content border border-base-content/10 shadow-[0_24px_60px_-12px_rgba(0,30,80,0.45)]">
+                      <div className="h-1 bg-gradient-to-r from-[#002d6d] via-[#1e64c8] to-sky-400" />
+
+                      <div className="grid grid-cols-1 md:grid-cols-3 md:divide-x divide-base-content/10">
+                        {institutLinkGroups.map((grp) => {
+                          const style = groupStyles[grp.group] || groupStyles.institut;
+                          const GroupIcon = style.icon;
+                          return (
+                            <div key={grp.group} className="p-4 xl:p-5">
+                              <div className="flex items-center gap-2.5 mb-3">
+                                <span className={`grid place-items-center w-8 h-8 rounded-lg text-white shadow-sm ${style.badge}`}>
+                                  <GroupIcon size={14} />
+                                </span>
+                                <h4 className="flex-1 text-[11px] xl:text-xs font-bold uppercase tracking-wider text-base-content/70 leading-snug">
+                                  {t(grp.labelKey)}
+                                </h4>
+                                <span className="text-[10px] font-semibold text-base-content/50 bg-base-200 rounded-full px-2 py-0.5">
+                                  {grp.links.length}
+                                </span>
+                              </div>
+
+                              <div className="flex flex-col gap-0.5">
+                                {grp.links.map((link) => {
+                                  const Icon = linkIcons[link.slug] || FaAngleRight;
+                                  const active = !link.external && pathname === link.to;
+                                  const itemClass = `group/item flex items-center gap-3 rounded-xl px-2 py-2 text-[13px] xl:text-sm leading-snug transition-colors duration-200 ${
+                                    active ? "bg-base-200 font-semibold" : "font-medium hover:bg-base-200"
+                                  }`;
+                                  const content = (
+                                    <>
+                                      <span
+                                        className={`grid place-items-center shrink-0 w-8 h-8 rounded-lg transition-colors duration-200 ${
+                                          active ? `${style.badge} text-white` : `${style.soft} ${style.softHover}`
+                                        }`}
+                                      >
+                                        <Icon size={14} />
+                                      </span>
+                                      <span className="flex-1">{t(link.labelKey)}</span>
+                                      {link.external ? (
+                                        <FaExternalLinkAlt size={10} className="shrink-0 text-base-content/40" />
+                                      ) : (
+                                        <FaAngleRight
+                                          size={12}
+                                          className={`shrink-0 transition-all duration-200 ${
+                                            active
+                                              ? "opacity-100 text-base-content/60"
+                                              : "opacity-0 -translate-x-1 text-base-content/40 group-hover/item:opacity-100 group-hover/item:translate-x-0"
+                                          }`}
+                                        />
+                                      )}
+                                    </>
+                                  );
+                                  return link.external ? (
+                                    <a key={link.to} href={link.to} target="_blank" rel="noopener noreferrer" className={itemClass}>
+                                      {content}
+                                    </a>
+                                  ) : (
+                                    <Link key={link.to} to={link.to} className={itemClass}>
+                                      {content}
+                                    </Link>
+                                  );
+                                })}
+                              </div>
+                            </div>
+                          );
+                        })}
                       </div>
-                    ))}
+
+                      <div className="flex items-center justify-between gap-3 px-4 xl:px-5 py-2.5 bg-base-200/60 border-t border-base-content/10 text-xs">
+                        <span className="text-base-content/60 truncate">
+                          {t("site.nameLine1")} {t("site.nameLine2")} {t("site.nameLine3")}
+                        </span>
+                        <Link
+                          to="/contact"
+                          className="inline-flex items-center gap-1.5 shrink-0 font-semibold text-[#1e64c8] hover:underline"
+                        >
+                          <FaPhoneAlt size={10} />
+                          {t("nav.contact")}
+                        </Link>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

@@ -8,15 +8,20 @@ import { Link } from 'react-router-dom';
 import { useGlobalContext } from '../hooks/useGlobalContext';
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
-import { getGroupedInstitutLinks } from '../constants/institutLinks';
+import { institutLinks } from '../constants/institutLinks';
 import "swiper/css";
 import { useTranslation } from "../i18n/LanguageContext";
+
+// Footerda faqat asosiy bo'limlar (to'liq ro'yxat header mega-menyusida va yon panelda)
+const FOOTER_SLUGS = ["about", "leadership", "structure", "normativ-documents", "vacancy", "xalqaro-hamkorlik", "ilmiy-jurnal"];
+const footerInstitutLinks = FOOTER_SLUGS
+  .map((slug) => institutLinks.find((link) => link.slug === slug))
+  .filter(Boolean);
 
 function Footer() {
   const { t } = useTranslation();
     const {theme} = useGlobalContext()
     const [swiperInstance, setSwiperInstance] = useState(null)
-    const institutLinkGroups = getGroupedInstitutLinks();
     
     const usefulLinks = [
       { title: t("footer.links.president"), url: "https://president.uz/uz", logo: "/gerb.png", domen: "president.uz" },
@@ -114,34 +119,21 @@ function Footer() {
         <div className="flex flex-col gap-4">
           <h4 className="font-bold text-lg text-cyan-400 mb-2">{t("footer.links")}</h4>
           <div className="flex flex-col gap-4">
-            {institutLinkGroups.map((grp) => (
-              <div key={grp.group}>
-                <h5 className="text-xs font-semibold uppercase tracking-wide text-white/50 mb-1.5">
-                  {t(grp.labelKey)}
-                </h5>
-                <ul className="grid grid-cols-2 gap-x-3 gap-y-1.5">
-                  {grp.links.map((link) => (
-                    <li key={link.to}>
-                      {link.external ? (
-                        <a href={link.to} target="_blank" rel="noopener noreferrer" className="text-sm text-white/80 hover:text-cyan-300 hover:translate-x-1 transition-all inline-block">
-                          {t(link.labelKey)}
-                        </a>
-                      ) : (
-                        <Link to={link.to} className="text-sm text-white/80 hover:text-cyan-300 hover:translate-x-1 transition-all inline-block">
-                          {t(link.labelKey)}
-                        </Link>
-                      )}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-
             <div>
-              <h5 className="text-xs font-semibold uppercase tracking-wide text-white/50 mb-1.5">
-                {t("footer.linksOther")}
-              </h5>
               <ul className="grid grid-cols-2 gap-x-3 gap-y-1.5">
+                {footerInstitutLinks.map((link) => (
+                  <li key={link.to}>
+                    {link.external ? (
+                      <a href={link.to} target="_blank" rel="noopener noreferrer" className="text-sm text-white/80 hover:text-cyan-300 hover:translate-x-1 transition-all inline-block">
+                        {t(link.labelKey)}
+                      </a>
+                    ) : (
+                      <Link to={link.to} className="text-sm text-white/80 hover:text-cyan-300 hover:translate-x-1 transition-all inline-block">
+                        {t(link.labelKey)}
+                      </Link>
+                    )}
+                  </li>
+                ))}
                 <li>
                   <Link to="/news" className="text-sm text-white/80 hover:text-cyan-300 hover:translate-x-1 transition-all inline-block">
                     {t("nav.news")}
