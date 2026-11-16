@@ -76,4 +76,32 @@
   .animate-scaleIn {
     animation: scaleIn 0.3s ease-out;
   }
+
+  /* AI robotcha */
+  @keyframes aiRobotFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+  }
+
+  @keyframes aiRobotBlink {
+    0%, 92%, 100% { transform: scaleY(1); }
+    96% { transform: scaleY(0.1); }
+  }
+
+  .ai-robot-float {
+    animation: aiRobotFloat 2.4s ease-in-out infinite;
+  }
+
+  .ai-robot-eye {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: aiRobotBlink 4s infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ai-robot-float,
+    .ai-robot-eye {
+      animation: none;
+    }
+  }
 }

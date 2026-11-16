@@ -5,6 +5,7 @@ import { HeroContext } from "../context/HeroContext";
 import Footer from "../components/Footer";
 import { CalendarProvider } from "../context/CalendarContext";
 import FloatingActionButton from "../components/FloatingActionButton";
+import AiAssistant from "../components/AiAssistant";
 import CalendarModal from "../components/CalendarModal";
 import SEO from "../components/SEO";
 
@@ -51,6 +52,9 @@ function MainLayout() {
           
           {/* Floating Action Button */}
           <FloatingActionButton />
+
+          {/* AI yordamchi (robotcha) — pastki o'ng burchak */}
+          <AiAssistant />
           
           {/* Calendar Modal */}
           <CalendarModal />
