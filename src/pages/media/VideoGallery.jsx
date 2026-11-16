@@ -15,33 +15,110 @@ const YT_RE = /(?:youtube\.com\/(?:watch\?(?:[^"'\s<>]*&)?v=|embed\/|shorts\/|li
 
 const extractYoutubeIds = (text = "") => [...new Set([...text.matchAll(YT_RE)].map((m) => m[1]))];
 
-function VideoThumb({ video, big, onPlay, locale }) {
+// Eng yuqori sifatli YouTube rasmidan boshlab, topilmasa pastroq sifatga qaytamiz
+const YT_THUMB_CHAIN = ["maxresdefault", "sddefault", "hqdefault", "mqdefault"];
+
+// YouTube preview yoki yuklangan video fayldan (haqiqiy kadr) önizleme chiqaradi.
+// Bitta joyda, chunki aynan shu mantiq ham featured kartada, ham kichik kartalarda kerak.
+function VideoFrame({ video, onDiscard, mediaClassName, iconSize = 48 }) {
+  const [thumbIdx, setThumbIdx] = useState(0);
+  const [loaded, setLoaded] = useState(false);
+
+  const handleError = () => {
+    if (video.ytId) {
+      if (thumbIdx < YT_THUMB_CHAIN.length - 1) setThumbIdx((i) => i + 1);
+      else onDiscard?.(video.key);
+    } else {
+      onDiscard?.(video.key);
+    }
+  };
+
+  return (
+    <>
+      {!loaded && <div className="absolute inset-0 animate-pulse bg-gradient-to-br from-slate-800 to-slate-900" />}
+      {video.ytId ? (
+        <img
+          src={`https://i.ytimg.com/vi/${video.ytId}/${YT_THUMB_CHAIN[thumbIdx]}.jpg`}
+          alt={video.title}
+          loading="lazy"
+          onLoad={() => setLoaded(true)}
+          onError={handleError}
+          className={`${mediaClassName} ${loaded ? "opacity-100" : "opacity-0"}`}
+        />
+      ) : video.file ? (
+        <video
+          src={`${video.file}#t=0.1`}
+          muted
+          playsInline
+          preload="metadata"
+          onLoadedData={() => setLoaded(true)}
+          onError={handleError}
+          className={`${mediaClassName} ${loaded ? "opacity-100" : "opacity-0"}`}
+        />
+      ) : (
+        <div className="absolute inset-0 grid place-items-center text-white/20">
+          <FaVideo size={iconSize} />
+        </div>
+      )}
+    </>
+  );
+}
+
+// Eng so'nggi/asosiy video — matn va "tomosha qilish" tugmasi bilan ikki bo'lakli katta karta
+function FeaturedVideo({ video, onPlay, onDiscard, locale, t }) {
+  return (
+    <div className="grid lg:grid-cols-5 rounded-3xl overflow-hidden shadow-xl ring-1 ring-black/5">
+      <button
+        onClick={() => onPlay(video)}
+        className="group relative lg:col-span-3 aspect-video lg:aspect-auto bg-slate-900 text-left"
+      >
+        <VideoFrame
+          video={video}
+          onDiscard={onDiscard}
+          iconSize={56}
+          mediaClassName="absolute inset-0 w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
+        />
+        <div className="absolute inset-0 bg-black/10 group-hover:bg-black/25 transition-colors" />
+        <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 grid place-items-center w-20 h-20 rounded-full bg-white/90 text-rose-600 shadow-xl transition-transform duration-300 group-hover:scale-110">
+          <FaPlay className="ml-1" size={26} />
+        </span>
+      </button>
+
+      <div className="lg:col-span-2 flex flex-col justify-center gap-3 bg-gradient-to-br from-[#002d6d] via-[#194882] to-info text-white p-6 sm:p-8">
+        <span className="inline-flex items-center gap-1.5 self-start rounded-full bg-white/15 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide">
+          <FaVideo size={10} /> {t("media.featured")}
+        </span>
+        <h2 className="text-xl sm:text-2xl font-black font-serif leading-snug line-clamp-3">{video.title}</h2>
+        {video.date && (
+          <p className="flex items-center gap-1.5 text-sm text-white/70">
+            <FaCalendar size={12} /> {new Date(video.date).toLocaleDateString(locale)}
+          </p>
+        )}
+        <button
+          onClick={() => onPlay(video)}
+          className="mt-2 inline-flex w-fit items-center gap-2 rounded-xl bg-white text-[#002d6d] font-semibold px-4 py-2.5 text-sm hover:bg-white/90 transition-colors"
+        >
+          <FaPlay size={12} /> {t("media.watch")}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function VideoThumb({ video, onPlay, onDiscard, locale }) {
   return (
     <button
       onClick={() => onPlay(video)}
-      className={`group relative block w-full overflow-hidden rounded-2xl bg-slate-900 shadow-md hover:shadow-2xl text-left ${
-        big ? "aspect-video lg:aspect-auto lg:h-full lg:min-h-80" : "aspect-video"
-      }`}
+      className="group relative block w-full aspect-video overflow-hidden rounded-2xl bg-slate-900 shadow-sm ring-1 ring-black/10 hover:shadow-2xl hover:ring-black/0 transition-all duration-300 text-left"
     >
-      {video.ytId ? (
-        <img
-          src={`https://i.ytimg.com/vi/${video.ytId}/hqdefault.jpg`}
-          alt={video.title}
-          loading="lazy"
-          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-        />
-      ) : (
-        <div className="absolute inset-0 grid place-items-center text-white/30">
-          <FaVideo size={48} />
-        </div>
-      )}
+      <VideoFrame
+        video={video}
+        onDiscard={onDiscard}
+        mediaClassName="absolute inset-0 w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
+      />
       <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent" />
-      <span
-        className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 grid place-items-center rounded-full bg-white/90 text-rose-600 shadow-xl transition-transform duration-300 group-hover:scale-110 ${
-          big ? "w-20 h-20" : "w-14 h-14"
-        }`}
-      >
-        <FaPlay className="ml-1" size={big ? 26 : 18} />
+      <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 grid place-items-center w-14 h-14 rounded-full bg-white/90 text-rose-600 shadow-xl transition-transform duration-300 group-hover:scale-110">
+        <FaPlay className="ml-1" size={18} />
       </span>
       <div className="absolute inset-x-0 bottom-0 p-3 sm:p-4 text-white">
         {video.date && (
@@ -49,9 +126,25 @@ function VideoThumb({ video, big, onPlay, locale }) {
             <FaCalendar size={10} /> {new Date(video.date).toLocaleDateString(locale)}
           </p>
         )}
-        <p className={`font-semibold leading-snug line-clamp-2 ${big ? "text-lg sm:text-2xl" : "text-sm"}`}>{video.title}</p>
+        <p className="font-semibold leading-snug line-clamp-2 text-sm">{video.title}</p>
       </div>
     </button>
+  );
+}
+
+function VideoSkeleton() {
+  return (
+    <div className="space-y-8">
+      <div className="grid lg:grid-cols-5 rounded-3xl overflow-hidden">
+        <div className="lg:col-span-3 aspect-video lg:aspect-auto lg:h-80 animate-pulse bg-gradient-to-br from-slate-800 to-slate-900" />
+        <div className="lg:col-span-2 h-40 lg:h-80 animate-pulse bg-gradient-to-br from-[#002d6d] to-[#194882]" />
+      </div>
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        {Array.from({ length: 4 }).map((_, i) => (
+          <div key={i} className="aspect-video rounded-2xl animate-pulse bg-gradient-to-br from-slate-800 to-slate-900" />
+        ))}
+      </div>
+    </div>
   );
 }
 
@@ -61,6 +154,9 @@ function VideoGallery() {
   const [apiVideos, setApiVideos] = useState([]);
   const [apiPending, setApiPending] = useState(true);
   const [playing, setPlaying] = useState(null);
+  const [excludedKeys, setExcludedKeys] = useState(() => new Set());
+
+  const discard = (key) => setExcludedKeys((prev) => (prev.has(key) ? prev : new Set(prev).add(key)));
 
   useEffect(() => {
     const controller = new AbortController();
@@ -101,12 +197,13 @@ function VideoGallery() {
   const videos = useMemo(() => {
     const seen = new Set();
     return [...apiVideos, ...newsVideos].filter((v) => {
+      if (excludedKeys.has(v.key)) return false;
       const id = v.ytId || v.file;
-      if (seen.has(id)) return false;
+      if (seen.has(id)) return false; // dublikat videolarni olib tashlaymiz
       seen.add(id);
       return true;
     });
-  }, [apiVideos, newsVideos]);
+  }, [apiVideos, newsVideos, excludedKeys]);
 
   useEffect(() => {
     if (!playing) return;
@@ -132,33 +229,23 @@ function VideoGallery() {
         stats={videos.length ? [{ value: videos.length, label: t("media.videos") }] : undefined}
       >
         {isPending ? (
-          <div className="flex justify-center py-20">
-            <span className="loading loading-spinner loading-lg text-blue-600" />
-          </div>
+          <VideoSkeleton />
         ) : videos.length === 0 ? (
           <div className="text-center py-20 text-base-content/60">
             <FaVideo className="mx-auto text-6xl opacity-20 mb-4" />
             {t("media.noVideos")}
           </div>
         ) : (
-          <div className="space-y-4">
-            <div className={`grid gap-4 ${rest.length ? "lg:grid-cols-3" : ""}`}>
-              <div className={rest.length ? "lg:col-span-2" : ""}>
-                <VideoThumb video={featured} big onPlay={setPlaying} locale={locale} />
-              </div>
-              {rest.length > 0 && (
-                <div className="grid sm:grid-cols-2 lg:grid-cols-1 gap-4">
-                  {rest.slice(0, 2).map((v) => (
-                    <VideoThumb key={v.key} video={v} onPlay={setPlaying} locale={locale} />
+          <div className="space-y-8">
+            <FeaturedVideo video={featured} onPlay={setPlaying} onDiscard={discard} locale={locale} t={t} />
+            {rest.length > 0 && (
+              <div>
+                <h2 className="text-lg font-bold text-slate-700 mb-3">{t("media.moreVideos")}</h2>
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                  {rest.map((v) => (
+                    <VideoThumb key={v.key} video={v} onPlay={setPlaying} onDiscard={discard} locale={locale} />
                   ))}
                 </div>
-              )}
-            </div>
-            {rest.length > 2 && (
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                {rest.slice(2).map((v) => (
-                  <VideoThumb key={v.key} video={v} onPlay={setPlaying} locale={locale} />
-                ))}
               </div>
             )}
           </div>
@@ -167,7 +254,7 @@ function VideoGallery() {
 
       {playing && (
         <div
-          className="fixed inset-0 z-[60] bg-black/90 flex flex-col items-center justify-center p-3 sm:p-8 animate-fadeIn"
+          className="fixed inset-0 z-[60] bg-black/92 backdrop-blur-sm flex flex-col items-center justify-center p-3 sm:p-8 animate-fadeIn"
           onClick={() => setPlaying(null)}
           role="dialog"
           aria-modal="true"
@@ -181,7 +268,7 @@ function VideoGallery() {
                   {t("media.openNews")} <FaArrowRight size={12} />
                 </Link>
               )}
-              <button onClick={() => setPlaying(null)} className="p-2 rounded-lg hover:bg-white/15" aria-label={t("fab.close")}>
+              <button onClick={() => setPlaying(null)} className="p-2 rounded-full hover:bg-white/15 transition-colors" aria-label={t("fab.close")}>
                 <FaTimes size={20} />
               </button>
             </div>

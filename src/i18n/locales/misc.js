@@ -56,6 +56,9 @@ const misc = {
   "media.openNews": { uz: "Yangilikni oçiş", ru: "Открыть новость", en: "Open news" },
   "media.prev": { uz: "Oldingi", ru: "Предыдущее", en: "Previous" },
   "media.next": { uz: "Keyingi", ru: "Следующее", en: "Next" },
+  "media.featured": { uz: "Asosiy video", ru: "Главное видео", en: "Featured video" },
+  "media.watch": { uz: "Tomoşa qiliş", ru: "Смотреть", en: "Watch" },
+  "media.moreVideos": { uz: "Başqa videolar", ru: "Другие видео", en: "More videos" },
 
   // Infografika
   "info.keyFacts": { uz: "Asosiy körsatkiçlar", ru: "Ключевые показатели", en: "Key figures" },
