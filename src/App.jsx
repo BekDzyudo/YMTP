@@ -44,6 +44,8 @@ import VacancyApply from "./pages/institut-info/VacancyApply";
 import Contact from "./pages/contact/Contact";
 import { institutLinks } from "./constants/institutLinks";
 import NewsList from "./pages/news/NewsList";
+import PhotoGallery from "./pages/media/PhotoGallery";
+import VideoGallery from "./pages/media/VideoGallery";
 import NewsDetail from "./pages/news/NewsDetail";
 import MetodikTaminot from "./pages/metodik-taminot/MetodikTaminot";
 import MetodikTaminotDetail from "./pages/metodik-taminot/MetodikTaminotDetail";
@@ -154,7 +156,20 @@ function App() {
         },
         {
           path: "news",
-          element: <NewsList/>
+          element: <NewsList key="news" />
+        },
+        {
+          // E'lonlar — yangiliklarning "elon" kategoriyasi
+          path: "announcements",
+          element: <NewsList key="announcements" categorySlug="elon" />
+        },
+        {
+          path: "photo-gallery",
+          element: <PhotoGallery />
+        },
+        {
+          path: "video-gallery",
+          element: <VideoGallery />
         },
         {
           path: "science",

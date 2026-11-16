@@ -16,7 +16,8 @@ import Pagination from "../../components/Pagination";
 import SEO from "../../components/SEO";
 import { useTranslation } from "../../i18n/LanguageContext";
 
-function NewsList() {
+// categorySlug berilsa (masalan "elon") — faqat shu kategoriya ko'rsatiladi (E'lonlar sahifasi)
+function NewsList({ categorySlug }) {
   const { t, lang } = useTranslation();
   const [selectedCategory, setSelectedCategory] = useState("Barchasi");
   const [currentPage, setCurrentPage] = useState(1);
@@ -174,22 +175,30 @@ function NewsList() {
         date: formatDate(item.sana),
         image: item.image,
         category: item.kategoriya,
+        slug: item.kategoriya_slug,
         ...getCategoryStyle(item.kategoriya_slug || item.kategoriya),
       })),
     [allNews]
   );
 
   // Kategoriyalar ro'yxati
+  const scopedNews = useMemo(
+    () => (categorySlug ? newsData.filter((item) => item.slug === categorySlug) : newsData),
+    [newsData, categorySlug]
+  );
+
   const categories = useMemo(
-    () => ["Barchasi", ...new Set(newsData.map((item) => item.category))],
-    [newsData]
+    () => ["Barchasi", ...new Set(scopedNews.map((item) => item.category))],
+    [scopedNews]
   );
 
   // Filter - barcha datadan
   const filteredNews = useMemo(() => {
-    if (selectedCategory === "Barchasi") return newsData;
-    return newsData.filter((item) => item.category === selectedCategory);
-  }, [newsData, selectedCategory]);
+    if (selectedCategory === "Barchasi") return scopedNews;
+    return scopedNews.filter((item) => item.category === selectedCategory);
+  }, [scopedNews, selectedCategory]);
+
+  const pageTitle = categorySlug ? t("nav.announcements") : t("nav.news");
 
   // Kategoriya o'zgarganda sahifani tiklash
   const handleCategoryChange = (category) => {
@@ -233,7 +242,7 @@ function NewsList() {
   return (
     <>
       <SEO 
-        title={t("nav.news")}
+        title={pageTitle}
         description={t("news.seoDesc")}
         keywords="yangiliklar, tadbirlar, elon, hamkorlik, yutuqlar, kasbiy ta'lim yangiliklari"
       />
@@ -251,20 +260,20 @@ function NewsList() {
                   {t("common.home")}
                 </Link>
               </li>
-              <li className="text-blue-700 font-semibold">{t("nav.news")}</li>
+              <li className="text-blue-700 font-semibold">{pageTitle}</li>
             </ul>
           </div>
 
           <div className="flex flex-col items-center lg:flex-row lg:items-end lg:justify-between gap-4 mb-10">
             <div>
               <h1 className="text-2xl sm:text-4xl font-serif lg:text-5xl font-black text-[#0d4ea3]">
-                {t("news.all")}
+                {categorySlug ? pageTitle : t("news.all")}
               </h1>
             </div>
 
-            {/* Category Filter */}
+            {/* Category Filter (bitta kategoriya sahifasida kerak emas) */}
             {/* Mobile: Select dropdown (< 640px) */}
-            <div className="sm:hidden w-full">
+            <div className={categorySlug ? "hidden" : "sm:hidden w-full"}>
               <select
                 value={selectedCategory}
                 onChange={(e) => handleCategoryChange(e.target.value)}
@@ -279,7 +288,7 @@ function NewsList() {
             </div>
 
             {/* Tablet & Desktop: Buttons (≥ 640px) */}
-            <div className="hidden sm:flex flex-wrap gap-2 justify-start lg:justify-end">
+            <div className={categorySlug ? "hidden" : "hidden sm:flex flex-wrap gap-2 justify-start lg:justify-end"}>
               {categories.map((category) => (
                 <button
                   key={category}

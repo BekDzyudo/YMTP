@@ -1,4 +1,5 @@
-// group: "institut" (institut haqida), "ochiq" (ochiq ma'lumotlar), "tinglovchilarga" (ilmiy/o'quv faoliyat)
+// group: "institut" (institut haqida), "ochiq" (ochiq ma'lumotlar), "ilmiy" (ilmiy faoliyat)
+// Har bir guruh headerda alohida menyu bo'lib chiqadi (src/constants/navMenu.js)
 export const institutLinks = [
   { to: "/about", labelKey: "institutLinks.about", slug: "about", group: "institut" },
   { to: "/leadership", labelKey: "institutLinks.leadership", slug: "leadership", group: "institut" },
@@ -13,21 +14,22 @@ export const institutLinks = [
   { to: "/anti-corruption", labelKey: "institutLinks.antiCorruption", slug: "anti-corruption", group: "ochiq" },
   { to: "/korik-tanlov", labelKey: "institutLinks.korikTanlov", slug: "korik-tanlov", group: "ochiq" },
 
-  { to: "/karyera-rivojlantirish", labelKey: "institutLinks.karyera", slug: "karyera-rivojlantirish", group: "tinglovchilarga" },
-  { to: "/ijtimoiy-emotsional-konikma", labelKey: "institutLinks.ijtimoiyEmotsional", slug: "ijtimoiy-emotsional-konikma", group: "tinglovchilarga" },
-  { to: "/doktorantlar", labelKey: "institutLinks.doktorantlar", slug: "doktorantlar", group: "tinglovchilarga" },
-  { to: "/ilmiy-qarorlar", labelKey: "institutLinks.ilmiyQarorlar", slug: "ilmiy-qarorlar", group: "tinglovchilarga" },
-  { to: "/dars-jadvali", labelKey: "institutLinks.darsJadvali", slug: "dars-jadvali", group: "tinglovchilarga" },
-  { to: "https://journal.ktri.uz/", labelKey: "institutLinks.journal", slug: "ilmiy-jurnal", group: "tinglovchilarga", external: true },
+  { to: "/science", labelKey: "institutLinks.ilmiyNashrlar", slug: "science", group: "ilmiy" },
+  { to: "/karyera-rivojlantirish", labelKey: "institutLinks.karyera", slug: "karyera-rivojlantirish", group: "ilmiy" },
+  { to: "/ijtimoiy-emotsional-konikma", labelKey: "institutLinks.ijtimoiyEmotsional", slug: "ijtimoiy-emotsional-konikma", group: "ilmiy" },
+  { to: "/doktorantlar", labelKey: "institutLinks.doktorantlar", slug: "doktorantlar", group: "ilmiy" },
+  { to: "/ilmiy-qarorlar", labelKey: "institutLinks.ilmiyQarorlar", slug: "ilmiy-qarorlar", group: "ilmiy" },
+  // "platforma" guruhi institut yon panelida ko'rsatilmaydi — u headerdagi "Platformalar" menyusida
+  { to: "https://journal.ktri.uz/", labelKey: "institutLinks.journal", slug: "ilmiy-jurnal", group: "platforma", external: true },
 ];
 
 // Guruh tartibi va sarlavhalari (header mega-menyu, footer va yon panel shu tartibda ko'rsatadi)
-export const institutLinkGroupOrder = ["institut", "ochiq", "tinglovchilarga"];
+export const institutLinkGroupOrder = ["institut", "ochiq", "ilmiy"];
 
 export const institutLinkGroupLabels = {
   institut: "institutLinks.group.institut",
   ochiq: "institutLinks.group.ochiq",
-  tinglovchilarga: "institutLinks.group.tinglovchilarga",
+  ilmiy: "institutLinks.group.ilmiy",
 };
 
 // Header/Footer uchun tayyor guruhlangan ro'yxat: [{ group, labelKey, links }]

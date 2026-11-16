@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import useGetFetch from "../../hooks/useGetFetch";
 import { FaHome, FaChevronDown, FaChevronUp } from "react-icons/fa";
-import DOMPurify from "dompurify";
+import InfographicContent from "../../components/InfographicContent";
 import SEO from "../../components/SEO";
 import { useTranslation } from "../../i18n/LanguageContext";
 
@@ -179,12 +179,7 @@ function Management() {
                 {person.vazifasi && openDropdowns[`${person.id}-vazifa`] && (
                   <div className="bg-slate-50 rounded-xl border border-slate-200 p-4 transition-all duration-300 mb-6">
                     <h3 className="text-[16px] sm:text-lg font-bold text-blue-800 mb-3">{person.lavozim}</h3>
-                    <div
-                      className="prose prose-sm sm:prose-base max-w-none text-gray-600 text-justify text-sm sm:text-base"
-                      dangerouslySetInnerHTML={{
-                        __html: DOMPurify.sanitize(person.vazifasi),
-                      }}
-                    />
+                    <InfographicContent html={person.vazifasi} showStats={false} />
                   </div>
                 )}
 
@@ -192,12 +187,7 @@ function Management() {
                 {person.mehnat_faoliyati && openDropdowns[`${person.id}-faoliyat`] && (
                   <div className="bg-slate-50 rounded-xl border border-slate-200 p-4 transition-all duration-300 mb-6">
                     <h3 className="text-[16px] sm:text-lg font-bold text-blue-800 mb-3">{t("inst.management.career")}</h3>
-                    <div
-                      className="prose prose-sm sm:prose-base max-w-none text-gray-600 text-justify text-sm sm:text-base"
-                      dangerouslySetInnerHTML={{
-                        __html: DOMPurify.sanitize(person.mehnat_faoliyati),
-                      }}
-                    />
+                    <InfographicContent html={person.mehnat_faoliyati} showStats={false} />
                   </div>
                 )}
               </div>

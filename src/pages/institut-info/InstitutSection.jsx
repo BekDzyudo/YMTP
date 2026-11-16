@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { institutLinks } from "../../constants/institutLinks";
 import useGetFetch from "../../hooks/useGetFetch";
 import { FaHome } from "react-icons/fa";
-import DOMPurify from "dompurify";
+import InfographicContent from "../../components/InfographicContent";
 import { useTranslation } from "../../i18n/LanguageContext";
 
 function InstitutSection() {
@@ -18,7 +18,6 @@ function InstitutSection() {
   const apiEndpoint = `${import.meta.env.VITE_BASE_URL}/shared_app/institut/${current.slug}/`;
 
   const { data, isPending, error } = useGetFetch(apiEndpoint);
-  console.log('Current slug:', current.slug, 'Data:', data);
 
   return (
     <section className="w-full bg-base-100 rounded-2xl border border-base-300 p-4 sm:p-6 lg:p-8 min-h-105">
@@ -58,10 +57,7 @@ function InstitutSection() {
           <span>{tx("Ma'lumotlarni yuklashda xatolik yuz berdi")}</span>
         </div>
       ) : data?.length && data[0]?.description ? (
-        <div 
-          className="prose prose-base sm:prose-lg max-w-none text-base-content/80 text-justify"
-          dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data[0]?.description) }}
-        />
+        <InfographicContent html={data[0]?.description} />
       ) : (
         <p className="text-base-content/70 text-sm sm:text-base">
           {tx("Bu bo'lim uchun kontent topilmadi.")}

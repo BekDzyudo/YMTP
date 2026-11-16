@@ -1,29 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import {
-  FaAngleDown,
-  FaAngleRight,
-  FaBalanceScale,
-  FaBookOpen,
-  FaBriefcase,
-  FaCalendarAlt,
-  FaChartLine,
-  FaExternalLinkAlt,
-  FaFlask,
-  FaFolderOpen,
-  FaGavel,
-  FaGlobeAmericas,
-  FaHandsHelping,
-  FaInfoCircle,
-  FaMapMarkedAlt,
-  FaPhoneAlt,
-  FaShieldAlt,
-  FaSitemap,
-  FaTrophy,
-  FaUniversity,
-  FaUserGraduate,
-  FaUserTie,
-  FaUsers,
-} from "react-icons/fa";
+import { FaAngleDown, FaAngleRight, FaExternalLinkAlt } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
 import { IoMenu } from "react-icons/io5";
 import { useGlobalContext } from "../hooks/useGlobalContext";
@@ -31,55 +7,92 @@ import { useHero } from "../context/HeroContext";
 import { FiLogIn } from "react-icons/fi";
 import { AuthContext } from "../context/AuthContext";
 import useGetFetchProfile from "../hooks/useGetFetchProfile";
-import { getGroupedInstitutLinks } from "../constants/institutLinks";
+import { navMenu, linkIcons } from "../constants/navMenu";
 import { useTranslation } from "../i18n/LanguageContext";
 
-// Institut mega-menyusi: guruh ranglari va har bir havola ikonkasi (slug bo'yicha)
-const groupStyles = {
-  institut: {
-    icon: FaUniversity,
-    badge: "bg-[#1e64c8]",
-    soft: "bg-[#1e64c8]/10 text-[#1e64c8]",
-    softHover: "group-hover/item:bg-[#1e64c8] group-hover/item:text-white",
-  },
-  ochiq: {
-    icon: FaFolderOpen,
-    badge: "bg-emerald-600",
-    soft: "bg-emerald-600/10 text-emerald-600",
-    softHover: "group-hover/item:bg-emerald-600 group-hover/item:text-white",
-  },
-  tinglovchilarga: {
-    icon: FaUserGraduate,
-    badge: "bg-amber-500",
-    soft: "bg-amber-500/15 text-amber-600",
-    softHover: "group-hover/item:bg-amber-500 group-hover/item:text-white",
-  },
-};
+const isLinkActive = (link, pathname) =>
+  !link.external && (pathname === link.to || pathname.startsWith(`${link.to}/`));
 
-const linkIcons = {
-  about: FaInfoCircle,
-  leadership: FaUserTie,
-  structure: FaSitemap,
-  "hududiy-filiallar": FaMapMarkedAlt,
-  "raqamlashtirish-laboratoriyasi": FaFlask,
-  "oquv-metodik-birlashmalar": FaUsers,
-  "xalqaro-hamkorlik": FaGlobeAmericas,
-  "normativ-documents": FaBalanceScale,
-  vacancy: FaBriefcase,
-  "anti-corruption": FaShieldAlt,
-  "korik-tanlov": FaTrophy,
-  "karyera-rivojlantirish": FaChartLine,
-  "ijtimoiy-emotsional-konikma": FaHandsHelping,
-  doktorantlar: FaUserGraduate,
-  "ilmiy-qarorlar": FaGavel,
-  "dars-jadvali": FaCalendarAlt,
-  "ilmiy-jurnal": FaBookOpen,
-};
+// Platformadagi asosiy gradient — barcha bloklarda bir xil
+const GRADIENT = "bg-linear-to-br from-[#194882] to-info";
+
+// Bitta bo'limning ochiladigan bloki (hamma bo'limda bir xil ko'rinish)
+function NavDropdownPanel({ item, open, align, pathname, onNavigate, t }) {
+  const SectionIcon = item.icon;
+  return (
+    // Tashqi qatlam (pt-3) tugmaga yopishib turadi — sichqoncha o'tishida bo'shliq qolmaydi
+    <div
+      className={`absolute z-40 top-full pt-3 ${align === "right" ? "right-0" : "left-0"} w-[min(92vw,330px)] transition-[opacity,visibility] duration-200 ${
+        open ? "visible opacity-100" : "invisible opacity-0 pointer-events-none"
+      }`}
+      onClick={(e) => e.target.closest("a") && onNavigate()}
+    >
+      <div className={`relative transition-transform duration-300 ease-out ${open ? "translate-y-0" : "translate-y-3"}`}>
+        <span
+          className={`absolute -top-1.5 ${align === "right" ? "right-8" : "left-8"} w-3 h-3 rotate-45 bg-[#194882]`}
+        />
+        <div className="relative overflow-hidden rounded-2xl bg-base-100 text-base-content border border-base-content/10 shadow-[0_24px_60px_-12px_rgba(0,30,80,0.45)]">
+          {/* Sarlavha — platforma gradienti */}
+          <div className={`${GRADIENT} flex items-center gap-2.5 px-4 py-3 text-white`}>
+            <span className="grid place-items-center w-8 h-8 rounded-lg bg-white/15 shrink-0">
+              <SectionIcon size={14} />
+            </span>
+            <span className="flex-1 text-sm font-bold leading-snug">{t(item.labelKey)}</span>
+            <span className="text-[11px] font-semibold bg-white/20 rounded-full px-2 py-0.5">{item.links.length}</span>
+          </div>
+          <div className="p-2 grid gap-0.5">
+            {item.links.map((link) => {
+              const Icon = linkIcons[link.slug] || FaAngleRight;
+              const active = isLinkActive(link, pathname);
+              const itemClass = `group/item flex items-center gap-3 rounded-xl px-2.5 py-2 text-[13px] xl:text-sm leading-snug transition-colors duration-200 ${
+                active ? "bg-[#194882]/8 text-[#194882] font-semibold" : "font-medium hover:bg-[#194882]/6 hover:text-[#194882]"
+              }`;
+              const content = (
+                <>
+                  <span
+                    className={`grid place-items-center shrink-0 w-8 h-8 rounded-lg transition-colors duration-200 ${
+                      active
+                        ? `${GRADIENT} text-white shadow-sm`
+                        : "bg-[#194882]/10 text-[#194882] group-hover/item:bg-linear-to-br group-hover/item:from-[#194882] group-hover/item:to-info group-hover/item:text-white"
+                    }`}
+                  >
+                    <Icon size={14} />
+                  </span>
+                  <span className="flex-1 min-w-0">{t(link.labelKey)}</span>
+                  {link.external ? (
+                    <FaExternalLinkAlt size={10} className="shrink-0 text-base-content/40" />
+                  ) : (
+                    <FaAngleRight
+                      size={12}
+                      className={`shrink-0 transition-all duration-200 ${
+                        active
+                          ? "opacity-100 text-base-content/60"
+                          : "opacity-0 -translate-x-1 text-base-content/40 group-hover/item:opacity-100 group-hover/item:translate-x-0"
+                      }`}
+                    />
+                  )}
+                </>
+              );
+              return link.external ? (
+                <a key={link.to} href={link.to} target="_blank" rel="noopener noreferrer" className={itemClass}>
+                  {content}
+                </a>
+              ) : (
+                <Link key={link.to} to={link.to} className={itemClass}>
+                  {content}
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 function Header() {
   const { t, lang, setLang, languages } = useTranslation();
   const currentLanguage = languages.find((l) => l.code === lang);
-  const institutLinkGroups = getGroupedInstitutLinks();
 
   // Tilni tanlagach dropdownni yopish
   const handleLanguageChange = (code) => {
@@ -89,21 +102,26 @@ function Header() {
   const { onHero } = useHero();
   const { pathname } = useLocation();
 
-  // Institut mega-menyusi holati
-  const [institutOpen, setInstitutOpen] = useState(false);
+  // Qaysi bo'lim bloki ochiq. Sichqoncha chiqib ketganda darhol emas, biroz kechikib yopiladi —
+  // shunda nomdan blokka o'tishda menyu yopilib qolmaydi.
+  const [openMenu, setOpenMenu] = useState(null);
   const closeTimer = useRef(null);
-  const openInstitutMenu = () => {
+  const openMenuNow = (key) => {
     clearTimeout(closeTimer.current);
-    setInstitutOpen(true);
+    setOpenMenu(key);
   };
-  const closeInstitutMenuSoon = () => {
+  const closeMenuSoon = () => {
     clearTimeout(closeTimer.current);
-    closeTimer.current = setTimeout(() => setInstitutOpen(false), 200);
+    closeTimer.current = setTimeout(() => setOpenMenu(null), 200);
+  };
+  const closeMenuNow = () => {
+    clearTimeout(closeTimer.current);
+    setOpenMenu(null);
   };
   useEffect(() => () => clearTimeout(closeTimer.current), []);
-  
+
   const { userData, auth, logout } = useContext(AuthContext);
-  const { theme, changeTheme } = useGlobalContext();
+  const { theme } = useGlobalContext();
 
   const { data: user } = useGetFetchProfile(
     `${import.meta.env.VITE_BASE_URL}/user-data/`
@@ -111,7 +129,7 @@ function Header() {
 
   // Hero stilini qo'llash kerakligini aniqlash (tungi rejim yoki hero ustida)
   const useHeroStyle = theme === "night" || (theme === "light" && onHero);
-  
+
   // Barcha komponentlar uchun yagona stil o'zgaruvchilari
   const logoSrc = "/new_logo_white_2026.png"; // Doim oq logo
   const textColor = "text-white"; // Doim oq matn
@@ -120,15 +138,13 @@ function Header() {
   const compactNav = lang !== "uz";
   const navLinkClass = `${textColor} text-center leading-tight whitespace-normal`;
   const navSizeClass = compactNav
-    ? "lg:[&>li>*]:px-1.5 xl:[&>li>*]:px-3 lg:text-[11px] xl:text-[14px] 2xl:text-[15px] 2xl:gap-1"
-    : "lg:[&>li>*]:px-2 xl:[&>li>*]:px-3 lg:text-[12px] xl:text-[16px] 2xl:gap-3";
+    ? "lg:[&>li>*]:px-1.5 xl:[&>li>*]:px-2.5 lg:text-[11px] xl:text-[14px] 2xl:text-[15px] 2xl:gap-1"
+    : "lg:[&>li>*]:px-2 xl:[&>li>*]:px-3 lg:text-[12px] xl:text-[15px] 2xl:text-[16px] 2xl:gap-2";
   const borderColor = useHeroStyle ? "border-white/30" : "border-white/20";
-  
+
   // Background style - hero ustida transparent, boshqa sahifalarda gradient
-  // onHero true bo'lsa (hero bor sahifada) - transparent
-  // onHero false bo'lsa (oddiy sahifa, masalan Contact) - gradient
-  const bgStyle = onHero 
-    ? { background: 'transparent' } 
+  const bgStyle = onHero
+    ? { background: 'transparent' }
     : { background: 'linear-gradient(to right, rgba(0, 45, 109, 0.95), rgba(0, 61, 125, 0.95), rgba(0, 45, 109, 0.95))' };
 
   return (
@@ -159,395 +175,59 @@ function Header() {
           <ul
             className={`menu lg:menu-horizontal flex-nowrap items-center max-w-full [&>li]:shrink border rounded-xl ${navSizeClass} ${borderColor}`}
           >
-            <li className="relative">
-              {/* Ochish/yopish state orqali: sichqoncha chiqib ketganda darhol emas, biroz kechikib yopiladi —
-                  shunda "Institut" yozuvidan panelga o'tishda menyu yopilib qolmaydi. Klaviatura uchun focus ham ochadi. */}
-              <div
-                className="relative"
-                onMouseEnter={openInstitutMenu}
-                onMouseLeave={closeInstitutMenuSoon}
-                onFocus={openInstitutMenu}
-                onBlur={(e) => {
-                  if (!e.currentTarget.contains(e.relatedTarget)) closeInstitutMenuSoon();
-                }}
-                onKeyDown={(e) => e.key === "Escape" && setInstitutOpen(false)}
-              >
-                <div
-                  tabIndex={0}
-                  role="button"
-                  aria-haspopup="true"
-                  aria-expanded={institutOpen}
-                  className={`${textColor} gap-1.5 items-center flex w-auto`}
-                >
-                  {t("nav.institute")}
-                  <FaAngleDown
-                    size={12}
-                    className={`transition-transform duration-300 ${institutOpen ? "rotate-180" : ""}`}
-                  />
-                </div>
-                {/* Mega-menyu. Tashqi qatlam (pt-3) siljimaydi va tugmaga yopishib turadi — hover hududida bo'shliq qolmaydi;
-                    animatsiya faqat ichki kartochkada. Ichida ul/li ishlatilmaydi: daisyUI .menu ichma-ich ro'yxatlarga
-                    o'z padding/chiziqlarini qo'shadi. */}
-                <div
-                  className={`absolute z-40 left-0 top-full pt-3 w-[min(92vw,880px)] transition-[opacity,visibility] duration-200 ${
-                    institutOpen ? "visible opacity-100" : "invisible opacity-0 pointer-events-none"
-                  }`}
-                  onClick={(e) => e.target.closest("a") && setInstitutOpen(false)}
-                >
+            {navMenu.map((item, index) => {
+              if (item.to) {
+                const active = pathname === item.to;
+                return (
+                  <li key={item.key}>
+                    <Link to={item.to} className={`${navLinkClass} ${active ? "bg-white/15" : ""}`}>
+                      {t(item.labelKey)}
+                    </Link>
+                  </li>
+                );
+              }
+              const open = openMenu === item.key;
+              const sectionActive = item.links.some((l) => isLinkActive(l, pathname));
+              return (
+                <li key={item.key} className="relative">
+                  {/* Ichida ul/li ishlatilmaydi: daisyUI .menu ichma-ich ro'yxatlarga o'z padding/chiziqlarini qo'shadi */}
                   <div
-                    className={`relative transition-transform duration-300 ease-out ${
-                      institutOpen ? "translate-y-0" : "translate-y-3"
-                    }`}
+                    className="relative"
+                    onMouseEnter={() => openMenuNow(item.key)}
+                    onMouseLeave={closeMenuSoon}
+                    onFocus={() => openMenuNow(item.key)}
+                    onBlur={(e) => {
+                      if (!e.currentTarget.contains(e.relatedTarget)) closeMenuSoon();
+                    }}
+                    onKeyDown={(e) => e.key === "Escape" && closeMenuNow()}
                   >
-                    {/* Tugmaga ishora qiluvchi uchburchak */}
-                    <span className="absolute -top-1.5 left-8 w-3 h-3 rotate-45 bg-base-100 border-l border-t border-base-content/10" />
-
-                    <div className="relative overflow-hidden rounded-2xl bg-base-100 text-base-content border border-base-content/10 shadow-[0_24px_60px_-12px_rgba(0,30,80,0.45)]">
-                      <div className="h-1 bg-gradient-to-r from-[#002d6d] via-[#1e64c8] to-sky-400" />
-
-                      <div className="grid grid-cols-1 md:grid-cols-3 md:divide-x divide-base-content/10">
-                        {institutLinkGroups.map((grp) => {
-                          const style = groupStyles[grp.group] || groupStyles.institut;
-                          const GroupIcon = style.icon;
-                          return (
-                            <div key={grp.group} className="p-4 xl:p-5">
-                              <div className="flex items-center gap-2.5 mb-3">
-                                <span className={`grid place-items-center w-8 h-8 rounded-lg text-white shadow-sm ${style.badge}`}>
-                                  <GroupIcon size={14} />
-                                </span>
-                                <h4 className="flex-1 text-[11px] xl:text-xs font-bold uppercase tracking-wider text-base-content/70 leading-snug">
-                                  {t(grp.labelKey)}
-                                </h4>
-                                <span className="text-[10px] font-semibold text-base-content/50 bg-base-200 rounded-full px-2 py-0.5">
-                                  {grp.links.length}
-                                </span>
-                              </div>
-
-                              <div className="flex flex-col gap-0.5">
-                                {grp.links.map((link) => {
-                                  const Icon = linkIcons[link.slug] || FaAngleRight;
-                                  const active = !link.external && pathname === link.to;
-                                  const itemClass = `group/item flex items-center gap-3 rounded-xl px-2 py-2 text-[13px] xl:text-sm leading-snug transition-colors duration-200 ${
-                                    active ? "bg-base-200 font-semibold" : "font-medium hover:bg-base-200"
-                                  }`;
-                                  const content = (
-                                    <>
-                                      <span
-                                        className={`grid place-items-center shrink-0 w-8 h-8 rounded-lg transition-colors duration-200 ${
-                                          active ? `${style.badge} text-white` : `${style.soft} ${style.softHover}`
-                                        }`}
-                                      >
-                                        <Icon size={14} />
-                                      </span>
-                                      <span className="flex-1">{t(link.labelKey)}</span>
-                                      {link.external ? (
-                                        <FaExternalLinkAlt size={10} className="shrink-0 text-base-content/40" />
-                                      ) : (
-                                        <FaAngleRight
-                                          size={12}
-                                          className={`shrink-0 transition-all duration-200 ${
-                                            active
-                                              ? "opacity-100 text-base-content/60"
-                                              : "opacity-0 -translate-x-1 text-base-content/40 group-hover/item:opacity-100 group-hover/item:translate-x-0"
-                                          }`}
-                                        />
-                                      )}
-                                    </>
-                                  );
-                                  return link.external ? (
-                                    <a key={link.to} href={link.to} target="_blank" rel="noopener noreferrer" className={itemClass}>
-                                      {content}
-                                    </a>
-                                  ) : (
-                                    <Link key={link.to} to={link.to} className={itemClass}>
-                                      {content}
-                                    </Link>
-                                  );
-                                })}
-                              </div>
-                            </div>
-                          );
-                        })}
-                      </div>
-
-                      <div className="flex items-center justify-between gap-3 px-4 xl:px-5 py-2.5 bg-base-200/60 border-t border-base-content/10 text-xs">
-                        <span className="text-base-content/60 truncate">
-                          {t("site.nameLine1")} {t("site.nameLine2")} {t("site.nameLine3")}
-                        </span>
-                        <Link
-                          to="/contact"
-                          className="inline-flex items-center gap-1.5 shrink-0 font-semibold text-[#1e64c8] hover:underline"
-                        >
-                          <FaPhoneAlt size={10} />
-                          {t("nav.contact")}
-                        </Link>
-                      </div>
+                    <div
+                      tabIndex={0}
+                      role="button"
+                      aria-haspopup="true"
+                      aria-expanded={open}
+                      className={`${navLinkClass} gap-1 items-center flex w-auto rounded-lg ${
+                        open || sectionActive ? "bg-white/15" : ""
+                      }`}
+                    >
+                      {t(item.labelKey)}
+                      <FaAngleDown
+                        size={11}
+                        className={`shrink-0 transition-transform duration-300 ${open ? "rotate-180" : ""}`}
+                      />
                     </div>
+                    <NavDropdownPanel
+                      item={item}
+                      open={open}
+                      align={index >= navMenu.length - 3 ? "right" : "left"}
+                      pathname={pathname}
+                      onNavigate={closeMenuNow}
+                      t={t}
+                    />
                   </div>
-                </div>
-              </div>
-            </li>
-             {/* <li>
-              <Link
-                to="/region"
-                className={navLinkClass}
-              >
-                Texnikumlar
-              </Link>
-            </li> */}
-            <li>
-              <Link
-                to="/digital-educational-resources"
-                className={navLinkClass}
-              >
-                {t("nav.digitalResources")}
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/methodological-support"
-                className={navLinkClass}
-              >
-                {t("nav.methodicalSupport")}
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="https://my.moqt.uz/"
-                target="_blank"
-                className={navLinkClass}
-              >
-                {t("nav.training")}
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/science"
-                className={navLinkClass}
-              >
-                {t("nav.science")}
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/news"
-                className={navLinkClass}
-              >
-                {t("nav.news")}
-              </Link>
-            </li>
-            {/* <li>
-              <Link
-                to="/literature"
-                className={navLinkClass}
-              >
-                Adabiyotlar
-              </Link>
-            </li> */}
-            <li>
-              <Link
-                to="/contact"
-                className={navLinkClass}
-              >
-                {t("nav.contact")}
-              </Link>
-            </li>
-            {/* <li className="relative">
-              <div className="dropdown dropdown-center group">
-                <div
-                  tabIndex={0}
-                  role="button"
-                  className={`${navTextColor} gap-2 items-center flex w-auto`}
-                >
-                  Bizning platformalar <FaAngleDown />
-                </div>
-                <ul
-                  tabIndex="-1"
-                  className="dropdown-content menu-horizontal border border-gray-700 bg-base-300 w-max rounded-md z-1 mt-5 pointer-events-none
-    group-focus-within:pointer-events-auto"
-                >
-                  <li>
-                    <Link
-                      to="https://ipitvet.uz/uz/"
-                      target="blank"
-                      className="flex flex-col items-center gap-1 max-w-48"
-                    >
-                      <img
-                        src="/rasmiy-website.png"
-                        alt="rasmiy-vebsayt"
-                        className="w-44"
-                      />
-                      <p className="text-sm font-semibold">Rasmiy veb-sayt</p>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      to="https://edu.profedu.uz/"
-                      target="blank"
-                      className="flex flex-col items-center gap-1 max-w-48"
-                    >
-                      <img
-                        src="/eduprof.png"
-                        alt="Metodik taminlash"
-                        className="w-44"
-                      />
-                      <p className="text-sm font-semibold">Metodik taminlash</p>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      to="https://rtr.profedu.uz/"
-                      target="blank"
-                      className="flex flex-col items-center gap-1 max-w-48"
-                    >
-                      <img
-                        src="/rtr.png"
-                        alt="Raqamli ta'lim resurslari"
-                        className="w-44"
-                      />
-                      <p className="text-sm font-semibold">
-                        Raqamli ta'lim resurslari
-                      </p>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      to="https://my.moqt.uz/"
-                      target="blank"
-                      className="flex flex-col items-center gap-1 max-w-48"
-                    >
-                      <img
-                        src="/mymoqt.png"
-                        alt="Raqamli ta'lim resurslari"
-                        className="w-44"
-                      />
-                      <p className="text-sm font-semibold text-center">
-                        {" "}
-                        Malaka oshirish jarayonini tashkil etish
-                      </p>
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-            </li> */}
-             {/* <li>
-              <Link
-                to="/region"
-                className={`${
-                  theme === "light" && onHero && pathname == "/"
-                    ? "text-white"
-                    : "text-base-content"
-                }`}
-              >
-                Kasbiy ta'lim tashkilotlari
-              </Link>
-            </li>
-            <li className="relative">
-              <div className="dropdown dropdown-center group">
-                <div
-                  tabIndex={0}
-                  role="button"
-                  className={`${
-                    theme === "light" && onHero && pathname == "/"
-                      ? "text-white"
-                      : "text-base-content"
-                  } gap-2 items-center flex w-auto`}
-                >
-                  Bizning platformalar <FaAngleDown />
-                </div>
-                <ul
-                  tabIndex="-1"
-                  className="dropdown-content menu-horizontal border border-gray-700 bg-base-300 w-max rounded-md z-1 mt-5 pointer-events-none
-    group-focus-within:pointer-events-auto"
-                >
-                  <li>
-                    <Link
-                      to="https://ipitvet.uz/uz/"
-                      target="blank"
-                      className="flex flex-col items-center gap-1 max-w-48"
-                    >
-                      <img
-                        src="/rasmiy-website.png"
-                        alt="rasmiy-vebsayt"
-                        className="w-44"
-                      />
-                      <p className="text-sm font-semibold">Rasmiy veb-sayt</p>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      to="https://edu.profedu.uz/"
-                      target="blank"
-                      className="flex flex-col items-center gap-1 max-w-48"
-                    >
-                      <img
-                        src="/eduprof.png"
-                        alt="Metodik taminlash"
-                        className="w-44"
-                      />
-                      <p className="text-sm font-semibold">Metodik taminlash</p>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      to="https://rtr.profedu.uz/"
-                      target="blank"
-                      className="flex flex-col items-center gap-1 max-w-48"
-                    >
-                      <img
-                        src="/rtr.png"
-                        alt="Raqamli ta'lim resurslari"
-                        className="w-44"
-                      />
-                      <p className="text-sm font-semibold">
-                        Raqamli ta'lim resurslari
-                      </p>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      to="https://my.moqt.uz/"
-                      target="blank"
-                      className="flex flex-col items-center gap-1 max-w-48"
-                    >
-                      <img
-                        src="/mymoqt.png"
-                        alt="Raqamli ta'lim resurslari"
-                        className="w-44"
-                      />
-                      <p className="text-sm font-semibold text-center">
-                        {" "}
-                        Malaka oshirish jarayonini tashkil etish
-                      </p>
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-            </li>
-            <li>
-              <Link
-                to="rating"
-                className={`${
-                  theme === "light" && onHero && pathname == "/"
-                    ? "text-white"
-                    : "text-base-content"
-                }`}
-              >
-                Reyting
-              </Link>
-            </li>
-            <li>
-              <Link
-              to="teachers"
-                className={`${
-                  theme === "light" && onHero && pathname == "/"
-                    ? "text-white"
-                    : "text-base-content"
-                }`}
-              >
-                Materiallar
-              </Link>
-            </li> */}
+                </li>
+              );
+            })}
           </ul>
         </div>
         <div className="navbar-end lg:w-auto lg:shrink-0 2xl:gap-4 xl:gap-2 gap-2">
@@ -725,43 +405,34 @@ function Header() {
                 <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-blue-500/40 to-transparent"></div>
                 <div className="absolute inset-0 h-[1px] blur-md bg-gradient-to-r from-transparent via-blue-700/20 to-transparent"></div>
               </div>
-              <div className="lg:hidden">
+              <div className="lg:hidden max-h-[70vh] overflow-y-auto">
                 <li>
                   <Link to="/">{t("nav.home")}</Link>
                 </li>
-                {institutLinkGroups.map((grp) => (
-                  <React.Fragment key={grp.group}>
-                    <li className="menu-title pt-2">
-                      <span>{t(grp.labelKey)}</span>
+                {navMenu.map((item) =>
+                  item.to ? (
+                    <li key={item.key} className="pt-2">
+                      <Link to={item.to}>{t(item.labelKey)}</Link>
                     </li>
-                    {grp.links.map((link) => (
-                      <li key={link.to}>
-                        {link.external ? (
-                          <a href={link.to} target="_blank" rel="noopener noreferrer">
-                            {t(link.labelKey)}
-                          </a>
-                        ) : (
-                          <Link to={link.to}>{t(link.labelKey)}</Link>
-                        )}
+                  ) : (
+                    <React.Fragment key={item.key}>
+                      <li className="menu-title pt-2">
+                        <span>{t(item.labelKey)}</span>
                       </li>
-                    ))}
-                  </React.Fragment>
-                ))}
-                <li>
-                  <Link to="/digital-educational-resources">{t("nav.digitalResources")}</Link>
-                </li>
-                <li>
-                  <Link to="/methodological-support">{t("nav.methodicalSupport")}</Link>
-                </li>
-                <li>
-                  <Link to="/science">{t("nav.science")}</Link>
-                </li>
-                <li>
-                  <Link to="/news">{t("nav.news")}</Link>
-                </li>
-                <li>
-                  <Link to="/contact">{t("nav.contact")}</Link>
-                </li>
+                      {item.links.map((link) => (
+                        <li key={link.to}>
+                          {link.external ? (
+                            <a href={link.to} target="_blank" rel="noopener noreferrer">
+                              {t(link.labelKey)}
+                            </a>
+                          ) : (
+                            <Link to={link.to}>{t(link.labelKey)}</Link>
+                          )}
+                        </li>
+                      ))}
+                    </React.Fragment>
+                  )
+                )}
               </div>
             </ul>
           </div>

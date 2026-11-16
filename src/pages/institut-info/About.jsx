@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import useGetFetch from "../../hooks/useGetFetch";
-import { FaHome, FaCircle, FaBuilding } from "react-icons/fa";
-import DOMPurify from "dompurify";
+import { FaHome } from "react-icons/fa";
+import InfographicContent from "../../components/InfographicContent";
 import SEO from "../../components/SEO";
 import { useTranslation } from "../../i18n/LanguageContext";
 
@@ -59,36 +59,8 @@ function About() {
           <span>{t("inst.loadError")}</span>
         </div>
       ) : data?.length ? (
-        <div className="relative">
-          {/* Vertical Line */}
-          <div className="absolute left-4 sm:left-5 md:left-6 top-0 bottom-0 w-0.5 bg-linear-to-b from-blue-500 via-blue-400 to-blue-300"></div>
-          
-          {/* Timeline Items */}
-          <div className="space-y-6 sm:space-y-8">
-            {data.map((item, index) => (
-              <div key={index} className="relative flex gap-3 sm:gap-4 md:gap-6 items-start group">
-                {/* Icon Circle */}
-                <div className="relative z-10 shrink-0">
-                  <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full bg-linear-to-br from-blue-600 to-blue-500 flex items-center justify-center shadow-lg ring-2 sm:ring-4 ring-white group-hover:scale-110 transition-transform duration-300">
-                    <FaBuilding className="text-white" size={16} />
-                  </div>
-                  {/* Pulse effect */}
-                  <div className="absolute inset-0 rounded-full bg-blue-500 opacity-0 group-hover:opacity-20 animate-ping"></div>
-                </div>
-
-                {/* Content Card */}
-                <div className="flex-1 border-b border-dashed sm:border-b-2 border-gray-300 pb-4 sm:pb-6">
-                  <div
-                    className="text-sm sm:text-base md:text-lg prose prose-sm sm:prose-base md:prose-lg max-w-none text-base-content/90 text-justify prose-headings:text-blue-700 prose-p:leading-relaxed prose-ul:list-disc prose-ol:list-decimal"
-                    dangerouslySetInnerHTML={{
-                      __html: DOMPurify.sanitize(item.description),
-                    }}
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+        // Barcha tavsif bloklari bitta infografikaga aylantiriladi
+        <InfographicContent html={data.map((item) => item.description || "").join("")} />
       ) : (
         <p className="text-base-content/70 text-sm sm:text-base">
           {t("inst.noContent")}
@@ -100,10 +72,7 @@ function About() {
           <h2 className="text-lg sm:text-xl md:text-2xl font-bold font-serif mb-4 text-blue-700">
             {vazifalar.sarlavha || t("inst.about.vazifalarTitle")}
           </h2>
-          <div
-            className="text-sm sm:text-base md:text-lg prose prose-sm sm:prose-base md:prose-lg max-w-none text-base-content/90 text-justify prose-headings:text-blue-700 prose-p:leading-relaxed prose-ul:list-disc prose-ol:list-decimal"
-            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(vazifalar.matn) }}
-          />
+          <InfographicContent html={vazifalar.matn} showStats={false} />
         </div>
       )}
     </section>

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { FaHome, FaDownload, FaExternalLinkAlt } from "react-icons/fa";
-import DOMPurify from "dompurify";
+import InfographicContent from "../../components/InfographicContent";
 import useGetFetch from "../../hooks/useGetFetch";
 import SEO from "../../components/SEO";
 import { useTranslation } from "../../i18n/LanguageContext";
@@ -48,10 +48,7 @@ function InternationalCooperation() {
         ) : (
           <>
             {sahifa?.matn && (
-              <div
-                className="prose prose-sm sm:prose-base md:prose-lg max-w-none text-base-content/90 text-justify prose-headings:text-blue-700 prose-p:leading-relaxed mb-8"
-                dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(sahifa.matn) }}
-              />
+              <InfographicContent html={sahifa.matn} className="mb-10" />
             )}
 
             {/* Xalqaro hamkorlar jadvali */}

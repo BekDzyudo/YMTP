@@ -44,7 +44,13 @@ const common = {
   "institutLinks.darsJadvali": { uz: "Dars jadvali", ru: "Расписание занятий", en: "Class schedule" },
   "institutLinks.group.institut": { uz: "Institut haqida", ru: "Об институте", en: "About the Institute" },
   "institutLinks.group.ochiq": { uz: "Oçiq ma'lumotlar", ru: "Открытые данные", en: "Open data" },
-  "institutLinks.group.tinglovchilarga": { uz: "Tinglovçilarga va ilmiy faoliyat", ru: "Слушателям и научная деятельность", en: "For trainees & research" },
+  "institutLinks.group.ilmiy": { uz: "Ilmiy faoliyat", ru: "Научная деятельность", en: "Research" },
+  "institutLinks.ilmiyNashrlar": { uz: "Ilmiy naşrlar va hujjatlar", ru: "Научные публикации и документы", en: "Publications & documents" },
+  "nav.platforms": { uz: "Platformalar", ru: "Платформы", en: "Platforms" },
+  "nav.media": { uz: "Media resurslar", ru: "Медиаресурсы", en: "Media" },
+  "nav.announcements": { uz: "E'lonlar", ru: "Объявления", en: "Announcements" },
+  "nav.photoGallery": { uz: "Fotogalereya", ru: "Фотогалерея", en: "Photo gallery" },
+  "nav.videoGallery": { uz: "Videogalereya", ru: "Видеогалерея", en: "Video gallery" },
 
   // Footer
   "footer.links.president": { uz: "Özbekiston Respublikasi Prezidenti rasmiy veb-sayti", ru: "Официальный сайт Президента Республики Узбекистан", en: "Official website of the President of the Republic of Uzbekistan" },

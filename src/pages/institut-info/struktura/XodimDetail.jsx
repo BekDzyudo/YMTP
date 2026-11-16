@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import DOMPurify from "dompurify";
+import InfographicContent from "../../../components/InfographicContent";
 import { FaHome, FaEnvelope } from "react-icons/fa";
 import useGetFetch from "../../../hooks/useGetFetch";
 import { useTranslation } from "../../../i18n/LanguageContext";
@@ -91,12 +91,7 @@ function XodimDetail() {
                 <h1 className="text-xl font-bold mb-6 font-serif bg-gradient-to-r from-[#194882] to-[#0ea5e9] bg-clip-text text-transparent">
                   {t("inst.structure.duties")}
                 </h1>
-                <div
-                  className="text-base md:text-lg text-justify space-y-4 leading-relaxed [&>p]:mb-4 [&>p]:pl-10 [&>p]:py-2 [&>p]:relative [&>p]:before:content-['✓'] [&>p]:before:absolute [&>p]:before:left-0 [&>p]:before:top-1/2 [&>p]:before:-translate-y-1/2 [&>p]:before:w-7 [&>p]:before:h-7 [&>p]:before:rounded-full [&>p]:before:bg-gradient-to-br [&>p]:before:from-[#194882] [&>p]:before:to-[#0ea5e9] [&>p]:before:text-white [&>p]:before:text-center [&>p]:before:leading-7 [&>p]:before:text-base [&>p]:before:font-bold [&>p]:before:shadow-md [&>p:last-child]:mb-0"
-                  dangerouslySetInnerHTML={{
-                    __html: DOMPurify.sanitize(data?.vazifasi),
-                  }}
-                />
+                <InfographicContent html={data?.vazifasi} showStats={false} />
               </div>
             </div>
           )}
@@ -107,12 +102,7 @@ function XodimDetail() {
               <h1 className="text-xl font-bold mb-6 font-serif bg-gradient-to-r from-[#194882] to-[#0ea5e9] bg-clip-text text-transparent">
                   {t("inst.structure.bio")}
                 </h1>
-                <div
-                  className="text-base md:text-lg text-justify space-y-4 leading-relaxed [&>p]:mb-4 [&>p]:pl-10 [&>p]:py-2 [&>p]:relative [&>p]:before:content-['i'] [&>p]:before:absolute [&>p]:before:left-0 [&>p]:before:top-1/2 [&>p]:before:-translate-y-1/2 [&>p]:before:w-7 [&>p]:before:h-7 [&>p]:before:rounded-full [&>p]:before:bg-gradient-to-br [&>p]:before:from-[#194882] [&>p]:before:to-[#0ea5e9] [&>p]:before:text-white [&>p]:before:text-center [&>p]:before:leading-7 [&>p]:before:text-sm [&>p]:before:font-bold [&>p]:before:italic [&>p]:before:shadow-md [&>p:last-child]:mb-0"
-                  dangerouslySetInnerHTML={{
-                    __html: DOMPurify.sanitize(data?.biografiya),
-                  }}
-                />
+                <InfographicContent html={data?.biografiya} showStats={false} />
               </div>
             </div>
           )}
@@ -123,14 +113,7 @@ function XodimDetail() {
               <h1 className="text-xl font-bold mb-6 font-serif bg-gradient-to-r from-[#194882] to-[#0ea5e9] bg-clip-text text-transparent">
                   {t("inst.structure.career")}
                 </h1>
-                <div
-                  className="text-base md:text-lg text-justify space-y-4 leading-relaxed [&>p]:mb-4 [&>p]:pl-10 [&>p]:py-2 [&>p]:relative [&>p]:before:content-['★'] [&>p]:before:absolute [&>p]:before:left-0 [&>p]:before:top-1/2 [&>p]:before:-translate-y-1/2 [&>p]:before:w-7 [&>p]:before:h-7 [&>p]:before:rounded-full [&>p]:before:bg-gradient-to-br [&>p]:before:from-[#194882] [&>p]:before:to-[#0ea5e9] [&>p]:before:text-white [&>p]:before:text-center [&>p]:before:leading-7 [&>p]:before:text-base [&>p]:before:font-bold [&>p]:before:shadow-md [&>p:last-child]:mb-0"
-                  dangerouslySetInnerHTML={{
-                    __html: DOMPurify.sanitize(
-                      data?.mehnat_faoliyati,
-                    ),
-                  }}
-                />
+                <InfographicContent html={data?.mehnat_faoliyati} showStats={false} />
               </div>
             </div>
           )}

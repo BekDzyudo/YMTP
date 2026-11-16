@@ -29,6 +29,39 @@ const misc = {
   "fab.close": { uz: "Yopiş", ru: "Закрыть", en: "Close" },
   "fab.open": { uz: "Oçiş", ru: "Открыть", en: "Open" },
 
+  // AI yordamchi (robotcha)
+  "ai.title": { uz: "AI yordamçi", ru: "ИИ-помощник", en: "AI assistant" },
+  "ai.subtitle": { uz: "Kasbiy ta'lim böyiça savollarga javob beraman", ru: "Отвечаю на вопросы о профессиональном образовании", en: "I answer questions about vocational education" },
+  "ai.welcome": { uz: "Salom! Men kasbiy ta'lim böyiça AI yordamçiman. Kasb-hunar maktablari, texnikumlar, qabul, yönalişlar, malaka oşiriş va boşqa mavzularda savolingizni yozing.", ru: "Здравствуйте! Я ИИ-помощник по профессиональному образованию. Задайте вопрос о профессиональных школах, техникумах, приёме, направлениях, повышении квалификации и других темах.", en: "Hello! I'm an AI assistant for vocational education. Ask me about vocational schools, technical colleges, admission, programmes, professional development and more." },
+  "ai.suggestion1": { uz: "Texnikumga qabul qanday amalga oşiriladi?", ru: "Как проходит приём в техникум?", en: "How does admission to a technical college work?" },
+  "ai.suggestion2": { uz: "Kasb-hunar maktabi va kollejning farqi nima?", ru: "Чем отличается профессиональная школа от колледжа?", en: "What is the difference between a vocational school and a college?" },
+  "ai.suggestion3": { uz: "Öqituvçilar malakasini qayerda oşiradi?", ru: "Где преподаватели повышают квалификацию?", en: "Where can teachers improve their qualifications?" },
+  "ai.placeholder": { uz: "Savolingizni yozing...", ru: "Напишите ваш вопрос...", en: "Type your question..." },
+  "ai.thinking": { uz: "Javob tayyorlanmoqda", ru: "Готовлю ответ", en: "Preparing an answer" },
+  "ai.error": { uz: "Javob olib bölmadi. Iltimos, qaytadan urinib köring.", ru: "Не удалось получить ответ. Попробуйте ещё раз.", en: "Couldn't get an answer. Please try again." },
+  "ai.retry": { uz: "Qayta urinib köriş", ru: "Повторить", en: "Try again" },
+  "ai.clear": { uz: "Suhbatni tozalaş", ru: "Очистить чат", en: "Clear chat" },
+  "ai.disclaimer": { uz: "AI javoblarida xatolik bölişi mumkin. Muhim ma'lumotlarni tekşirib köring.", ru: "Ответы ИИ могут содержать ошибки. Проверяйте важную информацию.", en: "AI answers can contain mistakes. Double-check important information." },
+  "ai.greetingTitle": { uz: "Salom! Men AI yordamçiman 👋", ru: "Здравствуйте! Я ИИ-помощник 👋", en: "Hi! I'm the AI assistant 👋" },
+  "ai.greetingText": { uz: "Kasbiy ta'limga oid istalgan savolingizga javob berişga tayyorman.", ru: "Готов ответить на любой вопрос о профессиональном образовании.", en: "I'm ready to answer any question about vocational education." },
+  "ai.ask": { uz: "Savol beriş", ru: "Задать вопрос", en: "Ask a question" },
+
+  // Media resurslar
+  "media.photoSubtitle": { uz: "Institut tadbirlari va voqealaridan suratlar", ru: "Фотографии с мероприятий и событий института", en: "Photos from institute events" },
+  "media.videoSubtitle": { uz: "Institut faoliyatiga oid video lavhalar", ru: "Видеосюжеты о деятельности института", en: "Videos about the institute's work" },
+  "media.albums": { uz: "albom", ru: "альбомов", en: "albums" },
+  "media.videos": { uz: "video", ru: "видео", en: "videos" },
+  "media.noPhotos": { uz: "Hozirça suratlar yöq", ru: "Фотографий пока нет", en: "No photos yet" },
+  "media.noVideos": { uz: "Hozirça videolar yöq", ru: "Видео пока нет", en: "No videos yet" },
+  "media.openNews": { uz: "Yangilikni oçiş", ru: "Открыть новость", en: "Open news" },
+  "media.prev": { uz: "Oldingi", ru: "Предыдущее", en: "Previous" },
+  "media.next": { uz: "Keyingi", ru: "Следующее", en: "Next" },
+
+  // Infografika
+  "info.keyFacts": { uz: "Asosiy körsatkiçlar", ru: "Ключевые показатели", en: "Key figures" },
+  "info.timeline": { uz: "Tarix", ru: "История", en: "History" },
+  "info.step": { uz: "Bosqiç", ru: "Этап", en: "Step" },
+
   // Kalendar
   "cal.upcoming": { uz: "Rejalaştirilgan", ru: "Запланировано", en: "Upcoming" },
   "cal.past": { uz: "Ötgan", ru: "Прошедшее", en: "Past" },

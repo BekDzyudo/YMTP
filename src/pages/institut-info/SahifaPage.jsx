@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { FaHome, FaFileDownload } from "react-icons/fa";
-import DOMPurify from "dompurify";
+import InfographicContent from "../../components/InfographicContent";
 import useGetFetch from "../../hooks/useGetFetch";
 import SEO from "../../components/SEO";
 import { useTranslation } from "../../i18n/LanguageContext";
@@ -51,10 +51,7 @@ function SahifaPage({ slug, titleKey, seoDescKey, icon }) {
           </div>
         ) : data?.matn ? (
           <>
-            <div
-              className="prose prose-sm sm:prose-base md:prose-lg max-w-none text-base-content/90 text-justify prose-headings:text-blue-700 prose-p:leading-relaxed prose-ul:list-disc prose-ol:list-decimal"
-              dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data.matn) }}
-            />
+            <InfographicContent html={data.matn} />
             {data.rasm && (
               <img src={data.rasm} alt={data.sarlavha} className="rounded-xl mt-6 max-w-full" />
             )}
