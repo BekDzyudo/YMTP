@@ -184,7 +184,7 @@ function AlbumTile({ album, big, onOpen, onDiscard, locale }) {
 
 function GallerySkeleton() {
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 auto-rows-[160px] sm:auto-rows-[200px] gap-3 sm:gap-4">
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 auto-rows-[190px] sm:auto-rows-[240px] gap-3 sm:gap-4">
       {Array.from({ length: 9 }).map((_, i) => (
         <div
           key={i}
@@ -278,7 +278,7 @@ function PhotoGallery() {
         ) : (
           <>
             {/* Masonry-ga o'xshash to'r: birinchi albom kattaroq, faqat sifatli rasmlar ko'rinadi */}
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 auto-rows-[160px] sm:auto-rows-[200px] gap-3 sm:gap-4 mb-8">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 auto-rows-[190px] sm:auto-rows-[240px] gap-3 sm:gap-4 mb-8">
               {current.map((album, i) => (
                 <AlbumTile
                   key={album.id}

@@ -98,8 +98,22 @@
     animation: aiRobotBlink 4s infinite;
   }
 
+  @keyframes aiRobotWave {
+    0%, 60%, 100% { transform: rotate(0deg); }
+    70% { transform: rotate(14deg); }
+    80% { transform: rotate(-8deg); }
+    90% { transform: rotate(10deg); }
+  }
+
+  .ai-robot-wave {
+    transform-box: fill-box;
+    transform-origin: 30% 100%;
+    animation: aiRobotWave 3.2s ease-in-out infinite;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .ai-robot-float,
+    .ai-robot-wave,
     .ai-robot-eye {
       animation: none;
     }

@@ -30,7 +30,7 @@ function FloatingActionButton() {
 
       {/* FAB Container */}
       {/* Pastki o'ng burchakda AI robotcha turadi, shuning uchun FAB uning ustida */}
-      <div className="fixed bottom-[6.25rem] right-4 sm:right-6 z-50 flex flex-col items-end gap-2.5 mr-0.5">
+      <div className="fixed bottom-[7.25rem] right-4 sm:right-6 z-50 flex flex-col items-end gap-2.5 mr-2">
         {/* Speed Dial Options */}
         {isOpen && (
           <div className="flex flex-col items-end gap-2.5 animate-slideUp">

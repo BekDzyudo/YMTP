@@ -30,7 +30,7 @@ function MediaPageLayout({ title, subtitle, icon: Icon, stats, children }) {
           </ul>
         </div>
 
-        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#002d6d] via-[#194882] to-info text-white px-5 sm:px-8 py-7 sm:py-9 mb-8 shadow-xl">
+        <div className="relative overflow-hidden rounded-3xl bg-linear-to-br from-[#194882] to-info text-white px-5 sm:px-8 py-7 sm:py-9 mb-8 shadow-xl">
           <div className="absolute -right-10 -top-10 w-48 h-48 rounded-full bg-white/10" />
           <div className="absolute right-24 -bottom-16 w-40 h-40 rounded-full bg-white/5" />
           <div className="relative flex flex-col sm:flex-row sm:items-center gap-5">

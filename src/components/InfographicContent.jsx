@@ -86,6 +86,8 @@ const ACCENTS = [
 const YEAR_LEAD = /^\s*(?:<[^>]+>\s*)*((?:19|20)\d{2})(?:\s*[-–—]\s*((?:19|20)?\d{2,4}))?\s*[-–—]?\s*(?:yil(?:da|dan|i|ning|lar)?|yy\.?|йил(?:лар)?|йй\.?|гг?\.|год[ау]?|y\.)?/i;
 const BULLET_LEAD = /^\s*(?:[-–—•●▪➢✓✔*]|\d{1,2}[.)])\s+/;
 const NUMBERED_LEAD = /^\s*\d{1,2}[.)]\s+/;
+// Bundan uzun "sarlavha" teglari xatboshi deb hisoblanadi
+const MAX_HEADING_LENGTH = 100;
 
 // Raqamli ko'rsatkichlar: "150 nafar", "14 ta hududiy fakultet", "85%", "2 mingdan ortiq"
 const STAT_RE = /(\d[\d\s.,]{0,9}\d|\d)\s*(%|\+|foiz|ta|nafar|ming|mln|million|mlrd|dan\s+ortiq|dan\s+ziyod|человек|тыс\.?|млн|более|%)?\s+([^\s.,;:!?()«»"]+(?:\s+[^\s.,;:!?()«»"]+){0,3})/giu;
@@ -167,7 +169,15 @@ function parseBlocks(html) {
     const { tag } = node;
     if (/^h[1-6]$/.test(tag)) {
       const text = textOf(node.html);
-      if (text) push({ type: "heading", text });
+      if (!text) continue;
+      // Backend ko'pincha butun xatboshini <h2>/<h4> ichida yuboradi. Uzun yoki <br> li "sarlavha"
+      // aslida oddiy matn — uni qalin sarlavha emas, odatiy xatboshi sifatida ko'rsatamiz.
+      if (text.length > MAX_HEADING_LENGTH || /<br\s*\/?>/i.test(node.html)) {
+        if (last()?.type === "text") last().paras.push(node.html);
+        else push({ type: "text", paras: [node.html], noLead: true });
+        continue;
+      }
+      push({ type: "heading", text });
       continue;
     }
     if (tag === "ul" || tag === "ol") {
@@ -236,7 +246,7 @@ function parseBlocks(html) {
 
 // @tailwindcss/typography o'rnatilmagan, shuning uchun matn stillari qo'lda beriladi
 const proseClass =
-  "text-sm sm:text-base leading-relaxed text-base-content/85 text-justify [&_p]:mb-3 [&_p:last-child]:mb-0 [&_a]:text-blue-700 [&_a]:underline [&_strong]:font-semibold [&_strong]:text-base-content [&_b]:font-semibold [&_em]:italic [&_img]:max-w-full [&_img]:h-auto [&_iframe]:w-full [&_iframe]:aspect-video [&_iframe]:rounded-xl [&_blockquote]:border-l-4 [&_blockquote]:border-info [&_blockquote]:pl-4 [&_blockquote]:italic";
+  "text-sm sm:text-base leading-relaxed text-base-content text-justify [&_p]:mb-3 [&_p:last-child]:mb-0 [&_a]:text-blue-700 [&_a]:underline [&_strong]:font-semibold [&_strong]:text-base-content [&_b]:font-semibold [&_em]:italic [&_img]:max-w-full [&_img]:h-auto [&_iframe]:w-full [&_iframe]:aspect-video [&_iframe]:rounded-xl [&_blockquote]:border-l-4 [&_blockquote]:border-info [&_blockquote]:pl-4 [&_blockquote]:italic";
 
 function Html({ html, className = "" }) {
   return <div className={className} dangerouslySetInnerHTML={{ __html: html }} />;
@@ -288,7 +298,7 @@ function Cards({ items }) {
             <span className={`grid place-items-center w-10 h-10 rounded-xl shrink-0 shadow-sm ${accent.icon} transition-transform group-hover:scale-110`}>
               <KeywordIcon text={text} size={16} />
             </span>
-            <div className="min-w-0 flex-1 text-sm sm:text-[15px] leading-relaxed text-base-content/85">
+            <div className="min-w-0 flex-1 text-sm sm:text-[15px] leading-relaxed text-base-content">
               {title && <p className="font-bold text-base-content mb-0.5">{title}</p>}
               <Html html={body.replace(/[;,]\s*$/, "")} className="first-letter:uppercase [&_a]:text-blue-700 [&_a]:underline" />
             </div>
@@ -310,7 +320,7 @@ function Steps({ items, stepLabel }) {
             <span className="relative z-10 grid place-items-center w-10 h-10 rounded-full bg-white border-2 border-info text-[#0d3a7a] font-black shrink-0 shadow-sm">
               {i + 1}
             </span>
-            <div className="flex-1 rounded-2xl bg-base-100 border border-base-300 p-3.5 sm:p-4 shadow-sm text-sm sm:text-[15px] leading-relaxed text-base-content/85">
+            <div className="flex-1 rounded-2xl bg-base-100 border border-base-300 p-3.5 sm:p-4 shadow-sm text-sm sm:text-[15px] leading-relaxed text-base-content">
               <p className="text-[10px] font-bold uppercase tracking-widest text-info mb-0.5">
                 {stepLabel} {i + 1}
               </p>
@@ -339,7 +349,7 @@ function Timeline({ items }) {
                   <span className="inline-block rounded-full bg-gradient-to-r from-[#194882] to-info text-white text-sm font-black px-3 py-0.5 mb-2">
                     {item.year}
                   </span>
-                  <p className="text-sm @2xl:text-[15px] leading-relaxed text-base-content/85">{item.body}</p>
+                  <p className="text-sm @2xl:text-[15px] leading-relaxed text-base-content">{item.body}</p>
                 </div>
               </div>
             </div>
@@ -359,7 +369,7 @@ function InfographicContent({ html, showStats = true, className = "" }) {
     let leadUsed = false;
     const parsed = parseBlocks(clean).map((b, i) => {
       if (b.type === "heading") return { ...b, index: ++headingIndex };
-      if (b.type === "text" && !leadUsed && i <= 1) {
+      if (b.type === "text" && !b.noLead && !leadUsed && i <= 1) {
         leadUsed = true;
         return { ...b, lead: true };
       }
@@ -400,7 +410,7 @@ function InfographicContent({ html, showStats = true, className = "" }) {
               <div key={i} className="space-y-3">
                 {isLead ? (
                   <div className="relative rounded-2xl bg-gradient-to-r from-blue-50 to-transparent border-l-4 border-info pl-4 sm:pl-5 pr-3 py-3 sm:py-4">
-                    <Html html={first} className={`${proseClass} sm:text-lg text-base-content/90`} />
+                    <Html html={first} className={`${proseClass} sm:text-lg text-base-content`} />
                   </div>
                 ) : (
                   <Html html={`<p>${first}</p>`} className={proseClass} />

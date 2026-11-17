@@ -19,7 +19,7 @@ const extractYoutubeIds = (text = "") => [...new Set([...text.matchAll(YT_RE)].m
 const YT_THUMB_CHAIN = ["maxresdefault", "sddefault", "hqdefault", "mqdefault"];
 
 // YouTube preview yoki yuklangan video fayldan (haqiqiy kadr) önizleme chiqaradi.
-// Bitta joyda, chunki aynan shu mantiq ham featured kartada, ham kichik kartalarda kerak.
+// Bitta joyda, chunki aynan shu mantiq har bir video kartasida kerak.
 function VideoFrame({ video, onDiscard, mediaClassName, iconSize = 48 }) {
   const [thumbIdx, setThumbIdx] = useState(0);
   const [loaded, setLoaded] = useState(false);
@@ -64,69 +64,44 @@ function VideoFrame({ video, onDiscard, mediaClassName, iconSize = 48 }) {
   );
 }
 
-// Eng so'nggi/asosiy video — matn va "tomosha qilish" tugmasi bilan ikki bo'lakli katta karta
-function FeaturedVideo({ video, onPlay, onDiscard, locale, t }) {
-  return (
-    <div className="grid lg:grid-cols-5 rounded-3xl overflow-hidden shadow-xl ring-1 ring-black/5">
-      <button
-        onClick={() => onPlay(video)}
-        className="group relative lg:col-span-3 aspect-video lg:aspect-auto bg-slate-900 text-left"
-      >
-        <VideoFrame
-          video={video}
-          onDiscard={onDiscard}
-          iconSize={56}
-          mediaClassName="absolute inset-0 w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
-        />
-        <div className="absolute inset-0 bg-black/10 group-hover:bg-black/25 transition-colors" />
-        <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 grid place-items-center w-20 h-20 rounded-full bg-white/90 text-rose-600 shadow-xl transition-transform duration-300 group-hover:scale-110">
-          <FaPlay className="ml-1" size={26} />
-        </span>
-      </button>
-
-      <div className="lg:col-span-2 flex flex-col justify-center gap-3 bg-gradient-to-br from-[#002d6d] via-[#194882] to-info text-white p-6 sm:p-8">
-        <span className="inline-flex items-center gap-1.5 self-start rounded-full bg-white/15 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide">
-          <FaVideo size={10} /> {t("media.featured")}
-        </span>
-        <h2 className="text-xl sm:text-2xl font-black font-serif leading-snug line-clamp-3">{video.title}</h2>
-        {video.date && (
-          <p className="flex items-center gap-1.5 text-sm text-white/70">
-            <FaCalendar size={12} /> {new Date(video.date).toLocaleDateString(locale)}
-          </p>
-        )}
-        <button
-          onClick={() => onPlay(video)}
-          className="mt-2 inline-flex w-fit items-center gap-2 rounded-xl bg-white text-[#002d6d] font-semibold px-4 py-2.5 text-sm hover:bg-white/90 transition-colors"
-        >
-          <FaPlay size={12} /> {t("media.watch")}
-        </button>
-      </div>
-    </div>
-  );
-}
-
-function VideoThumb({ video, onPlay, onDiscard, locale }) {
+// Bitta video kartasi: tepada video, ostida uning tavsifi (sarlavha, sana, tomosha tugmasi).
+// Kartalar yangiliklar sahifasidagi kabi to'rda (1/2/3/4 ustun) turadi.
+function VideoCard({ video, onPlay, onDiscard, locale, t, isLatest }) {
+  // O'lchamlari yangiliklar kartasi bilan bir xil: rasm h-60.5, matn qismi p-4, rounded-3xl
   return (
     <button
       onClick={() => onPlay(video)}
-      className="group relative block w-full aspect-video overflow-hidden rounded-2xl bg-slate-900 shadow-sm ring-1 ring-black/10 hover:shadow-2xl hover:ring-black/0 transition-all duration-300 text-left"
+      className="group relative h-full flex flex-col rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl border border-base-300 bg-base-100 text-left transition-all duration-300 hover:-translate-y-2"
+      aria-label={`${t("media.watch")}: ${video.title}`}
     >
-      <VideoFrame
-        video={video}
-        onDiscard={onDiscard}
-        mediaClassName="absolute inset-0 w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent" />
-      <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 grid place-items-center w-14 h-14 rounded-full bg-white/90 text-rose-600 shadow-xl transition-transform duration-300 group-hover:scale-110">
-        <FaPlay className="ml-1" size={18} />
-      </span>
-      <div className="absolute inset-x-0 bottom-0 p-3 sm:p-4 text-white">
-        {video.date && (
-          <p className="flex items-center gap-1.5 text-[11px] text-white/75 mb-1">
-            <FaCalendar size={10} /> {new Date(video.date).toLocaleDateString(locale)}
-          </p>
+      <div className="relative h-60.5 w-full overflow-hidden shrink-0 bg-slate-900">
+        <VideoFrame
+          video={video}
+          onDiscard={onDiscard}
+          mediaClassName="absolute inset-0 w-full h-full object-cover transition-all duration-500 group-hover:scale-105"
+        />
+        <div className="absolute inset-0 bg-black/10 group-hover:bg-black/25 transition-colors" />
+        <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 grid place-items-center w-14 h-14 rounded-full bg-white/90 text-rose-600 shadow-xl transition-transform duration-300 group-hover:scale-110">
+          <FaPlay className="ml-1" size={18} />
+        </span>
+        {isLatest && (
+          <span className="absolute top-3 left-3 inline-flex items-center gap-1.5 rounded-full bg-linear-to-r from-[#194882] to-info px-3 py-1.5 text-white text-sm font-semibold shadow-lg">
+            <FaVideo size={12} /> {t("media.featured")}
+          </span>
         )}
-        <p className="font-semibold leading-snug line-clamp-2 text-sm">{video.title}</p>
+      </div>
+
+      <div className="w-full flex-1 flex flex-col p-4 bg-linear-to-br from-[#194882] to-info text-white">
+        {video.date && (
+          <div className="flex items-center gap-1.5 text-white/75 mb-2">
+            <FaCalendar size={12} />
+            <span className="text-xs font-medium">{new Date(video.date).toLocaleDateString(locale)}</span>
+          </div>
+        )}
+        <h3 className="text-lg font-bold leading-snug line-clamp-2 mb-3 flex-1">{video.title}</h3>
+        <span className="inline-flex items-center gap-2 font-semibold text-sm group-hover:gap-3 transition-all duration-300">
+          <FaPlay size={11} /> {t("media.watch")}
+        </span>
       </div>
     </button>
   );
@@ -134,16 +109,13 @@ function VideoThumb({ video, onPlay, onDiscard, locale }) {
 
 function VideoSkeleton() {
   return (
-    <div className="space-y-8">
-      <div className="grid lg:grid-cols-5 rounded-3xl overflow-hidden">
-        <div className="lg:col-span-3 aspect-video lg:aspect-auto lg:h-80 animate-pulse bg-gradient-to-br from-slate-800 to-slate-900" />
-        <div className="lg:col-span-2 h-40 lg:h-80 animate-pulse bg-gradient-to-br from-[#002d6d] to-[#194882]" />
-      </div>
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-        {Array.from({ length: 4 }).map((_, i) => (
-          <div key={i} className="aspect-video rounded-2xl animate-pulse bg-gradient-to-br from-slate-800 to-slate-900" />
-        ))}
-      </div>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      {Array.from({ length: 8 }).map((_, i) => (
+        <div key={i} className="rounded-3xl overflow-hidden">
+          <div className="h-60.5 animate-pulse bg-linear-to-br from-slate-800 to-slate-900" />
+          <div className="h-32 animate-pulse bg-linear-to-br from-[#194882] to-info opacity-70" />
+        </div>
+      ))}
     </div>
   );
 }
@@ -217,7 +189,6 @@ function VideoGallery() {
   }, [playing]);
 
   const isPending = newsPending || apiPending;
-  const [featured, ...rest] = videos;
 
   return (
     <>
@@ -236,18 +207,18 @@ function VideoGallery() {
             {t("media.noVideos")}
           </div>
         ) : (
-          <div className="space-y-8">
-            <FeaturedVideo video={featured} onPlay={setPlaying} onDiscard={discard} locale={locale} t={t} />
-            {rest.length > 0 && (
-              <div>
-                <h2 className="text-lg font-bold text-slate-700 mb-3">{t("media.moreVideos")}</h2>
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                  {rest.map((v) => (
-                    <VideoThumb key={v.key} video={v} onPlay={setPlaying} onDiscard={discard} locale={locale} />
-                  ))}
-                </div>
-              </div>
-            )}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {videos.map((v, i) => (
+              <VideoCard
+                key={v.key}
+                video={v}
+                onPlay={setPlaying}
+                onDiscard={discard}
+                locale={locale}
+                t={t}
+                isLatest={i === 0}
+              />
+            ))}
           </div>
         )}
       </MediaPageLayout>

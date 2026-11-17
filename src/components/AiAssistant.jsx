@@ -1,7 +1,21 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { FaPaperPlane, FaTimes, FaRedo, FaTrashAlt } from "react-icons/fa";
+import {
+  FaPaperPlane,
+  FaTimes,
+  FaRedo,
+  FaMinus,
+  FaPaperclip,
+  FaChevronRight,
+  FaBookOpen,
+  FaGraduationCap,
+  FaFileAlt,
+  FaPlay,
+} from "react-icons/fa";
+import { HiSparkles } from "react-icons/hi2";
+import { LuShieldCheck } from "react-icons/lu";
 import { useTranslation } from "../i18n/LanguageContext";
 import { askAssistant, MAX_QUESTION_LENGTH } from "../utils/aiAssistant";
+import { RobotHead, RobotMascot } from "./AiRobot";
 
 const HISTORY_KEY = "aiAssistantHistory";
 const GREETING_KEY = "aiAssistantGreetingShown";
@@ -23,22 +37,20 @@ const saveHistory = (messages) => {
   }
 };
 
-// Robotcha ikonkasi
-function RobotIcon({ className = "" }) {
-  return (
-    <svg viewBox="0 0 64 64" className={className} aria-hidden="true">
-      <line x1="32" y1="6" x2="32" y2="14" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
-      <circle cx="32" cy="5" r="3.5" fill="#facc15" />
-      <rect x="10" y="14" width="44" height="34" rx="12" fill="currentColor" />
-      <rect x="16" y="21" width="32" height="18" rx="8" fill="#0f2f57" />
-      <circle cx="25" cy="30" r="4" fill="#5eead4" className="ai-robot-eye" />
-      <circle cx="39" cy="30" r="4" fill="#5eead4" className="ai-robot-eye" />
-      <rect x="4" y="25" width="6" height="12" rx="3" fill="currentColor" />
-      <rect x="54" y="25" width="6" height="12" rx="3" fill="currentColor" />
-      <path d="M24 54h16" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
-    </svg>
-  );
-}
+// Tezkor savollar: tugma matni va yuboriladigan savol
+const QUICK_QUESTIONS = [
+  { key: "materials", icon: <FaBookOpen className="w-6 shrink-0 text-xl text-[#1d5fd6]" /> },
+  { key: "platforms", icon: <FaGraduationCap className="w-6 shrink-0 text-xl text-[#1d5fd6]" /> },
+  { key: "journals", icon: <FaFileAlt className="w-6 shrink-0 text-xl text-[#1d5fd6]" /> },
+  {
+    key: "lessons",
+    icon: (
+      <span className="w-6 h-5 shrink-0 rounded-[5px] bg-[#1d5fd6] flex items-center justify-center">
+        <FaPlay className="text-white text-[9px] ml-px" />
+      </span>
+    ),
+  },
+];
 
 // AI javobini xavfsiz formatlash (innerHTML ishlatilmaydi): paragraf, ro'yxat, **qalin**
 function renderInline(text) {
@@ -90,6 +102,29 @@ function FormattedText({ text }) {
   });
 }
 
+// Javob yonidagi kichik avatar
+function BotAvatar() {
+  return (
+    <span className="w-8 h-8 shrink-0 rounded-full bg-linear-to-br from-[#194882] to-info flex items-center justify-center shadow-md ring-2 ring-white">
+      <RobotHead className="w-6 h-6" />
+    </span>
+  );
+}
+
+function HeaderButton({ onClick, label, children }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="w-9 h-9 flex items-center justify-center rounded-full bg-white/90 text-[#0b1f4d] shadow-md hover:bg-white hover:scale-105 active:scale-95 transition-all"
+      title={label}
+      aria-label={label}
+    >
+      {children}
+    </button>
+  );
+}
+
 function AiAssistant() {
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
@@ -102,6 +137,8 @@ function AiAssistant() {
   const listRef = useRef(null);
   const inputRef = useRef(null);
   const abortRef = useRef(null);
+
+  const hasChat = messages.length > 0 || isLoading || error;
 
   useEffect(() => saveHistory(messages), [messages]);
 
@@ -137,7 +174,7 @@ function AiAssistant() {
   // Komponent yopilganda kutilayotgan so'rovni bekor qilish
   useEffect(() => () => abortRef.current?.abort(), []);
 
-  // Esc bilan yopish
+  // Esc bilan kichraytirish
   useEffect(() => {
     if (!isOpen) return;
     const onKey = (e) => e.key === "Escape" && setIsOpen(false);
@@ -191,12 +228,15 @@ function AiAssistant() {
     if (messages.at(-1)?.role === "user") requestReply(messages);
   };
 
-  const handleClear = () => {
+  // Yopish: suhbat tugaydi va keyingi ochilishda boshlang'ich oyna chiqadi
+  const handleClose = () => {
     abortRef.current?.abort();
     abortRef.current = null;
     setIsLoading(false);
     setError(false);
     setMessages([]);
+    setInput("");
+    setIsOpen(false);
   };
 
   const openChat = () => {
@@ -204,13 +244,29 @@ function AiAssistant() {
     setIsOpen(true);
   };
 
-  const suggestions = [t("ai.suggestion1"), t("ai.suggestion2"), t("ai.suggestion3")];
+  const quickButtons = (
+    <div className="grid grid-cols-2 gap-2.5 sm:gap-3">
+      {QUICK_QUESTIONS.map(({ key, icon }) => (
+        <button
+          key={key}
+          type="button"
+          onClick={() => sendQuestion(t(`ai.quick.${key}Q`))}
+          disabled={isLoading}
+          className="group flex items-center gap-2 sm:gap-2.5 min-w-0 px-2.5 sm:px-3 py-3 rounded-xl bg-white border border-[#cfdcf3] text-[#0b1f4d] text-xs sm:text-sm font-medium text-left hover:border-[#1d5fd6] hover:shadow-md hover:-translate-y-0.5 disabled:opacity-60 transition-all"
+        >
+          {icon}
+          <span className="flex-1 min-w-0 truncate">{t(`ai.quick.${key}`)}</span>
+          <FaChevronRight className="shrink-0 text-xs text-[#1d5fd6] transition-transform group-hover:translate-x-0.5" />
+        </button>
+      ))}
+    </div>
+  );
 
   return (
     <>
       {/* Salomlashish pufakchasi */}
       {showGreeting && !isOpen && (
-        <div className="fixed bottom-24 right-4 sm:right-6 z-50 animate-slideUp max-w-[calc(100vw-2rem)]">
+        <div className="fixed bottom-28 right-4 sm:right-6 z-50 animate-slideUp max-w-[calc(100vw-2rem)]">
           <div className="relative bg-white rounded-2xl shadow-2xl p-4 pr-9 w-72 max-w-full border border-blue-100">
             <button
               onClick={() => setShowGreeting(false)}
@@ -223,7 +279,7 @@ function AiAssistant() {
             <p className="text-sm text-gray-600 mb-3">{t("ai.greetingText")}</p>
             <button
               onClick={openChat}
-              className="w-full px-4 py-2 bg-linear-to-br from-[#194882] to-info text-white text-sm font-semibold rounded-lg hover:shadow-lg transition-all"
+              className="w-full px-4 py-2 bg-linear-to-br from-[#1d5fd6] to-[#0b3a91] text-white text-sm font-semibold rounded-lg hover:shadow-lg transition-all"
             >
               {t("ai.ask")}
             </button>
@@ -237,105 +293,125 @@ function AiAssistant() {
         <div
           role="dialog"
           aria-label={t("ai.title")}
-          className="fixed z-50 inset-x-0 bottom-0 top-16 sm:inset-auto sm:bottom-24 sm:right-6 sm:w-96 sm:h-[min(600px,calc(100vh-8rem))] flex flex-col bg-white sm:rounded-2xl rounded-t-2xl shadow-2xl border border-gray-200 overflow-hidden animate-slideUp"
+          className={`fixed z-50 inset-x-0 bottom-0 max-h-[calc(100dvh-4rem)] sm:inset-auto sm:bottom-28 sm:right-6 sm:w-[480px] sm:max-h-[calc(100vh-8.5rem)] flex flex-col overflow-hidden rounded-t-[28px] sm:rounded-[28px] border border-white/70 shadow-[0_24px_60px_-12px_rgba(11,42,102,0.45)] bg-linear-to-b from-[#c9dcfb] via-[#eef4ff] to-white animate-slideUp ${
+            hasChat ? "h-[calc(100dvh-4rem)] sm:h-[600px]" : ""
+          }`}
         >
-          {/* Sarlavha */}
-          <div className="bg-linear-to-br from-[#194882] to-info px-4 py-3 flex items-center gap-3 text-white shrink-0">
-            <div className="bg-white/15 rounded-full p-1.5">
-              <RobotIcon className="w-8 h-8 text-white" />
-            </div>
-            <div className="flex-1 min-w-0">
-              <p className="font-bold leading-tight">{t("ai.title")}</p>
-              <p className="text-xs text-white/80 truncate">{t("ai.subtitle")}</p>
-            </div>
-            {messages.length > 0 && (
-              <button
-                onClick={handleClear}
-                className="p-2 rounded-lg hover:bg-white/20 transition-colors"
-                title={t("ai.clear")}
-                aria-label={t("ai.clear")}
-              >
-                <FaTrashAlt className="text-sm" />
-              </button>
-            )}
-            <button
-              onClick={() => setIsOpen(false)}
-              className="p-2 rounded-lg hover:bg-white/20 transition-colors"
-              title={t("fab.close")}
-              aria-label={t("fab.close")}
-            >
-              <FaTimes />
-            </button>
+          {/* Pastki o'ng burchakdagi ko'k to'lqin */}
+          <svg
+            viewBox="0 0 200 80"
+            preserveAspectRatio="none"
+            className="pointer-events-none absolute bottom-0 right-0 w-48 h-16"
+            aria-hidden="true"
+          >
+            <defs>
+              <linearGradient id="aiWave" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stopColor="#3b82f6" stopOpacity="0" />
+                <stop offset="100%" stopColor="#1d4fd8" />
+              </linearGradient>
+            </defs>
+            <path d="M0 80 C70 76 150 60 200 0 V80 Z" fill="url(#aiWave)" />
+          </svg>
+
+          {/* Boshqaruv tugmalari */}
+          <div className="absolute top-3.5 right-3.5 z-10 flex gap-2.5">
+            <HeaderButton onClick={() => setIsOpen(false)} label={t("ai.minimize")}>
+              <FaMinus className="text-sm" />
+            </HeaderButton>
+            <HeaderButton onClick={handleClose} label={t("fab.close")}>
+              <FaTimes className="text-base" />
+            </HeaderButton>
           </div>
 
-          {/* Xabarlar */}
-          <div ref={listRef} className="flex-1 overflow-y-auto px-4 py-4 space-y-3 bg-slate-50" aria-live="polite">
-            {/* Kirish xabari */}
-            <div className="flex items-end gap-2">
-              <RobotIcon className="w-7 h-7 text-[#194882] shrink-0" />
-              <div className="bg-white border border-gray-200 rounded-2xl rounded-bl-sm px-3.5 py-2.5 text-sm text-gray-800 max-w-[85%] shadow-sm">
-                {t("ai.welcome")}
+          {hasChat ? (
+            /* Suhbat sarlavhasi */
+            <div className="flex items-center gap-3 px-4 pt-4 pb-3 pr-28 shrink-0">
+              <span className="w-12 h-12 shrink-0 rounded-full bg-white/80 shadow flex items-center justify-center">
+                <RobotMascot className="w-11 h-11" />
+              </span>
+              <div className="min-w-0">
+                <p className="font-bold text-[#0b1f4d] leading-tight truncate">{t("ai.title")}</p>
+                <p className="flex items-center gap-1.5 text-xs text-[#3c4f75]">
+                  <span className="w-2 h-2 rounded-full bg-green-500" />
+                  {t("ai.online")}
+                </p>
               </div>
             </div>
+          ) : (
+            /* Boshlang'ich oyna: robotcha va salomlashish */
+            <div className="relative flex items-start gap-1 sm:gap-2 px-3 sm:px-4 pt-4 shrink-0">
+              <div className="relative w-36 sm:w-48 shrink-0 -ml-2 sm:-ml-3 -mr-3 sm:-mr-4">
+                <span className="absolute left-2 right-0 top-8 bottom-0 rounded-full bg-linear-to-br from-white/70 to-[#b9d1fa]/60" />
+                <RobotMascot className="relative w-full drop-shadow-[0_10px_14px_rgba(11,42,102,0.25)] ai-robot-float" />
+              </div>
+              <div className="relative flex-1 min-w-0 pt-12 pb-4">
+                <div className="relative bg-white rounded-3xl px-4 py-3.5 sm:px-5 sm:py-4 shadow-[0_8px_24px_-8px_rgba(11,42,102,0.25)]">
+                  <span className="absolute -left-2 top-1/2 w-5 h-5 bg-white rotate-45 rounded-sm" aria-hidden="true" />
+                  <p className="relative text-lg sm:text-[22px] font-extrabold whitespace-nowrap text-[#0b1f4d] leading-tight">{t("ai.hello")}</p>
+                  <p className="relative mt-1 text-sm sm:text-[17px] text-[#0b1f4d] leading-snug">{t("ai.intro")}</p>
+                </div>
+                <p className="mt-3 text-xs sm:text-sm text-[#3c4f75] leading-relaxed">{t("ai.introNote")}</p>
+              </div>
+            </div>
+          )}
 
-            {messages.length === 0 && (
-              <div className="flex flex-wrap gap-2 pl-9">
-                {suggestions.map((s) => (
+          {/* Kontent */}
+          {hasChat ? (
+            <div ref={listRef} className="flex-1 overflow-y-auto px-4 py-3 space-y-3 bg-white/60 border-y border-white" aria-live="polite">
+              {messages.map((m, i) =>
+                m.role === "user" ? (
+                  <div key={i} className="flex justify-end">
+                    <div className="bg-linear-to-br from-[#1d5fd6] to-[#0b3a91] text-white rounded-2xl rounded-br-sm px-3.5 py-2.5 text-sm max-w-[85%] whitespace-pre-wrap break-words shadow-sm">
+                      {m.content}
+                    </div>
+                  </div>
+                ) : (
+                  <div key={i} className="flex items-end gap-2">
+                    <BotAvatar />
+                    <div className="bg-white border border-[#dbe5f5] rounded-2xl rounded-bl-sm px-3.5 py-2.5 text-sm text-gray-800 max-w-[85%] shadow-sm break-words">
+                      <FormattedText text={m.content} />
+                    </div>
+                  </div>
+                )
+              )}
+
+              {isLoading && (
+                <div className="flex items-end gap-2">
+                  <BotAvatar />
+                  <div className="bg-white border border-[#dbe5f5] rounded-2xl rounded-bl-sm px-4 py-3 shadow-sm flex items-center gap-1" aria-label={t("ai.thinking")}>
+                    <span className="w-2 h-2 rounded-full bg-[#1d5fd6]/60 animate-bounce [animation-delay:-0.3s]" />
+                    <span className="w-2 h-2 rounded-full bg-[#1d5fd6]/60 animate-bounce [animation-delay:-0.15s]" />
+                    <span className="w-2 h-2 rounded-full bg-[#1d5fd6]/60 animate-bounce" />
+                  </div>
+                </div>
+              )}
+
+              {error && (
+                <div className="flex flex-col items-center gap-2 text-center">
+                  <p className="text-sm text-red-700 bg-red-50 border border-red-200 rounded-lg px-3 py-2">{t("ai.error")}</p>
                   <button
-                    key={s}
-                    onClick={() => sendQuestion(s)}
-                    className="text-left text-xs px-3 py-1.5 rounded-full border border-blue-200 bg-white text-[#194882] hover:bg-blue-50 transition-colors"
+                    onClick={handleRetry}
+                    className="inline-flex items-center gap-2 text-sm text-[#1d5fd6] font-semibold hover:underline"
                   >
-                    {s}
+                    <FaRedo className="text-xs" /> {t("ai.retry")}
                   </button>
-                ))}
-              </div>
-            )}
-
-            {messages.map((m, i) =>
-              m.role === "user" ? (
-                <div key={i} className="flex justify-end">
-                  <div className="bg-[#194882] text-white rounded-2xl rounded-br-sm px-3.5 py-2.5 text-sm max-w-[85%] whitespace-pre-wrap break-words">
-                    {m.content}
-                  </div>
                 </div>
-              ) : (
-                <div key={i} className="flex items-end gap-2">
-                  <RobotIcon className="w-7 h-7 text-[#194882] shrink-0" />
-                  <div className="bg-white border border-gray-200 rounded-2xl rounded-bl-sm px-3.5 py-2.5 text-sm text-gray-800 max-w-[85%] shadow-sm break-words">
-                    <FormattedText text={m.content} />
-                  </div>
-                </div>
-              )
-            )}
-
-            {isLoading && (
-              <div className="flex items-end gap-2">
-                <RobotIcon className="w-7 h-7 text-[#194882] shrink-0" />
-                <div className="bg-white border border-gray-200 rounded-2xl rounded-bl-sm px-4 py-3 shadow-sm flex items-center gap-1" aria-label={t("ai.thinking")}>
-                  <span className="w-2 h-2 rounded-full bg-gray-400 animate-bounce [animation-delay:-0.3s]" />
-                  <span className="w-2 h-2 rounded-full bg-gray-400 animate-bounce [animation-delay:-0.15s]" />
-                  <span className="w-2 h-2 rounded-full bg-gray-400 animate-bounce" />
-                </div>
-              </div>
-            )}
-
-            {error && (
-              <div className="flex flex-col items-center gap-2 text-center">
-                <p className="text-sm text-red-700 bg-red-50 border border-red-200 rounded-lg px-3 py-2">{t("ai.error")}</p>
-                <button
-                  onClick={handleRetry}
-                  className="inline-flex items-center gap-2 text-sm text-[#194882] font-semibold hover:underline"
-                >
-                  <FaRedo className="text-xs" /> {t("ai.retry")}
-                </button>
-              </div>
-            )}
-          </div>
+              )}
+            </div>
+          ) : (
+            <div className="relative px-4 sm:px-6 pt-4 pb-1 overflow-y-auto bg-white/70 rounded-t-[28px]">
+              <p className="flex items-center gap-2 mb-3 text-base sm:text-lg font-bold text-[#0b1f4d]">
+                <HiSparkles className="text-xl text-[#1d5fd6]" />
+                {t("ai.quickTitle")}
+              </p>
+              {quickButtons}
+            </div>
+          )}
 
           {/* Kiritish maydoni */}
-          <form onSubmit={handleSubmit} className="border-t border-gray-200 p-3 bg-white shrink-0">
-            <div className="flex items-end gap-2">
+          <form onSubmit={handleSubmit} className={`relative px-4 sm:px-6 pt-4 pb-3 shrink-0 ${hasChat ? "bg-white/60" : "bg-white/70"}`}>
+            <div className="flex items-center gap-2 pl-4 pr-1.5 py-1.5 rounded-full bg-white border border-[#cfdcf3] shadow-sm focus-within:border-[#1d5fd6] focus-within:ring-2 focus-within:ring-[#1d5fd6]/20 transition-all">
+              <FaPaperclip className="shrink-0 text-lg text-[#5b6b8c]" aria-hidden="true" />
               <textarea
                 ref={inputRef}
                 value={input}
@@ -343,20 +419,23 @@ function AiAssistant() {
                 onKeyDown={handleKeyDown}
                 rows={1}
                 placeholder={t("ai.placeholder")}
-                className="flex-1 resize-none max-h-32 min-h-[44px] px-3 py-2.5 text-sm border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none field-sizing-content"
+                className="flex-1 min-w-0 resize-none max-h-28 py-2.5 bg-transparent text-sm sm:text-base text-[#0b1f4d] placeholder:text-[#5b6b8c] outline-none field-sizing-content"
                 aria-label={t("ai.placeholder")}
               />
               <button
                 type="submit"
                 disabled={!input.trim() || isLoading}
-                className="h-11 w-11 shrink-0 flex items-center justify-center rounded-xl bg-linear-to-br from-[#194882] to-info text-white disabled:opacity-40 disabled:cursor-not-allowed hover:shadow-lg transition-all"
+                className="h-11 w-11 sm:h-12 sm:w-12 shrink-0 flex items-center justify-center rounded-full bg-linear-to-br from-[#1d5fd6] to-[#0b3a91] text-white shadow-md disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-lg hover:scale-105 active:scale-95 transition-all"
                 aria-label={t("common.send")}
                 title={t("common.send")}
               >
-                <FaPaperPlane />
+                <FaPaperPlane className="-ml-0.5" />
               </button>
             </div>
-            <p className="mt-1.5 text-[11px] text-gray-400 text-center">{t("ai.disclaimer")}</p>
+            <p className="relative mt-2.5 flex items-center justify-center gap-1.5 text-[11px] sm:text-xs italic text-[#3c4f75]" title={t("ai.disclaimer")}>
+              <LuShieldCheck className="shrink-0 text-base text-[#1d5fd6] not-italic" />
+              {t("ai.scope")}
+            </p>
           </form>
         </div>
       )}
@@ -364,20 +443,17 @@ function AiAssistant() {
       {/* Robotcha tugmasi */}
       <button
         onClick={() => (isOpen ? setIsOpen(false) : openChat())}
-        className="fixed bottom-6 right-4 sm:right-6 z-50 group"
-        title={isOpen ? t("fab.close") : t("ai.title")}
-        aria-label={isOpen ? t("fab.close") : t("ai.title")}
+        className={`fixed bottom-5 right-4 sm:right-6 z-50 group ${isOpen ? "hidden sm:block" : ""}`}
+        title={isOpen ? t("ai.minimize") : t("ai.title")}
+        aria-label={isOpen ? t("ai.minimize") : t("ai.title")}
         aria-expanded={isOpen}
       >
         {!isOpen && (
           <span className="absolute inset-0 rounded-full bg-info/40 animate-ping [animation-duration:2.5s]" />
         )}
-        <span className="relative flex items-center justify-center w-15 h-15 rounded-full bg-linear-to-br from-[#194882] to-info shadow-2xl transition-transform duration-300 group-hover:scale-110 group-active:scale-95">
-          {isOpen ? (
-            <FaTimes className="text-white text-xl" />
-          ) : (
-            <RobotIcon className="w-10 h-10 text-white ai-robot-float" />
-          )}
+        <span className="relative flex items-center justify-center w-[72px] h-[72px] rounded-full bg-linear-to-br from-[#194882] to-info ring-4 ring-white/90 shadow-[0_10px_30px_-4px_rgba(11,42,102,0.6)] transition-transform duration-300 group-hover:scale-110 group-active:scale-95">
+          <RobotHead className="w-12 h-12 ai-robot-float" />
+          <span className="absolute bottom-0.5 right-0.5 w-4 h-4 rounded-full bg-green-500 ring-[3px] ring-white" aria-hidden="true" />
         </span>
       </button>
     </>

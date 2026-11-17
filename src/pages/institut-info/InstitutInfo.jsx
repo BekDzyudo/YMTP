@@ -12,7 +12,11 @@ function InstitutInfo() {
     location.pathname.startsWith(link.to)
   );
   const { setOnHero } = useHero();
-  const institutLinkGroups = getGroupedInstitutLinks();
+  // Yon panelda faqat joriy sahifa tegishli bo'lgan guruh navlari ko'rinadi
+  // (sahifa hech qaysi guruhga mos kelmasa — barcha guruhlar)
+  const allGroups = getGroupedInstitutLinks();
+  const currentGroup = allGroups.find((grp) => grp.group === currentLink?.group);
+  const institutLinkGroups = currentGroup ? [currentGroup] : allGroups;
 
   useEffect(() => {
     setOnHero(false);
@@ -38,13 +42,15 @@ function InstitutInfo() {
             <div className="sticky top-24 space-y-5 mb-25 sm:mb-35">
               {/* Navigation Card */}
               <div className="bg-base-100 rounded-2xl border border-base-300 p-3 sm:p-4">
-                <h3 className="text-xl font-bold mb-3">{t("nav.institute")}</h3>
+                <h3 className="text-xl font-bold mb-3">{currentGroup ? t(currentGroup.labelKey) : t("nav.institute")}</h3>
                 <div className="space-y-3">
                   {institutLinkGroups.map((grp) => (
                     <div key={grp.group}>
-                      <p className="px-3 text-xs font-bold uppercase tracking-wide text-base-content/50 mb-1">
-                        {t(grp.labelKey)}
-                      </p>
+                      {!currentGroup && (
+                        <p className="px-3 text-xs font-bold uppercase tracking-wide text-base-content/50 mb-1">
+                          {t(grp.labelKey)}
+                        </p>
+                      )}
                       <ul className="menu w-full p-0 gap-0.5">
                         {grp.links.map((link) => (
                           <li key={link.to}>

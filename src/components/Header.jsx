@@ -44,7 +44,7 @@ function NavDropdownPanel({ item, open, align, pathname, onNavigate, t }) {
             {item.links.map((link) => {
               const Icon = linkIcons[link.slug] || FaAngleRight;
               const active = isLinkActive(link, pathname);
-              const itemClass = `group/item flex items-center gap-3 rounded-xl px-2.5 py-2 text-[13px] xl:text-sm leading-snug transition-colors duration-200 ${
+              const itemClass = `group/item flex items-center gap-3 rounded-xl px-2.5 py-2 text-sm xl:text-[15px] leading-snug transition-colors duration-200 ${
                 active ? "bg-[#194882]/8 text-[#194882] font-semibold" : "font-medium hover:bg-[#194882]/6 hover:text-[#194882]"
               }`;
               const content = (
@@ -192,7 +192,7 @@ function Header() {
                 <li key={item.key} className="relative">
                   {/* Ichida ul/li ishlatilmaydi: daisyUI .menu ichma-ich ro'yxatlarga o'z padding/chiziqlarini qo'shadi */}
                   <div
-                    className="relative"
+                    className={`relative ${open || sectionActive ? "bg-white/15" : ""}`}
                     onMouseEnter={() => openMenuNow(item.key)}
                     onMouseLeave={closeMenuSoon}
                     onFocus={() => openMenuNow(item.key)}
@@ -206,9 +206,7 @@ function Header() {
                       role="button"
                       aria-haspopup="true"
                       aria-expanded={open}
-                      className={`${navLinkClass} gap-1 items-center flex w-auto rounded-lg ${
-                        open || sectionActive ? "bg-white/15" : ""
-                      }`}
+                      className={`${navLinkClass} gap-1 items-center flex w-auto outline-none`}
                     >
                       {t(item.labelKey)}
                       <FaAngleDown
