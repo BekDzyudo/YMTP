@@ -43,7 +43,7 @@ function Science() {
     });
   };
   // Manba sahifasi havolasi ham joriy tilda ochiladi
-  const localizeSourceUrl = (url) => url?.replace("ipitvet.uz/uz/", `ipitvet.uz/${lang}/`);
+  const localizeSourceUrl = (url) => url?.replace("ktri.uz/uz/", `ktri.uz/${lang}/`);
   const [activeCategory, setActiveCategory] = useState(scienceCategories[0].id);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);

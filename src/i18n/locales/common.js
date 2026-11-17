@@ -54,7 +54,7 @@ const common = {
 
   // Footer
   "footer.links.president": { uz: "Özbekiston Respublikasi Prezidenti rasmiy veb-sayti", ru: "Официальный сайт Президента Республики Узбекистан", en: "Official website of the President of the Republic of Uzbekistan" },
-  "footer.links.ministry": { uz: "Oliy ta'lim, fan va innovatsiyalar vazirligi", ru: "Министерство высшего образования, науки и инноваций", en: "Ministry of Higher Education, Science and Innovation" },
+  "footer.links.ministry": { uz: "Ta'lim va ilm-fan vazirligi", ru: "Министерство образования и науки", en: "Ministry of Education and Science" },
   "footer.links.agency": { uz: "Kasbiy ta'lim agentligi", ru: "Агентство профессионального образования", en: "Vocational Education Agency" },
   "footer.links.mygov": { uz: "Yagona interaktiv davlat xizmatlari portali", ru: "Единый портал интерактивных государственных услуг", en: "Unified Portal of Interactive Public Services" },
   "footer.links.lex": { uz: "Qonunçilik ma'lumotlari milliy bazasi", ru: "Национальная база данных законодательства", en: "National Database of Legislation" },

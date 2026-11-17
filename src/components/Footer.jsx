@@ -226,12 +226,12 @@ function Footer() {
               <GrLanguage className="text-cyan-400 text-lg" />
               <p className="text-xs text-white/60">{t("footer.officialSite")}</p>
             </div>
-            <Link 
-              to="https://ipitvet.uz/uz/" 
+            <Link
+              to="https://ktri.uz/uz/"
               target="_blank"
               className="text-sm text-white hover:text-cyan-300 transition-colors flex items-center gap-2"
             >
-              https://ipitvet.uz/
+              https://ktri.uz/
               <HiOutlineExternalLink className="text-base" />
             </Link>
           </div>

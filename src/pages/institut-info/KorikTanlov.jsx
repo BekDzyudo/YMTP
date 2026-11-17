@@ -9,25 +9,25 @@ const korikTanlovItems = [
     id: 1,
     titleKey: "korik.doc1",
     dateKey: "korik.date",
-    url: "https://ipitvet.uz/media/files/%D0%90%D0%B3%D0%B5%D0%BD%D1%82%D0%BB%D0%B8%D0%BA_%D0%B1%D1%83%D0%B9%D1%80%D1%83%D2%93%D0%B8_13_08_2026_%D0%B9_153_%D1%81%D0%BE%D0%BD%D0%BB%D0%B8_%D0%A0%D0%A2%D0%A0_%D0%BA%D1%9E%D1%80%D0%B8%D0%BA_%D1%82%D0%B0%D0%BD%D0%BB%D0%BE%D0%B2%D0%B8.pdf",
+    url: "https://ktri.uz/media/files/%D0%90%D0%B3%D0%B5%D0%BD%D1%82%D0%BB%D0%B8%D0%BA_%D0%B1%D1%83%D0%B9%D1%80%D1%83%D2%93%D0%B8_13_08_2026_%D0%B9_153_%D1%81%D0%BE%D0%BD%D0%BB%D0%B8_%D0%A0%D0%A2%D0%A0_%D0%BA%D1%9E%D1%80%D0%B8%D0%BA_%D1%82%D0%B0%D0%BD%D0%BB%D0%BE%D0%B2%D0%B8.pdf",
   },
   {
     id: 2,
     titleKey: "korik.doc2",
     dateKey: "korik.date",
-    url: "https://ipitvet.uz/media/files/2-ilova.pdf",
+    url: "https://ktri.uz/media/files/2-ilova.pdf",
   },
   {
     id: 3,
     titleKey: "korik.doc3",
     dateKey: "korik.date",
-    url: "https://ipitvet.uz/media/files/1-ilova.pdf",
+    url: "https://ktri.uz/media/files/1-ilova.pdf",
   },
   {
     id: 4,
     titleKey: "korik.doc4",
     dateKey: "korik.date",
-    url: "https://ipitvet.uz/media/files/3-ilova.pdf",
+    url: "https://ktri.uz/media/files/3-ilova.pdf",
   },
 ];
 
